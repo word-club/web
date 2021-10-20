@@ -1,7 +1,5 @@
 <template>
-  <div>
-    Magic
-  </div>
+  <div />
 </template>
 
 <script>
