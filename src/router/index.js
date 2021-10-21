@@ -7,12 +7,22 @@ const routes = [
 	{
 		path: "/",
 		name: "Home",
-		component: () => import("@/views/home/Home"),
+		components: {
+			default: () => import("@/views/home/Home")
+		},
+		meta: {
+			home: true
+		}
 	},
 	{
 		path: "/communities",
 		name: "Communities",
-		component: () => import("@/views/home/Communities")
+		components: {
+			default: () => import("@/views/home/Communities.vue")
+		},
+		meta: {
+			home: true
+		}
 	}
 ]
 
