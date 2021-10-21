@@ -1,0 +1,81 @@
+{
+	"user": {
+		"list": "user/",
+		"detail": "user/%s/",
+		"register": "register/",
+		"login": "login/",
+		"logout": "logout/",
+		"updatePassword": "update-password/",
+		"requestResetPassword": "reset-password/",
+		"confirmResetPassword": "reset-password/%s/",
+		"addProfileCover": "profile/%s/cover/",
+		"addProfileAvatar": "profile/%s/avatar/",
+		"setActiveProfileCover": "profile-cover/%s/set-active/",
+		"setActiveProfileAvatar": "profile-avatar/%s/set-active/"
+	},
+	"community": {
+		"list": "community",
+		"detail": "community/%s/",
+		"addReport": "community/%s/report/",
+		"subscribe": "community/%s/subscribe/",
+		"disableNotificationFor": "community/%s/disable-notifications/",
+		"addAvatar": "community/%s/avatar/",
+		"addCover": "community/%s/cover/",
+		"addHashtag": "community/%s/hashtag/",
+		"addAdmin": "community/%s/admin/",
+		"removeDisabledNotification": "disable-notifications/%s/",
+		"removeRule": "community-rule/%s/",
+		"removeCover": "community-cover/%s/",
+		"removeAvatar": "community-avatar/%s/",
+		"removeReport": "community-report/%s/",
+		"unsubscribe": "community-unsubscribe/%s/",
+		"hashtagDetail": "community-hashtag/%s/",
+		"setActiveAvatar": "community-avatar/%s/set-active/",
+		"setActiveCover": "community-cover/%s/set-active/",
+		"adminDetail": "community-admin/%s/",
+		"requestAuthorization": "authorize-community/%s/request",
+		"confirmAuthorization": "authorize-community/%s/confirm"
+	},
+	"publication": {
+		"list": "publication/",
+		"detail": "publication/%s/",
+		"addTag": "publication/%s/tag/",
+		"tagDetail": "publication-tag/%s/",
+		"addImage": "publication/%s/image/",
+		"imageDetail": "publication-imgage/%s/",
+		"addImageUrl": "publication/%s/image-url/",
+		"imageUrlDetail": "publication-image-url/%s/",
+		"addUpVote": "publication/%s/up-vote/",
+		"removeUpVote": "publication-up-vote/%s/",
+		"addDownVote": "publication/%s/down-vote/",
+		"removeDownVote": "publication-down-vote/%s/",
+		"addBookmark": "publication/%s/bookmark/",
+		"bookmarkDetail": "publication-bookmark/%s/",
+		"addHiddenStatus": "publication/%s/hide/",
+		"removeHiddenStatus": "publication-hide/%s/",
+		"addReport": "publication/%s/report/",
+		"removeReport": "publication-report/%s/"
+	},
+	"comment": {
+		"add": "publication/%s/comment/",
+		"detail": "comment/%s/",
+		"addUpVote": "comment/%s/up-vote/",
+		"addDownVote": "comment/%s/down-vote/",
+		"addReport": "comment/%s/report/",
+		"removeReport": "comment-report/%s/",
+		"removeCommentImage": "comment-image/%s/",
+		"removeCommentImageUrl": "comment-image-url/%s/",
+		"removeCommentVideoUrl": "comment-video-url/%s/",
+		"removeCommentUpVote": "comment-up-vote/%s/",
+		"removeCommentDownVote": "comment-down-vote/%s/"
+	},
+	"hashtag": {
+		"list": "hashtag/",
+		"detail": "hashtag/%s/"
+	},
+	"notification": {
+		"list": "notification/",
+		"destroy": "notification/%s/",
+		"setAsSeen": "notification/%s/mark-seen"
+	}
+}
