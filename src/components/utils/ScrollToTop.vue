@@ -4,12 +4,9 @@
 			v-show="fab"
 			id="to-top"
 			v-scroll="onScroll"
-			fab
-			dark
-			fixed
-			bottom
-			left
-			medium
+			fab dark
+			fixed bottom
+			right medium
 			max-height="45"
 			max-width="45"
 			:color="color"
