@@ -8,7 +8,19 @@ const routes = [
 		path: "/",
 		name: "Home",
 		components: {
-			default: () => import("@/views/home/Home")
+			default: () => import("@/views/home/Home"),
+			sidebar: () => import("@/views/home/Sidebar")
+		},
+		meta: {
+			home: true
+		}
+	},
+	{
+		path: "/submit",
+		name: "Submit",
+		components: {
+			default: () => import("@/views/home/submit/Submit"),
+			sidebar: () => import("@/views/home/submit/Sidebar")
 		},
 		meta: {
 			home: true
