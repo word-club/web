@@ -34,7 +34,9 @@
 			>
 				<v-card
 					flat tile
-					color="grey lighten-4"
+					:color="
+						$route.name === 'Submit' ? 'grey lighten-2': 'grey lighten-4'
+					"
 					class="app-card"
 				>
 					<the-snackbar />

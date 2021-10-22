@@ -39,6 +39,7 @@
 	"publication": {
 		"list": "publication/",
 		"detail": "publication/%s/",
+		"publish": "publication/%s/publish/",
 		"addTag": "publication/%s/tag/",
 		"tagDetail": "publication-tag/%s/",
 		"addImage": "publication/%s/image/",

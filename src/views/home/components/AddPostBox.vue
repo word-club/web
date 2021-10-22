@@ -25,7 +25,7 @@
 				<v-icon>mdi-image</v-icon>
 			</v-btn>
 			<v-btn icon>
-				<v-icon>mdi-attachment</v-icon>
+				<v-icon>mdi-link-variant</v-icon>
 			</v-btn>
 		</v-card-title>
 	</v-card>
