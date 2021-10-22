@@ -1,7 +1,7 @@
 <template>
 	<v-card outlined>
 		<v-card-title class="pa-3">
-			<v-avatar size="40"
+			<v-avatar size="38"
 				color="grey darken-2"
 				class="mr-2"
 			/>

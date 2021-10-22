@@ -1,10 +1,16 @@
 <template>
 	<v-card outlined>
-		<v-card-actions class="actions pa-3">
-			<v-btn rounded
+		<v-card-actions
+			class="pa-3 flex-wrap justify-space-between"
+		>
+			<v-btn
+				rounded
 				depressed
+				class="primary--text"
 			>
-				<v-icon left>
+				<v-icon left
+					color="primary"
+				>
 					mdi-rocket
 				</v-icon>
 				Best
@@ -55,5 +61,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.v-btn {
+	font-size: 13px;
+	font-weight: 600;
+	color: #454545;
+	padding: 0 8px !important;
+}
 </style>

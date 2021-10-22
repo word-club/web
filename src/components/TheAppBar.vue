@@ -74,19 +74,28 @@
 			class="px-2"
 			small
 		>
-			<v-icon size="20">
-				mdi-bell
-			</v-icon>
-		</v-btn>
-
-		<v-btn icon
-			class="px-2"
-			small
-		>
 			<v-icon size="26">
 				mdi-plus
 			</v-icon>
 		</v-btn>
+
+		<v-badge
+			color="red lighten-1"
+			overlap
+		>
+			<template #badge>
+				<span class="font-weight-bold">55</span>
+			</template>
+			<v-btn icon
+				class="px-2"
+				small
+			>
+				<v-icon>
+					mdi-bell-outline
+				</v-icon>
+			</v-btn>
+		</v-badge>
+
 		<div class="px-4" />
 		<profile-drop />
 	</v-app-bar>
