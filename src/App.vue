@@ -8,10 +8,8 @@
 			:permanent="mdAndUp"
 			:temporary="!mdAndUp"
 		>
-			<v-list>
-				<v-list-item>Kiran</v-list-item>
-				<v-list-item>Parajuli</v-list-item>
-			</v-list>
+			<div class="py-2" />
+			<drawer-list />
 		</v-navigation-drawer>
 		<v-navigation-drawer
 			v-if="homeRoute"
@@ -21,8 +19,9 @@
 			color="grey lighten-3"
 			:permanent="mdAndUp"
 			:temporary="!mdAndUp"
-			:width="$vuetify.breakpoint.width > 1000 ? 280 : 220"
+			width="350"
 		>
+			<div class="py-2" />
 			<transition
 				name="view"
 			>
@@ -53,6 +52,7 @@
 export default {
 	name: "App",
 	components: {
+		DrawerList: () => import("@/views/home/components/DrawerList.vue"),
 		TheAppBar: () => import("@/components/TheAppBar"),
 		TheSnackbar: () => import("@/components/utils/TheSnackbar"),
 		ScrollToTop: () => import("@/components/utils/ScrollToTop"),
@@ -73,18 +73,22 @@ export default {
 </script>
 
 <style>
+* {
+	font-family: 'Barlow Semi Condensed', sans-serif;
+	box-sizing: border-box;
+}
 .app-card {
 	min-height: calc(100vh - 55px) !important;
 	padding: 10px 10px 0 10px
 }
 .v-label {
-	font-size: 12px !important;
+	font-size: 14px !important;
 	font-weight: bold;
 }
 .v-input {
-	font-size: 12px !important;
+	font-size: 14px !important;
 }
-.v-btn {
-	font-size: 12px !important;
+.sidebar-card-title {
+	font-size: 16px !important;
 }
 </style>
