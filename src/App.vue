@@ -72,7 +72,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 * {
 	font-family: 'Barlow Semi Condensed', sans-serif;
 	box-sizing: border-box;
@@ -90,5 +90,14 @@ export default {
 }
 .sidebar-card-title {
 	font-size: 16px !important;
+}
+.footer-items {
+	div {
+		font-size: 14px;
+		cursor: pointer;
+	}
+	div:hover {
+		color: black
+	}
 }
 </style>
