@@ -12,7 +12,7 @@
 				color="grey"
 			/>
 			<div class="px-2" />
-			<h4>WordClub</h4>
+			<h3>WordClub</h3>
 		</div>
 		<v-responsive
 			max-width="200"
@@ -88,15 +88,15 @@
 			</v-icon>
 		</v-btn>
 		<div class="px-4" />
-		<v-avatar color="grey"
-			size="30"
-		/>
+		<profile-drop />
 	</v-app-bar>
 </template>
 
 <script>
+import ProfileDrop from "@/components/utils/ProfileDrop.vue";
 export default {
 	name: "TheAppBar",
+	components: {ProfileDrop},
 	data: () => ({
 		searchCommunities: "",
 		searchPublications: ""
