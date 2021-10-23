@@ -1,5 +1,7 @@
 <template>
-	<v-card outlined>
+	<v-card outlined
+		class="publication-instance"
+	>
 		<v-card-text class="d-flex align-center pa-2 flex-wrap justify-space-between">
 			<v-avatar size="30"
 				color="grey" tile
@@ -126,6 +128,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.publication-instance:hover {
+	border: 1px solid black !important;
+}
 .publication-community {
 	font-size: 14px;
 	font-weight: bold;

@@ -15,9 +15,9 @@
 export default {
 	name: "Home",
 	components: {
-		PublicationInstance: () => import("@/views/home/components/PublicationInstance.vue"),
-		HotBar: () => import("@/views/home/components/HotBar.vue"),
-		AddPostBox: () => import("@/views/home/components/AddPostBox.vue")
+		HotBar: () => import("@/views/home/components/HotBar"),
+		AddPostBox: () => import("@/views/home/components/AddPostBox"),
+		PublicationInstance: () => import("@/views/home/publication/Instance")
 	}
 }
 </script>
