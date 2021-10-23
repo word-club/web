@@ -24,7 +24,9 @@
 				<v-icon>mdi-dots-horizontal</v-icon>
 			</v-btn>
 		</v-card-text>
-		<v-card-title class="pt-1">
+		<v-card-title class="pt-1 cursor"
+			@click="toPublicationDetail(publication.id)"
+		>
 			{{ publication.title }}
 		</v-card-title>
 		<v-card-subtitle>{{ publication.content }}</v-card-subtitle>
@@ -93,12 +95,15 @@
 </template>
 
 <script>
+import RouteMixin from "@/mixin/RouteMixin.js";
+
 export default {
 	name: "PublicationInstance",
-	props: {},
+	mixins: [RouteMixin],
 	data: () => ({
 		selected: null,
 		publication: {
+			id: 5896,
 			community: {
 				name: "Movies and TV Series"
 			},

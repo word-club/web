@@ -10,7 +10,7 @@
 
 <script>
 export default {
-	name: "Communities",
+	name: "Communitiy",
 	props: {},
 	data: () => ({}),
 	computed: {},

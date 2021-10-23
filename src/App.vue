@@ -102,4 +102,34 @@ export default {
 		color: black
 	}
 }
+.cursor {
+	cursor: pointer;
+}
+.px12 {
+	font-size: 12px !important;
+}
+.px14 {
+	font-size: 14px !important;
+}
+.px16 {
+	font-size: 16px !important;
+}
+.px18 {
+	font-size: 18px !important;
+}
+.weight-300 {
+	font-weight: 300 !important;
+}
+.weight-400 {
+	font-weight: 400 !important;
+}
+.weight-500 {
+	font-weight: 500 !important;
+}
+.weight-600 {
+	font-weight: 600 !important;
+}
+.weight-700 {
+	font-weight: 700 !important;
+}
 </style>

@@ -27,10 +27,22 @@ const routes = [
 		}
 	},
 	{
-		path: "/communities",
-		name: "Communities",
+		path: "/publication/:id",
+		name: "Publication",
 		components: {
-			default: () => import("@/views/home/Communities.vue")
+			default: () => import("@/views/home/publication/Publication"),
+			sidebar: () => import("@/views/home/publication/Sidebar")
+		},
+		meta: {
+			home: true
+		}
+	},
+	{
+		path: "/communitiy/:id",
+		name: "Communitiy",
+		components: {
+			default: () => import("@/views/home/community/Community"),
+			sidebar: () => import("@/views/home/community/Sidebar")
 		},
 		meta: {
 			home: true
