@@ -32,7 +32,7 @@ export default {
 	name: "CommunityRules",
 	computed: {
 		...mapGetters({
-			community: "community/detail"
+			community: "community/inView"
 		})
 	}
 }

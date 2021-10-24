@@ -9,7 +9,11 @@
 				:color="publication.community.theme.color" tile
 				class="rounded cursor"
 				@click="toCommunityDetail(publication.community.unique_id)"
-			/>
+			>
+				<v-img v-if="publication.community.avatar"
+					:src="publication.community.avatar.image"
+				/>
+			</v-avatar>
 			<div
 				v-if="$route.name !== 'Community'"
 				class="px-1"

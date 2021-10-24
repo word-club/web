@@ -3,7 +3,7 @@
 		flat
 	>
 		<v-card-text class="pa-0">
-			<v-img src="https://imgsv.imaging.nikon.com/lineup/coolpix/p/p7000/img/sample/img_02_b.jpg"
+			<v-img :src="community.cover.image"
 				height="300"
 			/>
 		</v-card-text>
@@ -19,8 +19,12 @@
 					<v-avatar
 						class="community-avatar"
 						size="80"
-						color="teal"
-					/>
+						:color="community.theme.color"
+					>
+						<v-img v-if="community.avatar"
+							:src="community.avatar.image"
+						/>
+					</v-avatar>
 					<div class="px-2" />
 					<div class="px24">
 						{{ community.name }}
@@ -83,7 +87,7 @@ export default {
 	data: () => ({}),
 	computed: {
 		...mapGetters({
-			community: "community/detail"
+			community: "community/inView"
 		})
 	},
 	methods: {}

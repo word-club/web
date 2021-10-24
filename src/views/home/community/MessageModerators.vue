@@ -54,7 +54,7 @@ export default {
 	name: "MessageModerators",
 	computed: {
 		...mapGetters({
-			community: "community/detail"
+			community: "community/inView"
 		})
 	},
 	methods: {}

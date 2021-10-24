@@ -41,9 +41,11 @@
 					class="app-card"
 					:class="{
 						'app-padding': ! $route.name.includes('Community') &&
-							!$route.name.includes('User'),
+							!$route.name.includes('User') &&
+							!$route.name.includes('Profile'),
 						'px-0': $route.name.includes('Community'),
 						'px-0': $route.name.includes('User'),
+						'px-0': $route.name.includes('Profile'),
 					}"
 				>
 					<the-snackbar />

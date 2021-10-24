@@ -111,10 +111,90 @@ const routes = [
 			},
 		],
 	},
+	{
+		path: "/profile",
+		components: {
+			default: () => import("@/views/home/profile/Profile.vue"),
+			sidebar: () => import("@/views/home/profile/Sidebar")
+		},
+		children: [
+			{
+				path: "",
+				component: () => import("@/views/home/user/Overview"),
+				name: "Profile Overview",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "posts",
+				component: () => import("@/views/home/user/Posts"),
+				name: "Profile Posts",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "comments",
+				component: () => import("@/views/home/user/Comments"),
+				name: "Profile Comments",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "saved",
+				component: () => import("@/views/home/profile/Saved"),
+				name: "Profile Saved",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "saved",
+				component: () => import("@/views/home/profile/Hidden"),
+				name: "Profile Hidden",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "up-voted",
+				component: () => import("@/views/home/profile/UpVoted"),
+				name: "Profile Upvoted",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "down-voted",
+				component: () => import("@/views/home/profile/DownVoted"),
+				name: "Profile Downvoted",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "awards-received",
+				component: () => import("@/views/home/profile/AwardsReceived"),
+				name: "Profile Awards Received",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "awards-given",
+				component: () => import("@/views/home/profile/AwardsGiven"),
+				name: "Profile Awards Given",
+				meta: {
+					home: true
+				},
+			},
+		],
+	},
 ]
 
 const router = new VueRouter({
-	mode: "history",
 	base: process.env.BASE_URL,
 	routes
 })

@@ -1,10 +1,12 @@
 <template>
-	<div>
-		<v-card outlined>
-			<v-card-title>Awards Received</v-card-title>
-			<v-card-title>Not Implemented Yet.</v-card-title>
-		</v-card>
-	</div>
+	<v-card>
+		<v-card-title>
+			Awards Given
+		</v-card-title>
+		<v-card-subtitle>
+			Yet to implement
+		</v-card-subtitle>
+	</v-card>
 </template>
 
 <script>

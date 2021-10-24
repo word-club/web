@@ -20,7 +20,7 @@ export default {
 	data: () => ({}),
 	computed: {
 		...mapGetters({
-			community: "community/detail"
+			community: "community/inView"
 		})
 	},
 	methods: {}

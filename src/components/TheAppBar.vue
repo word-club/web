@@ -19,6 +19,7 @@
 			</h3>
 		</div>
 		<v-responsive
+			v-if="$route.name"
 			max-width="200"
 			height="100%"
 			class="d-flex align-center justify-center px-2"
@@ -45,14 +46,16 @@
 						color="primary"
 						class="mt-0 mb-2"
 					>
-						<v-img :src="userInView.active_avatar.image" />
+						<v-img :src="userInView.avatar.image" />
 					</v-avatar>
 					<v-avatar
 						v-if="$route.name.includes('Community')"
 						size="30"
 						:color="communityInView.theme.color"
 						class="mt-0 mb-2"
-					/>
+					>
+						<v-img :src="communityInView.avatar.image" />
+					</v-avatar>
 				</template>
 			</v-text-field>
 		</v-responsive>
@@ -95,8 +98,9 @@
 		</v-btn>
 
 		<v-btn icon
-			class="px-2"
+			class="mx-2"
 			small
+			to="/submit"
 		>
 			<v-icon size="26">
 				mdi-plus
@@ -140,14 +144,14 @@ export default {
 	computed: {
 		...mapGetters({
 			userInView: "user/inView",
-			communityInView: "community/detail"
+			communityInView: "community/inView"
 		}),
 		placeHolder() {
 			if (this.$route.name.includes("User")) {
-				return this.userInView.username
+				return "#/" + this.userInView.username
 			}
 			if (this.$route.name.includes("Community")) {
-				return this.communityInView.unique_id
+				return "#/" + this.communityInView.unique_id
 			}
 			return this.$route.name
 		}

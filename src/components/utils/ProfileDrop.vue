@@ -1,11 +1,16 @@
 <template>
 	<v-menu offset-y>
 		<template #activator="{on, attrs}">
-			<v-avatar color="grey"
-				size="30"
+			<v-avatar color="primary"
+				size="35"
 				v-bind="attrs"
+				class="elevation-4"
 				v-on="on"
-			/>
+			>
+				<v-img v-if="currentUser.avatar"
+					:src="currentUser.avatar.image"
+				/>
+			</v-avatar>
 		</template>
 		<v-list width="200"
 			dense
@@ -32,7 +37,7 @@
 				<v-subheader class="text-uppercase">
 					My Stuff
 				</v-subheader>
-				<v-list-item>
+				<v-list-item to="/profile">
 					<v-list-item-icon><v-icon>mdi-account-circle-outline</v-icon></v-list-item-icon>
 					<v-list-item-content>
 						<v-list-item-title>Profile</v-list-item-title>
@@ -80,13 +85,19 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
 	name: "ProfileDrop",
 	props: {},
 	data: () => ({
 		onlineStatus: true
 	}),
-	computed: {},
+	computed: {
+		...mapGetters({
+			currentUser: "user/current"
+		})
+	},
 	methods: {}
 }
 </script>

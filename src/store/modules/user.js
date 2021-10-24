@@ -1,5 +1,6 @@
 const state = {
 	users: {},
+	currentUser: {},
 	userInView: {
 		id: 5896,
 		username: "kiranparajuli589",
@@ -11,46 +12,18 @@ const state = {
 			is_authorized: true,
 			authorized_at: "2021-5-21T22:07:24.169676+05:45",
 		},
-		active_avatar: {
+		avatar: {
 			id: 1,
 			image: "https://yt3.ggpht.com/a-/AAuE7mDGQh9L3n_EULfeZEO9rs_JR4BY376CSrlxdw=s900-mo-c-c0xffffffff-rj-k-no",
 			active: true,
 			timestamp: "2020-10-21T22:07:24.169676+05:45",
 		},
-		active_cover: {
+		cover: {
 			id: 1,
 			image: "https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/06/28/14/avatar.jpg?width=1200&auto=webp&quality=75",
 			active: true,
 			timestamp: "2020-10-21T22:07:24.169676+05:45",
 		},
-		avatars: [
-			{
-				id: 1,
-				image: "https://yt3.ggpht.com/a-/AAuE7mDGQh9L3n_EULfeZEO9rs_JR4BY376CSrlxdw=s900-mo-c-c0xffffffff-rj-k-no",
-				active: true,
-				timestamp: "2020-10-21T22:07:24.169676+05:45",
-			},
-			{
-				id: 2,
-				image: "https://static0.colliderimages.com/wordpress/wp-content/uploads/2019/03/avatar-movie-sam-worthington.jpg",
-				active: false,
-				timestamp: "2020-10-21T22:07:24.169676+05:45",
-			}
-		],
-		covers: [
-			{
-				id: 1,
-				image: "https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/06/28/14/avatar.jpg?width=1200&auto=webp&quality=75",
-				active: true,
-				timestamp: "2020-10-21T22:07:24.169676+05:45",
-			},
-			{
-				id: 2,
-				image: "https://assets1.ignimgs.com/2019/05/16/avatar-thumbnail1-1558036693141.jpg?width=1280",
-				active: false,
-				timestamp: "2020-10-21T22:07:24.169676+05:45",
-			}
-		],
 		followers: [
 			{ id: 1, user: { username: "ABCTopUser"}, timestamp: "2020-10-21T22:07:24.169676+05:45",  },
 			{ id: 2, user: { username: "NotABOt58"}, timestamp: "2020-10-21T22:07:24.169676+05:45",  },
@@ -72,6 +45,7 @@ const state = {
 const getters = {
 	list: state => state.users,
 	inView: state => state.userInView,
+	current: state => state.userInView,
 	inEdit: state => state.userInEdit,
 	formErrorList: state => state.formErrors
 }

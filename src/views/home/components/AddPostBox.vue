@@ -4,7 +4,14 @@
 			<v-avatar size="38"
 				:color="color"
 				class="mr-2"
-			/>
+			>
+				<v-img v-if="currentUser.avatar"
+					:src="currentUser.avatar.image"
+				/>
+				<v-icon v-else>
+					mdi-account-circle-outline
+				</v-icon>
+			</v-avatar>
 			<v-responsive class="px-2 py-1"
 				max-width="1200"
 			>
@@ -36,6 +43,8 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
 	name: "AddPostBox",
 	props: {
@@ -46,7 +55,11 @@ export default {
 		}
 	},
 	data: () => ({}),
-	computed: {},
+	computed: {
+		...mapGetters({
+			currentUser: "user/current"
+		})
+	},
 	methods: {}
 }
 </script>

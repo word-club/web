@@ -26,7 +26,34 @@ const RouteMixin = {
 		},
 		async toUserAwards(username) {
 			await this.$router.push({name: "User Awards", params: {username: username}})
-		}
+		},
+		async toProfileOverview() {
+			await this.$router.push({name: "Profile Overview"})
+		},
+		async toProfilePosts() {
+			await this.$router.push({name: "Profile Posts"})
+		},
+		async toProfileComments() {
+			await this.$router.push({name: "Profile Comments"})
+		},
+		async toProfileSaved() {
+			await this.$router.push({name: "Profile Saved"})
+		},
+		async toProfileHidden() {
+			await this.$router.push({name: "Profile Hidden"})
+		},
+		async toProfileUpVoted() {
+			await this.$router.push({name: "Profile Upvoted"})
+		},
+		async toProfileDownVoted() {
+			await this.$router.push({name: "Profile Downvoted"})
+		},
+		async toProfileAwardsReceived() {
+			await this.$router.push({name: "Profile Awards Received"})
+		},
+		async toProfileAwardsGiven() {
+			await this.$router.push({name: "Profile Awards Given"})
+		},
 	}
 }
 

@@ -6,7 +6,7 @@ const communityUrls = urls.community
 
 const state = {
 	communities: {},
-	community: {
+	communityInView: {
 		id: 5896,
 		unique_id: "TajMahalWonderers",
 		name: "Taj Mahal Wonderers",
@@ -24,6 +24,12 @@ const state = {
 		settings: {
 			what_to_call_subscribers: "taj mahal wonderers",
 			feeling_after_subscribing: "being quite literally awesome"
+		},
+		avatar: {
+			image: "https://1.bp.blogspot.com/-VCNd1oYfks8/XwL4UH4oJ2I/AAAAAAAARYA/1QiUS2b7Aq4iFQkZlHCe0ZMjhOIUSUzEgCLcBGAsYHQ/s1600/Lord%2BShiva%2BChildhood.jpg"
+		},
+		cover: {
+			image: "https://cdn.onlyinyourstate.com/wp-content/uploads/2016/01/15435913689_373933d80f_k.jpg"
 		},
 		rules: [
 			"Remember the human",
@@ -49,8 +55,8 @@ const mutations = {
 	SET_COMMUNITIES(state, value) {
 		state.communities = value
 	},
-	SET_COMMUNITY(state, value) {
-		state.community = value
+	SET_COMMUNITY_IN_VIEW(state, value) {
+		state.communityInView = value
 	},
 	SET_FORM_ERRORS(state, value) {
 		state.formErrors = value
@@ -59,7 +65,7 @@ const mutations = {
 
 const getters = {
 	list: state => state.communities,
-	detail: state => state.community,
+	inView: state => state.communityInView,
 	formErrorList: state => state.formErrors
 }
 
@@ -79,7 +85,7 @@ const actions = {
 	async fetchDetail({commit}, id) {
 		try {
 			const response = await $axios.get(util.format(communityUrls.detail, id))
-			commit("SET_COMMUNITY", response)
+			commit("SET_COMMUNITY_IN_VIEW", response)
 			return true
 		} catch {
 			return false

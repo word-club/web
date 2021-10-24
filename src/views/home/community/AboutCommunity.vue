@@ -97,7 +97,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			community: "community/detail"
+			community: "community/inView"
 		})
 	},
 	methods: {}
