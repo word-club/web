@@ -105,6 +105,9 @@ export default {
 .cursor {
 	cursor: pointer;
 }
+.px10 {
+	font-size: 10px !important;
+}
 .px12 {
 	font-size: 12px !important;
 }

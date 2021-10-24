@@ -33,6 +33,7 @@
 		<v-card-text class="pa-0">
 			<v-img :src="publication.image"
 				height="350"
+				contain
 			/>
 		</v-card-text>
 		<v-card-actions class="flex-wrap justify-space-between">
