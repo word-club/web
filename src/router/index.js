@@ -38,16 +38,38 @@ const routes = [
 		}
 	},
 	{
-		path: "/communitiy/:id",
-		name: "Communitiy",
+		path: "/community/:id",
 		components: {
 			default: () => import("@/views/home/community/Community"),
 			sidebar: () => import("@/views/home/community/Sidebar")
 		},
-		meta: {
-			home: true
-		}
-	}
+		children: [
+			{
+				path: "publications",
+				component: () => import("@/views/home/community/PostsList"),
+				name: "Community",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "wiki",
+				component: () => import("@/views/home/community/WikiPage"),
+				name: "Community Wiki",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "modmail",
+				component: () => import("@/views/home/community/ModMail"),
+				name: "Community Modmail",
+				meta: {
+					home: true
+				},
+			},
+		],
+	},
 ]
 
 const router = new VueRouter({

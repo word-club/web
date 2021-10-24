@@ -3,22 +3,38 @@
 		class="publication-instance"
 	>
 		<v-card-text class="d-flex align-center pa-2 flex-wrap justify-space-between">
-			<v-avatar size="30"
-				color="grey" tile
+			<v-avatar
+				v-if="$route.name !== 'Community'"
+				size="30"
+				:color="publication.community.theme.color" tile
 				class="rounded cursor"
 				@click="toCommunityDetail(publication.community.id)"
 			/>
-			<div class="px-1" />
-			<div class="publication-community cursor hover-underline"
+			<v-icon
+				v-if="$route.name !== 'Community'"
+			>
+				mdi-circle-small
+			</v-icon>
+			<div
+				v-if="$route.name !== 'Community'"
+				class="publication-community cursor hover-underline"
+				:class="`${publication.community.theme.color}--text`"
 				@click="toCommunityDetail(publication.community.id)"
 			>
 				{{ publication.community.name }}
 			</div>
-			<div class="px-2" />
+			<v-icon
+				v-if="$route.name !== 'Community'"
+			>
+				mdi-circle-small
+			</v-icon>
+			<div v-else
+				class="px-1"
+			/>
 			<div class="publication-author">
 				{{ publication.created_by.username }}
 			</div>
-			<div class="px-2" />
+			<v-icon>mdi-circle-small</v-icon>
 			<div class="publication-timestamp">
 				{{ $moment(publication.timestamp).fromNow() }}
 			</div>
@@ -34,10 +50,16 @@
 		</v-card-title>
 		<v-card-subtitle>{{ publication.content }}</v-card-subtitle>
 		<v-card-text class="pa-0">
-			<v-img :src="publication.image"
+			<v-card
+				dark tile
+				flat
 				height="350"
-				contain
-			/>
+			>
+				<v-img :src="publication.image"
+					height="350"
+					contain
+				/>
+			</v-card>
 		</v-card-text>
 		<v-card-actions class="flex-wrap justify-space-between">
 			<v-btn depressed>
@@ -100,31 +122,18 @@
 
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
+import {mapGetters} from "vuex";
 
 export default {
 	name: "PublicationInstance",
 	mixins: [RouteMixin],
 	data: () => ({
 		selected: null,
-		publication: {
-			id: 5896,
-			community: {
-				id: 7890,
-				name: "Movies and TV Series"
-			},
-			created_by: {
-				username: "kiranparajuli589"
-			},
-			timestamp: "2021-10-21T22:07:24.169676+05:45",
-			title: "The first trailer for the film adaptation Uncharted",
-			content: "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui." +
-				" Vivamus suscipit tortor eget felis porttitor volutpat. Pellentesque in ipsum" +
-				" id orci porta dapibus. Curabitur non nulla sit amet nisl tempus convallis " +
-				"quis ac lectus.",
-			image: "https://static3.srcdn.com/wordpress/wp-content/uploads/2019/11/Harry-Potter-wand-Harry-Potter-Movies.jpg"
-		}
 	}),
 	computed: {
+		...mapGetters({
+			publication: "publication/inView"
+		}),
 		publicationActions() {
 			return [
 				{icon: "mdi-bookmark-outline", title: "Save"},

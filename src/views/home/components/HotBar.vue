@@ -6,16 +6,17 @@
 			<v-btn
 				rounded
 				depressed
-				class="primary--text"
+				:class="`${color}--text`"
 			>
 				<v-icon left
-					color="primary"
+					:color="color"
 				>
 					mdi-rocket
 				</v-icon>
 				Best
 			</v-btn>
-			<v-btn rounded
+			<v-btn
+				rounded
 				depressed
 			>
 				<v-icon left>
@@ -23,7 +24,8 @@
 				</v-icon>
 				Hot
 			</v-btn>
-			<v-btn rounded
+			<v-btn
+				rounded
 				depressed
 			>
 				<v-icon left>
@@ -44,7 +46,7 @@
 			</v-btn>
 			<v-spacer />
 			<v-btn icon>
-				<v-icon>mdi-view-agenda</v-icon>
+				<v-icon>mdi-view-agenda-outline</v-icon>
 			</v-btn>
 		</v-card-actions>
 	</v-card>
@@ -53,7 +55,13 @@
 <script>
 export default {
 	name: "HotBar",
-	props: {},
+	props: {
+		color: {
+			default: "primary",
+			required: false,
+			type: String
+		}
+	},
 	data: () => ({}),
 	computed: {},
 	methods: {}

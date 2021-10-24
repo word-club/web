@@ -12,7 +12,11 @@
 				color="grey"
 			/>
 			<div class="px-2" />
-			<h3>WordClub</h3>
+			<h3 class="cursor"
+				@click="toHome"
+			>
+				WordClub
+			</h3>
 		</div>
 		<v-responsive
 			max-width="200"
@@ -103,9 +107,11 @@
 
 <script>
 import ProfileDrop from "@/components/utils/ProfileDrop.vue";
+import RouteMixin from "@/mixin/RouteMixin.js";
 export default {
 	name: "TheAppBar",
 	components: {ProfileDrop},
+	mixins: [RouteMixin],
 	data: () => ({
 		searchCommunities: "",
 		searchPublications: ""

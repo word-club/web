@@ -4,6 +4,26 @@ const urls = require("@/urls.json")
 
 const state = {
 	publications: {},
+	publicationInView: {
+		id: 5896,
+		community: {
+			id: 7890,
+			name: "Movies and TV Series",
+			theme: {
+				color: "teal"
+			}
+		},
+		created_by: {
+			username: "kiranparajuli589"
+		},
+		timestamp: "2021-10-21T22:07:24.169676+05:45",
+		title: "The first trailer for the film adaptation Uncharted",
+		content: "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui." +
+			" Vivamus suscipit tortor eget felis porttitor volutpat. Pellentesque in ipsum" +
+			" id orci porta dapibus. Curabitur non nulla sit amet nisl tempus convallis " +
+			"quis ac lectus.",
+		image: "https://static3.srcdn.com/wordpress/wp-content/uploads/2019/11/Harry-Potter-wand-Harry-Potter-Movies.jpg"
+	},
 	publicationForEdit: {},
 	publicationInProgress: {},
 	formErrors: {}
@@ -26,6 +46,7 @@ const mutations = {
 
 const getters = {
 	list: state => state.publications,
+	inView: state => state.publicationInView,
 	forEdit: state => state.publicationForEdit,
 	inProgress: state => state.publicationInProgress,
 	formErrors: state => state.formErrors

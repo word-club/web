@@ -38,6 +38,10 @@
 						$route.name === 'Submit' ? 'grey lighten-2': 'grey lighten-4'
 					"
 					class="app-card"
+					:class="{
+						'app-padding': $route.name !== 'Community',
+						'px-0': $route.name === 'Community'
+					}"
 				>
 					<the-snackbar />
 					<transition name="view">
@@ -70,7 +74,7 @@ export default {
 		homeRoute() {
 			return this.$route.meta["home"]
 		}
-	},
+	}
 }
 </script>
 
@@ -81,6 +85,8 @@ export default {
 }
 .app-card {
 	min-height: calc(100vh - 55px) !important;
+}
+.app-padding {
 	padding: 10px 10px 0 10px
 }
 .v-label {
