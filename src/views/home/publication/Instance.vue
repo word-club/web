@@ -8,18 +8,17 @@
 				size="30"
 				:color="publication.community.theme.color" tile
 				class="rounded cursor"
-				@click="toCommunityDetail(publication.community.id)"
+				@click="toCommunityDetail(publication.community.unique_id)"
 			/>
-			<v-icon
-				v-if="$route.name !== 'Community'"
-			>
-				mdi-circle-small
-			</v-icon>
 			<div
 				v-if="$route.name !== 'Community'"
-				class="publication-community cursor hover-underline"
+				class="px-1"
+			/>
+			<div
+				v-if="$route.name !== 'Community'"
+				class="px14 weight-600 cursor hover-underline"
 				:class="`${publication.community.theme.color}--text`"
-				@click="toCommunityDetail(publication.community.id)"
+				@click="toCommunityDetail(publication.community.unique_id)"
 			>
 				{{ publication.community.name }}
 			</div>
@@ -31,7 +30,9 @@
 			<div v-else
 				class="px-1"
 			/>
-			<div class="publication-author">
+			<div class="px14 cursor hover-underline weight-500"
+				@click="toUserOverview(publication.created_by.username)"
+			>
 				{{ publication.created_by.username }}
 			</div>
 			<v-icon>mdi-circle-small</v-icon>
@@ -149,23 +150,6 @@ export default {
 <style scoped lang="scss">
 .publication-instance:hover {
 	border: 1px solid black !important;
-}
-.publication-community {
-	font-size: 14px;
-	font-weight: bold;
-}
-.publication-author {
-	font-size: 14px;
-}
-.publication-timestamp {
-	font-size: 12px;
-}
-.publication-title {
-	font-size: 18px;
-	font-weight: 500;
-}
-.publication-timestamp {
-
 }
 .v-btn {
 	font-size: 12px !important;

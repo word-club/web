@@ -7,8 +7,11 @@ const state = {
 	publicationInView: {
 		id: 5896,
 		community: {
-			id: 7890,
-			name: "Movies and TV Series",
+			id: 5896,
+			unique_id: "TajMahalWonderers",
+			name: "Taj Mahal Wonderers",
+			quote: "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Cras ultricies ligula sed magna dictum porta.",
+			timestamp: "2021-10-21T22:07:24.169676+05:45",
 			theme: {
 				color: "teal"
 			}

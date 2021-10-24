@@ -101,6 +101,8 @@ export default {
 .community-top-button {
 	padding: 0 6px;
 	color: #666666;
+	text-transform: uppercase;
+	font-weight: 600;
 }
 .community-top-button:hover {
 	color: #269687

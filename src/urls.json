@@ -8,10 +8,14 @@
 		"updatePassword": "update-password/",
 		"requestResetPassword": "reset-password/",
 		"confirmResetPassword": "reset-password/%s/",
-		"addProfileCover": "profile/%s/cover/",
 		"addProfileAvatar": "profile/%s/avatar/",
-		"setActiveProfileCover": "profile-cover/%s/set-active/",
-		"setActiveProfileAvatar": "profile-avatar/%s/set-active/"
+		"addProfileCover": "profile/%s/cover/",
+		"removeProfileAvatar": "profile-avatar/%s/",
+		"removeProfileCover": "profile-cover/%s/",
+		"report": "user/%s/report/",
+		"block": "user/%s/block/",
+		"unBlock": "block/%s/",
+		"removeReport": "report/%s/"
 	},
 	"community": {
 		"list": "community",
@@ -30,8 +34,6 @@
 		"removeReport": "community-report/%s/",
 		"unsubscribe": "community-unsubscribe/%s/",
 		"hashtagDetail": "community-hashtag/%s/",
-		"setActiveAvatar": "community-avatar/%s/set-active/",
-		"setActiveCover": "community-cover/%s/set-active/",
 		"adminDetail": "community-admin/%s/",
 		"requestAuthorization": "authorize-community/%s/request",
 		"confirmAuthorization": "authorize-community/%s/confirm"

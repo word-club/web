@@ -38,7 +38,7 @@ const routes = [
 		}
 	},
 	{
-		path: "/community/:id",
+		path: "/community/:uniqueId",
 		components: {
 			default: () => import("@/views/home/community/Community"),
 			sidebar: () => import("@/views/home/community/Sidebar")
@@ -64,6 +64,47 @@ const routes = [
 				path: "modmail",
 				component: () => import("@/views/home/community/ModMail"),
 				name: "Community Modmail",
+				meta: {
+					home: true
+				},
+			},
+		],
+	},
+	{
+		path: "/user/:username",
+		components: {
+			default: () => import("@/views/home/user/User"),
+			sidebar: () => import("@/views/home/user/Sidebar")
+		},
+		children: [
+			{
+				path: "",
+				component: () => import("@/views/home/user/Overview"),
+				name: "User Overview",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "posts",
+				component: () => import("@/views/home/user/Posts"),
+				name: "User Posts",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "comments",
+				component: () => import("@/views/home/user/Comments"),
+				name: "User Comments",
+				meta: {
+					home: true
+				},
+			},
+			{
+				path: "awards",
+				component: () => import("@/views/home/user/AwardsReceived"),
+				name: "User Awards",
 				meta: {
 					home: true
 				},

@@ -33,14 +33,17 @@
 				class="pa-0"
 			>
 				<v-card
+					v-if="$route.name"
 					flat tile
 					:color="
 						$route.name === 'Submit' ? 'grey lighten-2': 'grey lighten-4'
 					"
 					class="app-card"
 					:class="{
-						'app-padding': $route.name !== 'Community',
-						'px-0': $route.name === 'Community'
+						'app-padding': ! $route.name.includes('Community') &&
+							!$route.name.includes('User'),
+						'px-0': $route.name.includes('Community'),
+						'px-0': $route.name.includes('User'),
 					}"
 				>
 					<the-snackbar />

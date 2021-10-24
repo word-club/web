@@ -27,12 +27,32 @@
 				v-model="searchCommunities"
 				dense outlined
 				hide-details
-				placeholder="Home"
+				:placeholder="placeHolder"
+				color="primary"
 			>
-				<template #prepend-inner>
-					<v-icon size="22">
+				<template
+					#prepend-inner
+				>
+					<v-icon
+						v-if="$route.name === 'Home'"
+						size="22"
+					>
 						mdi-home
 					</v-icon>
+					<v-avatar
+						v-if="$route.name.includes('User')"
+						size="30"
+						color="primary"
+						class="mt-0 mb-2"
+					>
+						<v-img :src="userInView.active_avatar.image" />
+					</v-avatar>
+					<v-avatar
+						v-if="$route.name.includes('Community')"
+						size="30"
+						:color="communityInView.theme.color"
+						class="mt-0 mb-2"
+					/>
 				</template>
 			</v-text-field>
 		</v-responsive>
@@ -84,7 +104,7 @@
 		</v-btn>
 
 		<v-badge
-			color="red lighten-1"
+			color="primary lighten-1"
 			overlap
 		>
 			<template #badge>
@@ -108,6 +128,7 @@
 <script>
 import ProfileDrop from "@/components/utils/ProfileDrop.vue";
 import RouteMixin from "@/mixin/RouteMixin.js";
+import {mapGetters} from "vuex";
 export default {
 	name: "TheAppBar",
 	components: {ProfileDrop},
@@ -116,7 +137,21 @@ export default {
 		searchCommunities: "",
 		searchPublications: ""
 	}),
-	computed: {},
+	computed: {
+		...mapGetters({
+			userInView: "user/inView",
+			communityInView: "community/detail"
+		}),
+		placeHolder() {
+			if (this.$route.name.includes("User")) {
+				return this.userInView.username
+			}
+			if (this.$route.name.includes("Community")) {
+				return this.communityInView.unique_id
+			}
+			return this.$route.name
+		}
+	},
 	methods: {}
 }
 </script>

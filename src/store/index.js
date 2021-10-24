@@ -5,6 +5,7 @@ import snack from "@/store/modules/snack"
 import community from "@/store/modules/community"
 import publication from "@/store/modules/publication"
 import hashtag from "@/store/modules/hashtag"
+import user from "@/store/modules/user"
 
 Vue.use(Vuex)
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
 	  snack,
 		community,
 		publication,
-		hashtag
+		hashtag,
+		user
 	}
 })
