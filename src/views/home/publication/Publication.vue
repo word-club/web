@@ -5,10 +5,13 @@
 		<v-card-text class="d-flex align-center py-2 flex-wrap justify-space-between">
 			<v-avatar size="30"
 				color="grey" tile
-				class="rounded"
+				class="rounded cursor"
+				@click="toCommunityDetail(publication.community.id)"
 			/>
 			<div class="px-1" />
-			<div class="weight-500 px16">
+			<div class="weight-500 px16 cursor hover-underline"
+				@click="toCommunityDetail(publication.community.id)"
+			>
 				{{ publication.community.name }}
 			</div>
 			<div class="px-2" />
@@ -77,6 +80,8 @@
 </template>
 
 <script>
+import RouteMixin from "@/mixin/RouteMixin.js";
+
 export default {
 	name: "Publication",
 	components: {
@@ -84,6 +89,7 @@ export default {
 		CommentList: () => import("@/views/home/publication/CommentList.vue"),
 		CommentField: () => import("@/components/form/_comment_field.vue")
 	},
+	mixins: [RouteMixin],
 	data: () => ({
 		myComment: ""
 	}),
@@ -92,6 +98,7 @@ export default {
 			return {
 				id: 5896,
 				community: {
+					id: 7890,
 					name: "Movies and TV Series"
 				},
 				created_by: {

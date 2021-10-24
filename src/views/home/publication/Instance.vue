@@ -5,10 +5,13 @@
 		<v-card-text class="d-flex align-center pa-2 flex-wrap justify-space-between">
 			<v-avatar size="30"
 				color="grey" tile
-				class="rounded"
+				class="rounded cursor"
+				@click="toCommunityDetail(publication.community.id)"
 			/>
 			<div class="px-1" />
-			<div class="publication-community">
+			<div class="publication-community cursor hover-underline"
+				@click="toCommunityDetail(publication.community.id)"
+			>
 				{{ publication.community.name }}
 			</div>
 			<div class="px-2" />
@@ -106,6 +109,7 @@ export default {
 		publication: {
 			id: 5896,
 			community: {
+				id: 7890,
 				name: "Movies and TV Series"
 			},
 			created_by: {

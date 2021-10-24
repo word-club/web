@@ -135,4 +135,7 @@ export default {
 .weight-700 {
 	font-weight: 700 !important;
 }
+.hover-underline:hover {
+	text-decoration: underline;
+}
 </style>
