@@ -192,6 +192,14 @@ const routes = [
 			},
 		],
 	},
+	{
+		path: "notifications",
+		component: () => import("@/views/home/notification/Notification"),
+		name: "Notification",
+		meta: {
+			home: true
+		},
+	},
 ]
 
 const router = new VueRouter({

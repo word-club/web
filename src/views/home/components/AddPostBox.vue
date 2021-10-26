@@ -1,5 +1,7 @@
 <template>
-	<v-card outlined>
+	<v-card outlined
+		class="cursor"
+	>
 		<v-card-title class="pa-3">
 			<v-avatar size="38"
 				:color="color"
@@ -16,11 +18,12 @@
 				max-width="1200"
 			>
 				<v-text-field
-					dense outlined
-					hide-details
+					dense
+					outlined hide-details
 					placeholder="Create Post"
 					full-width
 					:color="color"
+					@click="toCreatePost"
 				>
 					<template
 						v-if="$route.path === '/'"
@@ -44,9 +47,11 @@
 
 <script>
 import {mapGetters} from "vuex";
+import RouteMixin from "@/mixin/RouteMixin.js";
 
 export default {
 	name: "AddPostBox",
+	mixins: [RouteMixin],
 	props: {
 		color: {
 			default: "primary",
@@ -54,7 +59,6 @@ export default {
 			type: String
 		}
 	},
-	data: () => ({}),
 	computed: {
 		...mapGetters({
 			currentUser: "user/current"

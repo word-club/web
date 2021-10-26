@@ -88,6 +88,9 @@ export default {
 	font-family: 'Barlow Semi Condensed', sans-serif;
 	box-sizing: border-box;
 }
+:root {
+	--primary: #1975d1
+}
 .app-card {
 	min-height: calc(100vh - 55px) !important;
 }

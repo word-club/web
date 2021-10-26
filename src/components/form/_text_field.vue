@@ -1,13 +1,13 @@
 <template>
 	<v-text-field
-		:value="value" dense
+		:value="value" :dense="dense"
 		outlined clearable
 		:label="label.toUpperCase()"
 		placeholder="Start typing"
 		:type="type" :hint="hint"
 		:counter="counter"
 		hide-details="auto"
-		color="grey darken-4"
+		color="primary"
 		background-color="#00000"
 		:error-messages="getErrorMessage"
 		:prepend-inner-icon="icon"
@@ -59,6 +59,10 @@ export default {
 		autocomplete: {
 			type: String,
 			default: "off"
+		},
+		dense: {
+			type: Boolean,
+			default: true
 		}
 	},
 	emits: ["input", "change"],
