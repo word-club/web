@@ -107,22 +107,7 @@
 			</v-icon>
 		</v-btn>
 
-		<v-badge
-			color="primary lighten-1"
-			overlap
-		>
-			<template #badge>
-				<span class="font-weight-bold">55</span>
-			</template>
-			<v-btn icon
-				class="px-2"
-				small
-			>
-				<v-icon>
-					mdi-bell-outline
-				</v-icon>
-			</v-btn>
-		</v-badge>
+		<notification-menu />
 
 		<div class="px-4" />
 		<profile-drop />
@@ -133,9 +118,10 @@
 import ProfileDrop from "@/components/utils/ProfileDrop.vue";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import {mapGetters} from "vuex";
+import NotificationMenu from "@/views/home/notification/NotificationMenu.vue";
 export default {
 	name: "TheAppBar",
-	components: {ProfileDrop},
+	components: {NotificationMenu, ProfileDrop},
 	mixins: [RouteMixin],
 	data: () => ({
 		searchCommunities: "",
