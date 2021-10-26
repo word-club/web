@@ -21,9 +21,9 @@ export default {
 				{icon: "mdi-view-dashboard", title: "Overview", to: "/"},
 				{icon: "mdi-clock-time-four-outline", title: "Fresh"},
 				{icon: "mdi-thermostat", title: "Popular"},
-				{icon: "mdi-plus", title: "Create Post"},
+				{icon: "mdi-plus", title: "Create Post", to: "/submit"},
 				{icon: "mdi-format-list-numbered", title: "Top Communities"},
-				{icon: "mdi-bell-outline", title: "Notifications"},
+				{icon: "mdi-bell-outline", title: "Notifications", to: "/notifications"},
 				{icon: "mdi-apple-keyboard-command", title: "Premium"},
 			]
 		}

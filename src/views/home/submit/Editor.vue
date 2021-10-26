@@ -28,7 +28,6 @@ import Table from "@editorjs/table";
 import AlignmentBlockTune from "editorjs-text-alignment-blocktune";
 import SocialPost from "editorjs-social-post-plugin";
 import * as EditorJSStyle from "editorjs-style";
-const RawTool = require("@editorjs/raw");
 
 const urls = require("@/urls.json")
 const util = require("util")
@@ -69,8 +68,8 @@ export default {
 						shortcut: "CMD+SHIFT+H",
 						config: {
 							placeholder: "Enter a header",
-							levels: [1, 2, 3, 4, 5],
-							defaultLevel: 2
+							levels: [1, 2],
+							defaultLevel: 1
 						},
 						tunes: ["alignmentTune"]
 					},
@@ -173,7 +172,6 @@ export default {
 						},
 					},
 					socialPost: SocialPost,
-					raw: RawTool,
 					style: EditorJSStyle.StyleInlineTool,
 				},
 				tunes: ["textVariant"],

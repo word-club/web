@@ -9,7 +9,7 @@
 		clearable
 		item-value="id"
 		item-text="name"
-		color="grey darken-4"
+		color="primary"
 		background-color="white"
 		prepend-inner-icon="mdi-account-group"
 		:error-messages="getErrorMessage"

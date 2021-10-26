@@ -16,7 +16,7 @@ const state = {
 				color: "teal"
 			},
 			avatar: {
-				image: "https://1.bp.blogspot.com/-VCNd1oYfks8/XwL4UH4oJ2I/AAAAAAAARYA/1QiUS2b7Aq4iFQkZlHCe0ZMjhOIUSUzEgCLcBGAsYHQ/s1600/Lord%2BShiva%2BChildhood.jpg"
+				image: "https://images7.alphacoders.com/803/803146.jpg"
 			},
 			cover: {
 				image: "https://cdn.onlyinyourstate.com/wp-content/uploads/2016/01/15435913689_373933d80f_k.jpg"
