@@ -152,4 +152,10 @@ export default {
 .hover-underline:hover {
 	text-decoration: underline;
 }
+.full-width {
+	width: 100%
+}
+.normal-whitespace {
+	white-space: normal !important;
+}
 </style>
