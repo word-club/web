@@ -1,15 +1,18 @@
 <template>
 	<v-list three-line>
-		<comment-item />
-		<comment-item />
+		<comment-item v-for="(n, index) in 3"
+			:key="n"
+			:index="index"
+		/>
 	</v-list>
 </template>
 
 <script>
-import CommentItem from "@/views/home/publication/CommentItem.vue";
 export default {
 	name: "CommentList",
-	components: {CommentItem},
+	components: {
+		CommentItem: () => import("@/views/home/publication/CommentItem.vue")
+	},
 	props: {},
 	data: () => ({}),
 	computed: {},

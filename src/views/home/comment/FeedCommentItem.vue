@@ -4,36 +4,36 @@
 			<v-icon>mdi-comment</v-icon>
 			<div class="px-2">
 				<div class="d-flex">
-					<div class="px12">
+					<div class="px14">
 						<span class="cursor primary--text hover-underline"
 							@click="toUserOverview(comment.created_by.username)"
-						>{{ comment.created_by.username }}</span> commented on
+						>u/{{ comment.created_by.username }}</span> commented on
 						<span class="cursor weight-500 hover-underline"
 							@click="toPublicationDetail(comment.publication.id)"
 						>{{ comment.publication.title }}</span>
 					</div>
 					<v-icon>mdi-circle-small</v-icon>
-					<div class="px12 weight-600 cursor hover-underline"
+					<div class="px14 weight-600 cursor hover-underline"
 						:class="`${comment.publication.community.theme.color}--text`"
 						@click="toCommunityDetail(comment.publication.community.unique_id)"
 					>
 						{{ comment.publication.community.unique_id }}
 					</div>
 				</div>
-				<div class="px12 weight-400">
+				<div class="px14 weight-400">
 					Posted by <span class="cursor hover-underline weight-600"
 						@click="toUserOverview(comment.publication.created_by.username)"
 					>{{ comment.publication.created_by.username }}</span>
 				</div>
 			</div>
 		</v-card-text>
-		<v-divider class="mx-2 pb-2" />
+		<v-divider class="mx-2 pb-1" />
 		<div class="comment-item-wrapper">
 			<v-card flat
 				class="item-card"
 				color="grey lighten-3"
 			>
-				<v-card-subtitle class="d-flex py-0 pt-1 px12">
+				<v-card-subtitle class="d-flex py-0 pt-1 px14">
 					<div class="cursor hover-underline"
 						@click="toUserOverview(comment.created_by.username)"
 					>
@@ -127,7 +127,7 @@ export default {
 
 <style scoped lang="scss">
 .comment-item-wrapper {
-	margin: 6px 8px 8px 20px;
+	margin: 6px 8px 10px 20px;
 	.item-card {
 		border-left: 3px dashed grey !important;
 		border-top-left-radius: 0 !important;

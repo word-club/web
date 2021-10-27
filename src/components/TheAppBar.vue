@@ -1,10 +1,11 @@
 <template>
 	<v-app-bar
-		app
-		color="grey lighten-4"
+		app flat
+		color="white"
 		height="55"
 		clipped-left
 		clipped-right
+		class="the-app-bar"
 	>
 		<div class="d-flex align-center px-2">
 			<v-avatar
@@ -115,13 +116,15 @@
 </template>
 
 <script>
-import ProfileDrop from "@/components/utils/ProfileDrop.vue";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import {mapGetters} from "vuex";
-import NotificationMenu from "@/views/home/notification/NotificationMenu.vue";
+
 export default {
 	name: "TheAppBar",
-	components: {NotificationMenu, ProfileDrop},
+	components: {
+		NotificationMenu: () => import("@/views/home/notification/NotificationMenu.vue"),
+		ProfileDrop: () => import("@/components/utils/ProfileDrop.vue")
+	},
 	mixins: [RouteMixin],
 	data: () => ({
 		searchCommunities: "",
@@ -145,3 +148,8 @@ export default {
 	methods: {}
 }
 </script>
+<style scoped>
+.the-app-bar {
+	border-bottom: 1px solid #d2d2d2 !important;
+}
+</style>

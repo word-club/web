@@ -3,10 +3,10 @@
 		class="full-width"
 		flat tile
 	>
-		<div
+		<div v-if="label"
 			class="tiptap-label"
 		>
-			Comment
+			{{ label }}
 		</div>
 		<bubble-menu
 			v-if="editor"
@@ -29,6 +29,11 @@
 			>
 				Strike
 			</button>
+			<button :class="{ 'is-active': editor.isActive('code') }"
+				@click="editor.chain().focus().toggleCode().run()"
+			>
+				Code
+			</button>
 		</bubble-menu>
 		<floating-menu
 			v-if="editor"
@@ -36,6 +41,16 @@
 			:tippy-options="{ duration: 100 }"
 			:editor="editor"
 		>
+			<button :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+				@click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+			>
+				H1
+			</button>
+			<button :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+				@click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+			>
+				H2
+			</button>
 			<button :class="{ 'is-active': editor.isActive('bulletList') }"
 				@click="editor.chain().focus().toggleBulletList().run()"
 			>
@@ -48,6 +63,9 @@
 			</button>
 			<button @click="addImage">
 				Image
+			</button>
+			<button @click="addIframe">
+				Iframe
 			</button>
 		</floating-menu>
 		<editor-content :editor="editor"
@@ -63,6 +81,7 @@ import Placeholder from "@tiptap/extension-placeholder"
 import Image from "@tiptap/extension-image"
 import Typography from "@tiptap/extension-typography"
 import { SmilieReplacer } from "@/tiptap/SmilieReplacer.js"
+import Iframe from "@/tiptap/Iframe.js"
 
 export default {
 	name: "TipTapEditor",
@@ -72,13 +91,20 @@ export default {
 		FloatingMenu,
 	},
 	props: {
-		value: {
-			required: true
-		},
-		reply: {
-			default: false,
+		label: {
+			type: [String, null],
 			required: false,
-			type: Boolean
+			default: null
+		},
+		placeholder: {
+			type: String,
+			required: false,
+			default: "Start typing"
+		},
+		height: {
+			default: "350",
+			required: false,
+			type: String
 		}
 	},
 	data() {
@@ -94,13 +120,14 @@ export default {
 				Typography,
 				SmilieReplacer,
 				Placeholder.configure({
-					placeholder: "Add your comment"
+					placeholder: this.placeholder
 				}),
 				Image.configure({
 					HTMLAttributes: {
 						class: "publication-image-url",
 					},
 				}),
+				Iframe,
 			],
 		})
 	},
@@ -113,6 +140,18 @@ export default {
 
 			if (url) {
 				this.editor.chain().focus().setImage({ src: url }).run()
+			}
+		},
+		addIframe() {
+			const url = window.prompt("Add a Video URL")
+			const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+			const match = url.match(regExp);
+			let embedUrl;
+			if (match && match[2].length === 11) {
+				embedUrl = `https://www.youtube.com/embed/${match[2]}`
+			} else embedUrl = url
+			if (embedUrl) {
+				this.editor.chain().focus().setIframe({ src: embedUrl }).run()
 			}
 		},
 	},
@@ -135,7 +174,7 @@ export default {
 		border: 2px solid var(--primary) !important;
 	}
 	.ProseMirror {
-		min-height: 150px;
+		min-height: 200px;
 		border: 1px solid grey;
 		border-radius: 4px;
 		padding: 6px 0;
@@ -183,24 +222,36 @@ export default {
 			padding-left: 1rem;
 			border-left: 2px solid rgba(#0D0D0D, 0.1);
 		}
+		.iframe-wrapper {
+			overflow: hidden;
+			width: 100%;
+			height: 300px;
+			&.ProseMirror-selectednode {
+				outline: 3px solid #68CEF8;
+			}
+			iframe {
+				width: 100%;
+				height: 300px;
+			}
+		}
 	}
 }
 
 .bubble-menu {
 	display: flex;
-	background-color: rgb(227, 227, 227);
-	padding: 0 5px;
-	border-radius: 4px;
-	box-shadow: 1px 4px 6px #dedede;
-
+	background-color: #0D0D0D;
+	padding: 0.2rem;
+	border-radius: 0.5rem;
 
 	button {
 		border: none;
-		font-size: 1rem;
+		background: none;
+		color: #FFF;
+		font-size: 0.85rem;
 		font-weight: 500;
-		padding: 0 5px;
+		padding: 0 0.2rem;
 		opacity: 0.6;
-		height: 30px;
+
 		&:hover,
 		&.is-active {
 			opacity: 1;
@@ -210,19 +261,34 @@ export default {
 
 .floating-menu {
 	display: flex;
-	background-color: rgb(227, 227, 227);
-	padding: 0 5px;
-	margin-left: 110px;
+	background-color: #0D0D0D10;
+	padding: 0;
+	margin-left: 150px;
 	border-radius: 4px;
+	border: 1px solid grey;
+	width: 100%;
 	box-shadow: 1px 4px 6px #dedede;
+	button:nth-child(2) {
+		border-left: 1px solid grey;
+	}
+	button:nth-child(3) {
+		border-left: 1px solid grey;
+	}
+	button:nth-child(4) {
+		border-left: 1px solid grey;
+	}
+	button:nth-child(5) {
+		border-left: 1px solid grey;
+		border-right: 1px solid grey;
+	}
 	button {
 		border: none;
 		background: none;
 		font-size: 1rem;
 		font-weight: 500;
 		opacity: 0.6;
+		width: 100%;
 		height: 30px;
-		padding: 0 5px;
 
 		&:hover,
 		&.is-active {
