@@ -102,13 +102,9 @@
 							<v-fade-transition>
 								<v-col
 									v-if="activeTabItem.title === 'Post'"
-									cols="12"
+									cols="12 pa-0"
 								>
-									<v-card class="primary-border"
-										flat min-height="400"
-									>
-										<v-card-title>Here goes tiptap editor</v-card-title>
-									</v-card>
+									<tip-tap-editor placeholder="Give your thoughts..." />
 								</v-col>
 								<v-col v-else-if="activeTabItem.title === 'Images/Videos'"
 									cols="12"
@@ -209,10 +205,12 @@
 <script>
 import {mapGetters} from "vuex";
 import CardImage from "@/components/utils/CardImage.vue";
+import TipTapEditor from "@/components/utils/TiptapEditor.vue";
 
 export default {
 	name: "Submit",
 	components: {
+		TipTapEditor,
 		CardImage,
 		TextField: () => import("@/components/form/_text_field.vue"),
 		CommunityAutocomplete: () => import("@/components/form/_community_autocomplete.vue")
