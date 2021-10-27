@@ -20,40 +20,48 @@
 			</v-avatar>
 		</v-card-text>
 		<v-card-title class="d-flex justify-center">
-			{{ userInView.username }}
+			<h2>{{ userInView.username }}</h2>
 		</v-card-title>
 		<v-card-subtitle class="d-flex justify-center align-center">
-			<div>#/{{ userInView.username }}</div>
-			<v-icon>mdi-circle-small</v-icon>
-			<div>{{ $moment(userInView.last_active_at).fromNow() }}</div>
+			<div class="px16">
+				u/{{ userInView.username }}
+			</div>
+			<v-icon size="6"
+				class="px-2 mt-1"
+			>
+				mdi-circle
+			</v-icon>
+			<div class="px16">
+				{{ $moment(userInView.last_active_at).fromNow() }}
+			</div>
 		</v-card-subtitle>
 		<v-card-text class="px-5 py-0 d-flex justify-space-between">
 			<div>
-				<div class="px14 weight-500">
+				<div class="px16 weight-500">
 					Likes
 				</div>
 				<div class="d-flex align-center">
 					<v-icon small
-						color="primary lighten-2"
+						color="primary lighten-1"
 					>
 						mdi-thumb-up-outline
 					</v-icon>
-					<div class="pl-3 px12">
+					<div class="pl-3 px14 weight-500">
 						5,555
 					</div>
 				</div>
 			</div>
 			<div>
-				<div class="px14 weight-500">
+				<div class="px16 weight-500">
 					Cake day
 				</div>
 				<div class="d-flex align-center">
 					<v-icon small
-						color="primary lighten-2"
+						color="primary lighten-1"
 					>
 						mdi-cake-variant
 					</v-icon>
-					<div class="pl-3 px12">
+					<div class="pl-3 px14 weight-500">
 						{{ $moment(userInView.profile.birth_date).format('YYYY-M-D') }}
 					</div>
 				</div>

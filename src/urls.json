@@ -57,7 +57,9 @@
 		"addHiddenStatus": "publication/%s/hide/",
 		"removeHiddenStatus": "publication-hide/%s/",
 		"addReport": "publication/%s/report/",
-		"removeReport": "publication-report/%s/"
+		"removeReport": "publication-report/%s/",
+		"addLink": "publication/%s/link/",
+		"removeLink": "publication-link/%s/"
 	},
 	"comment": {
 		"add": "publication/%s/comment/",

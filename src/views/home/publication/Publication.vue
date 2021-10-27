@@ -27,20 +27,20 @@
 				<v-icon>mdi-dots-horizontal</v-icon>
 			</v-btn>
 		</v-card-text>
-		<v-card-title class="py-2">
+		<v-card-title class="py-2 publication-title">
 			{{ publication.title }}
 		</v-card-title>
-		<v-card-text class="py-2">
+		<v-card-text class="py-2 px16">
 			Donec rutrum congue leo eget malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.
 		</v-card-text>
 		<v-img src="https://www.gaonconnection.com/h-upload/2018/08/142057lsun8ytpjw37abf0qnrntgspzxa8sogd2800639.png"
 			height="400"
 		/>
-		<v-card-text>
+		<v-card-text class="px16">
 			Donec rutrum congue leo eget malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.
 		</v-card-text>
 		<actions />
-		<v-card-actions class="pb-0">
+		<v-card-actions class="pb-0 px-1">
 			<comment-field v-model="myComment" />
 		</v-card-actions>
 		<v-card-text>
@@ -73,7 +73,7 @@
 				</div>
 			</div>
 		</v-card-text>
-		<v-card-text>
+		<v-card-text class="px-0">
 			<comment-list />
 		</v-card-text>
 	</v-card>
@@ -118,5 +118,7 @@ export default {
 </script>
 
 <style scoped>
-
+.publication-title {
+	font-size: 32px; line-height: 32px;
+}
 </style>

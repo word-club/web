@@ -36,7 +36,7 @@ const state = {
 			{ id: 3, user: { username: "PsycoKiller"}, timestamp: "2020-10-21T22:07:24.169676+05:45",  },
 			{ id: 4, user: { username: "DwayneJohnson"}, timestamp: "2020-10-21T22:07:24.169676+05:45",  },
 		],
-		last_active_at: "2020-10-20:30:24.169676+05:45",
+		last_active_at: "2021-10-21T22:07:24.169676+05:45",
 	},
 	userInEdit: {},
 	formErrors: {}

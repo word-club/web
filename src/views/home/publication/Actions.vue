@@ -1,5 +1,5 @@
 <template>
-	<v-card-actions class="flex-wrap justify-space-between">
+	<v-card-actions class="flex-wrap justify-space-between px-3">
 		<v-btn class="ma-1"
 			depressed
 		>

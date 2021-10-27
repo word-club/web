@@ -48,12 +48,14 @@
 				<v-icon>mdi-dots-horizontal</v-icon>
 			</v-btn>
 		</v-card-text>
-		<v-card-title class="pt-1 cursor"
+		<v-card-title class="pt-1 cursor publication-title"
 			@click="toPublicationDetail(publication.id)"
 		>
 			{{ publication.title }}
 		</v-card-title>
-		<v-card-subtitle>{{ publication.content }}</v-card-subtitle>
+		<v-card-subtitle class="px16">
+			{{ publication.content }}
+		</v-card-subtitle>
 		<v-card-text class="pa-0">
 			<v-card
 				dark tile
@@ -159,5 +161,8 @@ export default {
 	font-size: 12px !important;
 	font-weight: 600 !important;
 	color: #585858;
+}
+.publication-title {
+	font-size: 22px;
 }
 </style>
