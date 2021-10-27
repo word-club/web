@@ -14,7 +14,6 @@ export default {
 	components: {
 		CommunityPeek: () => import("@/views/home/community/CommunityPeek"),
 		PostingToWordClub: () => import("@/components/utils/PostingToWordClub"),
-		HomeSmallFooter: () => import("@/components/footer/HomeSmallFooter.vue")
 	},
 }
 </script>

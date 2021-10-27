@@ -7,13 +7,11 @@
 </template>
 
 <script>
-import HomeSmallFooter from "@/components/footer/HomeSmallFooter.vue";
-import UserPeek from "@/views/home/user/components/UserPeek.vue";
 
 export default {
 	name: "Sidebar",
-	components: {UserPeek, HomeSmallFooter},
-	props: {},
-	methods: {}
+	components: {
+		UserPeek: () => import("@/views/home/user/components/UserPeek.vue")
+	},
 }
 </script>

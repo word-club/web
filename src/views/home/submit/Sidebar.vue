@@ -12,7 +12,6 @@
 export default {
 	name: "Sidebar",
 	components: {
-		HomeSmallFooter: () => import("@/components/footer/HomeSmallFooter"),
 		PostingToWordClub: () => import("@/components/utils/PostingToWordClub")
 	}
 }
