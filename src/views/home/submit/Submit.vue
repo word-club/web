@@ -102,9 +102,13 @@
 							<v-fade-transition>
 								<v-col
 									v-if="activeTabItem.title === 'Post'"
-									cols="12 pa-0"
+									cols="12"
+									class="pa-0"
 								>
-									<tip-tap-editor placeholder="Give your thoughts..." />
+									<tip-tap-editor v-model="post.content"
+										placeholder="Give your thoughts..."
+										@update="updateContent"
+									/>
 								</v-col>
 								<v-col v-else-if="activeTabItem.title === 'Images/Videos'"
 									cols="12"
@@ -229,6 +233,7 @@ export default {
 			title: null,
 			link: null,
 			tags: [],
+			content: ""
 		},
 		files: [],
 		fileUrls: [],
@@ -245,6 +250,9 @@ export default {
 		}
 	},
 	methods: {
+		updateContent(value) {
+			this.post.content = value
+		},
 		removeFile(item, index) {
 			this.files.splice(index, 1)
 			this.fileUrls.splice(index, 1)

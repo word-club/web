@@ -41,7 +41,7 @@
 		</v-card-text>
 		<actions />
 		<v-card-actions class="pb-0 px-1">
-			<comment-field v-model="myComment" />
+			<comment-field :publication="publication.id" />
 		</v-card-actions>
 		<v-card-text>
 			<v-menu offset-y>

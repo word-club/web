@@ -62,7 +62,8 @@
 				class="field-wrapper"
 			>
 				<div class="field-line" />
-				<comment-field v-model="reply"
+				<comment-field
+					comment="pubId"
 					:reply="true"
 				/>
 			</div>

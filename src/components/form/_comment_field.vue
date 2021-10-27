@@ -72,8 +72,13 @@ export default {
 		FloatingMenu,
 	},
 	props: {
-		value: {
-			required: true
+		publication: {
+			default: null,
+			required: false,
+		},
+		comment: {
+			default: null,
+			required: false,
 		},
 		reply: {
 			default: false,
@@ -81,6 +86,7 @@ export default {
 			type: Boolean
 		}
 	},
+	emits: ["update"],
 	data() {
 		return {
 			editor: null,
@@ -102,6 +108,9 @@ export default {
 					},
 				}),
 			],
+			onUpdate: () => {
+				this.$emit("update", this.editor.getHTML())
+			}
 		})
 	},
 	beforeUnmount() {
