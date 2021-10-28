@@ -5,6 +5,7 @@
 			v-model="drawer"
 			app clipped
 			color="grey lighten-3"
+			class="home-sidebar"
 			:permanent="mdAndUp"
 			:temporary="!mdAndUp"
 		>
@@ -17,6 +18,7 @@
 			app right
 			clipped
 			color="grey lighten-3"
+			class="home-sidebar"
 			:permanent="mdAndUp"
 			:temporary="!mdAndUp"
 			width="350"
@@ -160,5 +162,26 @@ export default {
 }
 .normal-whitespace {
 	white-space: normal !important;
+}
+.home-sidebar {
+		/* width */
+	::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #d7d7d7;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #888;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #727272;
+	}
 }
 </style>
