@@ -3,29 +3,10 @@
 		class="publication-instance"
 	>
 		<v-card-text class="d-flex align-center pa-2 flex-wrap justify-space-between">
-			<v-avatar
+			<community-hover-box
 				v-if="$route.name !== 'Community'"
-				size="30"
-				:color="publication.community.theme.color" tile
-				class="rounded cursor"
-				@click="toCommunityDetail(publication.community.unique_id)"
-			>
-				<v-img v-if="publication.community.avatar"
-					:src="publication.community.avatar.image"
-				/>
-			</v-avatar>
-			<div
-				v-if="$route.name !== 'Community'"
-				class="px-1"
+				:community="publication.community"
 			/>
-			<div
-				v-if="$route.name !== 'Community'"
-				class="px14 weight-600 cursor hover-underline"
-				:class="`${publication.community.theme.color}--text`"
-				@click="toCommunityDetail(publication.community.unique_id)"
-			>
-				{{ publication.community.name }}
-			</div>
 			<v-icon
 				v-if="$route.name !== 'Community'"
 			>
@@ -34,11 +15,7 @@
 			<div v-else
 				class="px-1"
 			/>
-			<div class="px14 cursor hover-underline weight-500"
-				@click="toUserOverview(publication.created_by.username)"
-			>
-				{{ publication.created_by.username }}
-			</div>
+			<user-hover-box :user="publication.created_by" />
 			<v-icon>mdi-circle-small</v-icon>
 			<div class="publication-timestamp">
 				{{ $moment(publication.timestamp).fromNow() }}
@@ -130,12 +107,16 @@
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
 import {mapGetters} from "vuex";
+import CommunityHoverBox from "@/components/utils/CommunityHoverBox.vue";
+import UserHoverBox from "@/components/utils/UserHoverBox.vue";
 
 export default {
 	name: "PublicationInstance",
+	components: {UserHoverBox, CommunityHoverBox},
 	mixins: [RouteMixin],
 	data: () => ({
 		selected: null,
+		communityHover: false
 	}),
 	computed: {
 		...mapGetters({

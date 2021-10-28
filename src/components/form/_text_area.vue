@@ -2,14 +2,13 @@
 	<v-textarea
 		:value="value"
 		auto-grow
-		solo rounded
-		clearable
+		outlined clearable
 		hide-details="auto"
 		:label="label.toUpperCase()"
 		placeholder="Start typing"
 		:error-messages="getErrorMessage"
 		:prepend-inner-icon="icon"
-		:counter="counter"
+		:counter="counter" color="primary"
 		@input="$emit('input', $event)"
 		@change="$emit('change', $event)"
 	/>

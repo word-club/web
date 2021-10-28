@@ -19,6 +19,8 @@ Vue.prototype.$helper = helper
 Vue.prototype.$urls = require("@/urls.json")
 
 
+Vue.component("HomeSmallFooter", () => import("@/components/footer/HomeSmallFooter"))
+
 
 new Vue({
 	router,

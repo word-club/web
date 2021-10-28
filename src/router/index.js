@@ -27,6 +27,64 @@ const routes = [
 		}
 	},
 	{
+		path: "/register-community",
+		name: "Register Community",
+		components: {
+			default: () => import("@/views/home/community/RegisterCommunity"),
+			sidebar: () => import("@/views/home/community/RegisterSidebar")
+		},
+		children: [
+			{
+				path: "",
+				name: "Community Mainframe",
+				component: () => import("@/views/home/community/register/Mainframe"),
+				meta: {
+					home: true
+				}
+			},
+			{
+				path: "display",
+				name: "Community Display",
+				component: () => import("@/views/home/community/register/Display"),
+				meta: {
+					home: true
+				}
+			},
+			{
+				path: "rules",
+				name: "Community Rules",
+				component: () => import("@/views/home/community/register/Rules"),
+				meta: {
+					home: true
+				}
+			},
+			{
+				path: "hashtags",
+				name: "Community Hashtags",
+				component: () => import("@/views/home/community/register/Hashtags"),
+				meta: {
+					home: true
+				}
+			},
+			{
+				path: "authorization",
+				name: "Community Authorization",
+				component: () => import("@/views/home/community/register/Authorization"),
+				meta: {
+					home: true
+				}
+			},
+			{
+				path: "administration",
+				name: "Community Administration",
+				component: () => import("@/views/home/community/register/Administration"),
+				meta: {
+					home: true
+				}
+			}
+		]
+	},
+	{
 		path: "/publication/:id",
 		name: "Publication",
 		components: {

@@ -1,5 +1,7 @@
 <template>
-	<v-card outlined>
+	<v-card outlined
+		max-width="350"
+	>
 		<v-img :src="communityCover"
 			height="30"
 		/>

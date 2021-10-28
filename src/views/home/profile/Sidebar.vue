@@ -11,7 +11,6 @@ export default {
 	name: "Sidebar",
 	components: {
 		ProfilePeek: () => import("@/views/home/profile/components/ProfilePeek"),
-		HomeSmallFooter: () => import("@/components/footer/HomeSmallFooter"),
 	},
 	props: {},
 	methods: {}

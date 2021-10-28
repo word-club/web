@@ -23,6 +23,7 @@
 			<v-btn rounded
 				block outlined
 				class="primary--text"
+				to="/register-community"
 			>
 				Create a Community
 			</v-btn>

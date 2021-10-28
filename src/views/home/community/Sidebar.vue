@@ -17,7 +17,6 @@ export default {
 		AboutCommunity: () =>  import("@/views/home/community/AboutCommunity.vue"),
 		CommunityRules: () =>  import("@/views/home/community/CommunityRules.vue"),
 		MessageModerators: () =>  import("@/views/home/community/MessageModerators.vue"),
-		HomeSmallFooter: () =>  import("@/components/footer/HomeSmallFooter.vue")
 	},
 	props: {},
 	data: () => ({}),

@@ -54,7 +54,7 @@
 				<v-subheader class="text-uppercase">
 					More Stuff
 				</v-subheader>
-				<v-list-item>
+				<v-list-item to="/register-community">
 					<v-list-item-icon><v-icon>mdi-account-group-outline</v-icon></v-list-item-icon>
 					<v-list-item-content>
 						<v-list-item-title>Create a Community</v-list-item-title>
