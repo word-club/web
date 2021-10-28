@@ -33,7 +33,7 @@ export default {
 
 <style scoped>
 .drawer-item {
-	font-size: 14px;
+	font-size: 16px;
 	padding-left: 10px;
 }
 </style>

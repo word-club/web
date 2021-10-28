@@ -1,5 +1,7 @@
 <template>
-	<v-card outlined>
+	<v-card outlined
+		class="feeds-comment-item"
+	>
 		<v-card-text class="pa-2 d-flex">
 			<v-icon>mdi-comment</v-icon>
 			<div class="px-2">
@@ -37,7 +39,7 @@
 					<div class="cursor hover-underline"
 						@click="toUserOverview(comment.created_by.username)"
 					>
-						{{ comment.created_by.username }}
+						u/{{ comment.created_by.username }}
 					</div>
 					<v-icon>mdi-circle-small</v-icon>
 					<div>{{ $moment(comment.timestamp).fromNow() }}</div>
@@ -143,5 +145,8 @@ export default {
 			color: black;
 		}
 	}
+}
+.feeds-comment-item:hover {
+	border: 1px solid black !important;
 }
 </style>

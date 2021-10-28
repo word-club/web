@@ -3,29 +3,31 @@
 		<v-card flat
 			color="primary" height="70"
 			class="rounded-b-0"
-			:img="userInView.active_cover.image"
+			:img="user.cover ? user.cover.image : ''"
 		/>
 		<v-card-text class="d-flex justify-center avatar-line">
 			<v-avatar size="200"
 				color="grey"
 				class="profile-avatar"
 			>
-				<v-img :src="userInView.active_avatar.image" />
+				<v-img v-if="user.avatar"
+					:src="user.avatar.image"
+				/>
 			</v-avatar>
 		</v-card-text>
 		<v-card-title class="d-flex justify-center">
-			{{ userInView.username }}
+			<h2>{{ user.username }}</h2>
 		</v-card-title>
-		<v-card-subtitle class="d-flex justify-center">
+		<v-card-subtitle class="d-flex justify-center px15 weight-500">
 			<div>
-				#/{{ userInView.username }}
+				u/{{ user.username }}
 			</div>
 			<v-icon>mdi-circle-small</v-icon>
-			<div>{{ $moment(userInView.last_active_at).fromNow() }}</div>
+			<div>{{ $moment(user.last_active_at).fromNow() }}</div>
 		</v-card-subtitle>
-		<v-card-text class="px-3 py-0 d-flex justify-space-between">
+		<v-card-text class="px-4 py-0 d-flex justify-space-between">
 			<div>
-				<div class="px14 weight-500">
+				<div class="px16 weight-500">
 					Likes
 				</div>
 				<div class="d-flex align-center">
@@ -34,13 +36,13 @@
 					>
 						mdi-thumb-up-outline
 					</v-icon>
-					<div class="pl-3 px12">
+					<div class="pl-3 px14 weight-500">
 						5,555
 					</div>
 				</div>
 			</div>
 			<div>
-				<div class="px14 weight-500">
+				<div class="px16 weight-500">
 					Cake day
 				</div>
 				<div class="d-flex align-center">
@@ -49,17 +51,20 @@
 					>
 						mdi-cake-variant
 					</v-icon>
-					<div class="pl-3 px12">
-						{{ $moment(userInView.profile.birth_date).format('YYYY-M-D') }}
+					<div class="pl-3 px14 weight-500">
+						<span v-if="user.profile && user.profile.birth_date">
+							{{ $moment(user.profile.birth_date).format('YYYY-M-D') }}
+						</span>
+						<span v-else>-</span>
 					</div>
 				</div>
 			</div>
 		</v-card-text>
 		<v-card-text class="px-2 px12 d-flex">
-			<v-avatar size="20"
+			<v-avatar size="30"
 				color="grey"
 			/>
-			<div class="pl-2">
+			<div class="pl-2 px14">
 				Received the Helpful Award and more in the past 30 days
 			</div>
 		</v-card-text>
@@ -133,19 +138,18 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
 
 export default {
 	name: "UserPeek",
-	props: {},
+	props: {
+		user: {
+			required: true,
+			type: Object
+		}
+	},
 	data: () => ({
 		moreOptions: false
 	}),
-	computed: {
-		...mapGetters({
-			userInView: "user/inView"
-		})
-	},
 	methods: {}
 }
 </script>
