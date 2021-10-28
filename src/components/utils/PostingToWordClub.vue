@@ -34,7 +34,7 @@ export default {
 	computed: {
 		instructions() {
 			return [
-				"Remember the human",
+				"Remember to be human",
 				"Behave like you would in real life",
 				"Look for the original source of content",
 				"Search for duplicates before posting",

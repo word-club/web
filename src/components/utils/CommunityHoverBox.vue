@@ -11,7 +11,7 @@
 			>
 				<v-avatar
 					size="30"
-					:color="community.theme.color" tile
+					:color="$helper.getThemeColor(community)" tile
 					class="rounded cursor"
 					@click="toCommunityDetail(community.unique_id)"
 				>
@@ -22,14 +22,14 @@
 				<div class="px-1" />
 				<div
 					class="px14 weight-600 cursor hover-underline"
-					:class="`${community.theme.color}--text`"
+					:class="`${$helper.getThemeColor(community)}--text`"
 					@click="toCommunityDetail(community.unique_id)"
 				>
 					{{ community.name }}
 				</div>
 			</div>
 		</template>
-		<community-peek />
+		<community-peek :community="community" />
 	</v-menu>
 </template>
 

@@ -70,7 +70,9 @@
 			color="transparent"
 		>
 			<v-card-text class="pb-0">
-				<router-view />
+				<transition name="view">
+					<router-view />
+				</transition>
 			</v-card-text>
 		</v-card>
 	</div>
@@ -97,21 +99,31 @@ export default {
 <style scoped lang="scss">
 .top-tab {
 	width: 100%;
-.profile-top-btn {
-	text-transform: uppercase;
-	margin: 0 6px;
-	font-size: 14px;
-	font-weight: 500;
-	color: grey;
-	padding: 0 4px 4px 4px;
+	.profile-top-btn {
+		text-transform: uppercase;
+		margin: 0 6px;
+		font-size: 14px;
+		font-weight: 500;
+		color: grey;
+		padding: 0 4px 4px 4px;
+	}
+	.profile-top-btn:hover {
+		color: #1d1d1d
+	}
+	.profile-top-btn-active {
+		color: #1d1d1d;
+		border-bottom: 3px solid #1d1d1d;
+		pointer-events: none;
+	}
 }
-.profile-top-btn:hover {
-	color: #1d1d1d
-}
-.profile-top-btn-active {
-	color: #1d1d1d;
-	border-bottom: 3px solid #1d1d1d;
-	pointer-events: none;
-}
-}
+</style>
+<style lang="sass">
+.view-enter-active, .view-leave-active
+	transition: opacity .6s ease-in-out, transform .6s ease
+.view-enter-active
+	transition-delay: .5s
+.view-enter, .view-leave-to
+	opacity: 0
+.view-enter-to, .view-leave
+	opacity: 1
 </style>

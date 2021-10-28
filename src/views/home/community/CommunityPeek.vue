@@ -2,19 +2,31 @@
 	<v-card outlined
 		max-width="350"
 	>
-		<v-img :src="communityCover"
-			height="30"
-		/>
-		<v-card-text class="pa-3 d-flex align-center">
-			<v-avatar color="orange"
-				size="45"
+		<v-card
+			:color="$helper.getThemeColor(community)"
+			height="35" flat
+			class="rounded-b-0"
+		>
+			<v-img
+				v-if="community.cover"
+				:src="community.cover.image"
+				height="35"
 			/>
+		</v-card>
+		<v-card-text class="pa-3 d-flex align-center">
+			<v-avatar :color="$helper.getThemeColor(community)"
+				size="45"
+			>
+				<v-img v-if="community.avatar"
+					:src="community.avatar.image"
+				/>
+			</v-avatar>
 			<div class="px-3 mt-1 px16 weight-500">
-				#/TajMahalTheWonder
+				#/{{ community.unique_id }}
 			</div>
 		</v-card-text>
 		<v-card-text class="pa-2">
-			Nulla quis lorem ut libero malesuada feugiat. Proin eget tortor risus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.
+			{{ community.quote }}
 		</v-card-text>
 		<v-card-text class="d-flex align-center pa-3 weight-500">
 			<div>
@@ -22,7 +34,7 @@
 					5.2m
 				</div>
 				<div class="px14">
-					taj mahal wonderers
+					{{ community.settings.what_to_call_subscribers }}
 				</div>
 			</div>
 			<div class="px-1" />
@@ -31,7 +43,7 @@
 					15.1k
 				</div>
 				<div class="px14">
-					being quite literally awesome
+					{{ community.settings.feeling_after_subscribing }}
 				</div>
 			</div>
 		</v-card-text>
@@ -41,13 +53,13 @@
 				mdi-routes-clock
 			</v-icon>
 			<div class="px-2 px16 weight-500">
-				Created Jul 19, 2018
+				Created {{ $moment(community.created_at).format("MM DD, YYYY") }}
 			</div>
 		</v-card-text>
 		<v-card-text class="pa-3">
 			<v-btn
 				block rounded
-				outlined color="orange"
+				outlined :color="$helper.getThemeColor(community)"
 			>
 				Join
 			</v-btn>
@@ -55,30 +67,52 @@
 		<v-divider class="mx-3" />
 		<v-card-text>
 			<v-btn
-				depressed
-				small
-				rounded
-				block
+				depressed small
+				rounded block
+				@click="seeOptions = !seeOptions"
 			>
 				<template #default>
-					<div class="d-flex align-center justify-space-between px-4"
-						style="width: 100%"
-					>
+					<div class="d-flex align-center justify-space-between px-4 full-width">
 						<div>Community options</div>
 						<v-icon>mdi-chevron-down</v-icon>
 					</div>
 				</template>
 			</v-btn>
 		</v-card-text>
+		<v-slide-y-transition>
+			<v-card-text v-if="seeOptions"
+				class="pt-0"
+			>
+				<v-list class="py-0"
+					dense
+				>
+					<v-list-item>
+						<v-list-item-content>
+							<v-list-item-title>See community theme</v-list-item-title>
+						</v-list-item-content>
+						<v-list-item-action>
+							<v-switch :value="true"
+								:color="$helper.getThemeColor(community)"
+							/>
+						</v-list-item-action>
+					</v-list-item>
+				</v-list>
+			</v-card-text>
+		</v-slide-y-transition>
 	</v-card>
 </template>
 
 <script>
 export default {
 	name: "CommunityPeek",
-	props: {},
+	props: {
+		community: {
+			required: true,
+			type: Object
+		}
+	},
 	data: () => ({
-		communityCover: "https://www.gaonconnection.com/h-upload/2018/08/142057lsun8ytpjw37abf0qnrntgspzxa8sogd2800639.png"
+		seeOptions: false
 	}),
 	computed: {},
 	methods: {}

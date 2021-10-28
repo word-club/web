@@ -58,7 +58,7 @@
 			<v-list color="grey lighten-3"
 				two-line
 			>
-				<v-list-item v-for="n in 12"
+				<v-list-item v-for="n in 10"
 					:key="n"
 				>
 					<v-list-item-avatar size="40"

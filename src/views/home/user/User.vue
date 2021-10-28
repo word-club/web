@@ -40,7 +40,9 @@
 			color="transparent"
 		>
 			<v-card-text class="pb-0">
-				<router-view />
+				<transition name="view">
+					<router-view />
+				</transition>
 			</v-card-text>
 		</v-card>
 	</div>

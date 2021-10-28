@@ -3,22 +3,10 @@
 		class="mx-auto" max-width="800"
 	>
 		<v-card-text class="d-flex align-center py-2 flex-wrap justify-space-between">
-			<v-avatar size="30"
-				color="grey" tile
-				class="rounded cursor"
-				@click="toCommunityDetail(publication.community.id)"
-			/>
-			<div class="px-1" />
-			<div class="weight-500 px16 cursor hover-underline"
-				@click="toCommunityDetail(publication.community.id)"
-			>
-				{{ publication.community.name }}
-			</div>
-			<div class="px-2" />
-			<div class="publication-author">
-				{{ publication.created_by.username }}
-			</div>
-			<div class="px-2" />
+			<community-hover-box :community="publication.community" />
+			<v-icon>mdi-circle-small</v-icon>
+			<user-hover-box :user="publication.created_by" />
+			<v-icon>mdi-circle-small</v-icon>
 			<div class="publication-timestamp">
 				{{ $moment(publication.timestamp).fromNow() }}
 			</div>
@@ -81,10 +69,15 @@
 
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
+import {mapGetters} from "vuex";
+import UserHoverBox from "@/components/utils/UserHoverBox.vue";
+import CommunityHoverBox from "@/components/utils/CommunityHoverBox.vue";
 
 export default {
 	name: "Publication",
 	components: {
+		CommunityHoverBox,
+		UserHoverBox,
 		Actions: () => import("@/views/home/publication/Actions.vue"),
 		CommentList: () => import("@/views/home/publication/CommentList.vue"),
 		CommentField: () => import("@/components/form/_comment_field.vue")
@@ -94,25 +87,9 @@ export default {
 		myComment: ""
 	}),
 	computed: {
-		publication() {
-			return {
-				id: 5896,
-				community: {
-					id: 7890,
-					name: "Movies and TV Series"
-				},
-				created_by: {
-					username: "kiranparajuli589"
-				},
-				timestamp: "2021-10-21T22:07:24.169676+05:45",
-				title: "The first trailer for the film adaptation Uncharted",
-				content: "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui." +
-					" Vivamus suscipit tortor eget felis porttitor volutpat. Pellentesque in ipsum" +
-					" id orci porta dapibus. Curabitur non nulla sit amet nisl tempus convallis " +
-					"quis ac lectus.",
-				image: "https://static3.srcdn.com/wordpress/wp-content/uploads/2019/11/Harry-Potter-wand-Harry-Potter-Movies.jpg"
-			}
-		}
+		...mapGetters({
+			publication: "publication/inView"
+		})
 	}
 }
 </script>

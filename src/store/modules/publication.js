@@ -15,6 +15,10 @@ const state = {
 			theme: {
 				color: "teal"
 			},
+			settings: {
+				what_to_call_subscribers: "taj mahal wonderers",
+				feeling_after_subscribing: "being quite literally awesome"
+			},
 			avatar: {
 				image: "https://images7.alphacoders.com/803/803146.jpg"
 			},

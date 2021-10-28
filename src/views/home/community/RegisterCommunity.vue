@@ -5,7 +5,9 @@
 			max-width="800"
 		>
 			<div class="py-4" />
-			<router-view />
+			<transition name="view">
+				<router-view />
+			</transition>
 		</v-card>
 	</div>
 </template>

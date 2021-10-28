@@ -71,7 +71,11 @@
 				class="mx-auto"
 				flat color="transparent"
 			>
-				<router-view />
+				<v-slide-x-transition>
+					<transition name="view">
+						<router-view />
+					</transition>
+				</v-slide-x-transition>
 			</v-card>
 		</v-card-text>
 	</v-card>
