@@ -48,7 +48,42 @@
 					</tbody>
 				</template>
 			</v-simple-table>
+			<v-divider />
 		</v-card-text>
+		<v-card-actions>
+			<v-btn block
+				color="primary"
+				rounded depressed
+			>
+				View All
+			</v-btn>
+		</v-card-actions>
+		<v-card-actions>
+			<v-btn class="primary--text tag-btn"
+				color="grey lighten-4"
+				rounded depressed
+			>
+				Top
+			</v-btn>
+			<v-btn class="primary--text tag-btn"
+				color="grey lighten-4"
+				rounded depressed
+			>
+				Near You
+			</v-btn>
+			<v-btn class="primary--text tag-btn"
+				color="grey lighten-4"
+				rounded depressed
+			>
+				Sports
+			</v-btn>
+			<v-btn class="primary--text tag-btn"
+				color="grey lighten-4"
+				rounded depressed
+			>
+				Gaming
+			</v-btn>
+		</v-card-actions>
 	</v-card>
 </template>
 
@@ -68,5 +103,8 @@ export default {
 </script>
 
 <style scoped>
-
+.tag-btn {
+	height: 25px !important; font-size: 11px; font-weight: 700;
+	padding: 0 4px !important;
+}
 </style>
