@@ -112,15 +112,7 @@ const actions = {
 			}
 			return false
 		}
-	},
-	async delete({commit}, {id: id}) {
-		try {
-			await $axios.delete(util.format(communityUrls.detail, id))
-			return true
-		} catch (e) {
-			return false
-		}
-	},
+	}
 }
 
 export default {

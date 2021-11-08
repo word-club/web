@@ -68,7 +68,7 @@ const getters = {
 const actions = {
 	async filter({ commit }, payload) {
 		try {
-			commit("SET_PUBLICATIONS", await $axios.getWithPayload(urls.publication.list))
+			commit("SET_PUBLICATIONS", await $axios.getWithPayload(urls.publication.list, payload))
 			return true
 		} catch {
 			return false

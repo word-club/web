@@ -1,5 +1,6 @@
 <template>
-	<v-card outlined>
+	<v-card outlined
+		max-width="350">
 		<v-card flat
 			color="primary" height="70"
 			class="rounded-b-0"
@@ -139,17 +140,18 @@
 
 <script>
 
+import {mapGetters} from "vuex";
+
 export default {
 	name: "UserPeek",
-	props: {
-		user: {
-			required: true,
-			type: Object
-		}
-	},
 	data: () => ({
 		moreOptions: false
 	}),
+	computed: {
+		...mapGetters({
+			user: "user/inView"
+		})
+	},
 	methods: {}
 }
 </script>

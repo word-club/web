@@ -139,6 +139,12 @@ export default {
 .px18 {
 	font-size: 18px !important;
 }
+.px22 {
+	font-size: 22px !important;
+}
+.px26 {
+	font-size: 26px !important;
+}
 .weight-300 {
 	font-weight: 300 !important;
 }

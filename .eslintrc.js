@@ -4,9 +4,12 @@ module.exports = {
 		node: true
 	},
 	extends: [
-		"plugin:vue/vue3-recommended",
+		"plugin:vue/essential",
+		"eslint:recommended"
 	],
-	parser: "vue-eslint-parser",
+	parserOptions: {
+		parser: "babel-eslint"
+	},
 	rules: {
 		indent: [
 			"error",
@@ -32,16 +35,6 @@ module.exports = {
 				ignores: []
 			}
 		],
-		"vue/max-attributes-per-line": [
-			"error",
-			{
-				singleline: 1,
-				multiline: {
-					max: 2,
-					allowFirstLine: true
-				}
-			}
-		],
 		"space-before-function-paren": ["error", {
 			anonymous: "always",
 			named: "never",
@@ -50,6 +43,6 @@ module.exports = {
 		"no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"quotes": ["error", "double"],
-    "vue/require-prop-types": "off"
+		"vue/require-prop-types": "off"
 	}
 }

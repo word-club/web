@@ -2,7 +2,7 @@
 	<v-card outlined
 		class="cursor"
 	>
-		<v-card-title class="pa-3">
+		<v-card-actions class="pa-3 flex-wrap align-center">
 			<v-avatar size="38"
 				:color="color"
 				class="mr-2"
@@ -17,23 +17,18 @@
 			<v-responsive class="px-2 py-1"
 				max-width="1200"
 			>
-				<v-text-field
-					dense
-					outlined hide-details
-					placeholder="Create Post"
-					full-width
-					:color="color"
+				<v-chip
+					class="full-width rounded"
+					style="height: 36px;"
 					@click="toCreatePost"
 				>
-					<template
-						v-if="$route.path === '/'"
-						#prepend-inner
-					>
-						<v-icon size="22">
-							mdi-home
-						</v-icon>
-					</template>
-				</v-text-field>
+					<v-icon size="22">
+						mdi-home
+					</v-icon>
+					<span class="px-2 weight-500 grey--text text--darken-1 px16">
+						New Publication
+					</span>
+				</v-chip>
 			</v-responsive>
 			<v-btn icon>
 				<v-icon>mdi-image-outline</v-icon>
@@ -41,7 +36,7 @@
 			<v-btn icon>
 				<v-icon>mdi-link-variant</v-icon>
 			</v-btn>
-		</v-card-title>
+		</v-card-actions>
 	</v-card>
 </template>
 

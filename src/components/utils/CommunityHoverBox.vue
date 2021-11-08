@@ -3,6 +3,7 @@
 		open-on-hover
 		nudge-top="-30"
 		nudge-left="-34"
+		close-delay="100"
 	>
 		<template #activator="{on, attrs}">
 			<div class="d-flex align-center"
