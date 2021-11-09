@@ -9,7 +9,7 @@
 		clearable
 		item-value="id"
 		item-text="name"
-		color="primary"
+		:color="color"
 		background-color="white"
 		prepend-inner-icon="mdi-account-group"
 		:error-messages="getErrorMessage"
@@ -23,7 +23,7 @@ import FormFieldError from "@/mixin/FormFieldError.js";
 import {mapGetters} from "vuex";
 
 export default {
-	name: "CommunityAutocomplete",
+	name: "CommunitySelect",
 	mixins: [FormFieldError],
 	props: {
 		value: {
@@ -33,7 +33,8 @@ export default {
 			type: Object,
 			required: false,
 			default: () => {}
-		}
+		},
+		color: {type: String, default: "primary"}
 	},
 	emits: ["input", "change"],
 	data: () => ({

@@ -16,16 +16,6 @@
 					/>
 				</v-col>
 				<v-col cols="12">
-					<text-field
-						v-model="community.email"
-						name="email"
-						label="Email Address"
-						icon="mdi-at"
-						type="email"
-						:errors="formErrors"
-					/>
-				</v-col>
-				<v-col cols="12">
 					<text-area
 						v-model="community.description"
 						name="description"
@@ -68,9 +58,10 @@
 		</v-card-text>
 		<v-card-actions>
 			<v-spacer />
-			<v-btn rounded
+			<v-btn
+				:to="{name: 'Community Display'}"
 				color="primary"
-				class="weight-600 px15"
+				class="px15"
 			>
 				Create
 			</v-btn>
@@ -84,13 +75,12 @@ import {mapGetters} from "vuex";
 export default {
 	name: "Mainframe",
 	components: {
-		TextArea: () => import("@/components/form/_text_area.vue"),
-		TextField: () => import("@/components/form/_text_field.vue")
+		TextArea: () => import("@/components/form/TextArea.vue"),
+		TextField: () => import("@/components/form/TextField.vue")
 	},
 	data: () => ({
 		community: {
 			name: null,
-			email: null,
 			description: null,
 			adult: null,
 			type: null
@@ -118,7 +108,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			formErrors: "community/formErrorList"
+			formErrors: "community/errorList"
 		})
 	},
 	methods: {}

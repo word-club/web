@@ -1,5 +1,5 @@
 const state = {
-	users: {},
+	users: { results: []},
 	currentUser: {},
 	userInView: {
 		id: 5896,
@@ -48,7 +48,7 @@ const getters = {
 	inView: state => state.userInView,
 	current: state => state.userInView,
 	inEdit: state => state.userInEdit,
-	formErrorList: state => state.formErrors
+	errorList: state => state.formErrors
 }
 
 const actions = {}

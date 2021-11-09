@@ -216,8 +216,8 @@ export default {
 	components: {
 		TipTapEditor,
 		CardImage,
-		TextField: () => import("@/components/form/_text_field.vue"),
-		CommunityAutocomplete: () => import("@/components/form/_community_autocomplete.vue")
+		TextField: () => import("@/components/form/TextField.vue"),
+		CommunityAutocomplete: () => import("@/components/form/CommunitySelect.vue")
 	},
 	props: {},
 	data: () => ({
@@ -241,8 +241,8 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			errors: "publication/formErrors",
-			tagFormErrors: "hashtag/formErrorList",
+			errors: "publication/errorList",
+			tagFormErrors: "hashtag/errorList",
 			hashtags: "hashtag/list"
 		}),
 		activeTabItem() {

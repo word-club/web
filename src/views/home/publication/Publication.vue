@@ -80,7 +80,7 @@ export default {
 		UserHoverBox,
 		Actions: () => import("@/views/home/publication/Actions.vue"),
 		CommentList: () => import("@/views/home/publication/CommentList.vue"),
-		CommentField: () => import("@/components/form/_comment_field.vue")
+		CommentField: () => import("@/components/form/CommentField.vue")
 	},
 	mixins: [RouteMixin],
 	data: () => ({

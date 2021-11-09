@@ -1,11 +1,16 @@
 const state = {
-	hashtags: {},
-	formErrors: {}
+	hashtags: [
+		{id: 1, tag: "Programming"},
+		{id: 2, tag: "Vuetify"},
+		{id: 3, tag: "Vue"},
+		{id: 4, tag: "Design"},
+	],
+	errors: {}
 }
 
 const getters = {
 	list: state => state.hashtags,
-	formErrorList: state => state.formErrors
+	errorList: state => state.errors
 }
 
 const actions = {}

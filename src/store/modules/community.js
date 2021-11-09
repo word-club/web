@@ -6,7 +6,7 @@ const communityUrls = urls.community
 
 const state = {
 	communities: {},
-	communityInView: {
+	toView: {
 		id: 5896,
 		unique_id: "TajMahalWonderers",
 		name: "Taj Mahal Wonderers",
@@ -48,25 +48,25 @@ const state = {
 			{username: "Tornado9797", role: { position: "mod"}},
 		]
 	},
-	formErrors: {}
+	toEdit: {},
+	errors: {},
+	createInProgress: {
+		unique_id: "TajMahalWonderers",
+	}
 }
 
 const mutations = {
-	SET_COMMUNITIES(state, value) {
-		state.communities = value
-	},
-	SET_COMMUNITY_IN_VIEW(state, value) {
-		state.communityInView = value
-	},
-	SET_FORM_ERRORS(state, value) {
-		state.formErrors = value
-	}
+	SET_COMMUNITIES: (state, value) => state.communities = value ,
+	SET_COMMUNITY_TO_VIEW: (state, value) => state.toView = value ,
+	SET_FORM_ERRORS: (state, value) => state.formErrors = value
 }
 
 const getters = {
 	list: state => state.communities,
-	inView: state => state.communityInView,
-	formErrorList: state => state.formErrors
+	inView: state => state.toView,
+	toEdit: state => state.toEdit,
+	errorList: state => state.errors,
+	inProgress: state => state.createInProgress
 }
 
 const actions = {
@@ -85,7 +85,7 @@ const actions = {
 	async fetchDetail({commit}, id) {
 		try {
 			const response = await $axios.get(util.format(communityUrls.detail, id))
-			commit("SET_COMMUNITY_IN_VIEW", response)
+			commit("SET_COMMUNITY_TO_VIEW", response)
 			return true
 		} catch {
 			return false

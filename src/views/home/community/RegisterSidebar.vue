@@ -10,7 +10,6 @@
 					<v-list-item v-for="(item, index) in registrationSteps"
 						:key="index"
 						:to="item.to"
-						:disabled="$route.path !== item.to"
 						active-class="step-active"
 					>
 						<v-list-item-icon>

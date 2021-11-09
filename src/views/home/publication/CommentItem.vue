@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import CommentField from "@/components/form/_comment_field.vue";
+import CommentField from "@/components/form/CommentField.vue";
 export default {
 	name: "CommentItem",
 	components: {CommentField},

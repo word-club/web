@@ -4,7 +4,7 @@ const urls = require("@/urls.json")
 
 const state = {
 	publications: {},
-	publicationInView: {
+	toView: {
 		id: 5896,
 		community: {
 			id: 5896,
@@ -37,32 +37,24 @@ const state = {
 			"quis ac lectus.",
 		image: "https://static3.srcdn.com/wordpress/wp-content/uploads/2019/11/Harry-Potter-wand-Harry-Potter-Movies.jpg"
 	},
-	publicationForEdit: {},
-	publicationInProgress: {},
-	formErrors: {}
+	toEdit: {},
+	errors: {},
+	createInProgress: {}
 }
 
 const mutations = {
-	SET_PUBLICATIONS(state, value) {
-		state.publications = value
-	},
-	SET_PUBLICATION_FOR_EDIT(state, value) {
-		state.publicationForEdit = value
-	},
-	SET_PUBLICATION_IN_PROGRESS(state, value) {
-		state.publicationInProgress = value
-	},
-	SET_FORM_ERRORS(state, value) {
-		state.formErrors = value
-	}
+	SET_PUBLICATIONS: (state, value) => state.publications = value,
+	SET_PUBLICATION_FOR_EDIT: (state, value) => state.toEdit = value,
+	SET_PUBLICATION_IN_PROGRESS: (state, value) => state.createInProgress = value,
+	SET_FORM_ERRORS: (state, value) => state.errors = value
 }
 
 const getters = {
 	list: state => state.publications,
-	inView: state => state.publicationInView,
-	forEdit: state => state.publicationForEdit,
-	inProgress: state => state.publicationInProgress,
-	formErrors: state => state.formErrors
+	inView: state => state.toView,
+	toEdit: state => state.toEdit,
+	inProgress: state => state.createInProgress,
+	errorList: state => state.errors
 }
 
 const actions = {
