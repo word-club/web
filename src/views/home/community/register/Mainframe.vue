@@ -8,7 +8,7 @@
 			<v-row class="ma-0 pa-0 py-6">
 				<v-col cols="12">
 					<text-field
-						v-model="community.name"
+						v-model="payload.name"
 						name="name"
 						label="Name"
 						icon="mdi-format-title"
@@ -17,16 +17,16 @@
 				</v-col>
 				<v-col cols="12">
 					<text-area
-						v-model="community.description"
+						v-model="payload.description"
 						name="description"
 						label="Description"
 						icon="mdi-subtitles-outline"
 						:errors="formErrors"
-						counter="512"
+						counter="256"
 					/>
 				</v-col>
 				<v-col cols="12">
-					<v-radio-group v-model="community.type">
+					<v-radio-group v-model="payload.type">
 						<v-radio v-for="(item, index) in radioGroup"
 							:key="index" :value="item.value"
 							hide-details
@@ -38,7 +38,7 @@
 								<div class="px-2 px15 weight-600">
 									{{ item.title }}
 								</div>
-								<div class="px14">
+								<div class="px13 weight-600 grey--text text--darken-0">
 									{{ item.desc }}
 								</div>
 							</template>
@@ -50,7 +50,7 @@
 						Adult Content
 					</div>
 					<v-checkbox
-						v-model="community.adult" color="primary"
+						v-model="payload.contains_adult_content" color="primary"
 						label="18+ year old community"
 					/>
 				</v-col>
@@ -59,9 +59,9 @@
 		<v-card-actions>
 			<v-spacer />
 			<v-btn
-				:to="{name: 'Community Display'}"
 				color="primary"
 				class="px15"
+				@click="createCommunity()"
 			>
 				Create
 			</v-btn>
@@ -70,21 +70,26 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import PostMixin from "@/mixin/PostMixin.js";
+import RouteMixin from "@/mixin/RouteMixin.js";
+import Snack from "@/mixin/Snack.js";
+import {mapMutations} from "vuex";
 
 export default {
 	name: "Mainframe",
+	mixins: [PostMixin, RouteMixin, Snack],
 	components: {
 		TextArea: () => import("@/components/form/TextArea.vue"),
 		TextField: () => import("@/components/form/TextField.vue")
 	},
 	data: () => ({
-		community: {
+		payload: {
 			name: null,
 			description: null,
-			adult: null,
-			type: null
+			contains_adult_content: false,
+			type: "public"
 		},
+		formErrors: {},
 		radioGroup: [
 			{
 				icon: "mdi-account-box",
@@ -106,12 +111,29 @@ export default {
 			},
 		]
 	}),
-	computed: {
-		...mapGetters({
-			formErrors: "community/errorList"
-		})
-	},
-	methods: {}
+	methods: {
+		...mapMutations("community", ["SET_COMMUNITY_IN_PROGRESS"]),
+		checkRequired(fieldList) {
+			let errObj = {}
+			fieldList.forEach(field => {
+				if (!this.payload[field]) errObj[field] = ["This field is required."]
+			})
+			this.formErrors = { ...errObj }
+			return Object.entries(errObj).length > 0
+		},
+		createCommunity() {
+			if (!this.checkRequired(["name", "description"])) {
+				this.post(this.$urls.community.list, this.payload)
+					.then(() => {
+						if (Object.keys(this.formErrors).length === 0) {
+							this.toRegisterCommunityTheme()
+							this.SET_COMMUNITY_IN_PROGRESS(this.postInstance)
+							localStorage.setItem("CommunityCreateInProgress", JSON.stringify(this.postInstance))
+						}
+					})
+			}
+		}
+	}
 }
 </script>
 

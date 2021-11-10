@@ -1,4 +1,3 @@
-const util = require("util")
 import urls from "@/urls.json"
 import $axios from "@/axios.js"
 
@@ -49,67 +48,31 @@ const state = {
 		]
 	},
 	toEdit: {},
-	errors: {},
 	createInProgress: {
 		unique_id: "TajMahalWonderers",
 	}
 }
 
 const mutations = {
-	SET_COMMUNITIES: (state, value) => state.communities = value ,
-	SET_COMMUNITY_TO_VIEW: (state, value) => state.toView = value ,
-	SET_FORM_ERRORS: (state, value) => state.formErrors = value
+	SET_COMMUNITIES: (state, value) => state.communities = value,
+	SET_COMMUNITY_TO_VIEW: (state, value) => state.toView = value,
+	SET_COMMUNITY_IN_PROGRESS: (state, value) => state.createInProgress = value
 }
 
 const getters = {
 	list: state => state.communities,
 	inView: state => state.toView,
 	toEdit: state => state.toEdit,
-	errorList: state => state.errors,
 	inProgress: state => state.createInProgress
 }
 
 const actions = {
-	clearFormErrors({commit}) {
-		commit("SET_FORM_ERRORS", {})
-	},
 	async filter({commit}, payload) {
 		try {
 			const response = await $axios.getWithPayload(communityUrls.list, payload)
 			commit("SET_COMMUNITIES", response)
 			return true
 		} catch {
-			return false
-		}
-	},
-	async fetchDetail({commit}, id) {
-		try {
-			const response = await $axios.get(util.format(communityUrls.detail, id))
-			commit("SET_COMMUNITY_TO_VIEW", response)
-			return true
-		} catch {
-			return false
-		}
-	},
-	async create({commit}, body) {
-		try {
-			await $axios.post(communityUrls.list, body)
-			return true
-		} catch (e) {
-			if (parseInt(e.response.status.toString()) === 400) {
-				commit("SET_FORM_ERRORS", e.response.data)
-			}
-			return false
-		}
-	},
-	async patch({commit}, id, body) {
-		try {
-			await $axios.patch(util.format(communityUrls.detail, id), body)
-			return true
-		} catch (e) {
-			if (parseInt(e.response.status.toString()) === 400) {
-				commit("SET_FORM_ERRORS", e.response.data)
-			}
 			return false
 		}
 	}

@@ -35,7 +35,7 @@ const routes = [
 		},
 		children: [
 			{
-				path: "",
+				path: "mainframe",
 				name: "Community Mainframe",
 				component: () => import("@/views/home/community/register/Mainframe"),
 				meta: {
@@ -105,7 +105,7 @@ const routes = [
 			{
 				path: "publications",
 				component: () => import("@/views/home/community/PostsList"),
-				name: "Community",
+				name: "Community Detail",
 				meta: {
 					home: true
 				},
@@ -113,7 +113,7 @@ const routes = [
 			{
 				path: "wiki",
 				component: () => import("@/views/home/community/WikiPage"),
-				name: "Community Wiki",
+				name: "Community Detail Wiki",
 				meta: {
 					home: true
 				},
@@ -121,7 +121,7 @@ const routes = [
 			{
 				path: "modmail",
 				component: () => import("@/views/home/community/ModMail"),
-				name: "Community Modmail",
+				name: "Community Detail Modmail",
 				meta: {
 					home: true
 				},
@@ -177,7 +177,7 @@ const routes = [
 		},
 		children: [
 			{
-				path: "",
+				path: "home",
 				component: () => import("@/views/home/user/Overview"),
 				name: "Profile Overview",
 				meta: {

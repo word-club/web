@@ -15,7 +15,7 @@
 			<v-btn rounded
 				block depressed
 				color="primary"
-				to="/submit"
+				:to="{name: 'Submit'}"
 			>
 				Create Post
 			</v-btn>
@@ -23,7 +23,7 @@
 			<v-btn rounded
 				block outlined
 				class="primary--text"
-				to="/register-community"
+				:to="{name: 'Community Mainframe'}"
 			>
 				Create a Community
 			</v-btn>

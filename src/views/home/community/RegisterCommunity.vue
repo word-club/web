@@ -13,8 +13,19 @@
 </template>
 
 <script>
+import {mapMutations} from "vuex";
+
 export default {
 	name: "RegisterCommunity",
+	created() {
+		const itemInProgress = localStorage.getItem("CommunityCreateInProgress")
+		if (itemInProgress) {
+			this.SET_COMMUNITY_IN_PROGRESS(JSON.parse(itemInProgress))
+		}
+	},
+	methods: {
+		...mapMutations("community", ["SET_COMMUNITY_IN_PROGRESS"])
+	}
 }
 </script>
 

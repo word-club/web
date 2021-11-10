@@ -45,9 +45,9 @@
 				<v-icon>mdi-dots-horizontal</v-icon>
 			</v-btn>
 			<v-spacer />
-			<v-btn icon>
-				<v-icon>mdi-view-agenda-outline</v-icon>
-			</v-btn>
+			<v-avatar size="50">
+				<v-img :src="require('@/assets/w_art.jpg')"></v-img>
+			</v-avatar>
 		</v-card-actions>
 	</v-card>
 </template>

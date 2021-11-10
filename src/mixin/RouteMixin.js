@@ -4,13 +4,31 @@ const RouteMixin = {
 			await this.$router.push({name: "Publication", params: {id: id}})
 		},
 		async toCommunityDetail(uniqueId) {
-			await this.$router.push({name: "Community", params: {uniqueId: uniqueId}})
+			await this.$router.push({name: "Community Detail", params: {uniqueId: uniqueId}})
 		},
 		async toCommunityWiki(uniqueId) {
-			await this.$router.push({name: "Community Wiki", params: {uniqueId: uniqueId}})
+			await this.$router.push({name: "Community Detail Wiki", params: {uniqueId: uniqueId}})
 		},
 		async toCommunityModmail(uniqueId) {
-			await this.$router.push({name: "Community Modmail", params: {uniqueId: uniqueId}})
+			await this.$router.push({name: "Community Detail Modmail", params: {uniqueId: uniqueId}})
+		},
+		async toRegisterCommunity() {
+			await this.$router.push({name: "Community Mainframe"})
+		},
+		async toRegisterCommunityTheme() {
+			await this.$router.push({name: "Community Display"})
+		},
+		async toRegisterCommunityRules() {
+			await this.$router.push({name: "Community Rules"})
+		},
+		async toRegisterCommunityTags() {
+			await this.$router.push({name: "Community Hashtags"})
+		},
+		async toRegisterCommunityAuthorization() {
+			await this.$router.push({name: "Community Authorization"})
+		},
+		async toRegisterCommunityAdmin() {
+			await this.$router.push({name: "Community Administration"})
 		},
 		async toHome() {
 			await this.$router.push("/")

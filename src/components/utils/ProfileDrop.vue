@@ -37,7 +37,7 @@
 				<v-subheader class="text-uppercase">
 					My Stuff
 				</v-subheader>
-				<v-list-item to="/profile">
+				<v-list-item :to="{name: 'Profile Overview'}">
 					<v-list-item-icon><v-icon>mdi-account-circle-outline</v-icon></v-list-item-icon>
 					<v-list-item-content>
 						<v-list-item-title>Profile</v-list-item-title>
@@ -54,7 +54,7 @@
 				<v-subheader class="text-uppercase">
 					More Stuff
 				</v-subheader>
-				<v-list-item to="/register-community">
+				<v-list-item :to="{name: 'Community Mainframe'}">
 					<v-list-item-icon><v-icon>mdi-account-group-outline</v-icon></v-list-item-icon>
 					<v-list-item-content>
 						<v-list-item-title>Create a Community</v-list-item-title>
@@ -101,7 +101,3 @@ export default {
 	methods: {}
 }
 </script>
-
-<style scoped>
-
-</style>

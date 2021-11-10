@@ -71,7 +71,7 @@
 			<v-btn block color="primary"
 				dark depressed
 				rounded class="px14 weight-700 text-capitalize"
-				to="/submit"
+				:to="{name: 'Submit'}"
 			>
 				New Post
 			</v-btn>

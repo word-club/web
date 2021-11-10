@@ -11,6 +11,7 @@
 						:key="index"
 						:to="item.to"
 						active-class="step-active"
+						:disabled="isStepCompleted(index)"
 					>
 						<v-list-item-icon>
 							<v-icon size="22">
@@ -32,18 +33,43 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
 	name: "RegisterSidebar",
 	data: ()=>({
 		registrationSteps: [
-			{title: "Community Mainframe", icon: "mdi-ballot", to: "/register-community"},
+			{title: "Community Mainframe", icon: "mdi-ballot", to: "/register-community/mainframe"},
 			{title: "Add Community Theme", icon: "mdi-camera-image", to: "/register-community/display"},
 			{title: "Set Community Rules", icon: "mdi-ruler-square-compass", to: "/register-community/rules"},
 			{title: "Community Hashtags", icon: "mdi-pound", to: "/register-community/hashtags"},
 			{title: "Authorize Your Community", icon: "mdi-check-bold", to: "/register-community/authorization"},
 			{title: "Community Administration", icon: "mdi-account-cowboy-hat", to: "/register-community/administration"},
 		]
-	})
+	}),
+	computed: {
+		...mapGetters({
+			community: "community/inProgress"
+		})
+	},
+	methods: {
+		isStepCompleted(index) {
+			if(!this.community) {
+				return index !== 0
+			} else {
+				if (index === 0) return true
+				else {
+					if (!this.community.create_progress) return false
+					const itemState = this.community.create_progress
+						.find(item => item.state === index.toString())
+					return (itemState)
+						// do not disable item if state is completed
+						? itemState.is_completed
+						: true
+				}
+			}
+		}
+	}
 }
 </script>
 

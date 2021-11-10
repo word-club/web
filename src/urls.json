@@ -18,7 +18,7 @@
 		"removeReport": "report/%s/"
 	},
 	"community": {
-		"list": "community",
+		"list": "community/",
 		"detail": "community/%s/",
 		"addReport": "community/%s/report/",
 		"subscribe": "community/%s/subscribe/",

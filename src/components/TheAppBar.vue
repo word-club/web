@@ -36,26 +36,26 @@
 					#prepend-inner
 				>
 					<v-icon
-						v-if="$route.name === 'Home'"
+						v-if="routeNameIs('Home')"
 						size="22"
 					>
 						mdi-home
 					</v-icon>
 					<v-avatar
-						v-if="$route.name.includes('User')"
+						v-if="routeIncludes('User')"
 						size="30"
 						color="primary"
 						class="mt-0 mb-2"
 					>
-						<v-img :src="userInView.avatar.image" />
+						<v-img v-if="userInView && userInView.avatar" :src="userInView.avatar.image" />
 					</v-avatar>
 					<v-avatar
-						v-if="$route.name.includes('Community')"
+						v-if="routeIncludes('Community Detail')"
 						size="30"
 						:color="communityInView.theme.color"
 						class="mt-0 mb-2"
 					>
-						<v-img :src="communityInView.avatar.image" />
+						<v-img v-if="communityInView && communityInView.avatar" :src="communityInView.avatar.image" />
 					</v-avatar>
 				</template>
 			</v-text-field>
@@ -101,7 +101,7 @@
 		<v-btn icon
 			class="mx-2"
 			small
-			to="/submit"
+			:to="{name: 'Submit'}"
 		>
 			<v-icon size="26">
 				mdi-plus
@@ -137,15 +137,26 @@ export default {
 		}),
 		placeHolder() {
 			if (this.$route.name.includes("User")) {
-				return "#/" + this.userInView.username
+				return "u/" + this.userInView.username
 			}
 			if (this.$route.name.includes("Community")) {
-				return "#/" + this.communityInView.unique_id
+				return "c/" + this.communityInView.unique_id
 			}
 			return this.$route.name
 		}
 	},
-	methods: {}
+	methods: {
+		routeNameIs(name) {
+			if (this.$route && this.$route.name) {
+				return this.$route.name === name
+			} return false
+		},
+		routeIncludes(text) {
+			if (this.$route && this.$route.name) {
+				return this.$route.name.includes(text)
+			} return false
+		}
+	}
 }
 </script>
 <style scoped>

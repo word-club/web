@@ -1,7 +1,7 @@
 import axios from "axios"
-import $helper from "@/helper"
+// import $helper from "@/helper"
 
-const BACKEND_HOST = process.env.VUE_APP_BACKEND_HOST
+const BACKEND_HOST = "http://localhost:8000"
 
 const AXIOS = {
 	setHeaders: function (contentType) {
@@ -10,10 +10,7 @@ const AXIOS = {
 			headers: {
 				"Content-Type": contentType || "application/json",
 				Accept: "*/*",
-				Authorization:
-					typeof $helper.getAccessToken() !== "string"
-						? null
-						: `Token ${$helper.getAccessToken()}`
+				Authorization: "Token b577d1dd0f62a2d7a2baacc72965167caa4bf24e"
 			}
 		})
 	},

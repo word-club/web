@@ -7,7 +7,7 @@
 				:color="color"
 				class="mr-2"
 			>
-				<v-img v-if="currentUser.avatar"
+				<v-img v-if="currentUser && currentUser.avatar"
 					:src="currentUser.avatar.image"
 				/>
 				<v-icon v-else>
@@ -19,7 +19,6 @@
 			>
 				<v-chip
 					class="full-width rounded"
-					style="height: 36px;"
 					@click="toCreatePost"
 				>
 					<v-icon size="22">
@@ -63,8 +62,11 @@ export default {
 }
 </script>
 
-<!--<style scoped lang="scss">-->
-<!--::v-deep.v-text-field&#45;&#45;outlined fieldset {-->
-<!--	border-color: #0078cd !important;-->
-<!--}-->
-<!--</style>-->
+<style scoped lang="scss">
+//::v-deep.v-text-field--outlined fieldset {
+//	border-color: #0078cd !important;
+//}
+.rounded {
+	height: 36px;
+}
+</style>

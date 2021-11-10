@@ -34,7 +34,7 @@ export default {
 				return this.$store.state.snack.snack
 			},
 			set(v) {
-				this.$store.dispatch("snack/setSnackState", v)
+				this.$store.dispatch("snack/setState", v)
 			}
 		},
 	},
