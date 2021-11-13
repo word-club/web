@@ -10,8 +10,10 @@
 		<div class="d-flex align-center px-2">
 			<v-avatar
 				size="40"
-				color="grey"
-			/>
+				color="white"
+			>
+				<v-img :src="require('@/assets/w_art.jpg')"/>
+			</v-avatar>
 			<div class="px-2" />
 			<h3 class="cursor"
 				@click="toHome"
@@ -80,27 +82,27 @@
 		</v-responsive>
 		<v-spacer />
 
-		<v-btn icon
-			class="px-2"
-			small
+		<v-btn
+			v-if="currentUser"
+			icon class="mx-2" small
 		>
 			<v-icon size="20">
 				mdi-thermostat
 			</v-icon>
 		</v-btn>
 
-		<v-btn icon
-			class="px-2"
-			small
+		<v-btn
+			v-if="currentUser"
+			icon class="mx-2" small
 		>
 			<v-icon size="20">
 				mdi-ballot-recount
 			</v-icon>
 		</v-btn>
 
-		<v-btn icon
-			class="mx-2"
-			small
+		<v-btn
+			v-if="currentUser"
+			icon class="mx-2" small
 			:to="{name: 'Submit'}"
 		>
 			<v-icon size="26">
@@ -108,10 +110,25 @@
 			</v-icon>
 		</v-btn>
 
-		<notification-menu />
+		<notification-menu v-if="currentUser" />
 
 		<div class="px-4" />
-		<profile-drop />
+		<profile-drop v-if="currentUser" />
+		<v-btn
+			v-if="!currentUser"
+			outlined color="primary"
+			rounded class="mx-1" @click="signUp"
+		>
+			Sign Up
+		</v-btn>
+		<v-btn
+			v-if="!currentUser"
+			color="primary" dark rounded
+			class="mx-1" @click="login"
+		>
+			Login
+		</v-btn>
+		<login-dialog />
 	</v-app-bar>
 </template>
 
@@ -122,8 +139,9 @@ import {mapGetters} from "vuex";
 export default {
 	name: "TheAppBar",
 	components: {
-		NotificationMenu: () => import("@/views/home/notification/NotificationMenu.vue"),
-		ProfileDrop: () => import("@/components/utils/ProfileDrop.vue")
+		LoginDialog: () => import("@/views/auth/LoginDialog"),
+		ProfileDrop: () => import("@/components/utils/ProfileDrop"),
+		NotificationMenu: () => import("@/views/home/notification/NotificationMenu")
 	},
 	mixins: [RouteMixin],
 	data: () => ({
@@ -132,6 +150,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
+			currentUser: "user/current",
 			userInView: "user/inView",
 			communityInView: "community/inView"
 		}),
@@ -143,6 +162,9 @@ export default {
 			} else { return this.$route.name }
 		}
 	},
+	created() {
+		this.checkForLoggedInUser()
+	},
 	methods: {
 		routeNameIs(name) {
 			if (this.$route && this.$route.name) {
@@ -153,6 +175,20 @@ export default {
 			if (this.$route && this.$route.name) {
 				return this.$route.name.startsWith(text)
 			} return false
+		},
+		login() {
+			this.$store.dispatch("setLoginState", true)
+		},
+		signUp() {},
+		checkForLoggedInUser() {
+			const token = this.$helper.getAccessToken()
+			const currentUser = this.$helper.getCurrentUser()
+			if (token && currentUser) this.$store.dispatch("user/setCurrentUser", currentUser)
+			else {
+				this.$helper.clearAccessToken()
+				this.$helper.clearCurrentUser()
+				this.$store.dispatch("user/setCurrentUser", null)
+			}
 		}
 	}
 }

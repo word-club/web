@@ -10,9 +10,20 @@ import user from "@/store/modules/user"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-	state: {},
-	mutations: {},
-	actions: {},
+	state: {
+		loginDialog: false
+	},
+	getters: {
+		loginState: state => state.loginDialog
+	},
+	mutations: {
+		SET_LOGIN_STATE: (state, value) => state.loginDialog = value
+	},
+	actions: {
+		setLoginState({commit}, value) {
+			commit("SET_LOGIN_STATE", value)
+		}
+	},
 	modules: {
 		snack,
 		community,

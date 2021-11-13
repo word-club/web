@@ -10,7 +10,7 @@
 				<v-img v-if="currentUser && currentUser.avatar"
 					:src="currentUser.avatar.image"
 				/>
-				<v-icon v-else>
+				<v-icon v-else dark>
 					mdi-account-circle-outline
 				</v-icon>
 			</v-avatar>
@@ -48,7 +48,7 @@ export default {
 	mixins: [RouteMixin],
 	props: {
 		color: {
-			default: "primary",
+			default: "primary lighten-1",
 			required: false,
 			type: String
 		}

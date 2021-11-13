@@ -1,5 +1,5 @@
 import axios from "axios"
-// import $helper from "@/helper"
+import $helper from "@/helper.js";
 
 const BACKEND_HOST = "http://localhost:8000"
 
@@ -10,7 +10,10 @@ const AXIOS = {
 			headers: {
 				"Content-Type": contentType || "application/json",
 				Accept: "*/*",
-				Authorization: "Token 07595c4877ce872b29b1030787cedbbe20971e81"
+				Authorization:
+					typeof $helper.getAccessToken() !== "string"
+						? null
+						: `Token ${$helper.getAccessToken()}`
 			}
 		})
 	},

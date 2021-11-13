@@ -3,6 +3,7 @@ const PostMixin = {
 		posting: false,
 		postInstance: null,
 		formErrors: {},
+		statusCode: null
 	}),
 	methods: {
 		post(url, payload = null) {
@@ -10,9 +11,11 @@ const PostMixin = {
 			return this
 				.$axios.post(url, payload)
 				.then(res => {
+					console.log(res)
 					this.postInstance = res
 				})
 				.catch(err => {
+					this.statusCode = err.response.status
 					this.formErrors = err.response.data
 				})
 				.finally(() => {

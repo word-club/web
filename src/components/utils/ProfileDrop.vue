@@ -10,6 +10,7 @@
 				<v-img v-if="currentUser.avatar"
 					:src="currentUser.avatar.image"
 				/>
+				<span v-else class="px22 white--text text-uppercase mb-1">{{currentUser.username[0]}}</span>
 			</v-avatar>
 		</template>
 		<v-list width="200"
@@ -73,7 +74,7 @@
 					</v-list-item-content>
 				</v-list-item>
 				<v-divider />
-				<v-list-item>
+				<v-list-item @click="logout">
 					<v-list-item-icon><v-icon>mdi-logout</v-icon></v-list-item-icon>
 					<v-list-item-content>
 						<v-list-item-title>Logout</v-list-item-title>
@@ -86,10 +87,12 @@
 
 <script>
 import {mapGetters} from "vuex";
+import PostMixin from "@/mixin/PostMixin.js";
+import Snack from "@/mixin/Snack.js";
 
 export default {
 	name: "ProfileDrop",
-	props: {},
+	mixins: [PostMixin, Snack],
 	data: () => ({
 		onlineStatus: true
 	}),
@@ -98,6 +101,22 @@ export default {
 			currentUser: "user/current"
 		})
 	},
-	methods: {}
+	methods: {
+		logout() {
+			const url = this.$urls.user.logout
+			this.post(url).then(() => {
+				// no content success response is empty string
+				if (this.postInstance === "") {
+					this.$helper.clearAccessToken()
+					this.$helper.clearCurrentUser()
+					this.$store.dispatch("user/setCurrentUser", null)
+					this.openSnack("User logged out successfully.", {color: "success"})
+				} else {
+					// logout errors are traced inside detail key
+					this.openSnack(this.formErrors.detail)
+				}
+			})
+		}
+	}
 }
 </script>

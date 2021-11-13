@@ -1,6 +1,6 @@
 const state = {
 	users: null,
-	currentUser: {},
+	currentUser: null,
 	inView: null,
 	inEdit: null
 }
@@ -12,9 +12,15 @@ const getters = {
 	inEdit: state => state.inEdit,
 }
 
-const actions = {}
+const mutations = {
+	SET_CURRENT_USER: (state, value) => state.currentUser = value
+}
 
-const mutations = {}
+const actions = {
+	setCurrentUser({commit}, value) {
+		commit("SET_CURRENT_USER", value)
+	}
+}
 
 export default {
 	namespaced: true,

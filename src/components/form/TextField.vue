@@ -14,6 +14,7 @@
 		:autocomplete="autocomplete"
 		@input="$emit('input', $event)"
 		@change="$emit('change', $event)"
+		@keyup="$emit('keyup', $event)"
 	/>
 </template>
 <script>
