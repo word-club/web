@@ -42,7 +42,7 @@
 						mdi-home
 					</v-icon>
 					<v-avatar
-						v-if="routeIncludes('User')"
+						v-if="routeNameStartsWith('User')"
 						size="30"
 						color="primary"
 						class="mt-0 mb-2"
@@ -50,7 +50,7 @@
 						<v-img v-if="userInView && userInView.avatar" :src="userInView.avatar.image" />
 					</v-avatar>
 					<v-avatar
-						v-if="routeIncludes('Community Detail')"
+						v-if="communityInView"
 						size="30"
 						:color="communityInView.theme.color"
 						class="mt-0 mb-2"
@@ -136,13 +136,11 @@ export default {
 			communityInView: "community/inView"
 		}),
 		placeHolder() {
-			if (this.$route.name.includes("User")) {
+			if (this.userInView) {
 				return "u/" + this.userInView.username
-			}
-			if (this.$route.name.includes("Community")) {
+			} else if (this.communityInView) {
 				return "c/" + this.communityInView.unique_id
-			}
-			return this.$route.name
+			} else { return this.$route.name }
 		}
 	},
 	methods: {
@@ -151,9 +149,9 @@ export default {
 				return this.$route.name === name
 			} return false
 		},
-		routeIncludes(text) {
+		routeNameStartsWith(text) {
 			if (this.$route && this.$route.name) {
-				return this.$route.name.includes(text)
+				return this.$route.name.startsWith(text)
 			} return false
 		}
 	}

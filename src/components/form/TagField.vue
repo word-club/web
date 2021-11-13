@@ -1,11 +1,17 @@
 <template>
-	<v-combobox
-		v-model="tags"
+	<v-autocomplete
+		:value="value"
 		outlined :label="label"
 		prepend-inner-icon="mdi-pound" multiple
 		:items="hashtags"
 		item-value="id"
-		item-text="tag"
+		item-text="tag" background-color="white"
+		placeholder="Start typing"
+		:loading="fetching" name="tags"
+		:color="color" hide-details="auto"
+		@change="$emit('change', $event)"
+		@input="$emit('input', $event)"
+		:error-messages="getErrorMessage"
 	>
 		<template v-slot:selection="data">
 			<v-chip
@@ -17,51 +23,54 @@
 				close
 			>
 				<v-avatar
-					class="accent white--text"
+					class="white--text"
+					:color="`${color} lighten-2`"
 					left size="10"
 					v-text="data.item.tag.slice(0, 1).toUpperCase()"
 				/>
 				<span class="weight-500 grey--text text--darken-2">{{ data.item.tag }}</span>
 			</v-chip>
 		</template>
-	</v-combobox>
+	</v-autocomplete>
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
+import FormFieldError from "@/mixin/FormFieldError.js";
 
 export default {
 	name: "TagField",
+	mixins: [FormFieldError],
 	props: {
+		value: {required: true},
 		label: {type: String, default: "Add hashtags"},
+		color: {type: String, default: "primary"},
+		errors: {type: Object, default: () => {}}
 	},
 	data: () => ({
+		fetching: true,
 		tags: []
 	}),
+	created() {
+		this.fetchTags()
+	},
 	computed: {
 		...mapGetters({
 			hashtags: "hashtag/list"
 		})
 	},
-	tags(val, prev) {
-		if (val.length === prev.length) return
-
-		this.tags = val.map(v => {
-			if (typeof v === "string") {
-				v = {
-					text: v,
-					color: this.colors[this.nonce - 1],
-				}
-
-				this.items.push(v)
-				// call hashtag post api here
-
-				this.nonce++
-			}
-
-			return v
-		})
-	},
+	methods: {
+		...mapMutations("hashtag", ["SET_LIST"]),
+		fetchTags() {
+			this.$axios.get(this.$urls.hashtag.list)
+				.then(res => {
+					this.SET_LIST(res.results)
+				})
+				.finally(() => {
+					this.fetching = false
+				})
+		}
+	}
 }
 </script>
 

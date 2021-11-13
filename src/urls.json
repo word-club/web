@@ -18,7 +18,7 @@
 		"removeReport": "report/%s/"
 	},
 	"community": {
-		"list": "community/",
+		"list": "community-view/",
 		"detail": "community/%s/",
 		"addReport": "community/%s/report/",
 		"subscribe": "community/%s/subscribe/",
@@ -27,6 +27,7 @@
 		"addCover": "community/%s/cover/",
 		"addHashtag": "community/%s/hashtag/",
 		"addAdmin": "community/%s/admin/",
+		"addRule": "community/%s/rule/",
 		"removeDisabledNotification": "disable-notifications/%s/",
 		"removeRule": "community-rule/%s/",
 		"removeCover": "community-cover/%s/",
@@ -35,8 +36,15 @@
 		"unsubscribe": "community-unsubscribe/%s/",
 		"hashtagDetail": "community-hashtag/%s/",
 		"adminDetail": "community-admin/%s/",
-		"requestAuthorization": "authorize-community/%s/request",
-		"confirmAuthorization": "authorize-community/%s/confirm"
+		"requestAuthorization": "authorize-community/%s/request/",
+		"confirmAuthorization": "authorize-community/%s/confirm/",
+		"completeProgress": "community-progress/%s/complete/",
+		"skipProgress": "community-progress/%s/skip/",
+		"approveRejectSubscriber": "community-subscriber/%s/approve/",
+		"banASubscriber": "community-subscriber/%s/ban/",
+		"addTheme": "community/%s/theme/",
+		"updateTheme": "community-theme/%s/",
+		"completeRegistration": "community/%s/complete-registration"
 	},
 	"publication": {
 		"list": "publication/",
@@ -75,8 +83,8 @@
 		"removeCommentDownVote": "comment-down-vote/%s/"
 	},
 	"hashtag": {
-		"list": "hashtag/",
-		"detail": "hashtag/%s/"
+		"list": "hash-tag/",
+		"detail": "hash-tag/%s/"
 	},
 	"notification": {
 		"list": "notification/",

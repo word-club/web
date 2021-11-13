@@ -10,7 +10,7 @@ const AXIOS = {
 			headers: {
 				"Content-Type": contentType || "application/json",
 				Accept: "*/*",
-				Authorization: "Token b577d1dd0f62a2d7a2baacc72965167caa4bf24e"
+				Authorization: "Token 07595c4877ce872b29b1030787cedbbe20971e81"
 			}
 		})
 	},

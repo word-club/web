@@ -16,6 +16,25 @@
 					/>
 				</v-col>
 				<v-col cols="12">
+					<text-field
+						v-model="payload.unique_id"
+						name="unique_id"
+						label="Unique ID"
+						icon="mdi-fingerprint"
+						:errors="formErrors"
+						hint="Unique ID will be used for your community URLs."
+					/>
+				</v-col>
+				<v-col cols="12">
+					<text-field
+						v-model="payload.email"
+						name="email"
+						label="Email"
+						icon="mdi-at"
+						:errors="formErrors"
+					/>
+				</v-col>
+				<v-col cols="12">
 					<text-area
 						v-model="payload.description"
 						name="description"
@@ -66,6 +85,7 @@
 				Create
 			</v-btn>
 		</v-card-actions>
+		<register-progress-dialog />
 	</div>
 </template>
 
@@ -73,23 +93,23 @@
 import PostMixin from "@/mixin/PostMixin.js";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import Snack from "@/mixin/Snack.js";
-import {mapMutations} from "vuex";
 
 export default {
 	name: "Mainframe",
 	mixins: [PostMixin, RouteMixin, Snack],
 	components: {
-		TextArea: () => import("@/components/form/TextArea.vue"),
-		TextField: () => import("@/components/form/TextField.vue")
+		TextArea: () => import("@/components/form/TextArea"),
+		TextField: () => import("@/components/form/TextField"),
+		RegisterProgressDialog: () => import("@/views/home/community/register/components/RegisterProgressDialog")
 	},
 	data: () => ({
 		payload: {
 			name: null,
+			email: null,
 			description: null,
 			contains_adult_content: false,
 			type: "public"
 		},
-		formErrors: {},
 		radioGroup: [
 			{
 				icon: "mdi-account-box",
@@ -109,10 +129,9 @@ export default {
 				desc: "Only approved users can view and submit to this community",
 				value: "private"
 			},
-		]
+		],
 	}),
 	methods: {
-		...mapMutations("community", ["SET_COMMUNITY_IN_PROGRESS"]),
 		checkRequired(fieldList) {
 			let errObj = {}
 			fieldList.forEach(field => {
@@ -127,8 +146,8 @@ export default {
 					.then(() => {
 						if (Object.keys(this.formErrors).length === 0) {
 							this.toRegisterCommunityTheme()
-							this.SET_COMMUNITY_IN_PROGRESS(this.postInstance)
-							localStorage.setItem("CommunityCreateInProgress", JSON.stringify(this.postInstance))
+							this.$helper.setCommunityInProgress(this.postInstance)
+							this.$store.dispatch("community/setInProgress", this.postInstance)
 						}
 					})
 			}

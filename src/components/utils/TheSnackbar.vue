@@ -2,6 +2,7 @@
 	<v-snackbar
 		v-model="snack"
 		:timeout="snackTimeout"
+		:multi-line="multiline"
 	>
 		{{ snackText }}
 
@@ -28,6 +29,7 @@ export default {
 			snackText: "snack/text",
 			snackColor: "snack/color",
 			snackTimeout: "snack/timeout",
+			multiline: "snack/multiline"
 		}),
 		snack: {
 			get() {

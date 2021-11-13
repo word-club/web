@@ -7,11 +7,11 @@
 			<v-divider />
 			<v-card-text class="pa-0">
 				<v-list dense>
-					<v-list-item v-for="(item, index) in registrationSteps"
+					<v-list-item v-for="(item, index) in $helper.registrationSteps"
 						:key="index"
 						:to="item.to"
 						active-class="step-active"
-						:disabled="isStepCompleted(index)"
+						:disabled="isStepCompleted(item.state)"
 					>
 						<v-list-item-icon>
 							<v-icon size="22">
@@ -37,36 +37,22 @@ import {mapGetters} from "vuex";
 
 export default {
 	name: "RegisterSidebar",
-	data: ()=>({
-		registrationSteps: [
-			{title: "Community Mainframe", icon: "mdi-ballot", to: "/register-community/mainframe"},
-			{title: "Add Community Theme", icon: "mdi-camera-image", to: "/register-community/display"},
-			{title: "Set Community Rules", icon: "mdi-ruler-square-compass", to: "/register-community/rules"},
-			{title: "Community Hashtags", icon: "mdi-pound", to: "/register-community/hashtags"},
-			{title: "Authorize Your Community", icon: "mdi-check-bold", to: "/register-community/authorization"},
-			{title: "Community Administration", icon: "mdi-account-cowboy-hat", to: "/register-community/administration"},
-		]
-	}),
 	computed: {
-		...mapGetters({
-			community: "community/inProgress"
-		})
+		...mapGetters("community", ["inProgress"]),
 	},
 	methods: {
-		isStepCompleted(index) {
+		isStepCompleted(state) {
+			if (state === "0") return true
 			if(!this.community) {
-				return index !== 0
+				return true
 			} else {
-				if (index === 0) return true
-				else {
-					if (!this.community.create_progress) return false
-					const itemState = this.community.create_progress
-						.find(item => item.state === index.toString())
-					return (itemState)
-						// do not disable item if state is completed
-						? itemState.is_completed
-						: true
-				}
+				if (!this.community.create_progress) return false
+				const itemState = this.community.create_progress
+					.find(item => item.state === state)
+				return (itemState)
+					// do not disable item if state is completed
+					? itemState.is_completed
+					: true
 			}
 		}
 	}

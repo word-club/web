@@ -1,11 +1,11 @@
 const PostMixin = {
 	data: () => ({
 		posting: false,
-		postInstance: null
+		postInstance: null,
+		formErrors: {},
 	}),
 	methods: {
-		post(url, payload) {
-			console.log(payload)
+		post(url, payload = null) {
 			this.posting = true
 			return this
 				.$axios.post(url, payload)

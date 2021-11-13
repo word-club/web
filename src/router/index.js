@@ -67,7 +67,7 @@ const routes = [
 				}
 			},
 			{
-				path: "authorization",
+				path: "authorization/:code?",
 				name: "Community Authorization",
 				component: () => import("@/views/home/community/register/Authorization"),
 				meta: {

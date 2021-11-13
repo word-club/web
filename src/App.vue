@@ -124,6 +124,9 @@ export default {
 .px10 {
 	font-size: 10px !important;
 }
+.px11 {
+	font-size: 11px !important;
+}
 .px12 {
 	font-size: 12px !important;
 }

@@ -1,6 +1,6 @@
 <template>
 	<v-card outlined>
-		<v-img src="https://astronomy.com/~/media/2D5DFC8056C147ACBAC697D519596DBB.jpg"
+		<v-img :src="phantomPlanetImg"
 			height="40"
 		/>
 		<v-card-text class="avatar-line pt-0">
@@ -34,10 +34,9 @@
 <script>
 export default {
 	name: "BeginWithWordClub",
-	props: {},
-	data: () => ({}),
-	computed: {},
-	methods: {}
+	data: () => ({
+		phantomPlanetImg: require("@/assets/phantomplanets.jpg")
+	}),
 }
 </script>
 <style scoped lang="scss">

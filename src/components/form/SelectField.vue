@@ -10,7 +10,7 @@
 		:item-text="itemText"
 		autocomplete="off"
 		hide-details="auto"
-		:color="color"
+		:color="color" background-color="white"
 		:prepend-inner-icon="icon"
 		:error-messages="getErrorMessage"
 		@input="$emit('input', $event)"

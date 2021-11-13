@@ -16,11 +16,11 @@
 export default {
 	name: "Sidebar",
 	components: {
-		HomeFooter: () => import("@/components/footer/HomeFooter.vue"),
-		TrendingCommunities: () => import("@/views/home/components/TrendingCommunities.vue"),
-		TryWordClubPremium: () => import("@/views/home/components/TryWordClubPremium.vue"),
-		BeginWithWordClub: () => import("@/views/home/components/BeginWithWordClub.vue"),
-		RecentlyViewedPosts: () => import("@/views/home/components/RecentlyViewedPosts.vue"),
+		TrendingCommunities: () => import("@/views/home/components/TrendingCommunities"),
+		TryWordClubPremium: () => import("@/views/home/components/TryWordClubPremium"),
+		BeginWithWordClub: () => import("@/views/home/components/BeginWithWordClub"),
+		RecentlyViewedPosts: () => import("@/views/home/components/RecentlyViewedPosts"),
+		HomeFooter: () => import("@/components/footer/HomeFooter"),
 	},
 }
 </script>

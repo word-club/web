@@ -1,21 +1,16 @@
 const state = {
-	hashtags: [
-		{id: 1, tag: "Programming"},
-		{id: 2, tag: "Vuetify"},
-		{id: 3, tag: "Vue"},
-		{id: 4, tag: "Design"},
-	],
-	errors: {}
+	hashtags: []
 }
 
 const getters = {
 	list: state => state.hashtags,
-	errorList: state => state.errors
 }
 
 const actions = {}
 
-const mutations = {}
+const mutations = {
+	SET_LIST: (state, value) => state.hashtags = value
+}
 
 export default {
 	namespaced: true,

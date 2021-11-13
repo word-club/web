@@ -40,10 +40,15 @@
 				<v-btn color="grey darken-4" outlined
 					:to="{name: 'Community Authorization'}"
 				>Authorization</v-btn>
+				<v-btn color="grey lighten-1"
+					@click="skip"
+				>
+					Skip
+				</v-btn>
 				<v-spacer />
 				<v-btn color="grey" dark>Skip</v-btn>
 				<v-btn color="primary"
-					@click="toCommunityDetail(communityInProgress.unique_id)"
+					@click="toCommunityDetail(community.unique_id)"
 				>Submit</v-btn>
 			</v-card-actions>
 		</div>
@@ -54,10 +59,11 @@
 import UserSelect from "@/components/form/UserSelect.vue";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import {mapGetters} from "vuex";
+import PostMixin from "@/mixin/PostMixin.js";
 export default {
 	name: "Administration",
 	components: {UserSelect},
-	mixins: [RouteMixin],
+	mixins: [RouteMixin, PostMixin],
 	data: () => ({
 		community: {
 			admins: [],
@@ -65,11 +71,26 @@ export default {
 		}
 	}),
 	computed: {
-		...mapGetters({
-			communityInProgress: "community/inProgress"
-		})
+		...mapGetters("community", ["inProgress"]),
+		state() {
+			return this.community.create_progress.find(item => item.state === "5")
+		},
 	},
-	methods: {}
+	methods: {
+		skip() {
+			if (!this.state.is_skipped) {
+				this.post(
+					this.$util.format(
+						this.$urls.community.skipProgress,
+						this.state.id
+					)
+				).then(() => {
+					this.$helper.setCommunityInProgress(this.postInstance)
+				})
+			}
+			this.$router.push({name: "Community Authorization"})
+		},
+	}
 }
 </script>
 

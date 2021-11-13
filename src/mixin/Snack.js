@@ -1,10 +1,15 @@
+import {mapMutations} from "vuex";
+
 const Snack = {
 	methods: {
-		async openSnack({text, color = "error", timeout = 3000}) {
-			await this.$store.dispatch("snack/setState", true)
-			await this.$store.dispatch("snack/setTimeout", timeout)
-			await this.$store.dispatch("snack/setColor", color)
-			await this.$store.dispatch("snack/setText", text)
+		...mapMutations("snack", ["SET_SNACK", "SE_COLOR", "SE_TEXT", "SET_LINE", "SE_TIMEOUT"]),
+		openSnack(text, {color = "error", timeout = 3000, multiline = false} = {}) {
+			console.log(text, multiline)
+			this.SET_SNACK(true)
+			this.SE_TIMEOUT(timeout)
+			this.SET_LINE(multiline)
+			this.SE_TEXT(text)
+			this.SE_COLOR(color)
 		},
 	}
 }

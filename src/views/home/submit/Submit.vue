@@ -46,7 +46,9 @@
 							<v-icon class="submit-tab-item-icon">
 								{{ item.icon }}
 							</v-icon>
-							<div class="submit-tab-item-title">
+							<div class="submit-tab-item-title"
+								v-if="$vuetify.breakpoint.width > 300"
+							>
 								{{ item.title }}
 							</div>
 							<v-scale-transition>
@@ -116,7 +118,7 @@
 								>
 									<v-card
 										:min-height="files.length ? 100 : 200" flat
-										class="d-flex align-center justify-center primary-border"
+										class="d-flex align-center justify-center primary-border flex-wrap"
 										@drop="dragFile"
 									>
 										<input
@@ -129,7 +131,7 @@
 											accept="image/*,.webm,.mp4,.mpeg,.flv,.mov,.MOV"
 											@change="fileInputChanged"
 										>
-										<div class="weight-500 primary--text">
+										<div class="weight-500 primary--text text-center">
 											Drag and drop images or
 										</div>
 										<div class="px-2">
@@ -182,10 +184,10 @@
 							</v-col>
 						</v-row>
 						<v-divider class="mx-2" />
-						<v-card-actions>
+						<v-card-actions class="flex-wrap">
 							<v-spacer />
 							<v-btn rounded
-								depressed color="grey lighten-2"
+								depressed color="grey lighten-2 ma-1"
 								class="weight-600 grey--text text--darken-3"
 							>
 								Save as Draft
@@ -193,7 +195,7 @@
 							<v-btn rounded
 								dark depressed
 								color="primary"
-								class="weight-600"
+								class="weight-600 ma-1"
 							>
 								Publish
 							</v-btn>
@@ -226,7 +228,7 @@ export default {
 			{title: "Post", icon: "mdi-post", active: true},
 			{title: "Images/Videos", icon: "mdi-image-size-select-actual", active: false},
 			{title: "Link", icon: "mdi-link-variant", active: false},
-			{title: "Poll", icon: "mdi-chart-box-outline", active: false},
+			// {title: "Poll", icon: "mdi-chart-box-outline", active: false},
 		],
 		post: {
 			community: null,
@@ -295,12 +297,13 @@ export default {
 		border-right: 1px solid #bbbbbb;
 	}
 	.submit-tab-item:nth-child(3) {
-		border-right: 1px solid #bbbbbb;
-	}
-	.submit-tab-item:nth-child(4) {
 		border-top-right-radius: 4px;
 		border-right: 1px solid #bbbbbb;
 	}
+	//.submit-tab-item:nth-child(4) {
+	//	border-top-right-radius: 4px;
+	//	border-right: 1px solid #bbbbbb;
+	//}
 	.submit-tab-item:hover {
 		background-color: #e7e7e7;
 	}
@@ -314,7 +317,7 @@ export default {
 		border-top: 1px solid #bbbbbb;
 		border-bottom: 1px solid #bbbbbb;
 		cursor: pointer;
-		width: 25%;
+		width: 33.333%;
 		display: flex;
 		justify-content: center;
 		align-items: center;

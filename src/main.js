@@ -13,10 +13,17 @@ Vue.config.productionTip = false
 
 Vue.use(moment)
 
+function generateFullLink(link) {
+	if (link.startsWith("http://localhost:8000")) return link
+	return "http://localhost:8000" + link
+}
+
 Vue.prototype.$axios = AXIOS
 Vue.prototype.$moment = moment
 Vue.prototype.$helper = helper
 Vue.prototype.$urls = require("@/urls.json")
+Vue.prototype.$util = require("util")
+Vue.prototype.$link = generateFullLink
 
 
 Vue.component("HomeSmallFooter", () => import("@/components/footer/HomeSmallFooter"))

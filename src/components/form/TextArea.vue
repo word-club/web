@@ -1,7 +1,7 @@
 <template>
 	<v-textarea
-		:value="value"
-		auto-grow
+		:value="value" auto-grow
+		background-color="white"
 		outlined clearable
 		hide-details="auto"
 		:label="label.toUpperCase()"
@@ -23,27 +23,11 @@ export default {
 		value: {
 			required: true
 		},
-		name: {
-			type: String,
-			required: true
-		},
-		label: {
-			type: String,
-			required: true
-		},
-		counter: {
-			type: String,
-			required: true
-		},
-		errors: {
-			type: Object,
-			required: false,
-			default: () => {}
-		},
-		icon: {
-			type: String,
-			required: true
-		},
+		name: {type: String, required: true},
+		label: {type: String, required: true},
+		counter: {type: String, required: true},
+		errors: {type: Object, required: false, default: () => {}},
+		icon: {type: String, required: true},
 		color: {type: String, default: "primary"}
 	},
 	emits: ["input", "change"]

@@ -15,47 +15,63 @@
 			</v-card-subtitle>
 		</v-card-text>
 		<v-divider class="mx-3"/>
-		<v-card-text v-for="(rule, index) in rules"
-			:key="index"
-		>
-			<v-subheader class="px-1">
-				<span class="text-decoration-underline">Rule {{ index+1 }}</span>
-				<v-spacer></v-spacer>
-				<v-fab-transition>
-					<v-btn v-if="rules.length > 1" x-small color="error"
-						@click="removeRule(index)"
-					>Remove rule</v-btn>
-				</v-fab-transition>
-			</v-subheader>
+		<v-card-text v-if="community.rules && community.rules.length">
+			<v-list>
+				<v-subheader class="px-4 weight-500">Rules</v-subheader>
+				<v-divider/>
+				<v-list-item
+					v-for="(rule, index) in community.rules"
+					:key="index"
+				>
+					<v-list-item-avatar color="grey lighten-2 weight-300 px22">
+						{{index + 1}}
+					</v-list-item-avatar>
+					<v-list-item-content>
+						<v-list-item-title>{{rule.title}}</v-list-item-title>
+						<v-list-item-subtitle>{{rule.description}}</v-list-item-subtitle>
+					</v-list-item-content>
+					<v-list-item-action>
+						<v-btn x-small color="error" @click="removeRule(rule.id, index)">Remove rule</v-btn>
+					</v-list-item-action>
+				</v-list-item>
+			</v-list>
+		</v-card-text>
+		<v-card-text>
 			<text-field
 				v-model="rule.title"
 				icon="mdi-format-title"
 				label="Rule Title"
 				name="title"
+				:errors="formErrors"
 			/>
 			<div class="py-4" />
 			<text-area
 				v-model="rule.description"
 				icon="mdi-subtitles"
 				label="Rule Description"
-				name="title"
+				name="description"
 				counter="512"
+				:errors="formErrors"
 			/>
 		</v-card-text>
 		<v-card-actions class="flex-wrap pa-3">
 			<v-btn class="ma-1" outlined color="grey darken-3"
 				:to="{name: 'Community Display'}"
-			>Display</v-btn>
+			>
+				Display
+			</v-btn>
 			<v-btn depressed color="grey lighten-1"
-				:to="{name: 'Community Hashtags'}"
+				@click="skip"
 				class="ma-1" dark
 			>
 				Skip
 			</v-btn>
 			<v-spacer />
-			<v-btn class="ma-1" outlined color="primary" @click="addAnotherRule">Add Another</v-btn>
+			<v-btn class="ma-1" outlined color="primary" @click="saveAndAddAnotherRule">
+				Save Add Another
+			</v-btn>
 			<v-btn
-				:to="{name: 'Community Hashtags'}"
+				@click="next"
 				color="primary" class="ma-1 weight-600 px15"
 			>
 				Next
@@ -67,27 +83,85 @@
 <script>
 import TextArea from "@/components/form/TextArea.vue";
 import TextField from "@/components/form/TextField.vue";
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
+import PostMixin from "@/mixin/PostMixin.js";
+import DeleteMixin from "@/mixin/DeleteMixin.js";
+import Snack from "@/mixin/Snack.js";
 
 export default {
 	name: "Rules",
+	mixins: [Snack, PostMixin, DeleteMixin],
 	components: {TextArea, TextField},
 	data: () => ({
-		rules: [
-			{title: null, description: null}
-		]
+		rule: {title: null, description: null}
 	}),
 	computed: {
-		...mapGetters({
-			community: "community/inProgress"
-		})
+		...mapGetters("community", ["inProgress"]),
+		state() {
+			return this.community.create_progress
+				.find(item => item.state === "2")
+		},
 	},
 	methods: {
-		addAnotherRule() {
-			this.rules.push({title: null, description: null})
+		...mapMutations("community", ["SET_IN_PROGRESS"]),
+		saveAndAddAnotherRule() {
+			// this.rules.push({title: null, description: null})
+			this.post(
+				this.$util.format(
+					this.$urls.community.addRule,
+					this.community.id
+				),
+				{...this.rule}
+			).then(() => {
+				if (Object.keys(this.postInstance).length) {
+					this.$helper.setCommunityInProgress(this.postInstance)
+					this.SET_IN_PROGRESS(this.postInstance)
+					this.rule = {title: null, description: null}
+				}
+			})
 		},
-		removeRule(index) {
-			this.rules.splice(index, 1)
+		removeRule(ruleID) {
+			this.delete(
+				this.$util.format(
+					this.$urls.community.removeRule,
+					ruleID
+				)
+			).then(() => {
+				this.$helper.setCommunityInProgress(this.deleteResponse)
+				this.SET_IN_PROGRESS(this.deleteResponse)
+			})
+		},
+		skip() {
+			if (!this.state.is_skipped) {
+				this.post(
+					this.$util.format(
+						this.$urls.community.skipProgress,
+						this.state.id
+					)
+				).then(() => {
+					this.$helper.setCommunityInProgress(this.postInstance)
+				})
+			}
+			this.$router.push({name: "Community Hashtags"})
+		},
+		next() {
+			let messages = []
+			if (this.community.rules.length < 3) messages.push("You must add three rule to process into the next step.")
+			if (messages.length >= 1) {
+				this.openSnack(messages.join("\n"), {multiline: true})
+			} else {
+				this.post(
+					this.$util.format(
+						this.$urls.community.completeProgress,
+						this.state.id
+					)
+				)
+					.then(() => {
+						this.$helper.setCommunityInProgress(this.postInstance)
+						this.SET_IN_PROGRESS(this.postInstance)
+						this.$router.push({name: "Community Hashtags"})
+					})
+			}
 		}
 	}
 }

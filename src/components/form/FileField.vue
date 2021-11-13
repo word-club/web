@@ -1,9 +1,9 @@
 <template>
 	<v-file-input
-		:value="value"
+		:value="value" dense
 		outlined small-chips show-size
 		:accept="accept" :label="label.toUpperCase()"
-		clearable color="primary"
+		clearable color="primary" background-color="white"
 		hide-details="auto" :placeholder="placeholder"
 		prepend-icon="" :prepend-inner-icon="icon"
 		:error-messages="getErrorMessage"

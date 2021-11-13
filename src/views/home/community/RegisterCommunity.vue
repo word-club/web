@@ -4,27 +4,31 @@
 			color="transparent" flat
 			max-width="800"
 		>
-			<div class="py-4" />
 			<transition name="view">
 				<router-view />
 			</transition>
+			<create-pending-dialog />
 		</v-card>
 	</div>
 </template>
 
 <script>
-import {mapMutations} from "vuex";
+import CheckPendingCommunities from "@/mixin/CheckPendingCommunities.js";
 
 export default {
 	name: "RegisterCommunity",
-	created() {
-		const itemInProgress = localStorage.getItem("CommunityCreateInProgress")
-		if (itemInProgress) {
-			this.SET_COMMUNITY_IN_PROGRESS(JSON.parse(itemInProgress))
-		}
+	mixins: [CheckPendingCommunities],
+	components: {
+		CreatePendingDialog: () => import("@/views/home/community/register/components/CreatePendingDialog.vue")
 	},
-	methods: {
-		...mapMutations("community", ["SET_COMMUNITY_IN_PROGRESS"])
+	created() {
+		const itemInProgress = this.$helper.getCommunityInProgress()
+		if (itemInProgress) {
+			this.$store.dispatch("community/setInProgress", itemInProgress)
+		} else {
+			this.$store.dispatch("community/setInProgress", null)
+			this.checkForPendingCommunities()
+		}
 	}
 }
 </script>
