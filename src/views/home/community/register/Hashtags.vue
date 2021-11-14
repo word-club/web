@@ -60,9 +60,6 @@ import PostMixin from "@/mixin/PostMixin.js";
 export default {
 	name: "Hashtags",
 	mixins: [PostMixin],
-	components: {
-		TagField: () => import("@/components/form/TagField.vue")
-	},
 	data: () => ({
 		payload: {
 			tags: []

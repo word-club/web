@@ -1,7 +1,7 @@
 import axios from "axios"
 import $helper from "@/helper.js";
 
-const BACKEND_HOST = "http://localhost:8000"
+const BACKEND_HOST = process.env.VUE_APP_BACKEND_HOST
 
 const AXIOS = {
 	setHeaders: function (contentType) {

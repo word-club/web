@@ -8,9 +8,9 @@ const state = {
 
 const mutations = {
 	SET_SNACK: (state, value) => state.snack = value,
-	SE_TEXT: (state, value) => state.text = value,
-	SE_COLOR: (state, value) => state.color = value,
-	SE_TIMEOUT: (state, value) => state.timeout = value,
+	SET_TEXT: (state, value) => state.text = value,
+	SET_COLOR: (state, value) => state.color = value,
+	SET_TIMEOUT: (state, value) => state.timeout = value,
 	SET_LINE: (state, value) => state.multiline = value
 }
 

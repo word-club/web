@@ -2,7 +2,7 @@
 	<!-- eslint-disable-next-line -->
   <v-autocomplete :search-input.sync="search"
 		:value="value" attach=""
-		:items="communities.results"
+		:items="communities"
 		:loading="isLoading"
 		outlined dense
 		chips small-chips
@@ -49,7 +49,6 @@ export default {
 	},
 	watch: {
 		search(val) {
-			if (!this.fetchUrl) return
 			if (this.isLoading) return
 			this.isLoading = true
 

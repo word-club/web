@@ -81,6 +81,21 @@ export default {
 		homeRoute() {
 			return this.$route.meta["home"]
 		}
+	},
+	created() {
+		this.checkForLoggedInUser()
+	},
+	methods: {
+		checkForLoggedInUser() {
+			const token = this.$helper.getAccessToken()
+			const currentUser = this.$helper.getCurrentUser()
+			if (token && currentUser) this.$store.dispatch("user/setCurrentUser", currentUser)
+			else {
+				this.$helper.clearAccessToken()
+				this.$helper.clearCurrentUser()
+				this.$store.dispatch("user/setCurrentUser", null)
+			}
+		}
 	}
 }
 </script>
@@ -91,8 +106,70 @@ export default {
 	box-sizing: border-box;
 }
 :root {
-	--primary: #1975d1
+	--primary: #1975d1;
+	--orange: #FF9800;
+	--indigo: #3F51B5;
+	--teal: #009688;
+	--red: #F44336;
+	--pink: #E91E63;
+	--green: #4CAF50;
+	--grey: #607D8B;
+	--deep-purple: #673AB7;
+	--amber: #FFC107;
 }
+
+.primary--text {color: var(--primary) !important;}
+.orange--text {color: var(--orange) !important;}
+.indigo--text {color: var(--indigo) !important;}
+.teal--text {color: var(--teal) !important;}
+.red--text {color: var(--red) !important;}
+.pink--text {color: var(--pink) !important;}
+.green--text {color: var(--green) !important;}
+.grey--text {color: var(--grey) !important;}
+.deep-purple--text {color: var(--deep-purple) !important;}
+.amber--text {color: var(--amber) !important;}
+
+.primary-border {
+	border: 2px solid var(--primary)!important;
+	background-color: whitesmoke;
+}
+.orange-border {
+	border: 2px solid var(--orange)!important;
+	background-color: whitesmoke;
+}
+.indigo-border {
+	border: 2px solid var(--indigo)!important;
+	background-color: whitesmoke;
+}
+.teal-border {
+	border: 2px solid var(--teal) !important;
+	background-color: whitesmoke;
+}
+.red-border {
+	border: 2px solid var(--red) !important;
+	background-color: whitesmoke;
+}
+.pink-border {
+	border: 2px solid var(--pink) !important;
+	background-color: whitesmoke;
+}
+.green-border {
+	border: 2px solid var(--green) !important;
+	background-color: whitesmoke;
+}
+.grey-border {
+	border: 2px solid var(--grey) !important;
+	background-color: whitesmoke;
+}
+.deep-purple-border {
+	border: 2px solid var(--deep-purple) !important;
+	background-color: whitesmoke;
+}
+.amber-border {
+	border: 2px solid var(--amber) !important;
+	background-color: whitesmoke;
+}
+
 .app-card {
 	min-height: calc(100vh - 55px) !important;
 }

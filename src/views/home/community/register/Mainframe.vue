@@ -1,6 +1,11 @@
 <template>
 	<div>
-		<v-card-title>Register a community</v-card-title>
+		<v-card color="primary" dark class="mx-2">
+			<v-card-title class="d-flex align-center flex-wrap">
+				<v-icon large dark>mdi-plus</v-icon>
+				<span class="px-2">New community</span>
+			</v-card-title>
+		</v-card>
 		<div class="px-3">
 			<v-divider />
 		</div>
@@ -98,8 +103,6 @@ export default {
 	name: "Mainframe",
 	mixins: [PostMixin, RouteMixin, Snack],
 	components: {
-		TextArea: () => import("@/components/form/TextArea"),
-		TextField: () => import("@/components/form/TextField"),
 		RegisterProgressDialog: () => import("@/views/home/community/register/components/RegisterProgressDialog")
 	},
 	data: () => ({

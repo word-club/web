@@ -82,7 +82,6 @@ import PostMixin from "@/mixin/PostMixin.js";
 
 export default {
 	name: "LoginDialog",
-	components: {TextField: () => import("@/components/form/TextField.vue")},
 	mixins: [Snack, PostMixin],
 	data: () => ({
 		auth: {

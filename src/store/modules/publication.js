@@ -1,9 +1,6 @@
-import $axios from "@/axios"
-const urls = require("@/urls.json")
-
-
 const state = {
-	publications: {},
+	publications: [],
+	drafts: {},
 	toView: {
 		id: 5896,
 		community: {
@@ -37,16 +34,31 @@ const state = {
 			"quis ac lectus.",
 		image: "https://static3.srcdn.com/wordpress/wp-content/uploads/2019/11/Harry-Potter-wand-Harry-Potter-Movies.jpg"
 	},
-	toEdit: {},
-	errors: {},
-	createInProgress: {}
+	toEdit: null,
+	createInProgress: null
 }
 
 const mutations = {
-	SET_PUBLICATIONS: (state, value) => state.publications = value,
-	SET_PUBLICATION_FOR_EDIT: (state, value) => state.toEdit = value,
-	SET_PUBLICATION_IN_PROGRESS: (state, value) => state.createInProgress = value,
-	SET_FORM_ERRORS: (state, value) => state.errors = value
+	SET_LIST: (state, value) => state.publications = value,
+	SET_FOR_EDIT: (state, value) => state.toEdit = value,
+	SET_TO_VIEW: (state, value) => state.toView = value,
+	SET_IN_PROGRESS: (state, value) => state.createInProgress = value,
+	SET_DRAFTS: (state, value) => state.drafts = value,
+	ADD_TO_DRAFTS(state, value) {
+		state.drafts.results.push(value)
+	},
+	REMOVE_DRAFT_ITEM(state, ID) {
+		const toRemove = state.drafts.results.find(item => item.id === ID)
+		const index = state.drafts.results.indexOf(toRemove)
+		state.drafts.results.splice(index, 1)
+		state.drafts.count --
+	},
+	REMOVE_IMAGE_ITEM(state, draftId, imageId) {
+		const draft = state.drafts.results.find(item=>item.id === draftId)
+		const toRemove = draft.images.find(item => item.id === imageId)
+		const index = draft.images.indexOf(toRemove)
+		draft.images.splice(index, 1)
+	}
 }
 
 const getters = {
@@ -54,19 +66,25 @@ const getters = {
 	inView: state => state.toView,
 	toEdit: state => state.toEdit,
 	inProgress: state => state.createInProgress,
-	errorList: state => state.errors
+	draftList: state => state.drafts
 }
 
 const actions = {
-	async filter({ commit }, payload) {
-		try {
-			commit("SET_PUBLICATIONS", await $axios.getWithPayload(urls.publication.list, payload))
-			return true
-		} catch {
-			return false
-		}
+	setDrafts({commit}, value) {
+		commit("SET_DRAFTS", value)
 	},
-
+	setInProgress({commit}, value) {
+		commit("SET_IN_PROGRESS", value)
+	},
+	addToDraft({commit}, value) {
+		commit("ADD_TO_DRAFTS", value)
+	},
+	removeDraftItem({commit}, ID) {
+		commit("REMOVE_DRAFT_ITEM", ID)
+	},
+	removeImageItem({commit}, draftId, itemId) {
+		commit("REMOVE_IMAGE_ITEM", draftId, itemId)
+	},
 }
 
 export default {

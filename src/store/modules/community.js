@@ -1,5 +1,5 @@
 const state = {
-	communities: null,
+	communities: [],
 	toView: null,
 	toEdit: null,
 	createInProgress: null,

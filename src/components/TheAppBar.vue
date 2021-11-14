@@ -162,9 +162,6 @@ export default {
 			} else { return this.$route.name }
 		}
 	},
-	created() {
-		this.checkForLoggedInUser()
-	},
 	methods: {
 		routeNameIs(name) {
 			if (this.$route && this.$route.name) {
@@ -179,17 +176,7 @@ export default {
 		login() {
 			this.$store.dispatch("setLoginState", true)
 		},
-		signUp() {},
-		checkForLoggedInUser() {
-			const token = this.$helper.getAccessToken()
-			const currentUser = this.$helper.getCurrentUser()
-			if (token && currentUser) this.$store.dispatch("user/setCurrentUser", currentUser)
-			else {
-				this.$helper.clearAccessToken()
-				this.$helper.clearCurrentUser()
-				this.$store.dispatch("user/setCurrentUser", null)
-			}
-		}
+		signUp() {}
 	}
 }
 </script>

@@ -70,14 +70,12 @@
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
 import {mapGetters} from "vuex";
-import UserHoverBox from "@/components/utils/UserHoverBox.vue";
-import CommunityHoverBox from "@/components/utils/CommunityHoverBox.vue";
 
 export default {
 	name: "Publication",
 	components: {
-		CommunityHoverBox,
-		UserHoverBox,
+		UserHoverBox: () => import("@/components/utils/UserHoverBox.vue"),
+		CommunityHoverBox: () => import("@/components/utils/CommunityHoverBox.vue"),
 		Actions: () => import("@/views/home/publication/Actions.vue"),
 		CommentList: () => import("@/views/home/publication/CommentList.vue"),
 		CommentField: () => import("@/components/form/CommentField.vue")

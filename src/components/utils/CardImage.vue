@@ -4,15 +4,18 @@
 		class="card-image"
 		dark
 	>
-		<v-btn small icon
-			class="fullscreen-btn"
-			@click="fullscreen=true"
-		>
-			<v-icon small>
-				mdi-fullscreen
-			</v-icon>
-		</v-btn>
-		<slot />
+		<v-card-actions class="actions flex-wrap align-center">
+			<v-btn icon
+				class="fullscreen-btn"
+				@click="fullscreen=true"
+			>
+				<v-icon>
+					mdi-fullscreen
+				</v-icon>
+			</v-btn>
+			<v-spacer />
+			<slot />
+		</v-card-actions>
 		<v-dialog v-model="fullscreen"
 			fullscreen
 		>
@@ -71,6 +74,14 @@ export default {
 <style scoped lang="scss">
 .card-image {
 	position: relative;
+	.actions {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		background-color: #184a617a;
+		z-index: 1;
+		height: 35px;
+	}
 	.fullscreen-btn {
 		position: absolute;
 		left: 4px;

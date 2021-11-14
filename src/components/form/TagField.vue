@@ -2,11 +2,11 @@
 	<v-autocomplete
 		:value="value"
 		outlined :label="label"
-		prepend-inner-icon="mdi-pound" multiple
-		:items="hashtags"
-		item-value="id"
-		item-text="tag" background-color="white"
-		placeholder="Start typing"
+		:prepend-inner-icon="icon"
+		multiple :items="hashtags"
+		item-value="id" item-text="tag"
+		background-color="white"
+		:placeholder="placeholder"
 		:loading="fetching" name="tags"
 		:color="color" hide-details="auto"
 		@change="$emit('change', $event)"
@@ -45,6 +45,8 @@ export default {
 		value: {required: true},
 		label: {type: String, default: "Add hashtags"},
 		color: {type: String, default: "primary"},
+		icon: {type:String, default: "mdi-pound"},
+		placeholder: {type:String, default: "Start typing"},
 		errors: {type: Object, default: () => {}}
 	},
 	data: () => ({

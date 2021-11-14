@@ -47,13 +47,15 @@
 		"completeRegistration": "community/%s/complete-registration"
 	},
 	"publication": {
-		"list": "publication/",
+		"list": "s/publication/",
+		"retrieve": "s/publication/%s/",
+		"add": "publication/",
 		"detail": "publication/%s/",
 		"publish": "publication/%s/publish/",
 		"addTag": "publication/%s/tag/",
 		"tagDetail": "publication-tag/%s/",
 		"addImage": "publication/%s/image/",
-		"imageDetail": "publication-imgage/%s/",
+		"imageDetail": "publication-image/%s/",
 		"addImageUrl": "publication/%s/image-url/",
 		"imageUrlDetail": "publication-image-url/%s/",
 		"addUpVote": "publication/%s/up-vote/",
@@ -67,7 +69,7 @@
 		"addReport": "publication/%s/report/",
 		"removeReport": "publication-report/%s/",
 		"addLink": "publication/%s/link/",
-		"removeLink": "publication-link/%s/"
+		"linkDetail": "publication-link/%s/"
 	},
 	"comment": {
 		"add": "publication/%s/comment/",

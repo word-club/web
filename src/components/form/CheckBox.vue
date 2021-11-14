@@ -28,7 +28,7 @@ export default {
 	.v-input__control {
 		.v-input__slot {
 			label {
-				color: $primary !important;
+				color: var(--primary) !important;
 			}
 		}
 	}
