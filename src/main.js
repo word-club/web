@@ -32,7 +32,7 @@ Vue.component("TagField", () => import("@/components/form/TagField"))
 Vue.component("UserSelect", () => import("@/components/form/UserSelect"))
 Vue.component("FileField", () => import("@/components/form/FileField"))
 Vue.component("SelectField", () => import("@/components/form/SelectField"))
-Vue.component("CardImg", () => import("@/components/utils/CardImage.vue"))
+Vue.component("CardImg", () => import("@/components/utils/CardImage"))
 
 new Vue({
 	router,

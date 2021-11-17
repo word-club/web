@@ -5,21 +5,20 @@
 	>
 		<add-post-box v-if="currentUser" class="my-4" />
 		<hot-bar class="my-4" />
-		<publication-instance v-for="n in 5"
-			:key="n" class="mb-4"
-		/>
+		<feed-list />
 	</v-card>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
+import FeedList from "@/components/feeds/FeedList.vue";
 
 export default {
 	name: "Home",
 	components: {
+		FeedList,
 		HotBar: () => import("@/views/home/components/HotBar"),
 		AddPostBox: () => import("@/views/home/components/AddPostBox"),
-		PublicationInstance: () => import("@/views/home/publication/Instance")
 	},
 	computed: {
 		...mapGetters({

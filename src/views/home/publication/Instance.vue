@@ -2,49 +2,11 @@
 	<v-card outlined
 		class="publication-instance"
 	>
-		<v-card-text class="d-flex align-center pa-2 flex-wrap justify-space-between">
-			<community-hover-box
-				v-if="$route.name !== 'Community'"
-				:community="publication.community"
-			/>
-			<v-icon
-				v-if="$route.name !== 'Community'"
-			>
-				mdi-circle-small
-			</v-icon>
-			<div v-else
-				class="px-1"
-			/>
-			<user-hover-box :user="publication.created_by" />
-			<v-icon>mdi-circle-small</v-icon>
-			<div class="publication-timestamp">
-				{{ $moment(publication.timestamp).fromNow() }}
-			</div>
-			<v-spacer />
-			<v-btn icon>
-				<v-icon>mdi-dots-horizontal</v-icon>
-			</v-btn>
-		</v-card-text>
-		<v-card-title class="pt-1 cursor publication-title"
-			@click="toPublicationDetail(publication.id)"
-		>
-			{{ publication.title }}
-		</v-card-title>
+
 		<v-card-subtitle class="px16">
 			{{ publication.content }}
 		</v-card-subtitle>
-		<v-card-text class="pa-0">
-			<v-card
-				dark tile
-				flat
-				height="350"
-			>
-				<v-img :src="publication.image"
-					height="350"
-					contain
-				/>
-			</v-card>
-		</v-card-text>
+
 		<v-card-actions class="flex-wrap justify-space-between">
 			<v-btn depressed>
 				<v-icon left>
@@ -105,23 +67,29 @@
 </template>
 
 <script>
-import RouteMixin from "@/mixin/RouteMixin.js";
-import {mapGetters} from "vuex";
 import CommunityHoverBox from "@/components/utils/CommunityHoverBox.vue";
 import UserHoverBox from "@/components/utils/UserHoverBox.vue";
 
 export default {
 	name: "PublicationInstance",
+	prop: {
+		publication: {
+			type: Object,
+			default: () => ({
+				title: null,
+				content: null,
+				tags: null,
+				image: null,
+				community: null
+			})
+		}
+	},
 	components: {UserHoverBox, CommunityHoverBox},
-	mixins: [RouteMixin],
 	data: () => ({
 		selected: null,
 		communityHover: false
 	}),
 	computed: {
-		...mapGetters({
-			publication: "publication/inView"
-		}),
 		publicationActions() {
 			return [
 				{icon: "mdi-bookmark-outline", title: "Save"},
@@ -135,15 +103,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.publication-instance:hover {
-	border: 1px solid black !important;
-}
-.v-btn {
-	font-size: 12px !important;
-	font-weight: 600 !important;
-	color: #585858;
-}
-.publication-title {
-	font-size: 22px;
-}
+
 </style>

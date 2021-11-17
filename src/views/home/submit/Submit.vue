@@ -16,6 +16,7 @@
 				Start new
 			</v-btn>
 			<v-btn
+				v-if="drafts.count > 0"
 				text rounded
 				color="primary"
 				@click="draftDialog = true"
@@ -457,8 +458,8 @@ export default {
 						shortcut: "CMD+SHIFT+H",
 						config: {
 							placeholder: "Enter a header",
-							levels: [2, 3, 4],
-							defaultLevel: 2
+							levels: [1, 2],
+							defaultLevel: 1
 						},
 						tunes: ["alignmentTune"]
 					},
@@ -472,6 +473,7 @@ export default {
 							quotePlaceholder: "Enter a quote",
 							captionPlaceholder: "Quote's author",
 						},
+						tunes: []
 					},
 					Marker: {
 						class: Marker,
@@ -616,8 +618,9 @@ export default {
 					this.$urls.publication.detail, this.inProgress.id
 				)
 				payload["tags"] = this.getActiveTabsString()
-				if (payload.type === "editor") {
-					payload["content"] = await this.editor.save()
+				if (this.inProgress.type === "editor") {
+					const content = await this.editor.save()
+					payload["content"] = JSON.stringify(content)
 				}
 				// send publication patch request
 				await this.patch(url, payload)

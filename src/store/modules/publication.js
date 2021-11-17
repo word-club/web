@@ -1,39 +1,10 @@
+const urls = require("@/urls.json").publication
+import axios from "@/axios";
+
 const state = {
-	publications: [],
+	publications: { results: []},
 	drafts: {},
-	toView: {
-		id: 5896,
-		community: {
-			id: 5896,
-			unique_id: "TajMahalWonderers",
-			name: "Taj Mahal Wonderers",
-			quote: "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Cras ultricies ligula sed magna dictum porta.",
-			timestamp: "2021-10-21T22:07:24.169676+05:45",
-			theme: {
-				color: "teal"
-			},
-			settings: {
-				what_to_call_subscribers: "taj mahal wonderers",
-				feeling_after_subscribing: "being quite literally awesome"
-			},
-			avatar: {
-				image: "https://images7.alphacoders.com/803/803146.jpg"
-			},
-			cover: {
-				image: "https://cdn.onlyinyourstate.com/wp-content/uploads/2016/01/15435913689_373933d80f_k.jpg"
-			},
-		},
-		created_by: {
-			username: "kiranparajuli589"
-		},
-		timestamp: "2021-10-21T22:07:24.169676+05:45",
-		title: "The first trailer for the film adaptation Uncharted",
-		content: "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui." +
-			" Vivamus suscipit tortor eget felis porttitor volutpat. Pellentesque in ipsum" +
-			" id orci porta dapibus. Curabitur non nulla sit amet nisl tempus convallis " +
-			"quis ac lectus.",
-		image: "https://static3.srcdn.com/wordpress/wp-content/uploads/2019/11/Harry-Potter-wand-Harry-Potter-Movies.jpg"
-	},
+	toView: null,
 	toEdit: null,
 	createInProgress: null
 }
@@ -70,6 +41,12 @@ const getters = {
 }
 
 const actions = {
+	filter({commit}, payload) {
+		return axios.getWithPayload(urls.list, payload)
+			.then(res => {
+				commit("SET_LIST", res)
+			})
+	},
 	setDrafts({commit}, value) {
 		commit("SET_DRAFTS", value)
 	},

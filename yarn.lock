@@ -3360,6 +3360,11 @@ editorjs-drag-drop@^1.0.0:
   resolved "https://registry.yarnpkg.com/editorjs-drag-drop/-/editorjs-drag-drop-1.0.0.tgz#496cc7ee122e8b7a9ca9e6c5c5974996af27ad97"
   integrity sha512-eZilUtSqBTx20kQTNynwjktz8lLje8krK+7hD1BI0aubg3658BFvTjSORwrVbXPgnJMv8lO6fmUuXgVpBCoS6A==
 
+editorjs-html@^3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/editorjs-html/-/editorjs-html-3.4.2.tgz#1ebe6b6631e3011ef974bb52727f645464c84428"
+  integrity sha512-Gy8FV4oHMvnPDXLsdpZYW0Dgjaagff9bPd28/WW9aFdy87FvktJxQz8H+NKpxiGcGoNY27MmjFffurK2yhXjEg==
+
 editorjs-paragraph-with-alignment@3.x:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/editorjs-paragraph-with-alignment/-/editorjs-paragraph-with-alignment-3.0.0.tgz#831b34b59fcb432296af56bca0f5787131872d93"

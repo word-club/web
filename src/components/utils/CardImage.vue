@@ -81,6 +81,7 @@ export default {
 		background-color: #184a617a;
 		z-index: 1;
 		height: 35px;
+		border-radius: 10px !important;
 	}
 	.fullscreen-btn {
 		position: absolute;

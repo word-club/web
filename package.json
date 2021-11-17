@@ -20,6 +20,7 @@
     "@mdi/font": "5.9.55",
     "axios": "^0.23.0",
     "editorjs-drag-drop": "^1.0.0",
+    "editorjs-html": "^3.4.2",
     "editorjs-paragraph-with-alignment": "3.x",
     "editorjs-social-post-plugin": "^1.0.0",
     "editorjs-text-alignment-blocktune": "^1.0.2",
