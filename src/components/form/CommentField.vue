@@ -1,6 +1,6 @@
 <template>
 	<v-textarea
-		outlined
+		outlined hide-details="auto"
 		:value="value"
 		name="comment"
 		prepend-inner-icon="mdi-comment-outline"

@@ -30,7 +30,6 @@ export default {
 	props: {
 		bg: {type: String, default: "white"},
 		icon: {type: String, default: "mdi-account"},
-		name: {type: String, required: true},
 		label: {type: String, default: "User"},
 		value: {required: true},
 		color: {type: String, default: "primary"},

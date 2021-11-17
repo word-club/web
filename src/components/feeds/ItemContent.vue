@@ -75,7 +75,7 @@
 			<template
 				v-if="block.type === 'list'"
 			>
-				<v-list dense>
+				<v-list dense class="pa-0">
 					<v-list-item v-for="(item, index) in block.data.items"
 						:key="index"
 					>
@@ -150,9 +150,9 @@ export default {
 	padding-right: 2px;
 }
 .quote-item {
-	border-left: 2px solid #70c4ea;
+	border-left: 2px solid #2196F3;
 	padding: 10px 20px;
-	background: #c4deea;
+	background: #d6effb;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
 	.quote-text {

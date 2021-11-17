@@ -29,10 +29,11 @@ import ItemImages from "@/components/feeds/ItemImages.vue";
 import ItemLink from "@/components/feeds/ItemLink.vue";
 import ItemContent from "@/components/feeds/ItemContent.vue";
 import ItemActions from "@/components/feeds/ItemActions.vue";
+import PublicationType from "@/mixin/PublicationType.js";
 
 export default {
 	name: "FeedList",
-	mixins: [RouteMixin],
+	mixins: [RouteMixin, PublicationType],
 	data: () => ({
 		isLoading: true
 	}),
@@ -59,13 +60,6 @@ export default {
 		async fetchPublications() {
 			await this.$store.dispatch("publication/filter", {is_published: true})
 			this.isLoading = false
-		},
-		getTypeString(type) {
-			if (type === "editor") return null
-			else if(type === "link") return "LINK"
-			else if(type === "media") return "MEDIA"
-			else if(type === "poll") return "POLL"
-			else return null
 		}
 	}
 }

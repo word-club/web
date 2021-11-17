@@ -44,7 +44,8 @@
 		"banASubscriber": "community-subscriber/%s/ban/",
 		"addTheme": "community/%s/theme/",
 		"updateTheme": "community-theme/%s/",
-		"completeRegistration": "community/%s/complete-registration"
+		"completeRegistration": "community/%s/complete-registration",
+		"subscribedCommunityFilter": "subscribed-community/filter/"
 	},
 	"publication": {
 		"list": "s/publication/",
