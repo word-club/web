@@ -25,6 +25,7 @@
     "editorjs-social-post-plugin": "^1.0.0",
     "editorjs-text-alignment-blocktune": "^1.0.2",
     "editorjs-undo": "^0.3.0",
+    "emojionearea": "^3.4.2",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "vue": "^2.6.11",
