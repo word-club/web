@@ -18,7 +18,7 @@
 			app right
 			clipped
 			color="grey lighten-3"
-			class="home-sidebar"
+			class="home-sidebar thin-scroll-bar"
 			:permanent="mdAndUp"
 			:temporary="!mdAndUp"
 			width="350"
@@ -252,8 +252,8 @@ export default {
 .normal-whitespace {
 	white-space: normal !important;
 }
-.home-sidebar {
-		/* width */
+.thin-scroll-bar {
+	/* width */
 	::-webkit-scrollbar {
 		width: 5px;
 	}

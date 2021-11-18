@@ -614,10 +614,8 @@ export default {
 		async saveAsDraft() {
 			if(!this.checkRequired(["title"])) {
 				const payload = {}
-				const url = this.$util.format(
-					this.$urls.publication.detail, this.inProgress.id
-				)
-				payload["tags"] = this.getActiveTabsString()
+				const url = this.$util.format(this.$urls.publication.detail, this.inProgress.id)
+				payload["tags"] = this.getSelectedTagsString()
 				if (this.inProgress.type === "editor") {
 					const content = await this.editor.save()
 					payload["content"] = JSON.stringify(content)
@@ -692,7 +690,7 @@ export default {
 			const filesList = Array.from(e.dataTransfer.files)
 			this.addTargetFilesToList(filesList)
 		},
-		getActiveTabsString() {
+		getSelectedTagsString() {
 			console.log(this.tagArray)
 			if (this.tagArray.length === 0) return null
 			else if (this.tagArray.length === 1) return this.tagArray[0]

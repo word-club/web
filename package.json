@@ -25,10 +25,10 @@
     "editorjs-social-post-plugin": "^1.0.0",
     "editorjs-text-alignment-blocktune": "^1.0.2",
     "editorjs-undo": "^0.3.0",
-    "emojionearea": "^3.4.2",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "vue": "^2.6.11",
+    "vue-emoji-picker": "^1.0.3",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0",
     "vuex": "^3.4.0"

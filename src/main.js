@@ -5,7 +5,6 @@ import store from "./store"
 import vuetify from "./plugins/vuetify"
 import "@mdi/font/css/materialdesignicons.css"
 import moment from "moment"
-
 import AXIOS from "@/axios"
 import helper from "@/helper"
 import {generateFullLink} from "@/utils.js";

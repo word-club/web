@@ -44,12 +44,7 @@
 		</v-dialog>
 		<v-scale-transition>
 			<v-card-text v-if="commentMode">
-				<comment-field v-model="comment" />
-				<v-fab-transition>
-					<v-btn color="primary" class="mt-2" v-if="comment"
-						@click="addComment"
-					>Add Comment</v-btn>
-				</v-fab-transition>
+				<comment-field :publication="item"/>
 			</v-card-text>
 		</v-scale-transition>
 		<v-divider />
@@ -58,10 +53,19 @@
 				'justify-space-evenly': smAndDown
 			}"
 		>
-			<v-btn :small="smAndDown" outlined class="item-action-btn"
+			<v-btn
+				:small="smAndDown"
+				:outlined="!commentMode"
+				:depressed="commentMode"
+				:dark="commentMode"
+				class="item-action-btn"
+				:color="(commentMode) ? 'primary' : 'grey darken-3'"
 				@click="commentMode = !commentMode"
 			>
-				<v-icon left>mdi-comment-outline</v-icon>Comments
+				<v-icon left
+					:color="commentMode ? 'white' : ''"
+				>mdi-comment-outline</v-icon>
+				Comments
 			</v-btn>
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
@@ -188,7 +192,6 @@ export default {
 	props: {item: {type: Object, default: () => {}}},
 	data: () => ({
 		commentMode: false,
-		comment: null,
 		shareMode: false,
 		share: {
 			title: null
@@ -200,7 +203,6 @@ export default {
 		}
 	},
 	methods: {
-		addComment() {},
 		copyLink() {},
 		bookmark() {},
 		hide() {},
@@ -217,7 +219,6 @@ export default {
 	margin-top: 2px;
 	margin-right: 6px;
 	margin-bottom: 2px;
-	color: #525252 !important;
 	font-size: 15px;
 }
 .menu-item {
