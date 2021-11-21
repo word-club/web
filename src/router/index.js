@@ -16,7 +16,7 @@ const routes = [
 		}
 	},
 	{
-		path: "/submit",
+		path: "/submit/:toEdit?",
 		name: "Submit",
 		components: {
 			default: () => import("@/views/home/submit/Submit"),

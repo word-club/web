@@ -21,9 +21,9 @@
 					class="d-flex justify-center align-center rounded"
 				>
 					<v-img v-if="user.avatar"
-						:src="user.avatar.image"
+						:src="user.avatar"
 					/>
-					<span class="text-h5 white--text text-uppercase">{{ user.username[0] }}</span>
+					<div class="full-width text-h5 white--text text-uppercase">{{ user.username[0] }}</div>
 				</v-list-item-avatar>
 				<v-list-item-content>
 					<v-list-item-title>{{user.username}}</v-list-item-title>
@@ -41,10 +41,10 @@
 							mdi-thumb-up-outline
 						</v-icon>
 						<div class="pl-3 px18 weight-500">
-							5,555
+							{{ user.reactions }}
 						</div>
 					</div>
-					<div>Likes</div>
+					<div>Reactions</div>
 				</div>
 				<div>
 					<div class="d-flex align-center">
@@ -52,8 +52,8 @@
 							mdi-cake-variant
 						</v-icon>
 						<div class="pl-3 px18 weight-500">
-							<span v-if="user.profile && user.profile.birth_date">
-								{{ $moment(user.profile.birth_date).format('YYYY-M-D') }}
+							<span v-if="user.birth_date">
+								{{ $moment(user.birth_date).format('YYYY-M-D') }}
 							</span>
 							<span v-else>-</span>
 						</div>

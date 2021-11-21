@@ -45,16 +45,13 @@
 		"addTheme": "community/%s/theme/",
 		"updateTheme": "community-theme/%s/",
 		"completeRegistration": "community/%s/complete-registration",
-		"subscribedCommunityFilter": "subscribed-community/filter/"
+		"subscriptionFilter": "subscribed-community/filter/"
 	},
 	"publication": {
 		"list": "s/publication/",
-		"retrieve": "s/publication/%s/",
 		"add": "publication/",
 		"detail": "publication/%s/",
 		"publish": "publication/%s/publish/",
-		"addTag": "publication/%s/tag/",
-		"tagDetail": "publication-tag/%s/",
 		"addImage": "publication/%s/image/",
 		"imageDetail": "publication-image/%s/",
 		"addImageUrl": "publication/%s/image-url/",
@@ -70,20 +67,33 @@
 		"addReport": "publication/%s/report/",
 		"removeReport": "publication-report/%s/",
 		"addLink": "publication/%s/link/",
-		"linkDetail": "publication-link/%s/"
+		"linkDetail": "publication-link/%s/",
+		"share": "publication/%s/share/",
+		"removeShare": "publication-share/%s/"
 	},
 	"comment": {
 		"add": "publication/%s/comment/",
+		"reply": "comment/%s/reply",
 		"detail": "comment/%s/",
+		"addImage": "comment/%s/image/",
+		"imageDetail": "comment-image/%s/",
+		"addImageUrl": "comment/%s/image-url/",
+		"imageUrlDetail": "comment-image-url/%s/",
+		"addLink": "publication/%s/link/",
+		"linkDetail": "publication-link/%s/",
 		"addUpVote": "comment/%s/up-vote/",
 		"addDownVote": "comment/%s/down-vote/",
 		"addReport": "comment/%s/report/",
 		"removeReport": "comment-report/%s/",
-		"removeCommentImage": "comment-image/%s/",
-		"removeCommentImageUrl": "comment-image-url/%s/",
-		"removeCommentVideoUrl": "comment-video-url/%s/",
-		"removeCommentUpVote": "comment-up-vote/%s/",
-		"removeCommentDownVote": "comment-down-vote/%s/"
+		"removeImage": "comment-image/%s/",
+		"removeImageUrl": "comment-image-url/%s/",
+		"removeUpVote": "comment-up-vote/%s/",
+		"removeDownVote": "comment-down-vote/%s/",
+		"bookmarkDetail": "comment-bookmark/%s/",
+		"addHiddenStatus": "comment/%s/hide/",
+		"removeHiddenStatus": "comment-hide/%s/",
+		"share": "comment/%s/share/",
+		"removeShare": "comment-share/%s/"
 	},
 	"hashtag": {
 		"list": "hash-tag/",

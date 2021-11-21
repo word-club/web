@@ -15,9 +15,6 @@ const mutations = {
 	SET_TO_VIEW: (state, value) => state.toView = value,
 	SET_IN_PROGRESS: (state, value) => state.createInProgress = value,
 	SET_DRAFTS: (state, value) => state.drafts = value,
-	ADD_TO_DRAFTS(state, value) {
-		state.drafts.results.push(value)
-	},
 	REMOVE_DRAFT_ITEM(state, ID) {
 		const toRemove = state.drafts.results.find(item => item.id === ID)
 		const index = state.drafts.results.indexOf(toRemove)
@@ -52,9 +49,6 @@ const actions = {
 	},
 	setInProgress({commit}, value) {
 		commit("SET_IN_PROGRESS", value)
-	},
-	addToDraft({commit}, value) {
-		commit("ADD_TO_DRAFTS", value)
 	},
 	removeDraftItem({commit}, ID) {
 		commit("REMOVE_DRAFT_ITEM", ID)

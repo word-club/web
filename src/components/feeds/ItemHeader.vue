@@ -18,9 +18,23 @@
 			{{ $moment(item.timestamp).fromNow() }}
 		</div>
 		<v-spacer />
-		<v-btn icon>
-			<v-icon>mdi-dots-horizontal</v-icon>
-		</v-btn>
+		<v-menu offset-y nudge-top="-5" nudge-right="-110"
+			transition="slide-y-transition"
+		>
+			<template #activator="{on, attrs}">
+				<v-btn icon v-bind="attrs" v-on="on">
+					<v-icon>mdi-dots-horizontal</v-icon>
+				</v-btn>
+			</template>
+			<v-list dense>
+				<v-list-item v-if="$helper.ifCurrentUserIs(item.created_by)"
+					:to="{name: 'Submit', params: {toEdit: item.id}}"
+				>
+					<v-list-item-icon class="mr-2"><v-icon>mdi-pencil</v-icon></v-list-item-icon>
+					<v-list-item-content><v-list-item-title>Edit Publication</v-list-item-title></v-list-item-content>
+				</v-list-item>
+			</v-list>
+		</v-menu>
 	</v-card-text>
 </template>
 

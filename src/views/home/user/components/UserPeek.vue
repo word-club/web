@@ -4,7 +4,7 @@
 		<v-card flat
 			color="primary" height="70"
 			class="rounded-b-0"
-			:img="user.cover ? user.cover.image : ''"
+			:img="user.cover ? user.cover : ''"
 		/>
 		<v-card-text class="d-flex justify-center avatar-line">
 			<v-avatar size="200"
@@ -12,7 +12,7 @@
 				class="profile-avatar"
 			>
 				<v-img v-if="user.avatar"
-					:src="user.avatar.image"
+					:src="user.avatar"
 				/>
 			</v-avatar>
 		</v-card-text>
@@ -24,7 +24,7 @@
 				u/{{ user.username }}
 			</div>
 			<v-icon>mdi-circle-small</v-icon>
-			<div>{{ $moment(user.last_active_at).fromNow() }}</div>
+			<div>{{ $moment(user.date_joined).fromNow() }}</div>
 		</v-card-subtitle>
 		<v-card-text class="px-4 py-0 d-flex justify-space-between">
 			<div>
@@ -38,7 +38,7 @@
 						mdi-thumb-up-outline
 					</v-icon>
 					<div class="pl-3 px14 weight-500">
-						5,555
+						{{ user.reactions }}
 					</div>
 				</div>
 			</div>
@@ -53,8 +53,8 @@
 						mdi-cake-variant
 					</v-icon>
 					<div class="pl-3 px14 weight-500">
-						<span v-if="user.profile && user.profile.birth_date">
-							{{ $moment(user.profile.birth_date).format('YYYY-M-D') }}
+						<span v-if="user.birth_date">
+							{{ $moment(user.birth_date).format('YYYY-M-D') }}
 						</span>
 						<span v-else>-</span>
 					</div>
@@ -65,8 +65,8 @@
 			<v-avatar size="30"
 				color="grey"
 			/>
-			<div class="pl-2 px14">
-				Received the Helpful Award and more in the past 30 days
+			<div class="pl-2 px14" v-if="user.bio">
+				{{ user.bio }}
 			</div>
 		</v-card-text>
 		<v-card-actions class="px-4 py-0 justify-space-between flex-wrap">

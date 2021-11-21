@@ -9,15 +9,15 @@
 				@click="toPublicationDetail(item.id)"
 			>
 				<h4>{{ item.title }}</h4>
-				<v-chip
-					v-if="getTypeString(item.type)"
-					color="primary" class="mx-1" small><v-icon left>mdi-link</v-icon>
-					{{ getTypeString(item.type) }}</v-chip>
+				<!--				<v-chip-->
+				<!--					v-if="getTypeString(item.type)"-->
+				<!--					color="primary" class="mx-1" small><v-icon left>mdi-link</v-icon>-->
+				<!--					{{ getTypeString(item.type) }}</v-chip>-->
 			</v-card-title>
 			<item-images v-if="item.type === 'media'" :item="item" />
 			<item-link v-if="item.type === 'link'" :link="item.link"/>
 			<item-content v-if="item.type ==='editor'" :content="JSON.parse(item.content)" />
-			<item-actions :item="item"/>
+			<item-actions @init="fetchPublications()" :item="item"/>
 		</v-card>
 	</v-card>
 </template>
@@ -58,7 +58,7 @@ export default {
 			this.$axios.delete(url)
 		},
 		async fetchPublications() {
-			await this.$store.dispatch("publication/filter", {is_published: true})
+			await this.$store.dispatch("publication/filter", {is_published: true, depth: 3})
 			this.isLoading = false
 		}
 	}

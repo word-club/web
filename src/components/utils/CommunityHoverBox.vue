@@ -3,7 +3,8 @@
 		open-on-hover
 		nudge-top="-30"
 		nudge-left="-34"
-		close-delay="100"
+		close-delay="200"
+		:close-on-content-click="false"
 	>
 		<template #activator="{on, attrs}">
 			<div class="d-flex align-center"
@@ -12,18 +13,18 @@
 			>
 				<v-avatar
 					size="30"
-					:color="$helper.getThemeColor(community)" tile
+					:color="community.theme.color" tile
 					class="rounded cursor"
 					@click="toCommunityDetail(community.unique_id)"
 				>
 					<v-img v-if="community.avatar"
-						:src="community.avatar.image"
+						:src="$link(community.avatar)"
 					/>
 				</v-avatar>
 				<div class="px-1" />
 				<div
 					class="px14 weight-600 cursor hover-underline"
-					:class="`${$helper.getThemeColor(community)}--text`"
+					:class="`${community.theme.color}--text`"
 					@click="toCommunityDetail(community.unique_id)"
 				>
 					{{ community.name }}

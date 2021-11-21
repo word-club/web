@@ -25,7 +25,7 @@ export default {
 		},
 		name: {type: String, required: true},
 		label: {type: String, required: true},
-		counter: {type: String, required: true},
+		counter: {type: [String, Boolean], required: true},
 		errors: {type: Object, required: false, default: () => {}},
 		icon: {type: String, required: true},
 		color: {type: String, default: "primary"}

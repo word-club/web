@@ -1,6 +1,6 @@
 <template>
 	<v-card class="rounded-t-0" color="grey lighten-4">
-		<v-dialog v-model="shareMode" max-width="600">
+		<v-dialog v-model="shareMode" max-width="600" scrollable>
 			<v-card color="primary" dark>
 				<v-card-title>
 					Share details
@@ -16,11 +16,15 @@
 						name="title"
 						prepend-inner-icon="mdi-format-title"
 						label="TITLE"
+						:error-messages="formErrors['title']"
 					/>
 				</v-card-text>
-				<v-card-text>
+				<v-card-text style="max-height: 400px;"
+					class="share-scrollbar"
+				>
 					<v-card outlined light>
 						<item-header :item="item" />
+						<v-divider />
 						<v-card-title>
 							{{item.title}}
 							<v-spacer />
@@ -30,21 +34,38 @@
 						<item-link v-if="item.type === 'link'" :link="item.link"/>
 						<item-content v-if="item.type ==='editor'" :content="JSON.parse(item.content)" />
 						<v-card-text class="grey lighten-4 d-flex flex-wrap align-center pa-2">
-							<div class="pa-1">27.3K Views</div>
+							<div class="pa-1">{{ item.view_count }} Views</div>
 							<v-icon>mdi-circle-small</v-icon>
-							<div class="pa-1">25K Comments</div>
+							<div class="pa-1">{{ item.comments.length }} Comments</div>
 						</v-card-text>
 					</v-card>
 				</v-card-text>
-				<v-card-actions>
-					<v-btn block class="grey--text text--darken-3"
-						color="primary lighten-4" @click="createShare">Share</v-btn>
+				<v-card-actions class="primary lighten-3">
+					<v-btn block color="primary" @click="createShare">Share</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
 		<v-scale-transition>
 			<v-card-text v-if="commentMode">
-				<comment-field :publication="item"/>
+				<v-scale-transition>
+					<v-list class="mb-4 rounded"
+						v-if="item.comments.length"
+					>
+						<comment-item v-for="(comment, index) in item.comments"
+							:key="index"
+							:index="index"
+							:item="comment"
+							:count="item.comments.length"
+							@init="$emit('init')"
+						/>
+					</v-list>
+					<div v-else class="d-flex justify-end pb-2">
+						<v-chip color="primary">Be the first to comment!</v-chip>
+					</div>
+				</v-scale-transition>
+				<comment-field :publication="item"
+					@init="$emit('init')"
+				/>
 			</v-card-text>
 		</v-scale-transition>
 		<v-divider />
@@ -59,25 +80,28 @@
 				:depressed="commentMode"
 				:dark="commentMode"
 				class="item-action-btn"
-				:color="(commentMode) ? 'primary' : 'grey darken-3'"
+				:color="(commentMode) ? 'primary' : 'grey darken-1'"
 				@click="commentMode = !commentMode"
 			>
 				<v-icon left
 					:color="commentMode ? 'white' : ''"
 				>mdi-comment-outline</v-icon>
-				Comments
+				{{item.comments.length}} Comments
 			</v-btn>
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
 					<v-btn v-if="!smAndDown" outlined class="item-action-btn"
 						v-bind="attrs"
 						v-on="on"
+						color="grey darken-1"
 					>
 						<v-icon left>mdi-share-outline</v-icon>Share
 					</v-btn>
 				</template>
 				<v-list dense>
-					<v-list-item class="menu-item"
+					<v-list-item
+						v-model="clipboardContent"
+						class="menu-item"
 						@click="copyLink"
 					>
 						<v-list-item-icon class="mr-2">
@@ -85,8 +109,9 @@
 						</v-list-item-icon>
 						Copy Link
 					</v-list-item>
-					<v-divider />
+					<v-divider v-if="!$helper.ifCurrentUserIs(item.created_by)" />
 					<v-list-item
+						v-if="!$helper.ifCurrentUserIs(item.created_by)"
 						class="menu-item"
 						@click="shareMode=true"
 					>
@@ -99,7 +124,9 @@
 			</v-menu>
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
-					<v-btn fab small outlined color="grey darken-2" v-bind="attrs" v-on="on">
+					<v-btn
+						v-if="!$helper.ifCurrentUserIs(item.created_by)"
+						icon outlined color="grey darken-1" v-bind="attrs" v-on="on">
 						<v-icon>mdi-dots-vertical</v-icon>
 					</v-btn>
 				</template>
@@ -138,14 +165,20 @@
 						</v-list>
 					</v-menu>
 					<v-divider v-if="smAndDown" />
-					<v-list-item @click="bookmark" class="menu-item">
+					<v-list-item @click="bookmark" class="menu-item"
+						active-class="menu-item-active"
+						:class="{'menu-item-active': ((item.bookmark_status))}"
+					>
 						<v-list-item-icon class="mr-2"><v-icon>mdi-bookmark-outline</v-icon></v-list-item-icon>
 						<v-list-item-content>
 							<v-list-item-title>Bookmark</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 					<v-divider />
-					<v-list-item @click="hide" class="menu-item">
+					<v-list-item @click="hide" class="menu-item"
+						active-class="menu-item-active"
+						:class="{'menu-item-active': ((item.hidden_status))}"
+					>
 						<v-list-item-icon class="mr-2"><v-icon>mdi-eye-off-outline</v-icon></v-list-item-icon>
 						<v-list-item-content>
 							<v-list-item-title>Hide</v-list-item-title>
@@ -161,15 +194,22 @@
 				</v-list>
 			</v-menu>
 			<v-spacer v-if="!smAndDown" />
-			<v-btn icon @click="upVote">
+			<v-chip color="primary" small v-if="reactionsCount === 0" class="mx-1">Add First Reaction</v-chip>
+			<v-btn icon @click="upVote"
+				color="primary" class="mx-0"
+				:value="item.up_vote"
+			>
 				<v-icon>
-					mdi-arrow-up-bold-outline
+					mdi-arrow-up-bold{{ (item.up_vote) ? '' : '-outline' }}
 				</v-icon>
 			</v-btn>
-			<div class="grey--text text--darken-3 weight-500 mx-1">33.4K</div>
-			<v-btn icon @clikc="downVote">
+			<div v-if="reactionsCount > 0" class="grey--text text--darken-3 weight-500 px-1">{{reactionsCount}}</div>
+			<v-btn icon @click="downVote"
+				color="grey darken-2" class="mx-0"
+				:value="item.down_vote"
+			>
 				<v-icon>
-					mdi-arrow-down-bold-outline
+					mdi-arrow-down-bold{{ (item.down_vote) ? '' : '-outline' }}
 				</v-icon>
 			</v-btn>
 		</v-card-actions>
@@ -185,31 +225,95 @@ import ItemLink from "@/components/feeds/ItemLink.vue";
 import ItemContent from "@/components/feeds/ItemContent.vue";
 import Snack from "@/mixin/Snack.js";
 import PostMixin from "@/mixin/PostMixin.js";
+import {mapGetters} from "vuex";
+import CommentItem from "@/views/home/publication/CommentItem.vue";
 export default {
 	name: "ItemActions",
-	components: {ItemContent, ItemLink, ItemImages, ItemHeader, CommentField},
+	components: {CommentItem, ItemContent, ItemLink, ItemImages, ItemHeader, CommentField},
 	mixins: [PublicationType, Snack, PostMixin],
 	props: {item: {type: Object, default: () => {}}},
 	data: () => ({
+		clipboardContent: null,
 		commentMode: false,
 		shareMode: false,
 		share: {
 			title: null
-		}
+		},
+		reportMessage: null
 	}),
 	computed: {
+		...mapGetters({
+			currentUser: "user/current"
+		}),
+		getLink() {
+			return "something"
+		},
 		smAndDown() {
 			return this.$vuetify.breakpoint.width < 600
+		},
+		reactionsCount() {
+			return this.item.reactions
 		}
 	},
 	methods: {
-		copyLink() {},
-		bookmark() {},
-		hide() {},
-		report() {},
-		upVote() {},
-		downVote() {},
-		createShare() {}
+		copyLink() {
+			navigator.clipboard.writeText(this.getLink)
+				.then(() => {
+					this.clipboardContent = true
+					this.openSnack("Publication link copied to the clipboard", {color: "success"})
+				})
+		},
+		sendActionRequest({id, payload, action, revoke = false}) {
+			const url = this.$util.format(this.$urls.publication[action], id || this.item.id)
+			if (revoke) {
+				this.$axios.delete(url).then(() => {
+					this.$emit("init")
+				})
+			} else {
+				this.post(url, payload).then(() => {
+					if(this.success) {
+						this.$emit("init")
+					}
+				})
+			}
+		},
+		bookmark() {
+			this.sendActionRequest({
+				action: (this.item.bookmark_status) ? "bookmarkDetail" : "addBookmark",
+				revoke: !!(this.item.bookmark_status),
+				id: (this.item.bookmark_status) ? this.item.bookmark_status.id : null
+			})
+		},
+		hide() {
+			this.sendActionRequest({
+				action: "addHiddenStatus"
+			})
+		},
+		report() {
+			this.sendActionRequest({
+				action: "addReport",
+				payload: {title: this.reportMessage}
+			})
+		},
+		upVote() {
+			this.sendActionRequest({
+				action: (this.item.up_vote) ? "removeUpVote" : "addUpVote",
+				revoke: !!(this.item.up_vote),
+				id: (this.item.up_vote) ? this.item.up_vote.id : null
+			})
+		},
+		downVote() {
+			this.sendActionRequest({
+				action: (this.item.down_vote) ? "removeDownVote" : "addDownVote",
+				revoke: !!(this.item.down_vote),
+				id: (this.item.down_vote) ? this.item.down_vote.id : null
+			})
+		},
+		createShare() {
+			this.sendActionRequest({action: "share",
+				payload: {...this.share}
+			})
+		}
 	}
 }
 </script>
@@ -219,7 +323,7 @@ export default {
 	margin-top: 2px;
 	margin-right: 6px;
 	margin-bottom: 2px;
-	font-size: 15px;
+	font-size: 14px;
 }
 .menu-item {
 	color: #868686 !important;
@@ -229,6 +333,18 @@ export default {
 	color: #1d1d1d !important;
 	::v-deep.v-icon {
 		color: #1d1d1d !important;
+	}
+}
+.menu-item-active {
+	background-color: whitesmoke;
+	color: #1d1d1d !important;
+	::v-deep.v-icon {
+		color: #1d1d1d !important;
+	}
+}
+.share-scrollbar {
+	::-webkit-scrollbar {
+		width: 5px !important;
 	}
 }
 </style>

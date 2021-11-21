@@ -3,47 +3,50 @@
 		max-width="350"
 	>
 		<v-card
-			:color="$helper.getThemeColor(community)"
+			:color="community.theme.color"
 			height="35" flat
 			class="rounded-b-0"
 		>
 			<v-img
 				v-if="community.cover"
-				:src="community.cover.image"
+				:src="$link(community.cover)"
 				height="35"
 			/>
 		</v-card>
 		<v-card-text class="pa-3 d-flex align-center">
-			<v-avatar :color="$helper.getThemeColor(community)"
+			<v-avatar :color="community.theme.color"
 				size="45"
 			>
 				<v-img v-if="community.avatar"
-					:src="community.avatar.image"
+					:src="$link(community.avatar)"
 				/>
 			</v-avatar>
-			<div class="px-3 mt-1 px16 weight-500">
-				#/{{ community.unique_id }}
+			<div>
+				<v-card-title>{{community.name}}</v-card-title>
+				<v-card-subtitle>
+					#/{{ community.unique_id }}
+				</v-card-subtitle>
 			</div>
 		</v-card-text>
-		<v-card-text class="pa-2">
+		<v-card-text v-if="community.quote" class="pa-2">
 			{{ community.quote }}
 		</v-card-text>
-		<v-card-text class="d-flex align-center pa-3 weight-500">
+		<v-card-text class="d-flex align-center pa-3 weight-500 justify-space-between">
 			<div>
 				<div class="px18">
-					5.2m
+					{{community.subscribers}}
 				</div>
 				<div class="px14">
-					{{ community.settings.what_to_call_subscribers }}
+					{{ community.theme.to_call_subscriber }}
 				</div>
 			</div>
 			<div class="px-1" />
 			<div>
 				<div class="px18">
-					15.1k
+					{{community.reactions}}
 				</div>
 				<div class="px14">
-					{{ community.settings.feeling_after_subscribing }}
+					{{ community.theme.state_after_subscription }}
 				</div>
 			</div>
 		</v-card-text>
@@ -53,13 +56,13 @@
 				mdi-routes-clock
 			</v-icon>
 			<div class="px-2 px16 weight-500">
-				Created {{ $moment(community.created_at).format("MM DD, YYYY") }}
+				Created {{ $moment(community.date_of_registration).format("MM DD, YYYY") }}
 			</div>
 		</v-card-text>
 		<v-card-text class="pa-3">
 			<v-btn
 				block rounded
-				outlined :color="$helper.getThemeColor(community)"
+				outlined :color="community.theme.color"
 			>
 				Join
 			</v-btn>
@@ -91,8 +94,8 @@
 							<v-list-item-title>See community theme</v-list-item-title>
 						</v-list-item-content>
 						<v-list-item-action>
-							<v-switch :value="true"
-								:color="$helper.getThemeColor(community)"
+							<v-switch v-model="seeTheme"
+								:color="community.theme.color"
 							/>
 						</v-list-item-action>
 					</v-list-item>
@@ -112,7 +115,8 @@ export default {
 		}
 	},
 	data: () => ({
-		seeOptions: false
+		seeOptions: false,
+		seeTheme: true
 	}),
 	computed: {},
 	methods: {}

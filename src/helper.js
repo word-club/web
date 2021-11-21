@@ -56,5 +56,9 @@ module.exports = {
 		const value = localStorage.getItem("CommunityCreateInProgress")
 		if (value) return JSON.parse(value)
 		return null
+	},
+	ifCurrentUserIs(user) {
+		const currentUser = this.getCurrentUser()
+		return currentUser && user.username === currentUser.username
 	}
 }

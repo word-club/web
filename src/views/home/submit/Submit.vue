@@ -5,11 +5,13 @@
 	>
 		<v-card-text />
 		<v-card-title class="px-0 pb-3">
-			<div>Create post</div>
+			<div v-if="editMode">Edit Publication</div>
+			<div v-else-if="draftMode">Edit Draft</div>
+			<div v-else>Create post</div>
 			<v-spacer />
 			<v-btn text rounded
 				v-if="inProgress"
-				:color="theme"
+				:color="theme.color"
 				class="weight-700"
 				@click="startNew"
 			>
@@ -18,11 +20,15 @@
 			<v-btn
 				v-if="drafts.count > 0"
 				text rounded
-				color="primary"
+				:color="theme.color"
 				@click="draftDialog = true"
 			>
 				<span class="px14">DRAFTS</span>
-				<span class="ma-1 pa-1 primary white--text rounded">{{ drafts.count }}</span>
+				<span class="ma-1 pa-1 white--text rounded"
+					:class="theme.color"
+				>
+					{{ drafts.count }}
+				</span>
 			</v-btn>
 			<v-dialog v-model="draftDialog"
 				max-width="600"
@@ -54,7 +60,7 @@
 									</v-list-item-subtitle>
 								</v-list-item-content>
 								<v-list-item-action>
-									<v-btn rounded :color="theme"
+									<v-btn rounded :color="theme.color"
 										@click="startEditingDraft(draft)"
 										:disabled="(inProgress && inProgress.id === draft.id)"
 									>
@@ -81,7 +87,9 @@
 				<community-select
 					v-model="payload.community"
 					:errors="formErrors"
-					:color="theme"
+					:color="theme.color" :loading="communityLoading"
+					:items="subscribedCommunities"
+					@change="onChangeCommunity"
 				/>
 			</v-col>
 			<v-col cols="12"
@@ -104,19 +112,19 @@
 							@click="setActiveTab(item)"
 						>
 							<v-icon class="submit-tab-item-icon"
-								:color="item.active ? theme: ''"
+								:color="item.active ? theme.color : ''"
 							>
 								{{ item.icon }}
 							</v-icon>
 							<div class="submit-tab-item-title"
 								v-if="$vuetify.breakpoint.width > 300"
-								:class="item.active ? `${theme}--text`: ''"
+								:class="item.active ? `${theme.color}--text`: ''"
 							>
 								{{ item.title }}
 							</div>
 							<v-scale-transition>
 								<v-card
-									flat :color="theme" v-if="item.active"
+									flat :color="theme.color" v-if="item.active"
 									class="submit-tab-item-active-line rounded-b-0 rounded-tl-xl rounded-tr-xl"
 								/>
 							</v-scale-transition>
@@ -135,7 +143,7 @@
 									icon="mdi-format-title"
 									@change="postPublication"
 									:errors="formErrors"
-									:color="theme"
+									:color="theme.color"
 								/>
 							</v-col>
 							<v-fade-transition>
@@ -151,19 +159,19 @@
 									</v-card>
 								</v-col>
 								<v-col v-else-if="activeTabItem.title === 'Images/Videos'"
-									cols="12"
+									cols="12" class="pt-0"
 									@dragover.prevent @drop.prevent
 								>
 									<v-scale-transition>
-										<v-col v-if="inProgress && inProgress['images']"
-											cols="12"
+										<v-col v-if="inProgress && inProgress['images'].length"
+											cols="12" class="pa-0"
 										>
 											<v-row class="ma-0 pa-0">
 												<v-col cols="4"
 													v-for="img in inProgress.images"
 													:key="img.id"
 												>
-													<card-img max-width="400" :src="img.image">
+													<card-img max-width="400" :src="$link(img.image)">
 														<v-btn icon color="error"
 															@click="deleteImage(img.id)"
 														>
@@ -213,7 +221,7 @@
 									<v-card
 										:min-height="files.length ? 100 : 200" flat
 										class="d-flex align-center justify-center flex-wrap"
-										:class="theme+'-border'"
+										:class="theme.color+'-border'"
 										@drop="dragFile"
 									>
 										<input
@@ -226,12 +234,14 @@
 											accept="image/*,.webm,.mp4,.mpeg,.flv,.mov,.MOV"
 											@change="fileInputChanged"
 										>
-										<div class="weight-500 primary--text text-center">
+										<div class="weight-500 text-center"
+											:class="theme.color + '--text'"
+										>
 											Drag and drop images or
 										</div>
 										<div class="px-2">
 											<v-btn outlined
-												color="primary"
+												:color="theme.color"
 												rounded class="weight-700"
 												@click="$refs.fileInput.click()"
 											>
@@ -249,7 +259,7 @@
 									>
 										<v-card-text>
 											<v-list-item>
-												<v-list-item-avatar :color="theme">
+												<v-list-item-avatar :color="theme.color">
 													<v-img v-if="inProgress.link.image" :src="inProgress.link.image" />
 													<span v-else class="white--text px22 mb-1">{{inProgress.link.title[0].toUpperCase()}}</span>
 												</v-list-item-avatar>
@@ -269,7 +279,7 @@
 										icon="mdi-link"
 										name="link" :dense="false"
 										:errors="formErrors"
-										:color="theme"
+										:color="theme.color"
 										:disabled="!payload.title"
 										@change="createLink"
 									/>
@@ -315,15 +325,23 @@
 						<v-card-actions class="flex-wrap">
 							<v-spacer />
 							<v-btn rounded
+								dark depressed
+								:color="theme.color"
+								class="weight-600 ma-1"
+								@click="saveAsDraft(false)"
+							>
+								Save
+							</v-btn>
+							<v-btn rounded v-if="!editMode"
 								depressed color="grey lighten-2 ma-1"
 								class="weight-600 grey--text text--darken-3"
 								@click="saveAsDraft"
 							>
 								Save as Draft
 							</v-btn>
-							<v-btn rounded
+							<v-btn rounded v-if="!editMode"
 								dark depressed
-								:color="theme"
+								:color="theme.color"
 								class="weight-600 ma-1"
 								@click="publish"
 							>
@@ -385,10 +403,24 @@ export default {
 			{name: "WARNING", tooltip: "Add post as a warning", color: "orange"}
 		],
 		editor: null,
+		subscribedCommunities: [],
+		communityLoading: true,
+		theme: {
+			color: "primary"
+		},
+		draftMode: false,
+		editMode: false,
 	}),
 	created() {
-		this.initSubmit()
-		this.initEditor(null)
+		this.fetchDrafts()
+		this.fetchSubscribedCommunities()
+		const publicationToEdit = this.$route.params.toEdit
+		if (publicationToEdit) {
+			this.$store.dispatch("publication/setInProgress", {id: publicationToEdit})
+			this.refreshInProgress(true)
+		} else {
+			this.initEditor(null)
+		}
 	},
 	computed: {
 		...mapGetters({
@@ -418,22 +450,36 @@ export default {
 		},
 		activeTabItem() {
 			return this.tabItems.find(item => item.active === true)
-		},
-		theme() {
-			if (this.inProgress) {
-				if (this.inProgress.community) {
-					return this.inProgress.community.theme
-				} else return "primary"
-			} else return "primary"
 		}
 	},
 	methods: {
-		refreshInProgress() {
-			this.$axios.get(this.$util.format(this.$urls.publication.retrieve, this.inProgress.id))
+		setTheme() {
+			if (this.inProgress.community) {
+				console.log(this.inProgress.community)
+				this.theme = this.inProgress.community.theme
+			}
+		},
+		fetchSubscribedCommunities() {
+			this.$axios.get(this.$urls.community.subscriptionFilter)
 				.then(res => {
-					this.$store.dispatch("publication/removeDraftItem", res.id)
-					this.$store.dispatch("publication/addToDraft", res)
+					this.subscribedCommunities = res.results
+					this.communityLoading = false
+				})
+		},
+		refreshInProgress(editMode = false, draftMode = false) {
+			this.$axios.get(this.$util.format(this.$urls.publication.detail, this.inProgress.id))
+				.then(res => {
 					this.$store.dispatch("publication/setInProgress", res)
+					this.setTheme()
+					this.payload = {...res}
+					this.editMode = editMode
+					this.draftMode = draftMode
+
+					if(res.community) {
+						this.payload.community = {
+							community: {...res.community}
+						}
+					}
 				})
 		},
 		initEditor(publication) {
@@ -498,7 +544,6 @@ export default {
 								 * @return {Promise.<{success, file: {url}}>|void}
 								 */
 								uploadByUrl(url) {
-									console.log(publication.id)
 									if (!publication) return
 									var formData = new FormData();
 									var uploadUrl = util.format(urls.publication.addImageUrl, publication.id)
@@ -596,7 +641,7 @@ export default {
 			} else this.tagArray = []
 			if (this.payload.type === "editor") this.initEditor(this.inProgress)
 		},
-		initSubmit() {
+		fetchDrafts() {
 			const url = this.$urls.publication.list
 			this.$axios.getWithPayload(url, {is_published: false, created_by: this.currentUser.id})
 				.then((res) => {
@@ -611,14 +656,19 @@ export default {
 			this.formErrors = { ...errObj }
 			return Object.entries(errObj).length > 0
 		},
-		async saveAsDraft() {
+		async saveAsDraft(isDraft = true) {
 			if(!this.checkRequired(["title"])) {
 				const payload = {}
 				const url = this.$util.format(this.$urls.publication.detail, this.inProgress.id)
+				// prepare tags for payload
 				payload["tags"] = this.getSelectedTagsString()
 				if (this.inProgress.type === "editor") {
 					const content = await this.editor.save()
 					payload["content"] = JSON.stringify(content)
+				}
+				// prepare community for payload
+				if (this.payload.community) {
+					payload["community"] = this.payload.community.id
 				}
 				// send publication patch request
 				await this.patch(url, payload)
@@ -626,23 +676,21 @@ export default {
 					this.formErrors = {...this.patchErrors}
 				} else {
 					await this.$store.dispatch("publication/setInProgress", this.patchInstance)
-					this.openSnack("Draft saved successfully.", {color:"success"})
+					this.openSnack(`${isDraft ? "Draft" : "Publication"} saved successfully.`, {color:"success"})
 				}
 			}
 		},
 		postPublication() {
 			if(!this.inProgress) {
 				if(!this.checkRequired(["title"])) {
-					// send pub create request
 					const url = this.$urls.publication.add
 					this.post(url, {
 						title: this.payload.title,
 						type: this.activeTabItem.type
 					}).then(() => {
 						if (this.postInstance) {
-							// set item in progress
 							this.$store.dispatch("publication/setInProgress", this.postInstance)
-							this.$store.dispatch("publication/addToDraft", this.postInstance)
+							this.fetchDrafts()
 							if (this.payload.type === "editor") this.initEditor(this.postInstance)
 						}
 					})
@@ -684,14 +732,13 @@ export default {
 		},
 		setActiveTab(item) {
 			this.payload.type = item.type
-			if(item.type === "editor") this.initEditor(null)
+			if(item.type === "editor") this.initEditor(this.payload)
 		},
 		dragFile(e) {
 			const filesList = Array.from(e.dataTransfer.files)
 			this.addTargetFilesToList(filesList)
 		},
 		getSelectedTagsString() {
-			console.log(this.tagArray)
 			if (this.tagArray.length === 0) return null
 			else if (this.tagArray.length === 1) return this.tagArray[0]
 			else return this.tagArray.join(",")
@@ -733,6 +780,11 @@ export default {
 							this.refreshInProgress()
 						}
 					})
+			}
+		},
+		onChangeCommunity(e) {
+			if(e && e.community) {
+				this.theme = e.community.theme
 			}
 		}
 	}

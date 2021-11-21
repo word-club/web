@@ -1,18 +1,11 @@
 <template>
-	<div v-if="publication" class="comment-box thin-scroll-bar">
-		<v-textarea
-			:id="`comment-input-${this.publication.id}`"
-			outlined hide-details="auto"
-			v-model="comment" name="comment"
-			prepend-inner-icon="mdi-comment-outline"
-			placeholder="Give your thoughts..."
-			@change="$emit('change', $event)"
-			@keyup="$emit('keyup', $event)"
-			@input="$emit('input', $event)"
-			@focus="pickerColor = 'primary'"
-			@blur="pickerColor = 'grey'"
-			:error-messages="formErrors['comment']"
-			autofocus
+	<div class="full-width reply-box thin-scroll-bar">
+		<text-area
+			:id="`#reply-input-${this.comment.id}`"
+			class="ml-4 reply-input" name="reply"
+			v-model="reply" icon="mdi-reply"
+			outlined label="REPLY" :counter="false"
+			placeholder="Add your reply"
 		/>
 		<emoji-picker :search="search"
 			@emoji="insert"
@@ -64,83 +57,78 @@
 			</div>
 		</emoji-picker>
 		<v-fab-transition>
-			<v-btn color="primary"
-				class="mt-2" v-if="comment"
-				@click="addComment"
-			>
-				Add Comment
-			</v-btn>
+			<v-btn v-if="reply" class="ml-4 mt-2" color="primary" @click="addReply">Reply</v-btn>
 		</v-fab-transition>
 	</div>
 </template>
 
 <script>
-import EmojiPicker from "vue-emoji-picker";
 import PostMixin from "@/mixin/PostMixin.js";
+import Snack from "@/mixin/Snack.js";
+import EmojiPicker from "vue-emoji-picker";
 
 export default {
-	name: "CommentField",
-	mixins: [PostMixin],
+	name: "ReplyField",
+	mixins: [PostMixin, Snack],
+	props: {
+		comment: {type:Object, required: true}
+	},
 	components: {
 		EmojiPicker
 	},
-	props: {
-		publication: {type: Object, default: () => {}},
-		reply: {type: Object, default: () => {}}
-	},
 	data: () => ({
 		search: "",
-		comment: "",
-		pickerColor: "grey"
+		pickerColor: "grey",
+		reply: null
 	}),
 	methods: {
-		addComment() {
+		addReply() {
 			this.post(
-				this.$util.format(this.$urls.comment.add, this.publication.id),
-				{ comment: this.comment }
+				this.$util.format(this.$urls.comment.reply, this.comment.id),
+				{ comment: this.reply }
 			).then(() => {
 				if(this.success) {
 					this.$emit("init")
-					this.comment = null
+					this.reply = null
 				}
 			})
 		},
 		insert(emoji) {
-			const commentTextarea = document.querySelector(`#comment-input-${this.publication.id}`)
-			if (commentTextarea) {
-				const cursorPosition = commentTextarea.selectionStart
+			const replyTextarea = document.querySelector(`#reply-input-${this.comment.id}`)
+			if (replyTextarea) {
+				const cursorPosition = replyTextarea.selectionStart
 
-				if (cursorPosition === this.comment.length) {
-					this.comment += emoji
+				if (cursorPosition === this.reply.length) {
+					this.reply += emoji
 				} else {
 					const firstPart = this.comment.substring(0, cursorPosition)
-					const secondPart = this.comment.substring(cursorPosition, this.comment.length)
-					this.comment = firstPart + emoji + secondPart
+					const secondPart = this.comment.substring(cursorPosition, this.reply.length)
+					this.reply = firstPart + emoji + secondPart
 				}
 			}
 		},
 	}
 }
 </script>
-<style lang="scss" scoped>
-.comment-box {
+
+<style scoped lang="scss">
+.reply-box {
 	position: relative;
-	.comment-input {
+
+	.reply-input {
 		border-radius: 4px;
 	}
+
 	.clear-button {
-		position:absolute;
+		position: absolute;
 		right: 7px !important;
 		top: 81px !important;
 	}
-	.comment-btn {
-		position: absolute;
-		top: 44px !important;
-		right: 4px !important;
-	}
+
 	.invoker {
-		position:absolute;
-		right: 7px; top: 7px;
+		position: absolute;
+		right: 7px;
+		top: 7px;
 	}
 
 	.emoji-picker {
@@ -160,6 +148,7 @@ export default {
 		.emoji-picker__search {
 			display: flex;
 		}
+
 		.emoji-picker__search > input {
 			flex: 1;
 			border-radius: 10rem;
@@ -167,6 +156,7 @@ export default {
 			padding: 0.5rem 1rem;
 			outline: none;
 		}
+
 		h5 {
 			margin-bottom: 0;
 			color: #b1b1b1;
@@ -174,21 +164,25 @@ export default {
 			font-size: 0.8rem;
 			cursor: default;
 		}
+
 		.emojis {
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: space-between;
+
 			span {
 				padding: 0.2rem;
 				cursor: pointer;
 				border-radius: 8px;
 				font-size: 20px;
 			}
+
 			span:hover {
 				background: #ececec;
 				cursor: pointer;
 			}
 		}
+
 		.emojis:after {
 			content: "";
 			flex: auto;
