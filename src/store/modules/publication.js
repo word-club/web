@@ -15,11 +15,11 @@ const mutations = {
 	SET_TO_VIEW: (state, value) => state.toView = value,
 	SET_IN_PROGRESS: (state, value) => state.createInProgress = value,
 	SET_DRAFTS: (state, value) => state.drafts = value,
-	REMOVE_DRAFT_ITEM(state, ID) {
-		const toRemove = state.drafts.results.find(item => item.id === ID)
+	REMOVE_DRAFT_ITEM(state, id) {
+		const toRemove = state.drafts.results.find(item => item.id === id)
 		const index = state.drafts.results.indexOf(toRemove)
 		state.drafts.results.splice(index, 1)
-		state.drafts.count --
+		state.drafts.count -= 1
 	},
 	REMOVE_IMAGE_ITEM(state, draftId, imageId) {
 		const draft = state.drafts.results.find(item=>item.id === draftId)
@@ -50,8 +50,8 @@ const actions = {
 	setInProgress({commit}, value) {
 		commit("SET_IN_PROGRESS", value)
 	},
-	removeDraftItem({commit}, ID) {
-		commit("REMOVE_DRAFT_ITEM", ID)
+	removeDraftItem({commit}, id) {
+		commit("REMOVE_DRAFT_ITEM", id)
 	},
 	removeImageItem({commit}, draftId, itemId) {
 		commit("REMOVE_IMAGE_ITEM", draftId, itemId)

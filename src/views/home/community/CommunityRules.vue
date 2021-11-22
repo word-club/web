@@ -7,7 +7,9 @@
 		</v-card-title>
 		<v-divider class="mx-2" />
 		<v-card-text class="pa-2 pt-0">
-			<v-simple-table dense>
+			<v-simple-table dense
+				v-if="community.rules.length"
+			>
 				<template #default>
 					<tbody>
 						<tr v-for="(item, index) in community.rules"
@@ -23,6 +25,7 @@
 					</tbody>
 				</template>
 			</v-simple-table>
+			<v-btn block class="mt-2">Add Rules</v-btn>
 		</v-card-text>
 	</v-card>
 </template>

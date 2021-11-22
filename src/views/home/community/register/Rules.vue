@@ -2,7 +2,7 @@
 	<v-card flat color="transparent">
 		<v-card-text>
 			<v-card dark
-				img="https://www.pepls.ms.gov/sites/pepls/files/images/rules-and-regulations.jpg"
+				:img="require('@/assets/rules-and-regulations.jpg')"
 				height="100"
 				class="d-flex align-start"
 			>
@@ -81,22 +81,17 @@
 </template>
 
 <script>
-import TextArea from "@/components/form/TextArea.vue";
-import TextField from "@/components/form/TextField.vue";
 import {mapGetters, mapMutations} from "vuex";
-import PostMixin from "@/mixin/PostMixin.js";
-import DeleteMixin from "@/mixin/DeleteMixin.js";
 import Snack from "@/mixin/Snack.js";
+import RuleMixin from "@/mixin/RuleMixin.js";
 
 export default {
 	name: "Rules",
-	mixins: [Snack, PostMixin, DeleteMixin],
-	components: {TextArea, TextField},
-	data: () => ({
-		rule: {title: null, description: null}
-	}),
+	mixins: [Snack, RuleMixin],
 	computed: {
-		...mapGetters("community", ["inProgress"]),
+		...mapGetters({
+			community: "community/inProgress"
+		}),
 		state() {
 			return this.community.create_progress
 				.find(item => item.state === "2")
@@ -104,29 +99,19 @@ export default {
 	},
 	methods: {
 		...mapMutations("community", ["SET_IN_PROGRESS"]),
+
 		saveAndAddAnotherRule() {
-			// this.rules.push({title: null, description: null})
-			this.post(
-				this.$util.format(
-					this.$urls.community.addRule,
-					this.community.id
-				),
-				{...this.rule}
-			).then(() => {
-				if (Object.keys(this.postInstance).length) {
-					this.$helper.setCommunityInProgress(this.postInstance)
-					this.SET_IN_PROGRESS(this.postInstance)
-					this.rule = {title: null, description: null}
-				}
-			})
+			this.saveRule()
+				.then(() => {
+					if (Object.keys(this.postInstance).length) {
+						this.$helper.setCommunityInProgress(this.postInstance)
+						this.SET_IN_PROGRESS(this.postInstance)
+						this.rule = {title: null, description: null}
+					}
+				})
 		},
-		removeRule(ruleID) {
-			this.delete(
-				this.$util.format(
-					this.$urls.community.removeRule,
-					ruleID
-				)
-			).then(() => {
+		removeRule(id) {
+			this.deleteRule(id).then(() => {
 				this.$helper.setCommunityInProgress(this.deleteResponse)
 				this.SET_IN_PROGRESS(this.deleteResponse)
 			})

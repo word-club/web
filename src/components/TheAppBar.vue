@@ -38,9 +38,12 @@
 						class="mt-0 mb-2"
 					>
 						<v-img
-							v-if="userInView && userInView.avatar"
+							v-if="userInView.avatar"
 							:src="userInView.avatar.image"
 						/>
+						<div v-else class="full-width white--text text-center weight-500">
+							{{userInView.username[0].toUpperCase()}}
+						</div>
 					</v-avatar>
 					<v-avatar
 						v-if="communityInView"
@@ -50,9 +53,12 @@
 						class="mt-0 mb-2"
 					>
 						<v-img
-							v-if="communityInView && communityInView.avatar"
+							v-if="communityInView.avatar"
 							:src="$link(communityInView.avatar.image)"
 						/>
+						<div v-else class="full-width white--text text-center weight-500">
+							{{communityInView.name[0].toUpperCase()}}
+						</div>
 					</v-avatar>
 				</template>
 			</v-text-field>

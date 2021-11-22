@@ -1,7 +1,7 @@
 <template>
 	<v-autocomplete :search-input.sync="search"
 		:value="value" attach=""
-		:items="users.results"
+		:items="users"
 		:loading="isLoading"
 		outlined dense
 		chips small-chips
@@ -22,13 +22,14 @@
 </template>
 <script>
 import FormFieldError from "@/mixin/FormFieldError.js";
-import {mapGetters} from "vuex";
+import Snack from "@/mixin/Snack.js";
 
 export default {
 	name: "UserSelect",
-	mixins: [FormFieldError],
+	mixins: [FormFieldError, Snack],
 	props: {
 		bg: {type: String, default: "white"},
+		url: {type: String, required: true},
 		icon: {type: String, default: "mdi-account"},
 		label: {type: String, default: "User"},
 		value: {required: true},
@@ -41,21 +42,22 @@ export default {
 	data: () => ({
 		name: "user",
 		isLoading: false,
-		search: null
+		search: null,
+		users: []
 	}),
-	computed: {
-		...mapGetters({
-			users: "user/list"
-		})
-	},
 	watch: {
 		search(val) {
+			console.log(val)
 			if (this.isLoading) return
 			this.isLoading = true
 
-			this.$store.dispatch("user/filter", {search: val})
-				.catch(err => {
-					console.log(err)
+			this.$axios.get(this.url, {search: val})
+				.then(res => {
+					console.log(res)
+					this.users = res
+				})
+				.catch(() => {
+					this.openSnack("Something went wrong.")
 				})
 				.finally(() => (this.isLoading = false))
 		}

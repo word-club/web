@@ -1,5 +1,5 @@
 <template>
-	<v-card color="transparent" flat>
+	<v-card color="transparent" flat v-if="community">
 		<v-card-text>
 			<v-card flat :color="theme.color || 'primary'" dark class="pb-6">
 				<v-card height="200"
@@ -143,13 +143,13 @@ import SelectField from "@/components/form/SelectField.vue";
 import FileField from "@/components/form/FileField.vue";
 import {mapGetters} from "vuex";
 import Snack from "@/mixin/Snack.js";
-import PostMixin from "@/mixin/PostMixin.js";
 import PatchMixin from "@/mixin/PatchMixin.js";
+import CommunityProgress from "@/mixin/CommunityProgress.js";
 
 export default {
 	name: "Display",
 	components: {FileField, SelectField, TextField},
-	mixins: [Snack, PostMixin, PatchMixin],
+	mixins: [Snack, CommunityProgress, PatchMixin],
 	data: () => ({
 		theme: {
 			color: null,
@@ -161,13 +161,15 @@ export default {
 		themeFormErrors: {},
 		avatarFormErrors: {},
 		coverFormErrors: {},
+		stateCode: "1",
+		nextRoute: "Community Rules",
+		requiredFields: ["avatar", "cover"],
+		invalidMessage: "Community theme form is not valid."
 	}),
 	computed: {
-		...mapGetters("community", ["inProgress"]),
-		state() {
-			return this.community.create_progress
-				.find(item => item.state === "1")
-		},
+		...mapGetters({
+			community: "community/inProgress"
+		}),
 		avatarUrl() {
 			if (!this.avatar) return null
 			return URL.createObjectURL(this.avatar)
@@ -240,40 +242,6 @@ export default {
 				}
 			})
 		},
-		skip() {
-			if (!this.state.is_skipped) {
-				this.post(
-					this.$util.format(
-						this.$urls.community.skipProgress,
-						this.state.id
-					)
-				).then(() => {
-					this.$helper.setCommunityInProgress(this.postInstance)
-				})
-			}
-			this.$router.push({name: "Community Rules"})
-		},
-		next() {
-			let messages = []
-			if (!this.community.avatar) messages.push("Community avatar is not set.")
-			if (!this.community.cover) messages.push("Community cover is not set.")
-			if (!this.isValid) messages.push("Community theme form is not valid.")
-			if (messages.length >= 1) {
-				this.openSnack(messages.join("\n"), {multiline: true})
-			} else {
-				this.post(
-					this.$util.format(
-						this.$urls.community.completeProgress,
-						this.state.id
-					)
-				)
-					.then(() => {
-						this.$helper.setCommunityInProgress(this.postInstance)
-						this.$store.dispatch("community/setInProgress", this.postInstance)
-						this.$router.push({name: "Community Rules"})
-					})
-			}
-		}
 	}
 }
 </script>

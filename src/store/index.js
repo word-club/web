@@ -11,17 +11,29 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		loginDialog: false
+		loginDialog: false,
+		draftDialog: false,
+		ruleDialog: false,
 	},
 	getters: {
-		loginState: state => state.loginDialog
+		loginState: state => state.loginDialog,
+		draftState: state => state.draftDialog,
+		ruleState: state => state.ruleDialog,
 	},
 	mutations: {
-		SET_LOGIN_STATE: (state, value) => state.loginDialog = value
+		SET_LOGIN_STATE: (state, value) => state.loginDialog = value,
+		SET_DRAFT_STATE: (state, value) => state.draftDialog = value,
+		SET_RULE_STATE: (state, value) => state.ruleDialog = value
 	},
 	actions: {
 		setLoginState({commit}, value) {
 			commit("SET_LOGIN_STATE", value)
+		},
+		setDraftState({commit}, value) {
+			commit("SET_DRAFT_STATE", value)
+		},
+		setRuleState({commit}, value) {
+			commit("SET_RULE_STATE", value)
 		}
 	},
 	modules: {

@@ -1,7 +1,7 @@
 <template>
 	<v-card class="transparent" flat>
 		<v-card-text>
-			<v-card dark color="success">
+			<v-card dark :color="isAuthorized ? 'success' : 'grey'">
 				<v-card-actions>
 					<v-avatar>
 						<v-icon large>mdi-check-circle</v-icon>
@@ -14,31 +14,39 @@
 		</v-card-text>
 		<v-card-text>
 			<v-row class="ma-0 pa-0">
-				<v-col v-if="authorized" cols="12">
+				<v-col v-if="isAuthorized" cols="12">
 					<v-card outlined>
 						<v-card-text>
-							Cheers! Community email is now authorized.
+							<b>Cheers!</b> Your community email is <b>AUTHORIZED</b>.
 						</v-card-text>
 					</v-card>
 				</v-col>
-				<v-col cols="12" class="d-flex align-center">
+				<v-col cols="12">
 					<text-field
 						v-model="email"
 						name="email"
 						label="Email Address"
 						icon="mdi-at"
 						type="email"
-						:readonly="community.is_authorized"
+						:errors="patchErrors"
+						:readonly="isAuthorized"
 						:color="community.theme.color"
 					/>
 					<v-fab-transition>
 						<v-btn
-							v-if="!authorized && email"
-							class="ml-2" icon
+							v-if="!isAuthorized && !this.community.email && email"
+							class="ma-2" :color="`${community.theme.color} lighten-2`"
+							@click="setEmail"
+						>
+							Set Email
+						</v-btn>
+						<v-btn
+							v-if="!isAuthorized && email"
+							class="ma-2"
 							:color="`${community.theme.color} lighten-2`"
 							@click="requestAuthorization"
 						>
-							<v-icon>mdi-send</v-icon>
+							Request Authorization
 						</v-btn>
 					</v-fab-transition>
 				</v-col>
@@ -91,42 +99,59 @@
 <script>
 import TextField from "@/components/form/TextField.vue";
 import {mapGetters} from "vuex";
-import PostMixin from "@/mixin/PostMixin.js";
 import PatchMixin from "@/mixin/PatchMixin.js";
 import Snack from "@/mixin/Snack.js";
+import CommunityProgress from "@/mixin/CommunityProgress.js";
 
 export default {
 	name: "Authorization",
-	mixins: [Snack, PostMixin, PatchMixin],
+	mixins: [Snack, CommunityProgress, PatchMixin],
 	components: {TextField},
 	data: () => ({
 		email: null,
 		confirmCode: null,
 		authorized: false,
+		stateCode: "4",
+		nextRoute: "Community Administration",
+		requiredFields: [],
+		invalidMessage: "You must verify your email address to proceed to the next step."
 	}),
 	computed: {
-		...mapGetters("community", ["inProgress"]),
-		state() {
-			return this.community.create_progress
-				.find(item => item.state === "4")
+		...mapGetters({
+			community: "community/inProgress"
+		}),
+		isValid() {
+			return this.community.is_authorized
 		},
+		isAuthorized() {
+			return this.community.is_authorized
+		}
 	},
 	created() {
 		this.email = this.community.email
 		this.confirmCode = this.$route.params.code
-		this.authorized = this.community.is_authorized
 	},
 	methods: {
+		setEmail() {
+			const url = this.$util.format(this.$urls.community.detail, this.community.id)
+			this.patch(url, {email: this.email})
+				.then(() => {
+					if (this.patchSuccess) {
+						this.$helper.setCommunityInProgress(this.patchInstance)
+						this.$store.dispatch("community/setInProgress", this.patchInstance)
+						this.openSuccessSnack("Added email successfully.")
+					}
+				})
+		},
 		authorize() {
 			if (!this.confirmCode) return
 			const url = this.$util.format(this.$urls.community.confirmAuthorization, this.confirmCode)
 			this.post(url)
 				.then(() => {
-					if (Object.keys(this.postInstance).length) {
+					if (this.success) {
 						this.openSnack("Email verified successfully.", {color: "success", timeout: 6000})
 						this.$helper.setCommunityInProgress(this.postInstance)
 						this.$store.dispatch("community/setInProgress", this.postInstance)
-						this.authorized = true
 						this.confirmCode = null
 						this.$router.push({name: "Community Authorization"})
 					}
@@ -136,47 +161,15 @@ export default {
 		requestAuthorization() {
 			const url = this.$util.format(this.$urls.community.requestAuthorization, this.community.id)
 			this.post(url).then(() => {
-				console.log(this.formErrors)
-				console.log(Object.keys(this.formErrors).length)
-				if (Object.keys(this.formErrors).length === 0) {
+				if (this.success) {
 					this.openSnack(
 						"Check you email address for verification link.",
 						{color: "success", timeout: 10000}
 					)
+				} else {
+					this.openSnack(this.formErrors.detail)
 				}
 			})
-		},
-		next() {
-			let messages = []
-			if (!this.community.is_authorized) messages.push("You must verify your email address to proceed to the next step.")
-			if (messages.length >= 1) {
-				this.openSnack(messages.join("\n"), {multiline: true})
-			} else {
-				this.post(
-					this.$util.format(
-						this.$urls.community.completeProgress,
-						this.state.id
-					)
-				)
-					.then(() => {
-						this.$helper.setCommunityInProgress(this.postInstance)
-						this.$store.dispatch("community/setInProgress", this.postInstance)
-						this.$router.push({name: "Community Administration"})
-					})
-			}
-		},
-		skip() {
-			if (!this.state.is_skipped) {
-				this.post(
-					this.$util.format(
-						this.$urls.community.skipProgress,
-						this.state.id
-					)
-				).then(() => {
-					this.$helper.setCommunityInProgress(this.postInstance)
-				})
-			}
-			this.$router.push({name: "Community Administration"})
 		},
 	}
 }
