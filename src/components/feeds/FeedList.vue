@@ -3,7 +3,6 @@
 		<v-card v-for="(item, index) in publications.results"
 			:key="index" class="my-4 feed-item" outlined
 		>
-			<!--			<v-btn @click="deletePub(item.id)" icon><v-icon>mdi-delete</v-icon></v-btn>-->
 			<item-header :item="item" />
 			<v-card-title class="py-1 cursor publication-title"
 				@click="toPublicationDetail(item.id)"
@@ -34,6 +33,15 @@ import PublicationType from "@/mixin/PublicationType.js";
 export default {
 	name: "FeedList",
 	mixins: [RouteMixin, PublicationType],
+	props: {
+		payload: {
+			type: Object,
+			default: () => ({
+				is_published: true,
+				depth: 3
+			})
+		}
+	},
 	data: () => ({
 		isLoading: true
 	}),
@@ -53,12 +61,8 @@ export default {
 		await this.fetchPublications()
 	},
 	methods: {
-		deletePub(id) {
-			const url = this.$util.format(this.$urls.publication.detail, id)
-			this.$axios.delete(url)
-		},
 		async fetchPublications() {
-			await this.$store.dispatch("publication/filter", {is_published: true, depth: 3})
+			await this.$store.dispatch("publication/filter", this.payload)
 			this.isLoading = false
 		}
 	}

@@ -9,7 +9,7 @@
 				flat
 				height="350"
 			>
-				<v-img :src="image.image"
+				<v-img :src="$link(image.image)"
 					height="350"
 					contain
 				/>
@@ -24,7 +24,7 @@
 				flat
 				height="350"
 			>
-				<v-img :src="image.image_url"
+				<v-img :src="$link(image.image_url)"
 					height="350"
 					contain
 				/>

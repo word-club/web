@@ -1,5 +1,5 @@
 <template>
-	<div class="pa-2">
+	<div class="px-2 pb-16" v-if="community">
 		<about-community />
 		<div class="py-2" />
 		<community-rules />
@@ -11,17 +11,20 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
 	name: "Sidebar",
 	components: {
-		AboutCommunity: () =>  import("@/views/home/community/AboutCommunity.vue"),
-		CommunityRules: () =>  import("@/views/home/community/CommunityRules.vue"),
-		MessageModerators: () =>  import("@/views/home/community/MessageModerators.vue"),
+		AboutCommunity: () =>  import("@/views/home/community/AboutCommunity"),
+		CommunityRules: () =>  import("@/views/home/community/CommunityRules"),
+		MessageModerators: () =>  import("@/views/home/community/MessageModerators"),
 	},
-	props: {},
-	data: () => ({}),
-	computed: {},
-	methods: {}
+	computed: {
+		...mapGetters({
+			community: "community/inView"
+		})
+	},
 }
 </script>
 

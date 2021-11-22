@@ -34,7 +34,7 @@
 					<v-avatar
 						v-if="routeNameStartsWith('User')"
 						size="30"
-						color="primary"
+						:color="(userInView && userInView.avatar) ? 'white': 'primary'"
 						class="mt-0 mb-2"
 					>
 						<v-img
@@ -45,12 +45,13 @@
 					<v-avatar
 						v-if="communityInView"
 						size="30"
-						:color="communityInView.theme.color"
+						:color="(communityInView && communityInView.avatar)
+							? 'white': communityInView.theme.color"
 						class="mt-0 mb-2"
 					>
 						<v-img
 							v-if="communityInView && communityInView.avatar"
-							:src="communityInView.avatar.image"
+							:src="$link(communityInView.avatar.image)"
 						/>
 					</v-avatar>
 				</template>
@@ -69,7 +70,7 @@
 				placeholder="Search WordClub"
 			>
 				<template #prepend-inner>
-					<v-icon size="22"> mdi-magnify</v-icon>
+					<v-icon size="22">mdi-magnify</v-icon>
 				</template>
 			</v-text-field>
 		</v-responsive>

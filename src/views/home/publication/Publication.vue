@@ -1,36 +1,16 @@
 <template>
-	<v-card outlined
+	<v-card outlined :loading="loading"
 		class="mx-auto" max-width="800"
 	>
-		<v-card-text class="d-flex align-center py-2 flex-wrap justify-space-between">
-			<community-hover-box :community="publication.community" />
-			<v-icon>mdi-circle-small</v-icon>
-			<user-hover-box :user="publication.created_by" />
-			<v-icon>mdi-circle-small</v-icon>
-			<div class="publication-timestamp">
-				{{ $moment(publication.timestamp).fromNow() }}
-			</div>
-			<v-spacer />
-			<v-btn icon>
-				<v-icon>mdi-dots-horizontal</v-icon>
-			</v-btn>
-		</v-card-text>
+		<item-header :item="publication" />
 		<v-card-title class="py-2 publication-title">
 			{{ publication.title }}
 		</v-card-title>
-		<v-card-text class="py-2 px16">
-			Donec rutrum congue leo eget malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.
-		</v-card-text>
-		<v-img src="https://www.gaonconnection.com/h-upload/2018/08/142057lsun8ytpjw37abf0qnrntgspzxa8sogd2800639.png"
-			height="400"
-		/>
-		<v-card-text class="px16">
-			Donec rutrum congue leo eget malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.
-		</v-card-text>
-		<actions />
-		<v-card-actions class="pb-0 px-1">
-			<comment-field :publication="publication.id" />
-		</v-card-actions>
+		<item-images v-if="publication.type === 'media'" :item="publication" />
+		<item-link v-if="publication.type === 'link'" :link="publication.link"/>
+		<item-content v-if="publication.type ==='editor'" :content="JSON.parse(publication.content)" />
+		<item-actions :item="publication" @init="fetchDetail" :detail="true" />
+		<v-divider />
 		<v-card-text>
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
@@ -61,33 +41,54 @@
 				</div>
 			</div>
 		</v-card-text>
-		<v-card-text class="px-0">
-			<comment-list />
+		<v-card-text class="py-0">
+			<comment-item v-for="(comment, index) in publication.comments"
+				:key="index"
+				:index="index"
+				:item="comment"
+				:count="publication.comments.length"
+				@init="$emit('init')"
+			/>
 		</v-card-text>
 	</v-card>
 </template>
 
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
+import ItemHeader from "@/components/feeds/ItemHeader.vue";
+import ItemContent from "@/components/feeds/ItemContent.vue";
+import ItemImages from "@/components/feeds/ItemImages.vue";
+import ItemLink from "@/components/feeds/ItemLink.vue";
+import ItemActions from "@/components/feeds/ItemActions.vue";
+import CommentItem from "@/views/home/publication/CommentItem.vue";
+import FetchMixin from "@/mixin/FetchMixin.js";
 
 export default {
 	name: "Publication",
 	components: {
-		UserHoverBox: () => import("@/components/utils/UserHoverBox.vue"),
-		CommunityHoverBox: () => import("@/components/utils/CommunityHoverBox.vue"),
-		Actions: () => import("@/views/home/publication/Actions.vue"),
-		CommentList: () => import("@/views/home/publication/CommentList.vue"),
-		CommentField: () => import("@/components/form/CommentField.vue")
+		CommentItem,
+		ItemActions,
+		ItemLink,
+		ItemImages,
+		ItemContent,
+		ItemHeader
 	},
-	mixins: [RouteMixin],
+	mixins: [RouteMixin, FetchMixin],
 	data: () => ({
-		myComment: ""
+		myComment: "",
+		model: "publication"
 	}),
 	computed: {
 		...mapGetters({
 			publication: "publication/inView"
 		})
+	},
+	created() {
+		this.fetchDetail()
+	},
+	methods: {
+		...mapMutations("publication", ["SET_TO_VIEW"])
 	}
 }
 </script>

@@ -17,7 +17,7 @@
 					<v-icon>mdi-circle-small</v-icon>
 					<div class="px14 weight-600 cursor hover-underline"
 						:class="`${comment.publication.community.theme.color}--text`"
-						@click="toCommunityDetail(comment.publication.community.unique_id)"
+						@click="toCommunityDetail(comment.publication.community.id)"
 					>
 						{{ comment.publication.community.unique_id }}
 					</div>

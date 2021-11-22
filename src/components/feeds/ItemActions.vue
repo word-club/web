@@ -49,7 +49,7 @@
 			<v-card-text v-if="commentMode">
 				<v-scale-transition>
 					<v-list class="mb-4 rounded"
-						v-if="item.comments.length"
+						v-if="!detail && item.comments.length"
 					>
 						<comment-item v-for="(comment, index) in item.comments"
 							:key="index"
@@ -86,7 +86,7 @@
 				<v-icon left
 					:color="commentMode ? 'white' : ''"
 				>mdi-comment-outline</v-icon>
-				{{item.comments.length}} Comments
+				{{item.reactions.comments}} Comments
 			</v-btn>
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
@@ -231,7 +231,10 @@ export default {
 	name: "ItemActions",
 	components: {CommentItem, ItemContent, ItemLink, ItemImages, ItemHeader, CommentField},
 	mixins: [PublicationType, Snack, PostMixin],
-	props: {item: {type: Object, default: () => {}}},
+	props: {
+		item: {type: Object, default: () => {}},
+		detail: {type: Boolean, default: false}
+	},
 	data: () => ({
 		clipboardContent: null,
 		commentMode: false,
@@ -252,7 +255,7 @@ export default {
 			return this.$vuetify.breakpoint.width < 600
 		},
 		reactionsCount() {
-			return this.item.reactions
+			return this.item.reactions.total
 		}
 	},
 	methods: {

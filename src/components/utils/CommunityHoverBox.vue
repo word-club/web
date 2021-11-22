@@ -15,7 +15,7 @@
 					size="30"
 					:color="community.theme.color" tile
 					class="rounded cursor"
-					@click="toCommunityDetail(community.unique_id)"
+					@click="toCommunityDetail(community.id)"
 				>
 					<v-img v-if="community.avatar"
 						:src="$link(community.avatar)"
@@ -25,7 +25,7 @@
 				<div
 					class="px14 weight-600 cursor hover-underline"
 					:class="`${community.theme.color}--text`"
-					@click="toCommunityDetail(community.unique_id)"
+					@click="toCommunityDetail(community.id)"
 				>
 					{{ community.name }}
 				</div>

@@ -56,6 +56,9 @@ const actions = {
 	removeImageItem({commit}, draftId, itemId) {
 		commit("REMOVE_IMAGE_ITEM", draftId, itemId)
 	},
+	setInView({commit}, value) {
+		commit("SET_TO_VIEW", value)
+	}
 }
 
 export default {

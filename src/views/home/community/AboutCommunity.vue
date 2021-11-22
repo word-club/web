@@ -15,22 +15,22 @@
 		<v-card-text class="pa-3">
 			{{ community.quote }}
 		</v-card-text>
-		<v-card-text class="d-flex align-center pa-3 weight-500">
+		<v-card-text class="d-flex align-center pa-3 weight-500 justify-space-between">
 			<div>
 				<div class="px18">
-					{{ community.subscribers.count }}
+					{{ community.subscriptions.subscribers }}
 				</div>
 				<div class="px14">
-					{{ community.settings.what_to_call_subscribers }}
+					{{ community.theme.to_call_subscriber }}
 				</div>
 			</div>
 			<div class="px-1" />
 			<div>
 				<div class="px18">
-					{{ community.notifiedSubscribers.count }}
+					{{ community.subscriptions.notification_disables }}
 				</div>
 				<div class="px14">
-					{{ community.settings.feeling_after_subscribing }}
+					{{ community.theme.state_after_subscription }}
 				</div>
 			</div>
 		</v-card-text>
@@ -40,7 +40,7 @@
 				mdi-routes-clock
 			</v-icon>
 			<div class="px-2 px16 weight-500">
-				Created {{ $moment(community.timestamp).fromNow() }}
+				Created {{ $moment(community.date_of_registration).fromNow() }}
 			</div>
 		</v-card-text>
 		<v-card-text class="pa-3">
@@ -54,35 +54,34 @@
 		</v-card-text>
 		<v-divider />
 		<v-card-text>
-			<v-menu offset-y>
-				<template #activator="{on, attrs}">
-					<v-btn
-						depressed small
-						rounded block
-						v-bind="attrs"
-						v-on="on"
+			<v-btn
+				depressed small
+				rounded block
+				@click="seeTheme = !seeTheme"
+			>
+				<template #default>
+					<div class="d-flex align-center justify-space-between px-4"
+						style="width: 100%"
 					>
-						<template #default>
-							<div class="d-flex align-center justify-space-between px-4"
-								style="width: 100%"
-							>
-								<div>Community options</div>
-								<v-icon>mdi-chevron-down</v-icon>
-							</div>
-						</template>
-					</v-btn>
+						<div>Community options</div>
+						<v-icon>mdi-chevron-down</v-icon>
+					</div>
 				</template>
-				<v-list dense>
+			</v-btn>
+		</v-card-text>
+		<v-slide-y-transition>
+			<v-card-actions v-if="seeTheme">
+				<v-card outlined class="full-width" rounded="lg">
 					<v-list-item>
-						<v-list-item-icon>mdi-eye-outline</v-list-item-icon>
+						<v-list-item-icon><v-icon>mdi-eye-outline</v-icon></v-list-item-icon>
 						<v-list-item-content><v-list-item-title>Community Theme</v-list-item-title></v-list-item-content>
 						<v-list-item-action>
-							<v-switch v-model="seeTheme" />
+							<v-switch :color="community.theme.color" v-model="seeTheme" />
 						</v-list-item-action>
 					</v-list-item>
-				</v-list>
-			</v-menu>
-		</v-card-text>
+				</v-card>
+			</v-card-actions>
+		</v-slide-y-transition>
 	</v-card>
 </template>
 
@@ -100,7 +99,6 @@ export default {
 			community: "community/inView"
 		})
 	},
-	methods: {}
 }
 </script>
 
