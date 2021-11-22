@@ -12,9 +12,8 @@
 				v-on="on"
 			>
 				<v-avatar
-					size="30"
-					:color="community.theme.color" tile
-					class="rounded cursor"
+					size="30" tile class="rounded cursor"
+					:color="(community.avatar) ? 'transparent' : community.theme.color"
 					@click="toCommunityDetail(community.id)"
 				>
 					<v-img v-if="community.avatar"
