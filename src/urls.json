@@ -45,7 +45,8 @@
 		"addTheme": "community/%s/theme/",
 		"updateTheme": "community-theme/%s/",
 		"completeRegistration": "community/%s/complete-registration",
-		"subscriptionFilter": "subscribed-community/filter/"
+		"subscriptionFilter": "subscribed-community/filter/",
+		"subscribersFilter": "community/%s/subscriber-filter/"
 	},
 	"publication": {
 		"list": "s/publication/",

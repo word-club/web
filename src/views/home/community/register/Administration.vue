@@ -10,10 +10,11 @@
 			<v-row class="ma-0 pa-0">
 				<v-col cols="12">
 					<user-select
-						v-model="community.admins"
+						v-model="payload.admins"
 						icon="mdi-account-tie"
 						label="admins"
-						name="admins"
+						name="admins" multiple
+						:url="subscriberFetchUrl"
 					/>
 					<v-card-subtitle class="px-2 pb-0 d-flex align-center">
 						<v-icon size="10">mdi-circle</v-icon>
@@ -22,10 +23,11 @@
 				</v-col>
 				<v-col cols="12">
 					<user-select
-						v-model="community.sub_admins"
+						v-model="payload.sub_admins"
 						icon="mdi-account-tie-outline"
 						label="Sub Admins"
-						name="sub_admins"
+						name="sub_admins" multiple
+						:url="subscriberFetchUrl"
 					/>
 					<v-card-subtitle class="px-2 pb-0 d-flex align-center">
 						<v-icon size="10">mdi-circle</v-icon>
@@ -70,7 +72,7 @@ export default {
 	components: {UserSelect},
 	mixins: [RouteMixin, CommunityProgress],
 	data: () => ({
-		community: {
+		payload: {
 			admins: [],
 			sub_admins: []
 		},
@@ -78,7 +80,12 @@ export default {
 		requiredFields: [],
 	}),
 	computed: {
-		...mapGetters("community", ["inProgress"])
+		...mapGetters({
+			community: "community/inProgress"
+		}),
+		subscriberFetchUrl() {
+			return this.$util.format(this.$urls.community.subscribersFilter, this.community.id)
+		}
 	},
 }
 </script>

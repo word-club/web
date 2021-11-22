@@ -128,7 +128,6 @@ export default {
 		}
 	},
 	created() {
-		console.log(this.community)
 		this.email = this.community.email
 		this.confirmCode = this.$route.params.code
 	},
