@@ -5,7 +5,9 @@
 	>
 		<div v-if="community && community.theme">
 			<v-card-text class="pa-0">
-				<v-card height="300" :color="community.theme.color"
+				<v-card
+					:height="(community.cover) ? 300 : 100"
+					:color="community.theme.color"
 					tile flat
 				>
 					<v-img
@@ -39,52 +41,36 @@
 						</div>
 						<v-spacer />
 						<div class="px-2" />
-						<v-btn outlined rounded
+						<v-btn
+							v-if="community.my_status && community.my_status.is_approved"
+							rounded depressed :color="community.theme.color"
+							@click="unSubscribe"
+						>
+							Joined
+						</v-btn>
+						<v-btn
+							v-else outlined rounded
 							:color="community.theme.color"
+							@click="subscribe"
 						>
 							Join
 						</v-btn>
 						<div class="px-2" />
-						<v-btn icon :color="community.theme.color">
+						<v-btn
+							v-if="community.my_status && !community.my_status.disable_notification"
+							icon :color="community.theme.color"
+							@click="disableNotification"
+						>
+							<v-icon>mdi-bell-outline</v-icon>
+						</v-btn>
+						<v-btn
+							v-else icon :color="community.theme.color"
+							@click="enableNotification"
+						>
 							<v-icon>mdi-bell</v-icon>
 						</v-btn>
 					</v-card-text>
-					<v-card-actions class="flex-wrap px14 weight-500 py-0">
-						<div
-							class="community-top-button ma-2 mb-0 cursor"
-							@click="toCommunityDetail(community.id)"
-							:class="($route.name==='Community Detail') ? community.theme.color + '--text': ''"
-						>
-							<div class="px-1">Posts</div>
-							<v-scale-transition>
-								<v-card height="3" :color="community.theme.color"
-									v-if="$route.name==='Community Detail'"
-								/>
-							</v-scale-transition>
-						</div>
-						<div class="community-top-button ma-2 mb-0 cursor"
-							@click="toCommunityWiki(community.id)"
-							:class="($route.name==='Community Detail Wiki') ? community.theme.color + '--text': ''"
-						>
-							<div class="px-1">Wiki</div>
-							<v-scale-transition>
-								<v-card height="3" :color="community.theme.color"
-									v-if="$route.name==='Community Detail Wiki'"
-								/>
-							</v-scale-transition>
-						</div>
-						<div class="community-top-button ma-2 mb-0 cursor"
-							:class="($route.name==='Community Detail Modmail') ? community.theme.color + '--text': ''"
-							@click="toCommunityModmail(community.id)"
-						>
-							<div class="px-1">Modmail</div>
-							<v-scale-transition>
-								<v-card height="3" :color="community.theme.color"
-									v-if="$route.name==='Community Detail Modmail'"
-								/>
-							</v-scale-transition>
-						</div>
-					</v-card-actions>
+					<community-tab />
 				</v-card>
 			</v-card-title>
 			<v-card-text class="pt-4">
@@ -107,8 +93,10 @@
 import {mapGetters, mapMutations} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import FetchMixin from "@/mixin/FetchMixin.js";
+import CommunityTab from "@/views/home/community/CommunityTab.vue";
 export default {
 	name: "Community",
+	components: {CommunityTab},
 	mixins: [RouteMixin, FetchMixin],
 	data: () => ({
 		model: "community"
@@ -138,7 +126,11 @@ export default {
 				tab.addEventListener("mouseover", onMouseOver)
 				tab.addEventListener("mouseout", onMouseOut)
 			})
-		}
+		},
+		unSubscribe() {},
+		subscribe() {},
+		disableNotification() {},
+		enableNotification() {},
 	}
 }
 </script>
@@ -150,10 +142,5 @@ export default {
 }
 .px24 {
 	font-size: 24px;
-}
-.community-top-button {
-	color: #818080;
-	text-transform: uppercase;
-	font-weight: 600;
 }
 </style>
