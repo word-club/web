@@ -48,6 +48,9 @@
 						</v-list-item>
 					</v-list>
 				</v-card-text>
+				<v-card-text>
+					//
+				</v-card-text>
 			</v-card>
 		</v-card-text>
 	</v-card>
@@ -55,11 +58,14 @@
 
 <script>
 import {mapGetters} from "vuex";
-
 export default {
 	name: "WikiPage",
-	props: {},
-	data: () => ({}),
+	data: () => ({
+		value: "## Welcome to",
+		options: {
+			lineNumbers: false
+		}
+	}),
 	computed: {
 		...mapGetters({
 			community: "community/inView"

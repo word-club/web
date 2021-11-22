@@ -98,10 +98,11 @@
 import PostMixin from "@/mixin/PostMixin.js";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import Snack from "@/mixin/Snack.js";
+import CheckRequiredMixin from "@/mixin/CheckRequiredMixin.js";
 
 export default {
 	name: "Mainframe",
-	mixins: [PostMixin, RouteMixin, Snack],
+	mixins: [PostMixin, RouteMixin, Snack, CheckRequiredMixin],
 	components: {
 		RegisterProgressDialog: () => import("@/views/home/community/register/components/RegisterProgressDialog")
 	},
@@ -135,14 +136,6 @@ export default {
 		],
 	}),
 	methods: {
-		checkRequired(fieldList) {
-			let errObj = {}
-			fieldList.forEach(field => {
-				if (!this.payload[field]) errObj[field] = ["This field is required."]
-			})
-			this.formErrors = { ...errObj }
-			return Object.entries(errObj).length > 0
-		},
 		createCommunity() {
 			if (!this.checkRequired(["name", "description"])) {
 				this.post(this.$urls.community.list, this.payload)

@@ -1,41 +1,37 @@
 <template>
 	<v-card-text class="pa-0">
-		<div v-if="item.images">
-			<v-card
-				v-for="(image, index) in item.images"
-				:key="index"
-
-				dark tile
-				flat
-				height="350"
+		<v-card
+			dark tile flat
+			height="350"
+		>
+			<v-carousel height="350" hide-delimiters
+				:show-arrows="medias.length > 1"
 			>
-				<v-img :src="$link(image.image)"
-					height="350"
-					contain
+				<v-carousel-item
+					v-for="(image, index) in medias"
+					:key="index"
+					:src="$link(image.image || image.image_url)"
 				/>
-			</v-card>
-		</div>
-		<div v-if="item.image_urls">
-			<v-card
-				v-for="(image, index) in item.image_urls"
-				:key="index"
-
-				dark tile
-				flat
-				height="350"
-			>
-				<v-img :src="$link(image.image_url)"
-					height="350"
-					contain
-				/>
-			</v-card>
-		</div>
+			</v-carousel>
+		</v-card>
 	</v-card-text>
 </template>
 
 <script>
 export default {
 	name: "ItemImages",
-	props: {item: {type: Object, default: () => {}}},
+	props: {
+		item: {
+			type: Object, default: () => ({
+				images: [],
+				image_urls: []
+			})
+		}
+	},
+	computed: {
+		medias() {
+			return this.item.images.concat(this.item.image_urls)
+		}
+	}
 }
 </script>

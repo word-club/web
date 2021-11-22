@@ -8,10 +8,6 @@
 				@click="toPublicationDetail(item.id)"
 			>
 				<h4>{{ item.title }}</h4>
-				<!--				<v-chip-->
-				<!--					v-if="getTypeString(item.type)"-->
-				<!--					color="primary" class="mx-1" small><v-icon left>mdi-link</v-icon>-->
-				<!--					{{ getTypeString(item.type) }}</v-chip>-->
 			</v-card-title>
 			<item-images v-if="item.type === 'media'" :item="item" />
 			<item-link v-if="item.type === 'link'" :link="item.link"/>
