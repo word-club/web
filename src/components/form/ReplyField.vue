@@ -1,5 +1,5 @@
 <template>
-	<div class="full-width reply-box thin-scroll-bar">
+	<div class="full-width reply-box">
 		<text-area
 			:id="`#reply-input-${this.comment.id}`"
 			class="ml-4 reply-input" name="reply"

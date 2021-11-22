@@ -1,10 +1,10 @@
 <template>
-	<v-dialog v-model="dialog" max-width="500">
+	<v-dialog v-model="dialog" max-width="500" persistent>
 		<v-card>
 			<v-card-title>
-				Community Rule
+				{{ ruleInEdit ? 'Edit Rule' : 'Add Rule' }}
 				<v-spacer />
-				<v-btn icon @click="$store.dispatch('setRuleState', false)">
+				<v-btn icon @click="closeDialog">
 					<v-icon>mdi-close</v-icon>
 				</v-btn>
 			</v-card-title>
@@ -29,12 +29,20 @@
 				/>
 			</v-card-text>
 			<v-card-actions>
-				<v-btn @click="$store.dispatch('setRuleState', false)" depressed color="error">Cancel</v-btn>
+				<v-btn @click="closeDialog" depressed color="error">Cancel</v-btn>
+				<v-spacer />
 				<v-btn
+					v-if="ruleInEdit"
+					dark :color="community.theme.color"
+					@click="updateRule"
+				>
+					Save
+				</v-btn>
+				<v-btn v-else
 					dark :color="community.theme.color"
 					@click="newRule"
 				>
-					Save
+					Add
 				</v-btn>
 			</v-card-actions>
 		</v-card>
@@ -42,7 +50,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import RuleMixin from "@/mixin/RuleMixin.js";
 
 export default {
@@ -50,7 +58,8 @@ export default {
 	mixins: [RuleMixin],
 	computed: {
 		...mapGetters({
-			community: "community/inView"
+			community: "community/inView",
+			ruleInEdit: "ruleInEdit"
 		}),
 		dialog: {
 			get() {
@@ -61,15 +70,36 @@ export default {
 			}
 		}
 	},
-	created() {
+	watch: {
+		ruleInEdit(v) {
+			if (v) {
+				this.dialog = true
+				this.rule = {...v}
+			}
+		}
 	},
 	methods: {
+		closeDialog() {
+			this.rule = {title: null, description: null}
+			this.$store.dispatch("setRuleState", false)
+			this.$store.dispatch("setRuleInEdit", null)
+		},
+		updateRule() {
+			this.patchRule(this.ruleInEdit.id, {
+				title: this.rule.title,
+				description: this.rule.description
+			}).then(() => {
+				if (this.patchSuccess) this.closeDialog()
+				else this.openSnack("Rule update failed. Please try again.")
+			})
+		},
 		newRule() {
 			this.saveRule()
 				.then(() => {
 					if (this.success) {
-						this.rule = {title: null, description: null}
-						this.$store.dispatch("setRuleState", false)
+						this.closeDialog()
+					} else {
+						this.openSnack("Rule create failed. Please try again.")
 					}
 				})
 		}

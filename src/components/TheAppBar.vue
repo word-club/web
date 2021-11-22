@@ -118,7 +118,7 @@
 		>
 			Login
 		</v-btn>
-		<login-dialog/>
+		<auth-dialog/>
 	</v-app-bar>
 </template>
 
@@ -129,7 +129,7 @@ import {mapGetters} from "vuex";
 export default {
 	name: "TheAppBar",
 	components: {
-		LoginDialog: () => import("@/views/auth/LoginDialog"),
+		AuthDialog: () => import("@/views/auth/AuthDialog.vue"),
 		ProfileDrop: () => import("@/components/utils/ProfileDrop"),
 		NotificationMenu: () =>
 			import("@/views/home/notification/NotificationMenu"),
@@ -169,9 +169,10 @@ export default {
 			return false;
 		},
 		login() {
-			this.$store.dispatch("setLoginState", true);
+			this.$store.dispatch("setAuthMode", {state: true, mode: "login"});
 		},
 		signUp() {
+			this.$store.dispatch("setAuthMode", {state: true, mode: "signup"});
 		},
 	},
 };

@@ -29,7 +29,7 @@
 		"addAdmin": "community/%s/admin/",
 		"addRule": "community/%s/rule/",
 		"removeDisabledNotification": "disable-notifications/%s/",
-		"removeRule": "community-rule/%s/",
+		"ruleDetail": "community-rule/%s/",
 		"removeCover": "community-cover/%s/",
 		"removeAvatar": "community-avatar/%s/",
 		"removeReport": "community-report/%s/",

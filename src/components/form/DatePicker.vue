@@ -11,7 +11,7 @@
 			<!--eslint-disable-next-line vue/no-mutating-props-->
 			<v-text-field v-model="value"
 				:label="label.toUpperCase()" :prepend-inner-icon="icon"
-				readonly v-bind="attrs"
+				readonly v-bind="attrs" :dense="dense"
 				v-on="on" outlined :color="color"
 				:error-messages="getErrorMessage"
 				@change="$emit('input', $event)"
@@ -54,7 +54,7 @@ export default {
 		},
 		dense: {
 			type: Boolean,
-			default: false
+			default: true
 		},
 		errors: {
 			type: Object,

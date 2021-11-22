@@ -96,7 +96,7 @@
 				>
 					<template #default>
 						<div class="last-reply-line" />
-						<div v-if="index + 1 !== count" class="field-line" />
+						<div v-if="item.replies.length && index + 1 !== count" class="field-line" />
 						<reply-field @init="$emit('init')"
 							:comment="item"
 						/>
@@ -235,20 +235,20 @@ export default {
 		},
 		upVoteComment(item = null) {
 			if (!item) item = this.item
+			const upVote = item.up_vote
 			this.sendActionRequest({
-				action: (item.up_vote) ? "removeUpVote" : "addUpVote",
-				revoke: !!(item.up_vote),
-				id: (item.up_vote) ? item.up_vote.id : item.id
+				action: (upVote) ? "removeUpVote" : "addUpVote",
+				revoke: !!(upVote),
+				id: (upVote) ? upVote.id : item.id
 			})
 		},
 		downVoteComment(item = null) {
-			console.log(item.id)
 			if (!item) item = this.item
-			console.log(item.id)
+			const downVote = item.down_vote
 			this.sendActionRequest({
-				action: (item.down_vote) ? "removeDownVote" : "addDownVote",
-				revoke: !!(item.down_vote),
-				id: (item.down_vote) ? item.down_vote.id : item.id
+				action: (downVote) ? "removeDownVote" : "addDownVote",
+				revoke: !!(downVote),
+				id: (downVote) ? downVote.id : item.id
 			})
 		},
 		createShare(item = null) {
@@ -261,10 +261,11 @@ export default {
 		},
 		saveComment(item = null) {
 			if (!item) item = this.item
+			const bookmarkStatus = item.bookmark_status
 			this.sendActionRequest({
-				action: (item.bookmark_status) ? "bookmarkDetail" : "addBookmark",
-				revoke: !!(item.bookmark_status),
-				id: (item.bookmark_status) ? item.bookmark_status.id : item.id
+				action: (bookmarkStatus) ? "bookmarkDetail" : "addBookmark",
+				revoke: !!(bookmarkStatus),
+				id: (bookmarkStatus) ? bookmarkStatus.id : item.id
 			})
 		},
 		reportComment(item = null) {
@@ -391,8 +392,8 @@ $leftPadding: 25px;
 	}
 	.last-reply-line {
 		position: absolute;
-		top: -30px;
-		height: 80px;
+		top: -35px;
+		height: 85px;
 		width: 17px;
 		z-index: 5;
 		border: 2px solid $borderGrey;

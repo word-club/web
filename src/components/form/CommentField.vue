@@ -1,5 +1,5 @@
 <template>
-	<div v-if="publication" class="comment-box thin-scroll-bar">
+	<div v-if="publication" class="comment-box">
 		<v-textarea
 			:id="`comment-input-${this.publication.id}`"
 			outlined hide-details="auto"

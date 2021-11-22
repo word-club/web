@@ -59,7 +59,16 @@
 					:key="rule.id"
 					class="py-0"
 				>
-					<v-card-title :class="{'pt-0': index !==0}">{{rule.title}}</v-card-title>
+					<v-card-title :class="{'pt-0': index !==0}">
+						{{rule.title}}
+						<v-spacer />
+						<v-btn icon :color="community.theme.color"
+							@click="$store.dispatch('setRuleInEdit', rule)"
+						>
+							<v-icon>mdi-pencil</v-icon>
+						</v-btn>
+						<v-btn icon color="error"><v-icon>mdi-delete</v-icon></v-btn>
+					</v-card-title>
 					<v-card-subtitle>{{rule.description}}</v-card-subtitle>
 				</v-card-text>
 			</v-card>

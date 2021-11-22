@@ -18,7 +18,7 @@
 			app right
 			clipped
 			color="grey lighten-3"
-			class="home-sidebar thin-scroll-bar"
+			class="home-sidebar"
 			:permanent="mdAndUp"
 			:temporary="!mdAndUp"
 			width="350"
@@ -252,25 +252,25 @@ export default {
 .normal-whitespace {
 	white-space: normal !important;
 }
-.thin-scroll-bar {
-	/* width */
-	::-webkit-scrollbar {
-		width: 5px;
-	}
+</style>
+<style lang="scss">
+/* width */
+::-webkit-scrollbar {
+	width: 6px;
+}
 
-	/* Track */
-	::-webkit-scrollbar-track {
-		background: #d7d7d7;
-	}
+/* Track */
+::-webkit-scrollbar-track {
+	background: #d7d7d7;
+}
 
-	/* Handle */
-	::-webkit-scrollbar-thumb {
-		background: #888;
-	}
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
 
-	/* Handle on hover */
-	::-webkit-scrollbar-thumb:hover {
-		background: #727272;
-	}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #727272;
 }
 </style>

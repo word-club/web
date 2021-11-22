@@ -19,6 +19,9 @@
 					<v-img v-if="community.avatar"
 						:src="$link(community.avatar)"
 					/>
+					<div v-else class="full-width white--text weight-500 px18 text-center">
+						{{community.name[0].toUpperCase()}}
+					</div>
 				</v-avatar>
 				<div class="px-1" />
 				<div

@@ -1,5 +1,6 @@
 import PostMixin from "@/mixin/PostMixin.js";
 import DeleteMixin from "@/mixin/DeleteMixin.js";
+import PatchMixin from "@/mixin/PatchMixin.js";
 
 const RuleMixin = {
 	data: () => ({
@@ -7,7 +8,7 @@ const RuleMixin = {
 			title: null, description: null
 		}
 	}),
-	mixins: [PostMixin, DeleteMixin],
+	mixins: [PostMixin, DeleteMixin, PatchMixin],
 	methods: {
 		deleteRule(ruleId) {
 			return this.delete(
@@ -15,6 +16,15 @@ const RuleMixin = {
 					this.$urls.community.removeRule,
 					ruleId
 				)
+			)
+		},
+		patchRule(ruleId, payload) {
+			return this.patch(
+				this.$util.format(
+					this.$urls.community.ruleDetail,
+					ruleId
+				),
+				payload
 			)
 		},
 		saveRule() {
