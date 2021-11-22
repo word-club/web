@@ -1,7 +1,7 @@
 <template>
 	<v-card color="transparent" flat>
 		<v-card-text>
-			<v-card dark img="https://www.picpedia.org/highway-signs/images/administration.jpg" height="100" />
+			<v-card dark :img="require('@/assets/administration.jpg')" height="100" />
 		</v-card-text>
 		<v-card-subtitle>
 			Set administrators for your community. They will be able to approve related publications.
@@ -15,9 +15,9 @@
 						label="admins"
 						name="admins"
 					/>
-					<v-card-subtitle class="px-2 pb-0">
-						<v-icon small>mdi-circle</v-icon>
-						Admin can approve/remove subscribers, manage publications and community settings.
+					<v-card-subtitle class="px-2 pb-0 d-flex align-center">
+						<v-icon size="10">mdi-circle</v-icon>
+						<div class="pl-3">Admin can <i>approve/remove</i> subscribers and manage <i>Community Settings</i>.</div>
 					</v-card-subtitle>
 				</v-col>
 				<v-col cols="12">
@@ -27,9 +27,9 @@
 						label="Sub Admins"
 						name="sub_admins"
 					/>
-					<v-card-subtitle class="px-2 pb-0">
-						<v-icon small>mdi-circle</v-icon>
-						Sub-admins can approve subscribers and manage few publication and community settings.
+					<v-card-subtitle class="px-2 pb-0 d-flex align-center">
+						<v-icon size="10">mdi-circle</v-icon>
+						<div class="pl-3">Sub-admins can <i>approve</i> subscribers and manage few <i>Community Settings</i>.</div>
 					</v-card-subtitle>
 				</v-col>
 			</v-row>
@@ -39,17 +39,21 @@
 			<v-card-actions>
 				<v-btn color="grey darken-4" outlined
 					:to="{name: 'Community Authorization'}"
-				>Authorization</v-btn>
+				>
+					Authorization
+				</v-btn>
+
 				<v-btn color="grey lighten-1"
 					@click="skip"
 				>
 					Skip
 				</v-btn>
 				<v-spacer />
-				<v-btn color="grey" dark>Skip</v-btn>
 				<v-btn color="primary"
 					@click="toCommunityDetail(community.id)"
-				>Submit</v-btn>
+				>
+					Submit
+				</v-btn>
 			</v-card-actions>
 		</div>
 	</v-card>
@@ -59,38 +63,23 @@
 import UserSelect from "@/components/form/UserSelect.vue";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import {mapGetters} from "vuex";
-import PostMixin from "@/mixin/PostMixin.js";
+import CommunityProgress from "@/mixin/CommunityProgress.js";
+
 export default {
 	name: "Administration",
 	components: {UserSelect},
-	mixins: [RouteMixin, PostMixin],
+	mixins: [RouteMixin, CommunityProgress],
 	data: () => ({
 		community: {
 			admins: [],
 			sub_admins: []
-		}
+		},
+		stateCode: "5",
+		requiredFields: [],
 	}),
 	computed: {
-		...mapGetters("community", ["inProgress"]),
-		state() {
-			return this.community.create_progress.find(item => item.state === "5")
-		},
+		...mapGetters("community", ["inProgress"])
 	},
-	methods: {
-		skip() {
-			if (!this.state.is_skipped) {
-				this.post(
-					this.$util.format(
-						this.$urls.community.skipProgress,
-						this.state.id
-					)
-				).then(() => {
-					this.$helper.setCommunityInProgress(this.postInstance)
-				})
-			}
-			this.$router.push({name: "Community Authorization"})
-		},
-	}
 }
 </script>
 

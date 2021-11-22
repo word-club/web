@@ -57,7 +57,7 @@
 			<v-btn
 				depressed small
 				rounded block
-				@click="seeTheme = !seeTheme"
+				@click="options = !options"
 			>
 				<template #default>
 					<div class="d-flex align-center justify-space-between px-4"
@@ -70,7 +70,7 @@
 			</v-btn>
 		</v-card-text>
 		<v-slide-y-transition>
-			<v-card-actions v-if="seeTheme">
+			<v-card-actions v-if="options">
 				<v-card outlined class="full-width" rounded="lg">
 					<v-list-item>
 						<v-list-item-icon><v-icon>mdi-eye-outline</v-icon></v-list-item-icon>
@@ -92,6 +92,7 @@ export default {
 	name: "AboutCommunity",
 	props: {},
 	data: () => ({
+		options: false,
 		seeTheme: true
 	}),
 	computed: {

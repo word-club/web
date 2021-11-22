@@ -56,30 +56,33 @@
 <script>
 import {mapGetters} from "vuex";
 import PostMixin from "@/mixin/PostMixin.js";
+import CommunityProgress from "@/mixin/CommunityProgress.js";
 
 export default {
 	name: "Hashtags",
-	mixins: [PostMixin],
+	mixins: [PostMixin, CommunityProgress],
 	data: () => ({
 		payload: {
 			tags: []
-		}
+		},
+		stateCode: "3",
+		nextRoute: "Community Authorization",
+		requiredFields: [],
+		invalidMessage: "You must add at least three tags to process into the next step."
 	}),
 	computed: {
 		...mapGetters({
 			community: "community/inProgress"
 		}),
-		state() {
-			return this.community.create_progress
-				.find(item => item.state === "3")
-		},
+		isValid() {
+			return this.community.hashtags.length >= 3;
+		}
 	},
 	created() {
 		this.populateSavedTags()
 	},
 	methods: {
 		populateSavedTags() {
-			console.log(this.community)
 			if (this.community.hashtags.length)
 				this.community.hashtags.forEach(tag => {
 					this.payload.tags.push({id: tag.tag, tag: tag.name})
@@ -99,38 +102,6 @@ export default {
 				}
 			})
 		},
-		skip() {
-			if (!this.state.is_skipped) {
-				this.post(
-					this.$util.format(
-						this.$urls.community.skipProgress,
-						this.state.id
-					)
-				).then(() => {
-					this.$helper.setCommunityInProgress(this.postInstance)
-				})
-			}
-			this.$router.push({name: "Community Authorization"})
-		},
-		next() {
-			let messages = []
-			if (this.community.hashtags < 3) messages.push("You must add at least three tags to process into the next step.")
-			if (messages.length >= 1) {
-				this.openSnack(messages.join("\n"), {multiline: true})
-			} else {
-				this.post(
-					this.$util.format(
-						this.$urls.community.completeProgress,
-						this.state.id
-					)
-				)
-					.then(() => {
-						this.$helper.setCommunityInProgress(this.postInstance)
-						this.$store.dispatch("community/setInProgress", this.postInstance)
-						this.$router.push({name: "Community Authorization"})
-					})
-			}
-		}
 	}
 }
 </script>

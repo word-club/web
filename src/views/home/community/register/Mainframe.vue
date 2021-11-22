@@ -31,25 +31,6 @@
 					/>
 				</v-col>
 				<v-col cols="12">
-					<text-field
-						v-model="payload.email"
-						name="email"
-						label="Email"
-						icon="mdi-at"
-						:errors="formErrors"
-					/>
-				</v-col>
-				<v-col cols="12">
-					<text-area
-						v-model="payload.description"
-						name="description"
-						label="Description"
-						icon="mdi-subtitles-outline"
-						:errors="formErrors"
-						counter="256"
-					/>
-				</v-col>
-				<v-col cols="12">
 					<v-radio-group v-model="payload.type">
 						<v-radio v-for="(item, index) in radioGroup"
 							:key="index" :value="item.value"
@@ -109,8 +90,7 @@ export default {
 	data: () => ({
 		payload: {
 			name: null,
-			email: null,
-			description: null,
+			unique_id: null,
 			contains_adult_content: false,
 			type: "public"
 		},
@@ -137,7 +117,7 @@ export default {
 	}),
 	methods: {
 		createCommunity() {
-			if (!this.checkRequired(["name", "description"])) {
+			if (!this.checkRequired(["name", "unique_id"])) {
 				this.post(this.$urls.community.list, this.payload)
 					.then(() => {
 						if (Object.keys(this.formErrors).length === 0) {

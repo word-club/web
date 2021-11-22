@@ -16,7 +16,11 @@
 					<v-img v-if="community.avatar"
 						:src="$link(community.avatar.image)"
 					/>
-					<div class="full-width display-1 text-center white--text">{{community.name[0].toUpperCase()}}</div>
+					<div v-else
+						class="full-width display-1 text-center white--text"
+					>
+						{{community.name[0].toUpperCase()}}
+					</div>
 				</v-avatar>
 				<div class="px-2" />
 				<div class="px24">
@@ -27,14 +31,14 @@
 				<v-btn
 					v-if="myStatus && myStatus.is_approved"
 					rounded depressed :color="community.theme.color"
-					@click="unSubscribe"
+					@click="unSubscribe" dark
 				>
 					Joined
 				</v-btn>
 				<v-btn
 					v-else outlined rounded
 					:color="community.theme.color"
-					@click="subscribe"
+					@click="subscribe" dark
 				>
 					Join
 				</v-btn>
@@ -44,13 +48,13 @@
 					icon :color="community.theme.color"
 					@click="disableNotification"
 				>
-					<v-icon>mdi-bell-outline</v-icon>
+					<v-icon>mdi-bell</v-icon>
 				</v-btn>
 				<v-btn
 					v-else icon :color="community.theme.color"
 					@click="enableNotification"
 				>
-					<v-icon>mdi-bell</v-icon>
+					<v-icon>mdi-bell-outline</v-icon>
 				</v-btn>
 			</v-card-text>
 			<community-tab />
