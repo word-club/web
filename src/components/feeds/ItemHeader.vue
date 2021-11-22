@@ -30,8 +30,14 @@
 				<v-list-item v-if="$helper.ifCurrentUserIs(item.created_by)"
 					:to="{name: 'Submit', params: {toEdit: item.id}}"
 				>
-					<v-list-item-icon class="mr-2"><v-icon>mdi-pencil</v-icon></v-list-item-icon>
+					<v-list-item-icon class="mr-2"><v-icon color="primary lighten-1">mdi-pencil</v-icon></v-list-item-icon>
 					<v-list-item-content><v-list-item-title>Edit Publication</v-list-item-title></v-list-item-content>
+				</v-list-item>
+				<v-list-item v-if="$helper.ifCurrentUserIs(item.created_by)"
+					@click="deletePublication()"
+				>
+					<v-list-item-icon class="mr-2"><v-icon color="red lighten-1">mdi-delete</v-icon></v-list-item-icon>
+					<v-list-item-content><v-list-item-title>Delete Publication</v-list-item-title></v-list-item-content>
 				</v-list-item>
 			</v-list>
 		</v-menu>
@@ -48,6 +54,12 @@ export default {
 	components: {
 		UserHoverBox,
 		CommunityHoverBox,
+	},
+	methods: {
+		deletePublication() {
+			const url = this.$util.format(this.$urls.publication.detail, this.item.id)
+			this.$axios.delete(url)
+		},
 	}
 }
 </script>

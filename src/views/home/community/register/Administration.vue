@@ -48,7 +48,7 @@
 				<v-spacer />
 				<v-btn color="grey" dark>Skip</v-btn>
 				<v-btn color="primary"
-					@click="toCommunityDetail(community.unique_id)"
+					@click="toCommunityDetail(community.id)"
 				>Submit</v-btn>
 			</v-card-actions>
 		</div>

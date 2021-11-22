@@ -1,4 +1,5 @@
 export function generateFullLink(link) {
-	if (link.startsWith("http://localhost:8000")) return link
-	return "http://localhost:8000" + link
+	if (link.startsWith("http://")) return link
+	else if (link.startsWith("https://")) return link
+	else return "http://localhost:8000" + link
 }

@@ -3,14 +3,14 @@ const RouteMixin = {
 		async toPublicationDetail(id) {
 			await this.$router.push({name: "Publication", params: {id: id}})
 		},
-		async toCommunityDetail(uniqueId) {
-			await this.$router.push({name: "Community Detail", params: {uniqueId: uniqueId}})
+		async toCommunityDetail(id) {
+			await this.$router.push({name: "Community Detail", params: {id: id}})
 		},
-		async toCommunityWiki(uniqueId) {
-			await this.$router.push({name: "Community Detail Wiki", params: {uniqueId: uniqueId}})
+		async toCommunityWiki(id) {
+			await this.$router.push({name: "Community Detail Wiki", params: {id: id}})
 		},
-		async toCommunityModmail(uniqueId) {
-			await this.$router.push({name: "Community Detail Modmail", params: {uniqueId: uniqueId}})
+		async toCommunityModmail(id) {
+			await this.$router.push({name: "Community Detail Modmail", params: {id: id}})
 		},
 		async toRegisterCommunity() {
 			await this.$router.push({name: "Community Mainframe"})

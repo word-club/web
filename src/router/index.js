@@ -96,7 +96,7 @@ const routes = [
 		}
 	},
 	{
-		path: "/community/:uniqueId",
+		path: "/community/:id",
 		components: {
 			default: () => import("@/views/home/community/Community"),
 			sidebar: () => import("@/views/home/community/Sidebar")

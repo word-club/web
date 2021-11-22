@@ -1,6 +1,10 @@
 <template>
-	<div class="pa-2">
-		<community-peek :community="publication.community" />
+	<div v-if="publication" class="pa-2">
+		<community-peek
+			v-if="publication.community"
+			:community="publication.community"
+		/>
+
 		<div class="py-4" />
 		<posting-to-word-club />
 		<div class="py-4" />
