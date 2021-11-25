@@ -1,5 +1,5 @@
 <template>
-	<v-card-text class="px-3">
+	<v-card-text class="pa-2">
 		<v-card>
 			<v-card-title>{{link.title}}</v-card-title>
 			<v-card-subtitle v-if="link.description">{{link.description}}</v-card-subtitle>

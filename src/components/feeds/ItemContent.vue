@@ -1,7 +1,7 @@
 <template>
-	<v-card tile>
+	<v-card tile flat>
 		<v-card-text v-for="(block, index) in content.blocks"
-			:key="index"
+			:key="index" class="pa-2"
 		>
 			<template
 				v-if="block.type === 'header'"
@@ -150,7 +150,7 @@ export default {
 	padding-right: 2px;
 }
 .quote-item {
-	border-left: 2px solid #2196F3;
+	border-left: 3px solid #2196F3;
 	padding: 10px 20px;
 	background: #d6effb;
 	border-top-right-radius: 4px;

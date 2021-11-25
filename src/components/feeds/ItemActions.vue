@@ -1,5 +1,5 @@
 <template>
-	<v-card class="rounded-t-0" color="grey lighten-4">
+	<v-card class="rounded-t-0" color="grey lighten-4" flat>
 		<v-dialog v-model="shareMode" max-width="600" scrollable>
 			<v-card color="primary" dark>
 				<v-card-title>
@@ -54,7 +54,7 @@
 						<comment-item v-for="(comment, index) in item.comments"
 							:key="index"
 							:index="index"
-							:item="comment"
+							:comment="comment"
 							:count="item.comments.length"
 							@init="$emit('init')"
 						/>
@@ -109,9 +109,9 @@
 						</v-list-item-icon>
 						Copy Link
 					</v-list-item>
-					<v-divider v-if="!$helper.ifCurrentUserIs(item.created_by)" />
+					<v-divider v-if="!isMyPublication" />
 					<v-list-item
-						v-if="!$helper.ifCurrentUserIs(item.created_by)"
+						v-if="!isMyPublication"
 						class="menu-item"
 						@click="shareMode=true"
 					>
@@ -125,7 +125,7 @@
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
 					<v-btn
-						v-if="!$helper.ifCurrentUserIs(item.created_by)"
+						v-if="!isMyPublication"
 						icon outlined color="grey darken-1" v-bind="attrs" v-on="on">
 						<v-icon>mdi-dots-vertical</v-icon>
 					</v-btn>
@@ -165,9 +165,9 @@
 						</v-list>
 					</v-menu>
 					<v-divider v-if="smAndDown" />
-					<v-list-item @click="bookmark" class="menu-item"
+					<v-list-item @click="bookmark()" class="menu-item"
 						active-class="menu-item-active"
-						:class="{'menu-item-active': ((item.bookmark_status))}"
+						:class="{'menu-item-active': ((bookmarkStatus))}"
 					>
 						<v-list-item-icon class="mr-2"><v-icon>mdi-bookmark-outline</v-icon></v-list-item-icon>
 						<v-list-item-content>
@@ -175,9 +175,9 @@
 						</v-list-item-content>
 					</v-list-item>
 					<v-divider />
-					<v-list-item @click="hide" class="menu-item"
+					<v-list-item @click="hide()" class="menu-item"
 						active-class="menu-item-active"
-						:class="{'menu-item-active': ((item.hidden_status))}"
+						:class="{'menu-item-active': ((hiddenStatus))}"
 					>
 						<v-list-item-icon class="mr-2"><v-icon>mdi-eye-off-outline</v-icon></v-list-item-icon>
 						<v-list-item-content>
@@ -185,7 +185,7 @@
 						</v-list-item-content>
 					</v-list-item>
 					<v-divider />
-					<v-list-item @click="report" class="menu-item">
+					<v-list-item @click="report()" class="menu-item">
 						<v-list-item-icon class="mr-2"><v-icon>mdi-flag-outline</v-icon></v-list-item-icon>
 						<v-list-item-content>
 							<v-list-item-title>Report</v-list-item-title>
@@ -194,22 +194,22 @@
 				</v-list>
 			</v-menu>
 			<v-spacer v-if="!smAndDown" />
-			<v-chip color="primary" small v-if="reactionsCount === 0" class="mx-1">Add First Reaction</v-chip>
-			<v-btn icon @click="upVote"
+			<v-chip color="primary" small v-if="reactions.total === 0" class="mx-1">Add First Reaction</v-chip>
+			<v-btn icon @click="sendUpVote()"
 				color="primary" class="mx-0"
-				:value="item.up_vote"
+				:value="upVote"
 			>
 				<v-icon>
-					mdi-arrow-up-bold{{ (item.up_vote) ? '' : '-outline' }}
+					mdi-arrow-up-bold{{ (upVote) ? '' : '-outline' }}
 				</v-icon>
 			</v-btn>
-			<div v-if="reactionsCount > 0" class="grey--text text--darken-3 weight-500 px-1">{{reactionsCount}}</div>
-			<v-btn icon @click="downVote"
+			<div v-if="reactions.total > 0" class="grey--text text--darken-3 weight-500 px-1">{{reactions.total}}</div>
+			<v-btn icon @click="sendDownVote()"
 				color="grey darken-2" class="mx-0"
-				:value="item.down_vote"
+				:value="downVote"
 			>
 				<v-icon>
-					mdi-arrow-down-bold{{ (item.down_vote) ? '' : '-outline' }}
+					mdi-arrow-down-bold{{ (downVote) ? '' : '-outline' }}
 				</v-icon>
 			</v-btn>
 		</v-card-actions>
@@ -254,8 +254,23 @@ export default {
 		smAndDown() {
 			return this.$vuetify.breakpoint.width < 600
 		},
-		reactionsCount() {
-			return this.item.reactions.total
+		reactions() {
+			return this.item.reactions
+		},
+		isMyPublication() {
+			return this.$helper.ifCurrentUserIs(this.item.created_by)
+		},
+		upVote() {
+			return this.item.up_vote
+		},
+		downVote() {
+			return this.item.down_vote
+		},
+		hiddenStatus() {
+			return this.item.hidden_status
+		},
+		bookmarkStatus() {
+			return this.item.bookmark_status
 		}
 	},
 	methods: {
@@ -282,9 +297,9 @@ export default {
 		},
 		bookmark() {
 			this.sendActionRequest({
-				action: (this.item.bookmark_status) ? "bookmarkDetail" : "addBookmark",
-				revoke: !!(this.item.bookmark_status),
-				id: (this.item.bookmark_status) ? this.item.bookmark_status.id : null
+				action: (this.bookmarkStatus) ? "bookmarkDetail" : "addBookmark",
+				revoke: !!(this.bookmarkStatus),
+				id: (this.bookmarkStatus) ? this.bookmarkStatus.id : null
 			})
 		},
 		hide() {
@@ -298,22 +313,23 @@ export default {
 				payload: {title: this.reportMessage}
 			})
 		},
-		upVote() {
+		sendUpVote() {
 			this.sendActionRequest({
-				action: (this.item.up_vote) ? "removeUpVote" : "addUpVote",
-				revoke: !!(this.item.up_vote),
-				id: (this.item.up_vote) ? this.item.up_vote.id : null
+				action: (this.upVote) ? "removeUpVote" : "addUpVote",
+				revoke: !!(this.upVote),
+				id: (this.upVote) ? this.upVote.id : null
 			})
 		},
-		downVote() {
+		sendDownVote() {
 			this.sendActionRequest({
-				action: (this.item.down_vote) ? "removeDownVote" : "addDownVote",
-				revoke: !!(this.item.down_vote),
-				id: (this.item.down_vote) ? this.item.down_vote.id : null
+				action: (this.downVote) ? "removeDownVote" : "addDownVote",
+				revoke: !!(this.downVote),
+				id: (this.downVote) ? this.downVote.id : null
 			})
 		},
 		createShare() {
-			this.sendActionRequest({action: "share",
+			this.sendActionRequest({
+				action: "share",
 				payload: {...this.share}
 			})
 		}
