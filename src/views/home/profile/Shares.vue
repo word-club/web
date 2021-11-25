@@ -4,7 +4,7 @@
 			height="86vh" flat
 		>
 			<v-card-title class="empty-content">
-				hmm... looks like you haven't upvoted anything yet
+				hmm... looks like you haven't shared anything yet
 			</v-card-title>
 		</v-card>
 		<div v-for="item in items"
@@ -26,21 +26,19 @@ import FeedMixin from "@/mixin/FeedMixin.js";
 import {mapGetters} from "vuex";
 
 export default {
-	name: "UpVoted",
+	name: "Shares",
 	mixins: [FeedMixin],
 	computed: {
 		...mapGetters({
 			user: "user/inView"
 		}),
 		publications() {
-			if (!this.user) return []
-			if (!this.user.up_voted_publications) return []
-			return this.user.up_voted_publications
+			if (!this.user && !this.user.shared_publications) return []
+			return this.user.shared_publications
 		},
 		comments() {
-			if (!this.user) return []
-			if (!this.user.up_voted_comments) return []
-			return this.user.up_voted_comments
+			if (!this.user && !this.user.shared_comments) return []
+			return this.user.shared_comments
 		}
 	},
 	created() {
@@ -49,6 +47,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

@@ -5,69 +5,24 @@
 				class="mx-auto" tile
 				flat
 			>
-				<v-card-actions class="pb-0 pt-4">
+				<v-card-actions class="pb-0 pt-4 overflow-x-auto">
 					<div
+						v-for="(item, index) in tabs"
+						:key="index"
 						class="profile-top-btn cursor"
-						:class="{'profile-top-btn-active': $route.name === 'Profile Overview'}"
-						@click="toProfileOverview(currentUser.username)"
+						:class="{'profile-top-btn-active': $route.name === item}"
+						@click="$router.push({name: item})"
 					>
-						Overview
-					</div>
-					<div class="profile-top-btn cursor"
-						:class="{'profile-top-btn-active': $route.name === 'Profile Posts'}"
-						@click="toProfilePosts(currentUser.username)"
-					>
-						Posts
-					</div>
-					<div class="profile-top-btn cursor"
-						:class="{'profile-top-btn-active': $route.name === 'Profile Comments'}"
-						@click="toProfileComments(currentUser.username)"
-					>
-						Comments
-					</div>
-					<div class="profile-top-btn cursor"
-						:class="{'profile-top-btn-active': $route.name === 'Profile Saved'}"
-						@click="toProfileSaved(currentUser.username)"
-					>
-						Saved
-					</div>
-					<div class="profile-top-btn cursor"
-						:class="{'profile-top-btn-active': $route.name === 'Profile Hidden'}"
-						@click="toProfileHidden(currentUser.username)"
-					>
-						Hidded
-					</div>
-					<div class="profile-top-btn cursor"
-						:class="{'profile-top-btn-active': $route.name === 'Profile Upvoted'}"
-						@click="toProfileUpVoted(currentUser.username)"
-					>
-						Upvoted
-					</div>
-					<div class="profile-top-btn cursor"
-						:class="{'profile-top-btn-active': $route.name === 'Profile Downvoted'}"
-						@click="toProfileDownVoted(currentUser.username)"
-					>
-						Downvoted
-					</div>
-					<div class="profile-top-btn cursor"
-						:class="{'profile-top-btn-active': $route.name === 'Profile Awards Received'}"
-						@click="toProfileAwardsReceived(currentUser.username)"
-					>
-						Awards Received
-					</div>
-					<div class="profile-top-btn cursor"
-						:class="{'profile-top-btn-active': $route.name === 'Profile Awards Given'}"
-						@click="toProfileAwardsGiven(currentUser.username)"
-					>
-						Awards Given
+						{{ item.split(" ")[1] }}
 					</div>
 				</v-card-actions>
 			</v-card>
 		</div>
 		<v-card
-			flat tile
+			flat tile color="primary"
 			max-width="800" class="mx-auto"
-			color="transparent"
+			:loading="refreshing"
+			style="background-color: transparent!important;"
 		>
 			<v-card-text class="pb-0">
 				<transition name="view">
@@ -81,18 +36,34 @@
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
 import {mapGetters} from "vuex";
+import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
 
 export default {
 	name: "Profile",
-	mixins: [RouteMixin],
-	props: {},
-	data: () => ({}),
+	mixins: [RouteMixin, RefreshMeMixin],
+	data: () => ({
+		tabs: [
+			"Profile Overview",
+			"Profile Recent",
+			"Profile Posts",
+			"Profile Comments",
+			"Profile Saved",
+			"Profile Shared",
+			"Profile Hidden",
+			"Profile Upvoted",
+			"Profile Downvoted",
+		]
+	}),
 	computed: {
 		...mapGetters({
-			currentUser: "user/current"
+			currentUser: "user/current",
 		})
 	},
-	methods: {}
+	async created() {
+		this.refreshing = true
+		await this.$store.dispatch("user/setInView", this.currentUser)
+		this.refreshing = false
+	}
 }
 </script>
 
@@ -108,11 +79,11 @@ export default {
 		padding: 0 4px 4px 4px;
 	}
 	.profile-top-btn:hover {
-		color: #1d1d1d
+		color: var(--primary)
 	}
 	.profile-top-btn-active {
-		color: #1d1d1d;
-		border-bottom: 3px solid #1d1d1d;
+		color: var(--primary);
+		border-bottom: 3px solid var(--primary);
 		pointer-events: none;
 	}
 }
