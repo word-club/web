@@ -1,17 +1,36 @@
 <template>
 	<v-app>
 		<the-app-bar />
-		<v-navigation-drawer
-			v-model="drawer"
-			app clipped
-			color="grey lighten-3"
-			class="home-sidebar"
-			:permanent="mdAndUp"
-			:temporary="!mdAndUp"
-		>
-			<div class="py-2" />
-			<drawer-list />
-		</v-navigation-drawer>
+		<v-slide-x-transition>
+			<v-navigation-drawer
+				v-if="!isUserSettingsRoute"
+				v-model="mainDrawer"
+				app clipped
+				color="grey lighten-3"
+				class="home-sidebar"
+				:permanent="mdAndUp"
+				:temporary="!mdAndUp"
+				:width="$vuetify.breakpoint.md ? 180 : 300"
+			>
+				<div class="py-2" />
+				<drawer-list />
+			</v-navigation-drawer>
+		</v-slide-x-transition>
+		<v-slide-x-reverse-transition>
+			<v-navigation-drawer
+				v-if="isUserSettingsRoute"
+				v-model="profileSettingsDrawer"
+				app clipped
+				color="grey lighten-3"
+				class="home-sidebar"
+				:permanent="mdAndUp"
+				:temporary="!mdAndUp"
+				:width="$vuetify.breakpoint.md ? 250 : 300"
+			>
+				<div class="py-2" />
+				<user-cog-drawer />
+			</v-navigation-drawer>
+		</v-slide-x-reverse-transition>
 		<v-navigation-drawer
 			v-if="homeRoute"
 			v-model="sidebar"
@@ -21,7 +40,7 @@
 			class="home-sidebar"
 			:permanent="mdAndUp"
 			:temporary="!mdAndUp"
-			width="350"
+			:width="$vuetify.breakpoint.md ? 320 : 350"
 		>
 			<div class="py-2" />
 			<transition
@@ -65,21 +84,26 @@
 export default {
 	name: "App",
 	components: {
-		DrawerList: () => import("@/views/home/components/DrawerList.vue"),
+		DrawerList: () => import("@/views/home/components/DrawerList"),
+		UserCogDrawer: () => import("@/views/home/components/UserCogDrawer"),
 		TheAppBar: () => import("@/components/TheAppBar"),
 		TheSnackbar: () => import("@/components/utils/TheSnackbar"),
 		ScrollToTop: () => import("@/components/utils/ScrollToTop"),
 	},
 	data: () => ({
 		sidebar: null,
-		drawer: null,
+		mainDrawer: null,
+		profileSettingsDrawer: null
 	}),
 	computed: {
+		isUserSettingsRoute() {
+			return this.$route.matched.some(route => route.meta["profile_settings"])
+		},
 		mdAndUp() {
 			return this.$vuetify.breakpoint.mdAndUp
 		},
 		homeRoute() {
-			return this.$route.meta["home"]
+			return this.$route.matched.some(route => route.meta["home"])
 		}
 	},
 	created() {
@@ -178,7 +202,7 @@ export default {
 }
 .v-label {
 	font-size: 14px !important;
-	font-weight: bold;
+	font-weight: 500;
 }
 .v-input {
 	font-size: 14px !important;
@@ -252,11 +276,38 @@ export default {
 .normal-whitespace {
 	white-space: normal !important;
 }
+.transparent-bg {
+	background-color: transparent!important;
+}
+.empty-content {
+	color: #5d5d5d
+}
+.drawer-item {
+	padding-left: 10px;
+	font-weight: 500;
+	color: #5d5d5d;
+}
+.form-header {
+	font-size: 18px;
+	padding-top: 20px;
+	font-weight: 500;
+	color: #4a4a4a;
+}
+.form-description {
+	color: #8e8e8e;
+	font-size: 13px;
+	padding-bottom: 10px;
+}
+.overline {
+	font-weight: 700;
+	letter-spacing: 1px !important;
+}
 </style>
 <style lang="scss">
 /* width */
 ::-webkit-scrollbar {
-	width: 6px;
+	width: 6px; // for vertical scrollbars
+	height: 6px; // for horizontal scrollbars
 }
 
 /* Track */
