@@ -46,7 +46,7 @@
 				<comment-item v-for="(comment, index) in publication.comments"
 					:key="index"
 					:index="index"
-					:item="comment"
+					:comment="comment"
 					:count="publication.comments.length"
 					@init="$emit('init')"
 				/>

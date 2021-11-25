@@ -8,24 +8,34 @@
 				<div class="d-flex">
 					<div class="px14">
 						<span class="cursor primary--text hover-underline"
-							@click="toUserOverview(comment.created_by.username)"
-						>u/{{ comment.created_by.username }}</span> commented on
+							@click="toUserOverview(createdBy.username)"
+						>
+							u/{{ createdBy.username }}
+						</span>
+						<span class="px-1">commented on</span>
 						<span class="cursor weight-500 hover-underline"
-							@click="toPublicationDetail(comment.publication.id)"
-						>{{ comment.publication.title }}</span>
+							@click="toPublicationDetail(publication.id)"
+						>
+							{{ publication.title }}
+						</span>
 					</div>
-					<v-icon>mdi-circle-small</v-icon>
-					<div class="px14 weight-600 cursor hover-underline"
-						:class="`${comment.publication.community.theme.color}--text`"
-						@click="toCommunityDetail(comment.publication.community.id)"
+					<v-icon v-if="community">mdi-circle-small</v-icon>
+					<div
+						v-if="community"
+						class="px14 weight-600 cursor hover-underline"
+						:class="`${community.theme.color}--text`"
+						@click="toCommunityDetail(community.id)"
 					>
-						{{ comment.publication.community.unique_id }}
+						{{ community.unique_id }}
 					</div>
 				</div>
 				<div class="px14 weight-400">
-					Posted by <span class="cursor hover-underline weight-600"
-						@click="toUserOverview(comment.publication.created_by.username)"
-					>{{ comment.publication.created_by.username }}</span>
+					Posted by
+					<span class="cursor hover-underline weight-600"
+						@click="toUserOverview(publication.created_by.username)"
+					>
+						{{ publication.created_by.username }}
+					</span>
 				</div>
 			</div>
 		</v-card-text>
@@ -37,26 +47,21 @@
 			>
 				<v-card-subtitle class="d-flex py-0 pt-1 px14">
 					<div class="cursor hover-underline"
-						@click="toUserOverview(comment.created_by.username)"
+						@click="toUserOverview(createdBy.username)"
 					>
-						u/{{ comment.created_by.username }}
+						u/{{ createdBy.username }}
 					</div>
 					<v-icon>mdi-circle-small</v-icon>
 					<div>{{ $moment(comment.timestamp).fromNow() }}</div>
 				</v-card-subtitle>
 				<v-card-text class="py-0 px16 black--text">
-					{{ comment.text }}
+					{{ comment.comment }}
 				</v-card-text>
 				<v-card-actions class="pa-2 pt-0">
 					<div v-ripple
 						class="action-btn cursor"
 					>
 						Reply
-					</div>
-					<div v-ripple
-						class="action-btn cursor"
-					>
-						Give Award
 					</div>
 					<div v-ripple
 						class="action-btn cursor"
@@ -91,6 +96,10 @@
 							</v-list-item>
 						</v-list>
 					</v-menu>
+					<v-spacer />
+					<v-btn small icon><v-icon>mdi-arrow-up-bold</v-icon></v-btn>
+					<div>{{comment.reactions.total}}</div>
+					<v-btn icon small><v-icon>mdi-arrow-down-bold</v-icon></v-btn>
 				</v-card-actions>
 			</v-card>
 		</div>
@@ -99,31 +108,38 @@
 
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
+import {mapGetters} from "vuex";
 
 export default {
 	name: "CommentInstance",
 	mixins: [RouteMixin],
-	props: {},
-	data: () => ({
+	props: {
 		comment: {
-			text: "Crazy parkour skill!",
-			created_by: {username: "kiranparajuli589"},
-			timestamp: "2021-10-21T22:07:24.169676+05:45",
-			publication: {
-				id: 578,
-				title: "This is quite amazing",
-				community: {
-					unique_id: "CrazyFuckingVideos",
-					theme: {
-						color: "purple"
-					}
+			type: Object, default: () => ({
+				publication: {
+					community: null,
+					created_by: null
 				},
-				created_by: {username: "AnimeHabbits"}
+			})
+		}
+	},
+	computed: {
+		...mapGetters({
+			userInView: "user/inView",
+		}),
+		publication() {
+			return this.comment.publication
+		},
+		community() {
+			return this.publication.community
+		},
+		createdBy() {
+			if (this.comment.created_by) return this.comment.created_by
+			else return {
+				username: this.userInView.username
 			}
 		}
-	}),
-	computed: {},
-	methods: {}
+	}
 }
 </script>
 

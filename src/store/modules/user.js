@@ -13,12 +13,16 @@ const getters = {
 }
 
 const mutations = {
-	SET_CURRENT_USER: (state, value) => state.currentUser = value
+	SET_CURRENT_USER: (state, value) => state.currentUser = value,
+	SET_IN_VIEW: (state, value) => state.inView = value
 }
 
 const actions = {
 	setCurrentUser({commit}, value) {
 		commit("SET_CURRENT_USER", value)
+	},
+	setInView({commit}, value) {
+		commit("SET_IN_VIEW", value)
 	}
 }
 

@@ -5,7 +5,7 @@
 			:to="item.to"
 		>
 			<v-icon>{{ item.icon }}</v-icon>
-			<v-list-item-title class="drawer-item">
+			<v-list-item-title class="drawer-item px14">
 				{{ item.title }}
 			</v-list-item-title>
 		</v-list-item>
@@ -30,10 +30,3 @@ export default {
 	},
 }
 </script>
-
-<style scoped>
-.drawer-item {
-	font-size: 16px;
-	padding-left: 10px;
-}
-</style>

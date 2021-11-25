@@ -2,26 +2,28 @@
 	<div>
 		<hot-bar />
 		<div class="py-2" />
-		<feed-comment-item />
-		<div class="py-2" />
-		<feed-comment-item />
-		<div class="py-2" />
-		<feed-comment-item />
-		<div class="py-2" />
-		<feed-comment-item />
+		<div v-for="item in comments"
+			:key="item.id"
+			class="pb-4"
+		>
+			<comment-instance :comment="item" />
+		</div>
 	</div>
 </template>
 
 <script>
-import HotBar from "@/views/home/user/components/HotBar.vue";
-import FeedCommentItem from "@/views/home/comment/FeedCommentItem.vue";
+import {mapGetters} from "vuex";
 export default {
 	name: "Comments",
-	components: {FeedCommentItem, HotBar},
-	props: {},
-	data: () => ({}),
-	computed: {},
-	methods: {}
+	computed: {
+		...mapGetters({
+			user: "user/inView"
+		}),
+		comments() {
+			if (!this.user && !this.user.comments) return []
+			return this.user.comments
+		},
+	}
 }
 </script>
 

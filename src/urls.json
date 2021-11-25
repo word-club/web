@@ -1,5 +1,6 @@
 {
 	"user": {
+		"me": "me/",
 		"list": "user/",
 		"detail": "user/%s/",
 		"register": "register/",
@@ -8,8 +9,8 @@
 		"updatePassword": "update-password/",
 		"requestResetPassword": "reset-password/",
 		"confirmResetPassword": "reset-password/%s/",
-		"addProfileAvatar": "profile/%s/avatar/",
-		"addProfileCover": "profile/%s/cover/",
+		"addAvatar": "profile/add-avatar/",
+		"addCover": "profile/add-cover/",
 		"removeProfileAvatar": "profile-avatar/%s/",
 		"removeProfileCover": "profile-cover/%s/",
 		"report": "user/%s/report/",

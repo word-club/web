@@ -60,5 +60,14 @@ module.exports = {
 	ifCurrentUserIs(user) {
 		const currentUser = this.getCurrentUser()
 		return currentUser && user.username === currentUser.username
+	},
+	createFormData(payload) {
+		const fd = new FormData()
+		if (payload) {
+			Object.entries(payload).forEach(([key, value]) => {
+				fd.append(key, value)
+			})
+		}
+		return fd
 	}
 }

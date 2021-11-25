@@ -3,7 +3,8 @@
 		open-on-hover
 		nudge-top="-30"
 		nudge-left="-34"
-		close-delay="100"
+		close-delay="200"
+		open-delay="200"
 		max-width="320"
 	>
 		<template #activator="{on, attrs}">
@@ -12,18 +13,19 @@
 				@click="toUserOverview(user.username)"
 				v-on="on"
 			>
-				u/{{ user.username }}
+				{{ user.username }}
 			</div>
 		</template>
 		<v-card>
 			<v-list-item>
-				<v-list-item-avatar color="primary" tile
+				<v-list-item-avatar
+					:color="user.avatar ? '' : 'primary'" tile
 					class="d-flex justify-center align-center rounded"
 				>
 					<v-img v-if="user.avatar"
-						:src="user.avatar"
+						:src="$link(user.avatar)"
 					/>
-					<div class="full-width text-h5 white--text text-uppercase">{{ user.username[0] }}</div>
+					<div v-else class="full-width text-h5 white--text text-uppercase">{{ user.username[0] }}</div>
 				</v-list-item-avatar>
 				<v-list-item-content>
 					<v-list-item-title>{{user.username}}</v-list-item-title>

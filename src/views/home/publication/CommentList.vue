@@ -1,6 +1,7 @@
 <template>
 	<v-list three-line>
-		<comment-item v-for="(n, index) in 3"
+		<comment-item
+			v-for="(n, index) in 3"
 			:key="n"
 			:index="index"
 		/>

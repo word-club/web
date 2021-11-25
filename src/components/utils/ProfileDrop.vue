@@ -1,14 +1,15 @@
 <template>
 	<v-menu offset-y>
 		<template #activator="{on, attrs}">
-			<v-avatar color="primary"
+			<v-avatar
+				:color="(currentUser.profile.avatar) ? '' : 'primary'"
 				size="35"
 				v-bind="attrs"
 				class="elevation-4"
 				v-on="on"
 			>
-				<v-img v-if="currentUser.avatar"
-					:src="currentUser.avatar.image"
+				<v-img v-if="currentUser.profile.avatar"
+					:src="$link(currentUser.profile.avatar.image)"
 				/>
 				<span v-else class="px22 white--text text-uppercase mb-1">{{currentUser.username[0]}}</span>
 			</v-avatar>
@@ -44,7 +45,7 @@
 						<v-list-item-title>Profile</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
-				<v-list-item>
+				<v-list-item to="/settings/account">
 					<v-list-item-icon><v-icon>mdi-cog-outline</v-icon></v-list-item-icon>
 					<v-list-item-content>
 						<v-list-item-title>User Settings</v-list-item-title>

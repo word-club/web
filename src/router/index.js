@@ -33,54 +33,39 @@ const routes = [
 			default: () => import("@/views/home/community/RegisterCommunity"),
 			sidebar: () => import("@/views/home/community/RegisterSidebar")
 		},
+		meta: {
+			home: true
+		},
 		children: [
 			{
 				path: "mainframe",
 				name: "Community Mainframe",
-				component: () => import("@/views/home/community/register/Mainframe"),
-				meta: {
-					home: true
-				}
+				component: () => import("@/views/home/community/register/Mainframe")
 			},
 			{
 				path: "display",
 				name: "Community Display",
-				component: () => import("@/views/home/community/register/Display"),
-				meta: {
-					home: true
-				}
+				component: () => import("@/views/home/community/register/Display")
 			},
 			{
 				path: "rules",
 				name: "Community Rules",
-				component: () => import("@/views/home/community/register/Rules"),
-				meta: {
-					home: true
-				}
+				component: () => import("@/views/home/community/register/Rules")
 			},
 			{
 				path: "hashtags",
 				name: "Community Hashtags",
-				component: () => import("@/views/home/community/register/Hashtags"),
-				meta: {
-					home: true
-				}
+				component: () => import("@/views/home/community/register/Hashtags")
 			},
 			{
 				path: "authorization/:code?",
 				name: "Community Authorization",
-				component: () => import("@/views/home/community/register/Authorization"),
-				meta: {
-					home: true
-				}
+				component: () => import("@/views/home/community/register/Authorization")
 			},
 			{
 				path: "administration",
 				name: "Community Administration",
-				component: () => import("@/views/home/community/register/Administration"),
-				meta: {
-					home: true
-				}
+				component: () => import("@/views/home/community/register/Administration")
 			}
 		]
 	},
@@ -101,30 +86,24 @@ const routes = [
 			default: () => import("@/views/home/community/Community"),
 			sidebar: () => import("@/views/home/community/Sidebar")
 		},
+		meta: {
+			home: true
+		},
 		children: [
 			{
 				path: "publications",
-				component: () => import("@/views/home/community/PostsList"),
 				name: "Community Detail",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/community/PostsList")
 			},
 			{
 				path: "wiki",
-				component: () => import("@/views/home/community/WikiPage"),
 				name: "Community Detail Wiki",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/community/WikiPage")
 			},
 			{
 				path: "modmail",
-				component: () => import("@/views/home/community/ModMail"),
 				name: "Community Detail Modmail",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/community/ModMail")
 			},
 		],
 	},
@@ -134,126 +113,126 @@ const routes = [
 			default: () => import("@/views/home/user/User"),
 			sidebar: () => import("@/views/home/user/Sidebar")
 		},
+		meta: {
+			home: true
+		},
 		children: [
 			{
 				path: "",
-				component: () => import("@/views/home/user/Overview"),
 				name: "User Overview",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/user/Overview"),
 			},
 			{
 				path: "posts",
-				component: () => import("@/views/home/user/Posts"),
 				name: "User Posts",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/user/Posts")
 			},
 			{
 				path: "comments",
-				component: () => import("@/views/home/user/Comments"),
 				name: "User Comments",
-				meta: {
-					home: true
-				},
-			},
-			{
-				path: "awards",
-				component: () => import("@/views/home/user/AwardsReceived"),
-				name: "User Awards",
-				meta: {
-					home: true
-				},
-			},
+				component: () => import("@/views/home/user/Comments")
+			}
 		],
 	},
 	{
 		path: "/profile",
 		components: {
-			default: () => import("@/views/home/profile/Profile.vue"),
+			default: () => import("@/views/home/profile/Profile"),
 			sidebar: () => import("@/views/home/profile/Sidebar")
+		},
+		meta: {
+			home: true
 		},
 		children: [
 			{
 				path: "home",
-				component: () => import("@/views/home/user/Overview"),
 				name: "Profile Overview",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/user/Overview")
+			},
+			{
+				path: "recent",
+				name: "Profile Recent",
+				component: () => import("@/views/home/profile/Recent")
 			},
 			{
 				path: "posts",
-				component: () => import("@/views/home/user/Posts"),
 				name: "Profile Posts",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/user/Posts")
 			},
 			{
 				path: "comments",
-				component: () => import("@/views/home/user/Comments"),
 				name: "Profile Comments",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/user/Comments")
 			},
 			{
 				path: "saved",
-				component: () => import("@/views/home/profile/Saved"),
 				name: "Profile Saved",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/profile/Saved")
 			},
 			{
 				path: "saved",
-				component: () => import("@/views/home/profile/Hidden"),
 				name: "Profile Hidden",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/profile/Hidden")
 			},
 			{
 				path: "up-voted",
-				component: () => import("@/views/home/profile/UpVoted"),
 				name: "Profile Upvoted",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/profile/UpVoted")
 			},
 			{
 				path: "down-voted",
-				component: () => import("@/views/home/profile/DownVoted"),
 				name: "Profile Downvoted",
-				meta: {
-					home: true
-				},
+				component: () => import("@/views/home/profile/DownVoted")
 			},
 			{
-				path: "awards-received",
-				component: () => import("@/views/home/profile/AwardsReceived"),
-				name: "Profile Awards Received",
-				meta: {
-					home: true
-				},
-			},
-			{
-				path: "awards-given",
-				component: () => import("@/views/home/profile/AwardsGiven"),
-				name: "Profile Awards Given",
-				meta: {
-					home: true
-				},
-			},
+				path: "shares",
+				name: "Profile Shared",
+				component: () => import("@/views/home/profile/Shares")
+			}
 		],
 	},
 	{
-		path: "notifications",
-		component: () => import("@/views/home/notification/Notification"),
+		path: "/settings",
+		component: () => import("@/views/home/settings/Settings"),
+		name: "User Settings",
+		meta: { profile_settings: true },
+		children: [
+			{
+				path: "account",
+				name: "User Settings Account",
+				component: () => import("@/views/home/settings/Account"),
+			},
+			{
+				path: "profile",
+				name: "User Settings Profile",
+				component: () => import("@/views/home/settings/Profile"),
+			},
+			{
+				path: "subscriptions",
+				name: "User Settings Subscriptions",
+				component: () => import("@/views/home/settings/Subscription"),
+			},
+			{
+				path: "communities",
+				name: "User Settings Communities",
+				component: () => import("@/views/home/settings/Communities"),
+			},
+			{
+				path: "notifications",
+				name: "User Settings Notifications",
+				component: () => import("@/views/home/settings/Notifications"),
+			},
+			{
+				path: "messaging",
+				name: "User Settings Messaging",
+				component: () => import("@/views/home/settings/Messaging"),
+			}
+		]
+	},
+	{
+		path: "/notifications",
 		name: "Notification",
+		component: () => import("@/views/home/notification/Notification"),
 		meta: {
 			home: true
 		},

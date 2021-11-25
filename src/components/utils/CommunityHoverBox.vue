@@ -4,6 +4,7 @@
 		nudge-top="-30"
 		nudge-left="-34"
 		close-delay="200"
+		open-delay="200"
 		:close-on-content-click="false"
 	>
 		<template #activator="{on, attrs}">
@@ -12,7 +13,7 @@
 				v-on="on"
 			>
 				<v-avatar
-					size="30" tile class="rounded cursor"
+					size="25" tile class="rounded cursor"
 					:color="(community.avatar) ? 'transparent' : community.theme.color"
 					@click="toCommunityDetail(community.id)"
 				>

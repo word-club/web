@@ -21,7 +21,7 @@
 		</v-dialog>
 		<v-list-item-group class="comment-item-wrapper">
 			<v-list-item class="comment-item">
-				<div v-if="item.replies.length" class="bottom-field-line" />
+				<div v-if="replies.length" class="bottom-field-line" />
 				<div
 					class="bottom-end-line-outer"
 				/>
@@ -29,28 +29,28 @@
 					size="30" class="comment-avatar"
 					color="grey"
 				>
-					<v-img v-if="item.created_by.avatar" :src="$link(item.created_by.avatar)" />
-					<div class="full-width text-center px16 weight-500 white--text">{{ item.created_by.username[0].toUpperCase() }}</div>
+					<v-img v-if="comment.created_by.avatar" :src="$link(comment.created_by.avatar)" />
+					<div class="full-width text-center px16 weight-500 white--text">{{ comment.created_by.username[0].toUpperCase() }}</div>
 				</v-list-item-avatar>
 				<v-list-item-content class="pl-4">
 					<v-list-item-subtitle class="d-flex align-center px14">
-						<div>{{ item.created_by.username }}</div>
+						<div>{{ comment.created_by.username }}</div>
 						<div><v-icon>mdi-circle-small</v-icon></div>
-						<div>{{$moment(item.timestamp).fromNow()}}</div>
+						<div>{{$moment(comment.timestamp).fromNow()}}</div>
 					</v-list-item-subtitle>
 					<v-list-item-title class="comment-text px16">
-						{{item.comment}}
+						{{comment.comment}}
 					</v-list-item-title>
 					<v-list-item-subtitle class="d-flex align-center pt-2">
-						<v-btn icon :color="item.up_vote ? 'primary' : 'grey'"
+						<v-btn icon :color="comment.up_vote ? 'primary' : 'grey'"
 							small @click="upVoteComment()"
 						>
 							<v-icon>mdi-chevron-up</v-icon>
 						</v-btn>
 						<div class="px-1">
-							1.6k
+							{{ comment.reactions.total }}
 						</div>
-						<v-btn icon :color="item.down_vote ? 'primary' : 'grey'"
+						<v-btn icon :color="comment.down_vote ? 'primary' : 'grey'"
 							small @click="downVoteComment()"
 						>
 							<v-icon>mdi-chevron-down</v-icon>
@@ -64,27 +64,40 @@
 						</v-btn>
 						<v-btn
 							small text rounded
-							@click="itemForShare = item"
+							@click="itemForShare = comment"
 						>
 							Share
 						</v-btn>
 						<v-btn
+							v-if="!isMyComment"
 							small text rounded
 							@click="saveComment()"
 						>
 							Save
 						</v-btn>
-						<v-btn v-if="!$helper.ifCurrentUserIs(item.created_by)"
+						<v-btn v-if="!isMyComment"
 							small text rounded
 							@click="reportComment()"
 						>
 							Report
 						</v-btn>
-						<v-btn v-if="!$helper.ifCurrentUserIs(item.created_by)"
+						<v-btn v-if="!isMyComment"
 							small text rounded
 							@click="hideComment()"
 						>
 							HIDE
+						</v-btn>
+						<v-btn v-if="isMyComment"
+							text small rounded
+							@click="initCommentEdit"
+						>
+							EDIT
+						</v-btn>
+						<v-btn v-if="isMyComment"
+							text small rounded
+							@click="initCommentDelete"
+						>
+							DELETE
 						</v-btn>
 					</v-list-item-subtitle>
 				</v-list-item-content>
@@ -96,29 +109,26 @@
 				>
 					<template #default>
 						<div class="last-reply-line" />
-						<div v-if="item.replies.length && index + 1 !== count" class="field-line" />
+						<div v-if="replies.length > 0" class="field-line" />
 						<reply-field @init="$emit('init')"
-							:comment="item"
+							:comment="comment"
 						/>
 					</template>
 				</v-list-item>
 			</v-scale-transition>
 		</v-list-item-group>
 		<v-list-item-group class="replies">
-			<v-list-item v-for="(reply, i) in item.replies"
+			<v-list-item v-for="(reply, i) in replies"
 				:key="i" class="comment-item"
 				:class="{
-					'reply': i + 1 !== item.replies.length,
-					'last-reply': i + 1 === item.replies.length
+					'reply': i + 1 !== replies.length,
+					'last-reply': i + 1 === replies.length
 				}"
 			>
-				<!--				<div -->
-				<!--					class="top-link-line"-->
-				<!--				/>-->
 				<div v-if="i !== 0"
 					class="top-field-line"
 				/>
-				<div v-if="i + 1 !== item.replies.length"
+				<div v-if="i + 1 !== replies.length"
 					class="bottom-field-line"
 				/>
 				<div
@@ -127,8 +137,8 @@
 				<v-list-item-avatar size="30"
 					color="grey" class="comment-avatar"
 				>
-					<v-img v-if="item.created_by.avatar" :src="$link(item.created_by.avatar)" />
-					<div class="full-width text-center px16 weight-500 white--text">{{ item.created_by.username[0].toUpperCase() }}</div>
+					<v-img v-if="comment.created_by.avatar" :src="$link(comment.created_by.avatar)" />
+					<div class="full-width text-center px16 weight-500 white--text">{{ comment.created_by.username[0].toUpperCase() }}</div>
 				</v-list-item-avatar>
 				<v-list-item-content class="pl-3">
 					<v-list-item-subtitle class="d-flex align-center px14">
@@ -146,7 +156,7 @@
 							<v-icon>mdi-chevron-up</v-icon>
 						</v-btn>
 						<div class="px-1">
-							1.6k
+							{{ reply.reactions.total }}
 						</div>
 						<v-btn icon
 							small :color="reply.down_vote ? 'primary' : 'grey'"
@@ -154,32 +164,42 @@
 						>
 							<v-icon>mdi-chevron-down</v-icon>
 						</v-btn>
-						<v-btn small
-							text rounded
+						<v-btn
+							small text rounded
 							@click="itemForShare = reply"
 						>
 							Share
 						</v-btn>
-						<v-btn small
-							text rounded
+						<v-btn v-if="!isMyReply(reply)"
+							small text rounded
 							@click="saveComment(reply)"
 						>
 							Save
 						</v-btn>
-						<v-btn v-if="!$helper.ifCurrentUserIs(reply.created_by)"
-							small
-							text rounded
+						<v-btn v-if="!isMyReply(reply)"
+							small text rounded
 							@click="reportComment(reply)"
 						>
 							Report
 						</v-btn>
-						<v-btn v-if="!$helper.ifCurrentUserIs(reply.created_by)"
-							small
-							text rounded
-							@click="hideComment()"
+						<v-btn v-if="!isMyReply(reply)"
+							small text rounded
+							@click="hideComment(reply)"
 						>
 							HIDE
-						</v-btn>`
+						</v-btn>
+						<v-btn v-if="isMyReply(reply)"
+							text small rounded
+							@click="initReplyEdit"
+						>
+							EDIT
+						</v-btn>
+						<v-btn v-if="isMyReply(reply)"
+							text small rounded
+							@click="initReplyDelete"
+						>
+							DELETE
+						</v-btn>
 					</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
@@ -191,97 +211,28 @@
 import ReplyField from "@/components/form/ReplyField.vue";
 import PostMixin from "@/mixin/PostMixin.js";
 import Snack from "@/mixin/Snack.js";
+import CommentActions from "@/mixin/CommentActions.js";
 
 export default {
 	name: "CommentItem",
 	components: {ReplyField},
-	mixins: [PostMixin, Snack],
+	mixins: [PostMixin, Snack, CommentActions],
 	props: {
 		index: {type: Number, required: true},
-		item: {type: Object, required: true},
+		comment: {type: Object, required: true},
 		count: {type: Number, required: true}
 	},
-	data: () => ({
-		addReply: false,
-		reportMessage: null,
-		itemForShare: null,
-		share: {
-			title: null
+	computed: {
+		isMyComment() {
+			return this.$helper.ifCurrentUserIs(this.comment.created_by)
 		},
-	}),
-	computed: {},
+		replies() {
+			return this.comment.replies
+		}
+	},
 	methods: {
-		copyLink() {
-			navigator.clipboard.writeText(this.getLink)
-				.then(() => {
-					this.clipboardContent = true
-					this.openSnack("Comment link copied to the clipboard", {color: "success"})
-				})
-		},
-		sendActionRequest({id, payload, action, revoke = false}) {
-			console.log(id)
-			const url = this.$util.format(this.$urls.comment[action], id)
-			if (revoke) {
-				this.$axios.delete(url).then(() => {
-					this.$emit("init")
-				})
-			} else {
-				this.post(url, payload).then(() => {
-					if(this.success) {
-						this.$emit("init")
-					}
-				})
-			}
-		},
-		upVoteComment(item = null) {
-			if (!item) item = this.item
-			const upVote = item.up_vote
-			this.sendActionRequest({
-				action: (upVote) ? "removeUpVote" : "addUpVote",
-				revoke: !!(upVote),
-				id: (upVote) ? upVote.id : item.id
-			})
-		},
-		downVoteComment(item = null) {
-			if (!item) item = this.item
-			const downVote = item.down_vote
-			this.sendActionRequest({
-				action: (downVote) ? "removeDownVote" : "addDownVote",
-				revoke: !!(downVote),
-				id: (downVote) ? downVote.id : item.id
-			})
-		},
-		createShare(item = null) {
-			if (!item) item = this.item
-			this.sendActionRequest({
-				id: item.id,
-				action: "share",
-				payload: {...this.share}
-			})
-		},
-		saveComment(item = null) {
-			if (!item) item = this.item
-			const bookmarkStatus = item.bookmark_status
-			this.sendActionRequest({
-				action: (bookmarkStatus) ? "bookmarkDetail" : "addBookmark",
-				revoke: !!(bookmarkStatus),
-				id: (bookmarkStatus) ? bookmarkStatus.id : item.id
-			})
-		},
-		reportComment(item = null) {
-			if (!item) item = this.item
-			this.sendActionRequest({
-				id: item.id,
-				action: "addReport",
-				payload: {title: this.reportMessage}
-			})
-		},
-		hideComment(item = null) {
-			if (!item) item = this.item
-			this.sendActionRequest({
-				id: item.id,
-				action: "addHiddenStatus"
-			})
+		isMyReply(reply) {
+			return this.$helper.ifCurrentUserIs(reply.created_by)
 		}
 	}
 }

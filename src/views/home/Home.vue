@@ -11,12 +11,11 @@
 
 <script>
 import {mapGetters} from "vuex";
-import FeedList from "@/components/feeds/FeedList.vue";
 
 export default {
 	name: "Home",
 	components: {
-		FeedList,
+		FeedList: () => import("@/components/feeds/FeedList"),
 		HotBar: () => import("@/views/home/components/HotBar"),
 		AddPostBox: () => import("@/views/home/components/AddPostBox"),
 	},

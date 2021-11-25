@@ -49,7 +49,7 @@
 				class="file-input"
 				type="file"
 				multiple
-				accept="image/*,.webm,.mp4,.mpeg,.flv,.mov,.MOV"
+				accept="image/*"
 				@change="fileInputChanged"
 			>
 			<div class="weight-500 text-center"
@@ -73,54 +73,34 @@
 <script>
 import {mapGetters} from "vuex";
 import PostMixin from "@/mixin/PostMixin.js";
+import FilesMixin from "@/mixin/FilesMixin.js";
+import Snack from "@/mixin/Snack.js";
 
 export default {
 	name: "SubmitMedia",
-	mixins: [PostMixin],
+	mixins: [PostMixin, FilesMixin, Snack],
 	props: {
 		theme: {type: Object, required: true},
 		payload: {type: Object, required: true},
 	},
-	data: () => ({
-		files: [],
-		fileUrls: [],
-		totalSize: null,
-	}),
 	computed: {
 		...mapGetters({
 			inProgress: "publication/inProgress"
 		})
 	},
 	methods: {
-		removeFile(item, index) {
-			this.files.splice(index, 1)
-			this.fileUrls.splice(index, 1)
-			this.totalSize -= item.size
-		},
 		postImage(item, index) {
 			const id = this.inProgress.id
 			const url = this.$util.format(this.$urls.publication.addImage, id)
-			const fd = new FormData()
-			fd.append("image", this.files[index])
+			const fd = this.$helper.createFormData({image: this.files[index]})
 			this.post(url, fd).then(() => {
-				this.removeFile(item, index)
-				this.$emit("refresh")
+				if (this.success) {
+					this.removeFile(item, index)
+					this.$emit("refresh")
+				} else {
+					this.openSnack("Sorry, something went wrong.")
+				}
 			})
-		},
-		addTargetFilesToList(filesList) {
-			filesList.forEach(file => {
-				this.files.push(file)
-				this.fileUrls.push(URL.createObjectURL(file))
-				this.totalSize += file.size
-			})
-		},
-		fileInputChanged(e) {
-			const filesList = Array.from(e.target.files)
-			this.addTargetFilesToList(filesList)
-		},
-		dragFile(e) {
-			const filesList = Array.from(e.dataTransfer.files)
-			this.addTargetFilesToList(filesList)
 		},
 	}
 }

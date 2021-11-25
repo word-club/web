@@ -1,24 +1,52 @@
 <template>
-	<div>
+	<div v-if="user">
 		<hot-bar />
 		<div class="py-2" />
-		<feed-comment-item />
+		<v-card color="transparent" flat>
+			<div v-for="item in items"
+				:key="item.id"
+				class="pb-4"
+			>
+				<publication-instance
+					v-if="Array.isArray(item.comments)"
+					:publication="item"
+					@init="handler"
+				/>
+				<comment-instance v-else :comment="item" />
+			</div>
+		</v-card>
 		<div class="py-2" />
-		<!--		<feed-list />-->
 	</div>
 </template>
 
 <script>
-import HotBar from "@/views/home/user/components/HotBar.vue";
-import FeedCommentItem from "@/views/home/comment/FeedCommentItem.vue";
+import {mapGetters} from "vuex";
+import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
+import FeedMixin from "@/mixin/FeedMixin.js";
 export default {
 	name: "Overview",
-	// feed list for user
-	components: {FeedCommentItem, HotBar},
-	props: {},
-	data: () => ({}),
-	computed: {},
-	methods: {}
+	mixins: [RefreshMeMixin, FeedMixin],
+	components: {
+		HotBar: () => import("@/views/home/user/components/HotBar"),
+		CommentInstance: () => import("@/views/home/components/CommentInstance"),
+		PublicationInstance: () => import("@/views/home/components/PublicationInstance"),
+	},
+	computed: {
+		...mapGetters({
+			user: "user/inView"
+		}),
+		comments() {
+			if (!this.user) return []
+			return this.user.comments
+		},
+		publications() {
+			if (!this.user) return []
+			return this.user.published_publications
+		},
+	},
+	created() {
+		this.sortItems()
+	}
 }
 </script>
 

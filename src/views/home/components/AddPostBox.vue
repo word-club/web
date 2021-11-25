@@ -21,10 +21,10 @@
 					class="full-width rounded"
 					@click="toCreatePost"
 				>
-					<v-icon size="22">
+					<v-icon size="22" class="mb-1">
 						mdi-home
 					</v-icon>
-					<span class="px-2 weight-500 grey--text text--darken-1 px16">
+					<span class="px-2 weight-500 grey--text text--darken-1 px14">
 						New Publication
 					</span>
 				</v-chip>

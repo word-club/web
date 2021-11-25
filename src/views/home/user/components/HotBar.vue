@@ -27,6 +27,14 @@
 				</v-icon>
 				Top
 			</v-btn>
+			<v-spacer v-if="isProfilePostsRoute" />
+			<v-btn
+				v-if="isProfilePostsRoute"
+				text rounded
+				class="primary--text weight-600"
+			>
+				Drafts
+			</v-btn>
 		</v-card-actions>
 	</v-card>
 </template>
@@ -34,10 +42,11 @@
 <script>
 export default {
 	name: "HotBar",
-	props: {},
-	data: () => ({}),
-	computed: {},
-	methods: {}
+	computed: {
+		isProfilePostsRoute() {
+			return this.$route.name === "Profile Posts"
+		}
+	},
 }
 </script>
 

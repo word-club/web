@@ -66,11 +66,8 @@ const RouteMixin = {
 		async toProfileDownVoted() {
 			await this.$router.push({name: "Profile Downvoted"})
 		},
-		async toProfileAwardsReceived() {
-			await this.$router.push({name: "Profile Awards Received"})
-		},
-		async toProfileAwardsGiven() {
-			await this.$router.push({name: "Profile Awards Given"})
+		async toProfileShares() {
+			await this.$router.push({name: "Profile Shares"})
 		},
 		async toCreatePost() {
 			await this.$router.push({name: "Submit"})
