@@ -109,7 +109,6 @@ export default {
 			const commentTextarea = document.querySelector(`#comment-input-${this.publication.id}`)
 			if (commentTextarea) {
 				const cursorPosition = commentTextarea.selectionStart
-
 				if (cursorPosition === this.comment.length) {
 					this.comment += emoji
 				} else {

@@ -1,11 +1,14 @@
 <template>
 	<div class="full-width reply-box">
 		<text-area
-			:id="`#reply-input-${this.comment.id}`"
+			:id="`reply-input-${this.comment.id}`"
 			class="ml-4 reply-input" name="reply"
 			v-model="reply" icon="mdi-reply"
 			outlined label="REPLY" :counter="false"
 			placeholder="Add your reply"
+			@focus="emojiColor = 'primary'"
+			@blur="emojiColor = 'grey'"
+			:clearable="false"
 		/>
 		<emoji-picker :search="search"
 			@emoji="insert"
@@ -18,7 +21,7 @@
 				<v-btn icon
 					class="emoji-btn"
 				>
-					<v-icon :color="pickerColor">
+					<v-icon :color="emojiColor">
 						mdi-emoticon
 					</v-icon>
 				</v-btn>
@@ -78,8 +81,8 @@ export default {
 	},
 	data: () => ({
 		search: "",
-		pickerColor: "grey",
-		reply: null
+		emojiColor: "grey",
+		reply: ""
 	}),
 	methods: {
 		addReply() {
@@ -96,13 +99,15 @@ export default {
 		insert(emoji) {
 			const replyTextarea = document.querySelector(`#reply-input-${this.comment.id}`)
 			if (replyTextarea) {
+				console.log(replyTextarea)
 				const cursorPosition = replyTextarea.selectionStart
-
 				if (cursorPosition === this.reply.length) {
+					console.log("hrere", this.reply, emoji)
 					this.reply += emoji
 				} else {
-					const firstPart = this.comment.substring(0, cursorPosition)
-					const secondPart = this.comment.substring(cursorPosition, this.reply.length)
+					const firstPart = this.reply.substring(0, cursorPosition)
+					const secondPart = this.reply.substring(cursorPosition, this.reply.length)
+					console.log("hrereee", this.reply, emoji, firstPart, secondPart)
 					this.reply = firstPart + emoji + secondPart
 				}
 			}
@@ -121,7 +126,7 @@ export default {
 
 	.clear-button {
 		position: absolute;
-		right: 7px !important;
+		right: 17px !important;
 		top: 81px !important;
 	}
 

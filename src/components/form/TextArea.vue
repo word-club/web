@@ -1,8 +1,9 @@
 <template>
 	<v-textarea
+		:id="id"
 		:value="value" auto-grow
 		background-color="white"
-		outlined clearable
+		outlined :clearable="clearable"
 		hide-details="auto"
 		:label="label.toUpperCase()"
 		placeholder="Start typing"
@@ -11,6 +12,8 @@
 		:counter="counter" :color="color"
 		@input="$emit('input', $event)"
 		@change="$emit('change', $event)"
+		@focus="$emit('focus', $event)"
+		@blur="$emit('blur', $event)"
 	/>
 </template>
 <script>
@@ -23,12 +26,14 @@ export default {
 		value: {
 			required: true
 		},
+		id: {type: String, default: null},
 		name: {type: String, required: true},
 		label: {type: String, required: true},
 		counter: {type: [String, Boolean], required: true},
 		errors: {type: Object, required: false, default: () => {}},
 		icon: {type: String, required: true},
-		color: {type: String, default: "primary"}
+		color: {type: String, default: "primary"},
+		clearable: {type: Boolean, default: true}
 	},
 	emits: ["input", "change"]
 }
