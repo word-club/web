@@ -1,24 +1,22 @@
 <template>
 	<v-card>
 		<v-card-title>
-			Awards Given
+			Notifications
 		</v-card-title>
-		<v-card-subtitle>
-			Yet to implement
-		</v-card-subtitle>
 	</v-card>
 </template>
 
 <script>
 export default {
-	name: "AwardsReceived",
-	props: {},
+	name: "Notifications",
 	data: () => ({}),
 	computed: {},
+	created() {
+	},
 	methods: {}
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

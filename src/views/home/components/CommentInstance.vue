@@ -101,7 +101,7 @@
 import RouteMixin from "@/mixin/RouteMixin.js";
 
 export default {
-	name: "FeedCommentItem",
+	name: "CommentInstance",
 	mixins: [RouteMixin],
 	props: {},
 	data: () => ({
@@ -147,6 +147,6 @@ export default {
 	}
 }
 .feeds-comment-item:hover {
-	border: 1px solid black !important;
+	border: 1px solid #707070 !important;
 }
 </style>
