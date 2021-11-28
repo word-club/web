@@ -2,6 +2,11 @@
 	<div>
 		<hot-bar />
 		<div class="py-2" />
+		<v-card v-if="!publications.length" flat min-height="79vh">
+			<v-card-title class="empty-content">
+				hmm... looks like you haven't posted anything yet
+			</v-card-title>
+		</v-card>
 		<div v-for="item in publications"
 			:key="item.id"
 			class="pb-4"
