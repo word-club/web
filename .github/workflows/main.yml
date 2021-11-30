@@ -31,7 +31,9 @@ jobs:
       - name: Build Dist
         run: yarn build
 
-      - name: Commit
+
+      - name: "Commit Dist"
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: \[actions\] updated dist with the latest
+          commit_message: [actions] updated dist with the latest
