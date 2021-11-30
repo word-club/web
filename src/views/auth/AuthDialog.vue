@@ -110,9 +110,21 @@
 						</div>
 					</div>
 					<v-card-actions class="justify-space-between">
-						<v-btn v-if="!isResetMode" text x-small class="auth-text-btn" rounded>Forget Password?</v-btn>
-						<v-btn v-if="!isSignUpMode" text x-small class="auth-text-btn" rounded>Register</v-btn>
-						<v-btn v-if="!isLoginMode" text x-small class="auth-text-btn" rounded>Login</v-btn>
+						<v-btn v-if="!isResetMode" text x-small class="auth-text-btn" rounded
+							@click="$store.dispatch('setAuthMode', {state: true, mode: 'reset'})"
+						>
+							Forget Password?
+						</v-btn>
+						<v-btn v-if="!isSignUpMode" text x-small class="auth-text-btn" rounded
+							@click="$store.dispatch('setAuthMode', {state: true, mode: 'signup'})"
+						>
+							Register
+						</v-btn>
+						<v-btn v-if="!isLoginMode" text x-small class="auth-text-btn" rounded
+							@click="$store.dispatch('setAuthMode', {state: true, mode: 'login'})"
+						>
+							Login
+						</v-btn>
 					</v-card-actions>
 					<div class="py-4"></div>
 					<v-card-actions>
@@ -156,10 +168,11 @@ import {mapGetters} from "vuex";
 import Snack from "@/mixin/Snack.js";
 import PostMixin from "@/mixin/PostMixin.js";
 import CheckRequiredMixin from "@/mixin/CheckRequiredMixin.js";
+import AfterAuth from "@/mixin/AfterAuth.js";
 
 export default {
 	name: "AuthDialog",
-	mixins: [Snack, PostMixin, CheckRequiredMixin],
+	mixins: [Snack, PostMixin, CheckRequiredMixin, AfterAuth],
 	data: () => ({
 		payload: {
 			username: null,
@@ -213,7 +226,7 @@ export default {
 					this.$helper.setCurrentUser(this.postInstance.data)
 					this.$store.dispatch("user/setCurrentUser", this.postInstance.data)
 					this.closeAuthDialog()
-					this.$router.push({name: "Home"})
+					this.afterAuth()
 				} else {
 					if (this.statusCode < 500 && this.statusCode >= 400) {
 						const nonFieldErrors = this.formErrors["non_field_errors"]
@@ -244,6 +257,7 @@ export default {
 					)
 					this.$store.dispatch("setAuthMode", {state: true, mode: "login"})
 				} else {
+					this.$store.dispatch("setAuthMode", {state: true, mode: "signup"})
 					this.openSnack("Sorry! System failed to register your data.\n" +
 						"Please check your form and try again.", {multiline: true})
 				}
