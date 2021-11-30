@@ -9,7 +9,7 @@
 		<item-images v-if="publication.type === 'media'" :item="publication" />
 		<item-link v-if="publication.type === 'link'" :link="publication.link"/>
 		<item-content v-if="publication.type ==='editor'" :content="JSON.parse(publication.content)" />
-		<item-actions @init="$emit('init')" :item="publication"/>
+		<item-actions @init="$emit('init')" :publication="publication"/>
 	</v-card>
 </template>
 
@@ -23,11 +23,11 @@ export default {
 	},
 	mixins: [RouteMixin],
 	components: {
-		ItemHeader: () => import("@/components/feeds/ItemHeader.vue"),
-		ItemImages: () => import("@/components/feeds/ItemImages.vue"),
-		ItemLink: () => import("@/components/feeds/ItemLink.vue"),
-		ItemContent: () => import("@/components/feeds/ItemContent.vue"),
-		ItemActions: () => import("@/components/feeds/ItemActions.vue"),
+		ItemHeader: () => import("@/components/feeds/ItemHeader"),
+		ItemImages: () => import("@/components/feeds/ItemImages"),
+		ItemLink: () => import("@/components/feeds/ItemLink"),
+		ItemContent: () => import("@/components/feeds/ItemContent"),
+		ItemActions: () => import("@/components/feeds/ItemActions"),
 	}
 }
 </script>

@@ -179,10 +179,10 @@ export default {
 			const comments = this.user.comments
 			let count = 0
 			publications.forEach(item => {
-				count += item.reactions.up_votes
+				count += item.popularity
 			})
 			comments.forEach(item => {
-				count += item.reactions.up_votes
+				count += item.popularity
 			})
 			return count
 		}

@@ -18,33 +18,33 @@
 			<v-chip
 				v-bind="data.attrs"
 				:input-value="data.selected"
-				dark :color="data.item.community.theme.color"
+				dark :color="data.item.theme.color"
 				@click="data.select"
 			>
 				<v-avatar left color="white">
 					<v-img
-						v-if="data.item.community.avatar"
-						:src="$link(data.item.community.avatar.image)"
+						v-if="data.item.avatar"
+						:src="$link(data.item.avatar.image)"
 					/>
 					<span v-else
-						:class="`${data.item.community.theme.color}--text`"
+						:class="`${data.item.theme.color}--text`"
 					>
-						{{ data.item.community.name[0].toUpperCase() }}
+						{{ data.item.name[0].toUpperCase() }}
 					</span>
 				</v-avatar>
-				{{ data.item.community.name }}
+				{{ data.item.name }}
 			</v-chip>
 		</template>
 		<template v-slot:item="data">
-			<v-list-item-avatar :color="data.item.community.theme.color">
+			<v-list-item-avatar :color="data.item.theme.color">
 				<v-img
-					v-if="data.item.community.avatar"
-					:src="$link(data.item.community.avatar.image)"
+					v-if="data.item.avatar"
+					:src="$link(data.item.avatar.image)"
 				/>
-				<div class="white--text headline text-center full-width" v-else>{{data.item.community.name[0].toUpperCase()}}</div>
+				<div class="white--text headline text-center full-width" v-else>{{data.item.name[0].toUpperCase()}}</div>
 			</v-list-item-avatar>
 			<v-list-item-content>
-				<v-list-item-title v-html="data.item.community.name"></v-list-item-title>
+				<v-list-item-title v-html="data.item.name" />
 			</v-list-item-content>
 		</template>
 	</v-autocomplete>

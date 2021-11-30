@@ -98,7 +98,7 @@
 					</v-menu>
 					<v-spacer />
 					<v-btn small icon><v-icon>mdi-arrow-up-bold</v-icon></v-btn>
-					<div>{{comment.reactions.total}}</div>
+					<div>{{comment.popularity}}</div>
 					<v-btn icon small><v-icon>mdi-arrow-down-bold</v-icon></v-btn>
 				</v-card-actions>
 			</v-card>

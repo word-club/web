@@ -69,5 +69,12 @@ module.exports = {
 			})
 		}
 		return fd
+	},
+	parseSortString(sortString, comment = false) {
+		if (sortString === "best") return "supports"
+		if (sortString === "popular") return "popularity"
+		if (sortString === "fresh") return (comment) ? "created_at" : "published_at"
+		if(sortString === "discussed") return "discussions"
+		return "support"
 	}
 }

@@ -74,8 +74,9 @@
 		"removeShare": "publication-share/%s/"
 	},
 	"comment": {
+		"list": "comment-view/",
 		"add": "publication/%s/comment/",
-		"reply": "comment/%s/reply",
+		"reply": "comment/%s/reply/",
 		"detail": "comment/%s/",
 		"addImage": "comment/%s/image/",
 		"imageDetail": "comment-image/%s/",
