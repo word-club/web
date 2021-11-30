@@ -23,9 +23,8 @@
 		>
 			<v-text-field
 				v-model="searchCommunities"
-				dense
-				outlined
-				hide-details
+				dense outlined hide-details
+				clearable aria-autocomplete="search_communities"
 				:placeholder="placeHolder"
 				color="primary"
 			>
@@ -70,9 +69,8 @@
 		>
 			<v-text-field
 				v-model="searchPublications"
-				dense
-				outlined
-				hide-details
+				dense outlined clearable
+				hide-details aria-autocomplete="search_publication"
 				placeholder="Search WordClub"
 			>
 				<template #prepend-inner>
@@ -82,17 +80,28 @@
 		</v-responsive>
 		<v-spacer/>
 
-		<v-btn v-if="currentUser" icon class="mx-2" small>
-			<v-icon size="20"> mdi-thermostat</v-icon>
-		</v-btn>
+		<tooltip-icon-btn
+			size="40"
+			v-if="currentUser"
+			icon="mdi-finance"
+			tooltip="Popular"
+			:to="{ name: 'Home', params: {sortBy: 'popular'} }"
+		/>
 
-		<v-btn v-if="currentUser" icon class="mx-2" small>
-			<v-icon size="20"> mdi-ballot-recount</v-icon>
-		</v-btn>
-
-		<v-btn v-if="currentUser" icon class="mx-2" small :to="{ name: 'Submit' }">
-			<v-icon size="26"> mdi-plus</v-icon>
-		</v-btn>
+		<tooltip-icon-btn
+			size="40"
+			v-if="currentUser"
+			icon="mdi-chart-gantt"
+			tooltip="Top Discussed"
+			:to="{ name: 'Home', params: {sortBy: 'discussed'} }"
+		/>
+		<tooltip-icon-btn
+			size="40"
+			v-if="currentUser"
+			icon="mdi-plus"
+			tooltip="Create Publication"
+			:to="{ name: 'Submit' }"
+		/>
 
 		<notification-menu v-if="currentUser"/>
 
@@ -125,10 +134,12 @@
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
 import {mapGetters} from "vuex";
+import TooltipIconBtn from "@/components/TooltipIconBtn.vue";
 
 export default {
 	name: "TheAppBar",
 	components: {
+		TooltipIconBtn,
 		AuthDialog: () => import("@/views/auth/AuthDialog.vue"),
 		ProfileDrop: () => import("@/components/utils/ProfileDrop"),
 		NotificationMenu: () =>

@@ -12,6 +12,7 @@ const AfterAuth = {
 			} else if (this.$route.name === "Publication") {
 				this.fetchDetail("publication")
 			}
+			// TODO: profile/user, community, user settings, administration
 		}
 	}
 }

@@ -7,6 +7,7 @@
 				:height="size" :width="size"
 				:color="color" :elevation="elevation"
 				@click="$emit('click', $event)"
+				:to="to" exact-path
 				v-bind="attrs" v-on="on" :dark="fab"
 				:disabled="disabled"
 			>
@@ -23,12 +24,13 @@ export default {
 	props: {
 		size: {type: String, default: "25"},
 		icon: {type: String, required: true},
-		color: {type: String, default: "grey"},
+		color: {type: String, default: "grey darken-2"},
 		tooltip: {type: String, required: true},
 		disabled: {type: Boolean, default: false},
 		iconSize: {type: String, default: "22"},
 		fab: {type: Boolean, default: false},
-		elevation: {type: String, default: "0"}
+		elevation: {type: String, default: "0"},
+		to: {type: Object, default: () => {}}
 	}
 }
 </script>
