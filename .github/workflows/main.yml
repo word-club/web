@@ -1,5 +1,5 @@
 name: CI
-on: create
+on: pull_request
 jobs:
   build:
     runs-on: ubuntu-latest
