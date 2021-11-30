@@ -6,7 +6,8 @@ const state = {
 	drafts: {},
 	toView: null,
 	toEdit: null,
-	createInProgress: null
+	createInProgress: null,
+	filterset: {}
 }
 
 const mutations = {
@@ -26,7 +27,8 @@ const mutations = {
 		const toRemove = draft.images.find(item => item.id === imageId)
 		const index = draft.images.indexOf(toRemove)
 		draft.images.splice(index, 1)
-	}
+	},
+	SET_FILTERSET: (state, value) => state.filterset = value
 }
 
 const getters = {
@@ -58,6 +60,9 @@ const actions = {
 	},
 	setInView({commit}, value) {
 		commit("SET_TO_VIEW", value)
+	},
+	setFilterset({commit}, value) {
+		commit("SET_FILTERSET", value)
 	}
 }
 

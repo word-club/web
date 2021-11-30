@@ -52,9 +52,11 @@
 
 <script>
 import {mapGetters} from "vuex";
+import Snack from "@/mixin/Snack.js";
 
 export default {
 	name: "DraftsDialog",
+	mixins: [Snack],
 	computed: {
 		...mapGetters({
 			inProgress: "publication/inProgress",
@@ -83,11 +85,20 @@ export default {
 		deleteDraft(id) {
 			const url = this.$util.format(this.$urls.publication.detail, id)
 			this.$axios.delete(url)
-			this.$store.dispatch("publication/removeDraftItem", id)
-			this.openSnack("Draft deleted successfully.", {color:"success"})
-
-			// TODO: After delete scenario
-			// if in progress is draft just deleted, reset the editor form
+				.then(() => {
+					if (id === this.inProgress.id) {
+						this.$store.dispatch("publication/setInProgress", null)
+						this.$emit("startNew")
+					}
+					this.$store.dispatch("publication/removeDraftItem", id)
+						.then(() => {
+							if (this.drafts.count === 0) this.draftDialog = false
+						})
+					this.openSuccessSnack("Draft deleted successfully.")
+				})
+				.catch(() => {
+					this.openSnack("Something went wrong. Please try again.")
+				})
 		},
 	}
 }

@@ -2,9 +2,9 @@
 	<v-card :height="height"
 		:max-width="maxWidth"
 		class="card-image"
-		dark
+		dark rounded
 	>
-		<v-card-actions class="actions flex-wrap align-center">
+		<v-card-actions class="actions rounded flex-wrap align-center">
 			<v-btn icon
 				class="fullscreen-btn"
 				@click="fullscreen=true"
@@ -80,8 +80,7 @@ export default {
 		width: 100%;
 		background-color: #184a617a;
 		z-index: 1;
-		height: 35px;
-		border-radius: 10px !important;
+		height: 45px;
 	}
 	.fullscreen-btn {
 		position: absolute;

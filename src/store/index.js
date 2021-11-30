@@ -6,6 +6,7 @@ import community from "@/store/modules/community"
 import publication from "@/store/modules/publication"
 import hashtag from "@/store/modules/hashtag"
 import user from "@/store/modules/user"
+import comment from "@/store/modules/comment"
 
 Vue.use(Vuex)
 
@@ -43,10 +44,8 @@ export default new Vuex.Store({
 		}
 	},
 	modules: {
-		snack,
-		community,
-		publication,
-		hashtag,
-		user
+		snack, community,
+		publication, hashtag,
+		user, comment
 	}
 })

@@ -40,6 +40,8 @@
 						>
 							Set Email
 						</v-btn>
+					</v-fab-transition>
+					<v-fab-transition>
 						<v-btn
 							v-if="!isAuthorized && email"
 							class="ma-2"

@@ -12,14 +12,18 @@
 						'text-right': checkAlignmentTune(block.tunes, 'right'),
 						'text-center': checkAlignmentTune(block.tunes, 'center'),
 					}"
-				>{{block.data.text}}</h1>
+				>
+					{{block.data.text}}
+				</h1>
 				<h2 v-else
 					:class="{
 						'text-left': checkAlignmentTune(block.tunes, 'left'),
 						'text-right': checkAlignmentTune(block.tunes, 'right'),
 						'text-center': checkAlignmentTune(block.tunes, 'center'),
 					}"
-				>{{block.data.text}}</h2>
+				>
+					{{block.data.text}}
+				</h2>
 			</template>
 			<template
 				v-if="block.type === 'image'"
@@ -28,18 +32,6 @@
 				<v-card outlined v-if="block.data.caption" class="rounded-t-0">
 					<v-card-subtitle class="px16 weight-500 grey--text text--darken-2">{{block.data.caption}}</v-card-subtitle>
 				</v-card>
-			</template>
-
-			<template
-				v-if="block.type === 'paragraph'"
-			>
-				<p v-html="block.data.text" class="px16"
-					:class="{
-						'text-left': checkAlignmentTune(block.tunes, 'left'),
-						'text-right': checkAlignmentTune(block.tunes, 'right'),
-						'text-center': checkAlignmentTune(block.tunes, 'center'),
-					}"
-				/>
 			</template>
 
 			<template
@@ -107,7 +99,6 @@ export default {
 	methods: {
 		findOembedHtml(source) {
 			const frame = this.iframes.find(item => item.source === source)
-
 			if (frame) {
 				const html = frame.oembed.html
 				return html.split("\n")[0]
@@ -115,7 +106,6 @@ export default {
 			else {
 				return ""
 			}
-
 		},
 		async prepareEmbedUrls() {
 			const embeds = this.content.blocks.filter(item => item.type === "embed")

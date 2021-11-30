@@ -6,7 +6,7 @@
 			<v-list-item>
 				<v-list-item-avatar :color="theme.color">
 					<v-img v-if="inProgress.link.image" :src="inProgress.link.image" />
-					<span v-else class="white--text px22 mb-1">{{inProgress.link.title[0].toUpperCase()}}</span>
+					<div v-else class="white--text px22 mb-1 full-width text-center">{{inProgress.link.title[0].toUpperCase()}}</div>
 				</v-list-item-avatar>
 				<v-list-item-content>
 					<v-list-item-title>

@@ -14,6 +14,7 @@
 <script>
 import PostMixin from "@/mixin/PostMixin.js";
 import PatchMixin from "@/mixin/PatchMixin.js";
+import {mapGetters} from "vuex";
 
 export default {
 	name: "UploadLink",
@@ -25,22 +26,25 @@ export default {
 		linkUrl: null
 	}),
 	mixins: [PostMixin, PatchMixin],
+	computed: {
+		...mapGetters("publication", ["inProgress"])
+	},
 	methods: {
 		createLink() {
-			if (!this.payload.linkUrl) return
+			if (!this.linkUrl) return
 			if (this.inProgress && this.inProgress.link) {
 				const url = this.$util.format(this.$urls.publication.linkDetail, this.inProgress.link.id)
 				this.patch(url, {link: this.linkUrl})
 					.then(() => {
-						if(this.patchInstance) {
+						if(this.patchSuccess) {
 							this.$emit("refresh")
 						}
 					})
 			} else {
 				const url = this.$util.format(this.$urls.publication.addLink, this.inProgress.id)
-				this.post(url, {link: this.payload.linkUrl})
+				this.post(url, {link: this.linkUrl})
 					.then(() => {
-						if(this.postInstance) {
+						if(this.success) {
 							this.$emit("refresh")
 						}
 					})

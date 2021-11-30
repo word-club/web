@@ -84,9 +84,7 @@ export default {
 		payload: {type: Object, required: true},
 	},
 	computed: {
-		...mapGetters({
-			inProgress: "publication/inProgress"
-		})
+		...mapGetters("publication", ["inProgress"])
 	},
 	methods: {
 		postImage(item, index) {

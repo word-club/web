@@ -5,14 +5,14 @@ Vue.use(VueRouter)
 
 const routes = [
 	{
-		path: "/",
+		path: "/:sortBy?",
 		name: "Home",
 		components: {
 			default: () => import("@/views/home/Home"),
 			sidebar: () => import("@/views/home/Sidebar")
 		},
 		meta: {
-			home: true
+			sidebar: true
 		}
 	},
 	{
@@ -23,7 +23,8 @@ const routes = [
 			sidebar: () => import("@/views/home/submit/Sidebar")
 		},
 		meta: {
-			home: true
+			drawer_free: true,
+			sidebar: true
 		}
 	},
 	{
@@ -34,7 +35,7 @@ const routes = [
 			sidebar: () => import("@/views/home/community/RegisterSidebar")
 		},
 		meta: {
-			home: true
+			sidebar: true
 		},
 		children: [
 			{
@@ -70,14 +71,14 @@ const routes = [
 		]
 	},
 	{
-		path: "/publication/:id",
+		path: "/publication/:id/:view?/:sortCommentBy?",
 		name: "Publication",
 		components: {
 			default: () => import("@/views/home/publication/Publication"),
 			sidebar: () => import("@/views/home/publication/Sidebar")
 		},
 		meta: {
-			home: true
+			sidebar: true
 		}
 	},
 	{
@@ -87,7 +88,7 @@ const routes = [
 			sidebar: () => import("@/views/home/community/Sidebar")
 		},
 		meta: {
-			home: true
+			sidebar: true
 		},
 		children: [
 			{
@@ -114,7 +115,7 @@ const routes = [
 			sidebar: () => import("@/views/home/user/Sidebar")
 		},
 		meta: {
-			home: true
+			sidebar: true
 		},
 		children: [
 			{
@@ -141,7 +142,7 @@ const routes = [
 			sidebar: () => import("@/views/home/profile/Sidebar")
 		},
 		meta: {
-			home: true
+			sidebar: true
 		},
 		children: [
 			{
@@ -195,7 +196,7 @@ const routes = [
 		path: "/settings",
 		component: () => import("@/views/home/settings/Settings"),
 		name: "User Settings",
-		meta: { profile_settings: true },
+		meta: { user_settings: true, drawer_free: true },
 		children: [
 			{
 				path: "account",
@@ -234,7 +235,7 @@ const routes = [
 		name: "Notification",
 		component: () => import("@/views/home/notification/Notification"),
 		meta: {
-			home: true
+			sidebar: true
 		},
 	},
 ]

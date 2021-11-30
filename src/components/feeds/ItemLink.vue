@@ -20,6 +20,20 @@
 					</v-list-item-action>
 				</v-list-item>
 			</v-card-text>
+			<v-card v-else flat
+				color="grey lighten-3"
+				class="rounded-t-0 d-flex justify-center align-center"
+			>
+				<v-list-item :href="link.link" target="_blank">
+					<v-list-item-avatar size="80" color="white">
+						<div class="full-width text-center px22">
+							{{link.title[0].toUpperCase()}}
+						</div>
+					</v-list-item-avatar>
+					<v-list-item-title class="weight-400 px18 text-decoration-underline">{{link.title}}</v-list-item-title>
+					<v-list-item-subtitle v-if="link.description">{{link.description}}</v-list-item-subtitle>
+				</v-list-item>
+			</v-card>
 		</v-card>
 	</v-card-text>
 </template>

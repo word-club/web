@@ -1,7 +1,7 @@
 const RouteMixin = {
 	methods: {
-		async toPublicationDetail(id) {
-			await this.$router.push({name: "Publication", params: {id: id}})
+		async toPublicationDetail(id, view) {
+			await this.$router.push({name: "Publication", params: {id: id, view: view}})
 		},
 		async toCommunityDetail(id) {
 			await this.$router.push({name: "Community Detail", params: {id: id}})

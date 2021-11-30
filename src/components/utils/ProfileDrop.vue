@@ -62,10 +62,10 @@
 						<v-list-item-title>Create a Community</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
-				<v-list-item>
-					<v-list-item-icon><v-icon>mdi-apple-keyboard-command</v-icon></v-list-item-icon>
+				<v-list-item color="orange">
+					<v-list-item-icon><v-icon color="orange">mdi-apple-keyboard-command</v-icon></v-list-item-icon>
 					<v-list-item-content>
-						<v-list-item-title>Premium</v-list-item-title>
+						<v-list-item-title class="orange--text">Premium</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
 				<v-list-item>
@@ -90,10 +90,11 @@
 import {mapGetters} from "vuex";
 import PostMixin from "@/mixin/PostMixin.js";
 import Snack from "@/mixin/Snack.js";
+import AfterAuth from "@/mixin/AfterAuth.js";
 
 export default {
 	name: "ProfileDrop",
-	mixins: [PostMixin, Snack],
+	mixins: [PostMixin, Snack, AfterAuth],
 	data: () => ({
 		onlineStatus: true
 	}),
@@ -110,6 +111,7 @@ export default {
 					this.$helper.clearAccessToken()
 					this.$helper.clearCurrentUser()
 					this.$store.dispatch("user/setCurrentUser", null)
+					this.afterAuth()
 					this.openSuccessSnack("Logged out successfully.")
 				} else {
 					// logout errors are traced inside detail key

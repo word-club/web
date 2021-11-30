@@ -52,7 +52,7 @@ export default {
 		})
 	},
 	created() {
-		this.fetchDetail()
+		this.fetchDetail("community")
 			.then(() => {
 				this.setTabListeners(this.community.theme.color)
 			})

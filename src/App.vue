@@ -3,7 +3,7 @@
 		<the-app-bar />
 		<v-slide-x-transition>
 			<v-navigation-drawer
-				v-if="!isUserSettingsRoute"
+				v-if="!drawerFreeRoute"
 				v-model="mainDrawer"
 				app clipped
 				color="grey lighten-3"
@@ -18,7 +18,7 @@
 		</v-slide-x-transition>
 		<v-slide-x-reverse-transition>
 			<v-navigation-drawer
-				v-if="isUserSettingsRoute"
+				v-if="userSettingRoute"
 				v-model="profileSettingsDrawer"
 				app clipped
 				color="grey lighten-3"
@@ -32,7 +32,7 @@
 			</v-navigation-drawer>
 		</v-slide-x-reverse-transition>
 		<v-navigation-drawer
-			v-if="homeRoute"
+			v-if="withSidebarRoute"
 			v-model="sidebar"
 			app right
 			clipped
@@ -96,14 +96,17 @@ export default {
 		profileSettingsDrawer: null
 	}),
 	computed: {
-		isUserSettingsRoute() {
-			return this.$route.matched.some(route => route.meta["profile_settings"])
+		drawerFreeRoute() {
+			return this.$route.matched.some(route => route.meta["drawer_free"])
+		},
+		userSettingRoute() {
+			return this.$route.matched.some(route => route.meta["user_settings"])
 		},
 		mdAndUp() {
 			return this.$vuetify.breakpoint.mdAndUp
 		},
-		homeRoute() {
-			return this.$route.matched.some(route => route.meta["home"])
+		withSidebarRoute() {
+			return this.$route.matched.some(route => route.meta["sidebar"])
 		}
 	},
 	created() {
