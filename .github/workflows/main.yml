@@ -1,5 +1,5 @@
 name: CI
-on: create
+on: pull_request
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -8,18 +8,47 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: Get Yarn Cache Directory Path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache Yarn
+        uses: actions/cache@v2
+        id: cache-yarn
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Cache Node Modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-
+
       - name: Install Dependencies
-        run: yarn install
+        if: |
+          steps.cache-yarn.outputs.cache-hit != 'true' ||
+          steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: yarn
+
 
       - name: Build Dist
         run: yarn build
 
-      - name: Setup git config
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
 
-      - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v4
+      - name: "Commit Dist"
+        uses: EndBug/add-and-commit@v7
         with:
-          commit_message: \[actions\] updated dist with the latest
+          message: "[actions] updated dist with the latest code"
+          committer_name: GitHub Actions
+          committer_email: 41898282+github-actions[bot]@users.noreply.github.com

@@ -14,6 +14,11 @@
 				class="mb-4"
 			/>
 		</div>
+		<v-card v-else outlined min-height="70vh" class="pt-16">
+			<v-card-text class="px16 weight-500 text-center pt-16">
+				Hmm... Sorry we're out of posts. Please visit us later.
+			</v-card-text>
+		</v-card>
 	</v-card>
 </template>
 <script>

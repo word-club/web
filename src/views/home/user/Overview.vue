@@ -3,6 +3,12 @@
 		<hot-bar />
 		<div class="py-2" />
 		<v-card color="transparent" flat>
+			<v-card v-if="!items.length" flat min-height="79vh">
+				<v-card-title class="empty-content">
+					hmm... looks like you haven't done anything yet
+				</v-card-title>
+			</v-card>
+
 			<div v-for="item in items"
 				:key="item.id"
 				class="pb-4"

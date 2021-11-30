@@ -2,6 +2,11 @@
 	<div>
 		<hot-bar />
 		<div class="py-2" />
+		<v-card v-if="!comments.length" flat min-height="79vh">
+			<v-card-title class="empty-content">
+				hmm... looks like you haven't commented yet
+			</v-card-title>
+		</v-card>
 		<div v-for="item in comments"
 			:key="item.id"
 			class="pb-4"

@@ -1,7 +1,9 @@
 <template>
 	<div>
-		<v-card v-if="!items.length">
-			hmm... looks like you haven't saved anything yet
+		<v-card v-if="!items.length" flat min-height="86vh">
+			<v-card-title class="empty-content">
+				hmm... looks like you haven't saved anything yet
+			</v-card-title>
 		</v-card>
 		<div v-for="item in items"
 			:key="item.id"
