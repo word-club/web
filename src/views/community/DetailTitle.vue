@@ -29,30 +29,30 @@
 				<v-spacer />
 				<div class="px-2" />
 				<v-btn
-					v-if="myStatus && myStatus.is_approved"
+					v-if="subscription && subscription.is_approved"
 					rounded depressed :color="community.theme.color"
-					@click="unSubscribe" dark
+					@click="unSubscribe(community)" dark
 				>
 					Joined
 				</v-btn>
 				<v-btn
 					v-else outlined rounded
 					:color="community.theme.color"
-					@click="subscribe" dark
+					@click="subscribe(community)" dark
 				>
 					Join
 				</v-btn>
 				<div class="px-2" />
 				<v-btn
-					v-if="myStatus && !myStatus.disable_notification"
+					v-if="subscription && !subscription.disable_notification"
 					icon :color="community.theme.color"
-					@click="disableNotification"
+					@click="disableNotification(community)"
 				>
 					<v-icon>mdi-bell</v-icon>
 				</v-btn>
 				<v-btn
 					v-else icon :color="community.theme.color"
-					@click="enableNotification"
+					@click="enableNotification(community)"
 				>
 					<v-icon>mdi-bell-outline</v-icon>
 				</v-btn>
@@ -64,26 +64,22 @@
 
 <script>
 import {mapGetters} from "vuex";
-import CommunityTab from "@/views/home/community/CommunityTab.vue";
+import CommunityTab from "@/views/community/CommunityTab.vue";
+import CommunityActions from "@/mixin/CommunityActions.js";
 
 export default {
 	name: "DetailTitle",
+	mixins: [CommunityActions],
 	components: {CommunityTab},
 	computed: {
 		...mapGetters({
 			community: "community/inView"
 		}),
-		myStatus() {
+		subscription() {
 			if (!this.community) return false
-			return this.community.my_status
+			return this.community.subscription
 		}
 	},
-	methods: {
-		unSubscribe() {},
-		subscribe() {},
-		disableNotification() {},
-		enableNotification() {},
-	}
 }
 </script>
 

@@ -85,7 +85,7 @@ export default {
 	name: "Mainframe",
 	mixins: [PostMixin, RouteMixin, Snack, CheckRequiredMixin],
 	components: {
-		RegisterProgressDialog: () => import("@/views/home/community/register/components/RegisterProgressDialog")
+		RegisterProgressDialog: () => import("@/views/community/register/components/RegisterProgressDialog.vue")
 	},
 	data: () => ({
 		payload: {

@@ -4,7 +4,7 @@
 			v-for="(item, index) in drawerItems"
 			:key="index"
 			:to="item.to"
-			exact-path
+			:exact-path="item.exact"
 		>
 			<v-icon>{{ item.icon }}</v-icon>
 			<v-list-item-title class="drawer-item px14">
@@ -20,13 +20,47 @@ export default {
 	computed: {
 		drawerItems() {
 			return [
-				{icon: "mdi-view-dashboard", title: "Overview", to: {name: "Home", params: {sortBy: undefined}}},
-				{icon: "mdi-chart-donut", title: "Fresh", to: {name: "Home", params: {sortBy: "fresh"}}},
-				{icon: "mdi-finance", title: "Popular", to: {name: "Home", params: {sortBy: "popular"}}},
-				{icon: "mdi-plus", title: "Create Post", to: {name: "Submit"}},
-				{icon: "mdi-format-list-numbered", title: "Top Communities"},
-				{icon: "mdi-bell-outline", title: "Notifications", to: "/notifications"},
-				{icon: "mdi-apple-keyboard-command", title: "Premium"},
+				{
+					icon: "mdi-view-dashboard",
+					title: "Overview",
+					to: {name: "Home", params: {sortBy: undefined}},
+					exact: true
+				},
+				{
+					icon: "mdi-chart-donut",
+					title: "Fresh",
+					to: {name: "Home", params: {sortBy: "fresh"}},
+					exact: true
+				},
+				{
+					icon: "mdi-finance",
+					title: "Popular",
+					to: {name: "Home", params: {sortBy: "popular"}},
+					exact: true
+				},
+				{
+					icon: "mdi-plus",
+					title: "Post",
+					to: {name: "Submit"},
+					exact: true
+				},
+				{
+					icon: "mdi-format-list-numbered",
+					title: "Top",
+					to: {name: "Top Communities"},
+					exact: false
+				},
+				{
+					icon: "mdi-bell-outline",
+					title: "Notifications",
+					to: "/notifications",
+					exact: true
+				},
+				{
+					icon: "mdi-apple-keyboard-command",
+					title: "Premium",
+					exact: true
+				},
 			]
 		}
 	},

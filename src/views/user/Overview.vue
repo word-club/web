@@ -33,9 +33,9 @@ export default {
 	name: "Overview",
 	mixins: [RefreshMeMixin, FeedMixin],
 	components: {
-		HotBar: () => import("@/views/home/user/components/HotBar"),
-		CommentInstance: () => import("@/views/home/components/CommentInstance"),
-		PublicationInstance: () => import("@/views/home/components/PublicationInstance"),
+		HotBar: () => import("@/views/user/components/HotBar.vue"),
+		CommentInstance: () => import("@/views/home/components/CommentInstance.vue"),
+		PublicationInstance: () => import("@/views/home/components/PublicationInstance.vue"),
 	},
 	computed: {
 		...mapGetters({

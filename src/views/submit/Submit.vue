@@ -214,13 +214,13 @@ import PostMixin from "@/mixin/PostMixin.js";
 import PatchMixin from "@/mixin/PatchMixin.js";
 import Snack from "@/mixin/Snack.js";
 import EditorMixin from "@/mixin/EditorMixin.js";
-import SubmitTab from "@/views/home/submit/components/SubmitTab.vue";
-import DraftsDialog from "@/views/home/submit/components/DraftsDialog.vue";
+import SubmitTab from "@/views/submit/components/SubmitTab.vue";
+import DraftsDialog from "@/views/submit/components/DraftsDialog.vue";
 import CheckRequiredMixin from "@/mixin/CheckRequiredMixin.js";
-import ImageList from "@/views/home/submit/components/ImageList.vue";
-import SubmitMedia from "@/views/home/submit/components/SubmitMedia.vue";
-import LinkPreview from "@/views/home/submit/components/LinkPreview.vue";
-import UploadLink from "@/views/home/submit/components/UploadLink.vue";
+import ImageList from "@/views/submit/components/ImageList.vue";
+import SubmitMedia from "@/views/submit/components/SubmitMedia.vue";
+import LinkPreview from "@/views/submit/components/LinkPreview.vue";
+import UploadLink from "@/views/submit/components/UploadLink.vue";
 
 export default {
 	name: "Submit",

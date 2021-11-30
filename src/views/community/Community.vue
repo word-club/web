@@ -38,7 +38,7 @@
 import {mapGetters, mapMutations} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import FetchMixin from "@/mixin/FetchMixin.js";
-import DetailTitle from "@/views/home/community/DetailTitle.vue";
+import DetailTitle from "@/views/community/DetailTitle.vue";
 export default {
 	name: "Community",
 	components: {DetailTitle},

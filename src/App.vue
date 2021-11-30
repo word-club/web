@@ -56,14 +56,13 @@
 				<v-card
 					v-if="$route.name"
 					flat tile
-					:color="
-						$route.name === 'Submit' ? 'grey lighten-2': 'grey lighten-4'
-					"
+					:color="appColor"
 					class="app-card"
 					:class="{
 						'app-padding': ! $route.name.includes('Community') &&
 							!$route.name.includes('User') &&
-							!$route.name.includes('Profile'),
+							!$route.name.includes('Profile') &&
+							!$route.name.includes('Top'),
 						'px-0': $route.name.includes('Community'),
 						'px-0': $route.name.includes('User'),
 						'px-0': $route.name.includes('Profile')
@@ -96,6 +95,9 @@ export default {
 		profileSettingsDrawer: null
 	}),
 	computed: {
+		appColor() {
+			return this.$route.name === "Submit" ? "grey lighten-2": "grey lighten-4"
+		},
 		drawerFreeRoute() {
 			return this.$route.matched.some(route => route.meta["drawer_free"])
 		},

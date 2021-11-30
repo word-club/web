@@ -10,7 +10,7 @@
 export default {
 	name: "Sidebar",
 	components: {
-		ProfilePeek: () => import("@/views/home/profile/components/ProfilePeek"),
+		ProfilePeek: () => import("@/views/profile/components/ProfilePeek.vue"),
 	},
 	props: {},
 	methods: {}

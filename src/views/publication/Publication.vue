@@ -79,13 +79,13 @@ import FetchMixin from "@/mixin/FetchMixin.js";
 export default {
 	name: "Publication",
 	components: {
-		CommentField: () => import("@/components/form/CommentField"),
-		CommentItem: () => import("@/views/home/publication/CommentItem"),
-		ItemActions: () => import("@/components/feeds/ItemActions"),
-		ItemLink: () => import("@/components/feeds/ItemLink"),
-		ItemImages: () => import("@/components/feeds/ItemImages"),
-		ItemContent: () => import("@/components/feeds/ItemContent"),
-		ItemHeader: () => import("@/components/feeds/ItemHeader")
+		CommentField: () => import("@/components/form/CommentField.vue"),
+		CommentItem: () => import("@/views/publication/CommentItem.vue"),
+		ItemActions: () => import("@/components/feeds/ItemActions.vue"),
+		ItemLink: () => import("@/components/feeds/ItemLink.vue"),
+		ItemImages: () => import("@/components/feeds/ItemImages.vue"),
+		ItemContent: () => import("@/components/feeds/ItemContent.vue"),
+		ItemHeader: () => import("@/components/feeds/ItemHeader.vue")
 	},
 	mixins: [RouteMixin, FetchMixin],
 	data: () => ({

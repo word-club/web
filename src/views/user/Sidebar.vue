@@ -13,7 +13,7 @@ import {mapGetters} from "vuex";
 export default {
 	name: "Sidebar",
 	components: {
-		UserPeek: () => import("@/views/home/user/components/UserPeek.vue")
+		UserPeek: () => import("@/views/user/components/UserPeek.vue")
 	},
 	computed: {
 		...mapGetters({

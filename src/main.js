@@ -32,7 +32,7 @@ Vue.component("UserSelect", () => import("@/components/form/UserSelect"))
 Vue.component("FileField", () => import("@/components/form/FileField"))
 Vue.component("SelectField", () => import("@/components/form/SelectField"))
 Vue.component("CardImg", () => import("@/components/utils/CardImage"))
-Vue.component("HotBar", () => import("@/views/home/user/components/HotBar"))
+Vue.component("HotBar", () => import("@/views/user/components/HotBar"))
 Vue.component("CommentInstance", () => import("@/views/home/components/CommentInstance"))
 Vue.component("PublicationInstance", () => import("@/views/home/components/PublicationInstance"))
 

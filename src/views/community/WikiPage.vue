@@ -78,7 +78,7 @@
 
 <script>
 import {mapGetters} from "vuex";
-import RuleDialog from "@/views/home/community/RuleDialog.vue";
+import RuleDialog from "@/views/community/RuleDialog.vue";
 export default {
 	name: "WikiPage",
 	components: {RuleDialog},

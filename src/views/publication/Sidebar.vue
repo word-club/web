@@ -18,8 +18,8 @@ import {mapGetters} from "vuex";
 export default {
 	name: "DetailSidebar",
 	components: {
-		CommunityPeek: () => import("@/views/home/community/CommunityPeek"),
-		PostingToWordClub: () => import("@/components/utils/PostingToWordClub"),
+		CommunityPeek: () => import("@/views/community/CommunityPeek.vue"),
+		PostingToWordClub: () => import("@/components/utils/PostingToWordClub.vue"),
 	},
 	computed: {
 		...mapGetters({

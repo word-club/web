@@ -143,7 +143,7 @@ export default {
 		AuthDialog: () => import("@/views/auth/AuthDialog.vue"),
 		ProfileDrop: () => import("@/components/utils/ProfileDrop"),
 		NotificationMenu: () =>
-			import("@/views/home/notification/NotificationMenu"),
+			import("@/views/notification/NotificationMenu"),
 	},
 	mixins: [RouteMixin],
 	data: () => ({

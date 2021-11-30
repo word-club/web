@@ -40,7 +40,7 @@
 
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
-import CommunityPeek from "@/views/home/community/CommunityPeek.vue";
+import CommunityPeek from "@/views/community/CommunityPeek.vue";
 
 export default {
 	name: "CommunityHoverBox",
