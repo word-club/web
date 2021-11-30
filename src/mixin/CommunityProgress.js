@@ -1,8 +1,9 @@
 import PostMixin from "@/mixin/PostMixin.js";
 import RouteMixin from "@/mixin/RouteMixin.js";
+import Snack from "@/mixin/Snack.js";
 
 const CommunityProgress = {
-	mixins: [PostMixin, RouteMixin],
+	mixins: [PostMixin, RouteMixin, Snack],
 	computed: {
 		state() {
 			return this.community.create_progress

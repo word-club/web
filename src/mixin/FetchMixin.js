@@ -9,11 +9,11 @@ const FetchMixin = {
 		next()
 	},
 	methods: {
-		fetchDetail() {
+		fetchDetail(model) {
 			this.routeId = this.$route.params.id
 			this.loading = true
 			return this.$axios
-				.get(this.$util.format(this.$urls[this.model].detail, this.routeId))
+				.get(this.$util.format(this.$urls[model].detail, this.routeId))
 				.then(res => {
 					this.SET_TO_VIEW(res)
 				})

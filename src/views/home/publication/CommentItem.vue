@@ -36,7 +36,7 @@
 					<v-list-item-subtitle class="d-flex align-center px14">
 						<div>{{ comment.created_by.username }}</div>
 						<div><v-icon>mdi-circle-small</v-icon></div>
-						<div>{{$moment(comment.timestamp).fromNow()}}</div>
+						<div>{{$moment(comment.created_at).fromNow()}}</div>
 					</v-list-item-subtitle>
 					<v-list-item-title class="comment-text px16">
 						{{comment.comment}}
@@ -48,7 +48,7 @@
 							<v-icon>mdi-chevron-up</v-icon>
 						</v-btn>
 						<div class="px-1">
-							{{ comment.reactions.total }}
+							{{ comment.popularity }}
 						</div>
 						<v-btn icon :color="comment.down_vote ? 'primary' : 'grey'"
 							small @click="downVoteComment()"
@@ -144,7 +144,7 @@
 					<v-list-item-subtitle class="d-flex align-center px14">
 						<div>{{ reply.created_by.username }}</div>
 						<div><v-icon>mdi-circle-small</v-icon></div>
-						<div>{{$moment(reply.timestamp).fromNow() }}</div>
+						<div>{{$moment(reply.created_at).fromNow() }}</div>
 					</v-list-item-subtitle>
 					<v-list-item-title class="comment-text px16">
 						{{reply.comment}}
@@ -156,7 +156,7 @@
 							<v-icon>mdi-chevron-up</v-icon>
 						</v-btn>
 						<div class="px-1">
-							{{ reply.reactions.total }}
+							{{ reply.popularity }}
 						</div>
 						<v-btn icon
 							small :color="reply.down_vote ? 'primary' : 'grey'"
