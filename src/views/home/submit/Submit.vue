@@ -30,7 +30,7 @@
 					{{ drafts.count }}
 				</span>
 			</v-btn>
-			<drafts-dialog @initDraft="initDraft" />
+			<drafts-dialog @initDraft="initDraft" @startNew="startNew" />
 		</v-card-title>
 		<v-divider />
 		<v-row class="ma-0 pa-0">
@@ -40,7 +40,8 @@
 				<community-select
 					v-model="payload.community"
 					:errors="formErrors"
-					:color="theme.color" :loading="communityLoading"
+					:color="theme.color"
+					:loading="communityLoading"
 					:items="subscribedCommunities"
 					@change="onChangeCommunity"
 				/>
@@ -57,17 +58,47 @@
 					<submit-tab
 						:theme="theme"
 						:payload="payload"
-						@setType="setType" />
+						@setType="setTypeBeforeSave" />
 					<v-card flat
 						class="rounded-t-0"
 					>
-						<v-row class="ma-0 pa-0">
+						<v-row class="ma-0 pa-0 pt-1">
+							<v-fab-transition>
+								<v-col
+									v-if="payload.community && communityHashtags.length"
+									cols="12"
+								>
+									<v-autocomplete
+										outlined :items="communityHashtags"
+										:color="theme.color"
+										label="Community Hashtags"
+										v-model="payload.hash_tags"
+										placeholder="Start typing"
+										hide-details="auto"
+										item-text="name"
+										return-object multiple
+										prepend-inner-icon="mdi-pound-box"
+									>
+										<template #selection="data">
+											<v-chip outlined
+												v-bind="data.attrs"
+												:input-value="data.selected"
+												@click="data.select"
+												:color="theme.color"
+											>
+												<v-icon>mdi-pound</v-icon>
+												{{data.item.name}}
+											</v-chip>
+										</template>
+									</v-autocomplete>
+								</v-col>
+							</v-fab-transition>
 							<v-col cols="12">
 								<text-field
 									v-model="payload.title"
 									label="Title"
 									name="title"
-									counter="128"
+									counter="128" :dense="false"
 									icon="mdi-format-title"
 									@change="postPublication"
 									:errors="formErrors"
@@ -99,7 +130,11 @@
 								>
 
 									<link-preview :theme="theme" />
-									<upload-link :payload="payload" :theme="theme" @refresh="refreshInProgress()"/>
+									<upload-link
+										:payload="payload"
+										:theme="theme"
+										@refresh="refreshInProgress()"
+									/>
 								</v-col>
 								<v-col
 									v-else
@@ -199,7 +234,8 @@ export default {
 			community: null,
 			title: null,
 			linkUrl: null,
-			content: null
+			content: null,
+			hash_tags: []
 		},
 		tagItems: [
 			{name: "OC", tooltip: "Post as your original content", color: "primary"},
@@ -231,31 +267,35 @@ export default {
 			drafts: "publication/draftList",
 			inProgress: "publication/inProgress"
 		}),
+		communityHashtags() {
+			if (!this.payload.community) return []
+			return this.payload.community.hashtags
+		}
 	},
 	methods: {
 		initDraft() {
-			this.payload = {...this.inProgress}
-			if(this.payload.tags) {
-				this.tagArray = this.payload.tags.split(",")
-			} else this.tagArray = []
-			if (this.payload.type === "editor") this.initEditor(this.inProgress)
-			if(this.inProgress.community) {
-				this.payload.community = {
-					community: {...this.inProgress.community}
-				}
-			}
+			this.initSubmit()
 			this.draftMode = true
 		},
-		setType(type) {
+		initSubmit() {
+			this.payload.title = this.inProgress.title
+			if (this.inProgress.community) {
+				this.setTheme()
+				this.setCommunity()
+				this.setHashtags()
+			}
+			this.setTags()
+			this.setType()
+		},
+		setTypeBeforeSave(type) {
 			this.payload.type = type
 			if(type === "editor") this.initEditor(this.payload)
 		},
 		setTheme() {
-			if (this.inProgress.community) {
-				this.theme = this.inProgress.community.theme
-			}
+			this.theme = this.inProgress.community.theme
 		},
 		fetchSubscribedCommunities() {
+			this.communityLoading = true
 			this.$axios.get(this.$urls.community.subscriptionFilter)
 				.then(res => {
 					this.subscribedCommunities = res.results
@@ -266,23 +306,14 @@ export default {
 			this.$axios.get(this.$util.format(this.$urls.publication.detail, this.inProgress.id))
 				.then(res => {
 					this.$store.dispatch("publication/setInProgress", res)
-					this.setTheme()
-					this.payload = {...res}
+					this.initSubmit()
 					this.editMode = editMode
 					this.draftMode = draftMode
-					if(res.community) {
-						this.payload.community = {
-							community: {...res.community}
-						}
-					}
 				})
 		},
 		resetSubmitForm() {
-			this.tagArray = []
 			this.$store.dispatch("publication/removeDraftItem", this.inProgress.id)
-			this.$store.dispatch("publication/setInProgress", null)
-			this.payload = { title: null, tags: null, type: "editor" }
-			if (this.payload.type === "editor") this.initEditor(null)
+			this.startNew()
 		},
 		publish() {
 			this.saveAsDraft()
@@ -308,7 +339,11 @@ export default {
 		async saveAsDraft(isDraft = true) {
 			if(!this.checkRequired(["title"])) {
 				const payload = {}
+
 				const url = this.$util.format(this.$urls.publication.detail, this.inProgress.id)
+
+				payload["title"] = this.payload.title
+
 				// prepare tags for payload
 				payload["tags"] = this.getSelectedTagsString()
 				if (this.inProgress.type === "editor") {
@@ -318,6 +353,13 @@ export default {
 				// prepare community for payload
 				if (this.payload.community) {
 					payload["community"] = this.payload.community.id
+				}
+				// prepare hashtags for payload
+				if (this.payload.hash_tags) {
+					payload["hash_tags"] = []
+					this.payload.hash_tags.forEach(tag => {
+						payload.hash_tags.push(tag.tag)
+					})
 				}
 				// send publication patch request
 				await this.patch(url, payload)
@@ -362,15 +404,42 @@ export default {
 		},
 		startNew() {
 			this.$store.dispatch("publication/setInProgress", null)
-			if (this.payload.type === "editor") this.initEditor(null)
+			this.initEditor(null)
+			this.tagArray = []
 			this.payload = {title: null, type: "editor"}
 		},
 		onChangeCommunity(e) {
-			if(e && e.community) {
-				this.theme = e.community.theme
-			} else {
-				this.theme = {color: "primary"}
+			if(e) this.theme = e.theme
+			else this.theme = {color: "primary"}
+		},
+		setCommunity() {
+			this.payload.community = this.subscribedCommunities
+				.find(item => item.id === this.inProgress.community.id)
+		},
+		setHashtags() {
+			if (this.inProgress.hashtags) {
+				this.payload.hash_tags = []
+				this.inProgress.hashtags.forEach(tag => {
+					this.payload.hash_tags
+						.push({
+							id: tag.id,
+							name: tag.hashtag.tag,
+							tag: tag.hashtag.id
+						})
+				})
 			}
+		},
+		setTags() {
+			if (this.inProgress.tags) {
+				if (this.inProgress.tags.includes(","))
+					this.tagArray = this.payload.tags.split(",")
+				else this.tagArray = [this.inProgress.tags]
+			} else this.tagArray = []
+		},
+		setType() {
+			this.payload.type = this.inProgress.type
+			if (this.payload.type === "editor")
+				this.initEditor(this.inProgress)
 		}
 	}
 }
@@ -380,13 +449,13 @@ export default {
 .clear-btn {
 	position: absolute;
 	right: 4px;
-	top: 4px;
+	top: 0;
 	z-index: 1;
 }
 .post-btn {
 	position: absolute;
 	right: 30px;
-	top: 4px;
+	top: 2px;
 	z-index: 1;
 }
 </style>
