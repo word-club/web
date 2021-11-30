@@ -68,14 +68,14 @@ export default {
 		stateCode: "3",
 		nextRoute: "Community Authorization",
 		requiredFields: [],
-		invalidMessage: "You must add at least three tags to process into the next step."
+		invalidMessage: "You must add at least one tag to proceed into the next step."
 	}),
 	computed: {
 		...mapGetters({
 			community: "community/inProgress"
 		}),
 		isValid() {
-			return this.community.hashtags.length >= 3;
+			return this.community.hashtags.length >= 1;
 		}
 	},
 	created() {
@@ -96,9 +96,10 @@ export default {
 				),
 				{ tags: this.payload.tags}
 			).then(() => {
-				if (Object.keys(this.postInstance).length > 0) {
+				if (this.success) {
 					this.$helper.setCommunityInProgress(this.postInstance)
 					this.$store.dispatch("community/setInProgress", this.postInstance)
+					this.openSuccessSnack("Hashtags assigned successfully.")
 				}
 			})
 		},

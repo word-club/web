@@ -56,7 +56,7 @@
 			<v-card-actions>
 				<v-spacer />
 				<v-btn color="success" @click="newCommunity">Create New</v-btn>
-				<v-btn color="primary">Continue Progress</v-btn>
+				<v-btn color="primary" @click="continueProgress">Continue Progress</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
@@ -88,6 +88,12 @@ export default {
 					this.$helper.clearCommunityInProgress()
 					this.checkForPendingCommunities()
 				})
+		},
+		continueProgress() {
+			const mostRecentNotFinished = this.community
+				.create_progress.find(item => item.is_completed === false)
+			this.$router
+				.push(this.$helper.getProgressState(mostRecentNotFinished.state).to)
 		}
 	}
 }

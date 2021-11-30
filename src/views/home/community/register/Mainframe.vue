@@ -56,7 +56,7 @@
 					</div>
 					<v-checkbox
 						v-model="payload.contains_adult_content" color="primary"
-						label="18+ year old community"
+						label="Allow publications with 18+ content."
 					/>
 				</v-col>
 			</v-row>

@@ -7,7 +7,7 @@
 				class="d-flex align-start"
 			>
 				<v-card-title class="pt-1">
-					This is Rules
+					Rules
 				</v-card-title>
 			</v-card>
 			<v-card-subtitle class="pb-1">
@@ -24,7 +24,9 @@
 					:key="index"
 				>
 					<v-list-item-avatar color="grey lighten-2 weight-300 px22">
-						{{index + 1}}
+						<div class="full-width text-center">
+							{{index + 1}}
+						</div>
 					</v-list-item-avatar>
 					<v-list-item-content>
 						<v-list-item-title>{{rule.title}}</v-list-item-title>

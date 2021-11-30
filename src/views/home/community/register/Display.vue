@@ -201,10 +201,12 @@ export default {
 				),
 				{ ...this.theme }
 			).then(() => {
-				this.themeFormErrors = this.patchErrors
-				if (Object.keys(this.patchInstance).length > 1) {
+				if (this.success) {
 					this.$helper.setCommunityInProgress(this.patchInstance)
 					this.$store.dispatch("community/setInProgress", this.patchInstance)
+					this.openSuccessSnack("Theme updated successfully.")
+				} else {
+					this.themeFormErrors = this.patchErrors
 				}
 			})
 		},
@@ -218,10 +220,14 @@ export default {
 				),
 				fd
 			).then(() => {
-				this.avatarFormErrors = this.formErrors
-				if (Object.keys(this.postInstance).length > 1) {
+				if (this.success) {
 					this.$helper.setCommunityInProgress(this.postInstance)
 					this.$store.dispatch("community/setInProgress", this.postInstance)
+					this.openSuccessSnack("Avatar uploaded successfully.")
+					this.avatar = null
+				} else {
+					this.avatarFormErrors = this.formErrors
+					this.openSnack("Avatar upload failed. Try again.")
 				}
 			})
 		},
@@ -235,10 +241,14 @@ export default {
 				),
 				fd
 			).then(() => {
-				this.coverFormErrors = this.formErrors
-				if (Object.keys(this.postInstance).length > 1) {
+				if (this.success) {
 					this.$helper.setCommunityInProgress(this.postInstance)
 					this.$store.dispatch("community/setInProgress", this.postInstance)
+					this.openSuccessSnack("Cover uploaded successfully.")
+					this.cover = null
+				} else {
+					this.coverFormErrors = this.formErrors
+					this.openSnack("Cover upload failed. Try again.")
 				}
 			})
 		},
