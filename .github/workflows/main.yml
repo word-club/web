@@ -43,7 +43,9 @@ jobs:
 
 
       - name: Build Dist
-        run: yarn build
+        run: |
+          echo "VUE_APP_BACKEND_HOST=https://wordclub.foodswipe.com.np\nVUE_APP_BACKEND_WS_HOST=ws://wordclub.foodswipe.com.np/ws" > .env
+          yarn build
 
 
       - name: "Commit Dist"

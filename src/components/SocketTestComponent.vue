@@ -16,7 +16,7 @@ export default {
 		}
 	},
 	created() {
-		this.websocket = new WebSocket("ws://localhost:8000/ws/notification/")
+		this.websocket = new WebSocket(process.env.VUE_APP_BACKEND_WS_HOST + "/notification/")
 
 		this.websocket.onmessage = function (event) {
 			this.notification = JSON.parse(event.data)

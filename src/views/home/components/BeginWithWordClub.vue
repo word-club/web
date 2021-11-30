@@ -4,9 +4,9 @@
 			height="40"
 		/>
 		<v-card-text class="avatar-line pt-0">
-			<v-avatar size="80"
-				color="grey darken-2"
-			/>
+			<v-avatar size="80" class="logo">
+				<v-img :src="require('@/assets/w_art.jpg')" />
+			</v-avatar>
 			<div class="home">
 				Your personal WordClub frontpage. Come here to check in with your favorite communities
 			</div>
@@ -51,5 +51,9 @@ export default {
 		line-height: 14px;
 		font-weight: 400;
 	}
+}
+.logo {
+	border: 3px solid #f2f7fe;
+	background-color: whitesmoke;
 }
 </style>

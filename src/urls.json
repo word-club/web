@@ -1,4 +1,5 @@
 {
+	"top": "top/",
 	"user": {
 		"me": "me/",
 		"list": "user/",
@@ -16,7 +17,8 @@
 		"report": "user/%s/report/",
 		"block": "user/%s/block/",
 		"unBlock": "block/%s/",
-		"removeReport": "report/%s/"
+		"removeReport": "report/%s/",
+		"profileList": "profile/filter/"
 	},
 	"community": {
 		"list": "community-view/",

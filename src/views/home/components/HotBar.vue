@@ -58,7 +58,7 @@ export default {
 		bestItem: {icon: "mdi-rocket", name: "Best", queryName: "best", sortBy: "support"},
 		filterItems: [
 			{icon: "mdi-fire", name: "Popular", queryName: "popular", sortBy: "popularity"},
-			{icon: "mdi-white-balance-sunny", name: "Fresh", queryName: "fresh", sortBy: "published_at"},
+			{icon: "mdi-chart-donut", name: "Fresh", queryName: "fresh", sortBy: "published_at"},
 			{icon: "mdi-arrow-up-bold-outline", name: "Top Discussed", queryName: "discussed", sortBy: "discussions"},
 		]
 	}),
