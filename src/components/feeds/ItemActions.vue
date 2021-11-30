@@ -23,20 +23,20 @@
 					class="share-scrollbar"
 				>
 					<v-card outlined light>
-						<item-header :item="item" />
+						<item-header :item="publication" />
 						<v-divider />
 						<v-card-title>
-							{{item.title}}
+							{{ publication.title }}
 							<v-spacer />
-							<v-chip v-if="getTypeString(item.type)" outlined>{{getTypeString(item.type)}}</v-chip>
+							<v-chip v-if="getTypeString(publication.type)" outlined>{{ getTypeString(publication.type) }}</v-chip>
 						</v-card-title>
-						<item-images v-if="item.type === 'media'" :item="item" />
-						<item-link v-if="item.type === 'link'" :link="item.link"/>
-						<item-content v-if="item.type ==='editor'" :content="JSON.parse(item.content)" />
+						<item-images v-if="publication.type === 'media'" :item="publication" />
+						<item-link v-if="publication.type === 'link'" :link="publication.link"/>
+						<item-content v-if="publication.type ==='editor'" :content="JSON.parse(publication.content)" />
 						<v-card-text class="grey lighten-4 d-flex flex-wrap align-center pa-2">
-							<div class="pa-1">{{ item.view_count }} Views</div>
+							<div class="pa-1">{{ publication.view_count }} Views</div>
 							<v-icon>mdi-circle-small</v-icon>
-							<div class="pa-1">{{ item.comments.length }} Comments</div>
+							<div class="pa-1">{{ publication.discussions }} Comments</div>
 						</v-card-text>
 					</v-card>
 				</v-card-text>
@@ -45,29 +45,6 @@
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
-		<v-scale-transition>
-			<v-card-text v-if="commentMode">
-				<v-scale-transition>
-					<v-list class="mb-4 rounded"
-						v-if="!detail && item.comments.length"
-					>
-						<comment-item v-for="(comment, index) in item.comments"
-							:key="index"
-							:index="index"
-							:comment="comment"
-							:count="item.comments.length"
-							@init="$emit('init')"
-						/>
-					</v-list>
-					<div v-else class="d-flex justify-end pb-2">
-						<v-chip color="primary">Be the first to comment!</v-chip>
-					</div>
-				</v-scale-transition>
-				<comment-field :publication="item"
-					@init="$emit('init')"
-				/>
-			</v-card-text>
-		</v-scale-transition>
 		<v-divider />
 		<v-card-actions class="flex-wrap"
 			:class="{
@@ -76,17 +53,13 @@
 		>
 			<v-btn
 				:small="smAndDown"
-				:outlined="!commentMode"
-				:depressed="commentMode"
-				:dark="commentMode"
+				outlined
 				class="item-action-btn"
-				:color="(commentMode) ? 'primary' : 'grey darken-1'"
-				@click="commentMode = !commentMode"
+				color="grey darken-1"
+				@click="routeToPublicationDetailComments"
 			>
-				<v-icon left
-					:color="commentMode ? 'white' : ''"
-				>mdi-comment-outline</v-icon>
-				{{item.reactions.comments}} Comments
+				<v-icon left>mdi-comment-outline</v-icon>
+				{{ publication.discussions }} Comments
 			</v-btn>
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
@@ -194,7 +167,7 @@
 				</v-list>
 			</v-menu>
 			<v-spacer v-if="!smAndDown" />
-			<v-chip color="primary" small v-if="reactions.total === 0" class="mx-1">Add First Reaction</v-chip>
+			<v-chip color="primary" small v-if="reactions === 0" class="mx-1">Add First Reaction</v-chip>
 			<v-btn icon @click="sendUpVote()"
 				color="primary" class="mx-0"
 				:value="upVote"
@@ -203,7 +176,7 @@
 					mdi-arrow-up-bold{{ (upVote) ? '' : '-outline' }}
 				</v-icon>
 			</v-btn>
-			<div v-if="reactions.total > 0" class="grey--text text--darken-3 weight-500 px-1">{{reactions.total}}</div>
+			<div v-if="reactions > 0" class="grey--text text--darken-3 weight-500 px-1">{{reactions}}</div>
 			<v-btn icon @click="sendDownVote()"
 				color="grey darken-2" class="mx-0"
 				:value="downVote"
@@ -217,27 +190,27 @@
 </template>
 
 <script>
-import CommentField from "@/components/form/CommentField.vue";
 import PublicationType from "@/mixin/PublicationType.js";
-import ItemHeader from "@/components/feeds/ItemHeader.vue";
-import ItemImages from "@/components/feeds/ItemImages.vue";
-import ItemLink from "@/components/feeds/ItemLink.vue";
-import ItemContent from "@/components/feeds/ItemContent.vue";
 import Snack from "@/mixin/Snack.js";
 import PostMixin from "@/mixin/PostMixin.js";
 import {mapGetters} from "vuex";
-import CommentItem from "@/views/home/publication/CommentItem.vue";
+import RouteMixin from "@/mixin/RouteMixin.js";
+import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
+
 export default {
 	name: "ItemActions",
-	components: {CommentItem, ItemContent, ItemLink, ItemImages, ItemHeader, CommentField},
-	mixins: [PublicationType, Snack, PostMixin],
+	components: {
+		ItemContent: () => import("@/components/feeds/ItemContent"),
+		ItemLink: () => import("@/components/feeds/ItemLink"),
+		ItemImages: () => import("@/components/feeds/ItemImages"),
+		ItemHeader: () => import("@/components/feeds/ItemHeader"),
+	},
+	mixins: [PublicationType, Snack, PostMixin, RouteMixin, RefreshMeMixin],
 	props: {
-		item: {type: Object, default: () => {}},
-		detail: {type: Boolean, default: false}
+		publication: {type: Object, default: () => {}},
 	},
 	data: () => ({
 		clipboardContent: null,
-		commentMode: false,
 		shareMode: false,
 		share: {
 			title: null
@@ -255,22 +228,22 @@ export default {
 			return this.$vuetify.breakpoint.width < 600
 		},
 		reactions() {
-			return this.item.reactions
+			return this.publication.popularity + this.publication.dislikes
 		},
 		isMyPublication() {
-			return this.$helper.ifCurrentUserIs(this.item.created_by)
+			return this.$helper.ifCurrentUserIs(this.publication.created_by)
 		},
 		upVote() {
-			return this.item.up_vote
+			return this.publication.up_vote
 		},
 		downVote() {
-			return this.item.down_vote
+			return this.publication.down_vote
 		},
 		hiddenStatus() {
-			return this.item.hidden_status
+			return this.publication.hidden_status
 		},
 		bookmarkStatus() {
-			return this.item.bookmark_status
+			return this.publication.bookmark_status
 		}
 	},
 	methods: {
@@ -282,15 +255,17 @@ export default {
 				})
 		},
 		sendActionRequest({id, payload, action, revoke = false}) {
-			const url = this.$util.format(this.$urls.publication[action], id || this.item.id)
+			const url = this.$util.format(this.$urls.publication[action], id || this.publication.id)
 			if (revoke) {
 				this.$axios.delete(url).then(() => {
 					this.$emit("init")
+					this.refreshMe()
 				})
 			} else {
 				this.post(url, payload).then(() => {
 					if(this.success) {
 						this.$emit("init")
+						this.refreshMe()
 					}
 				})
 			}
@@ -332,6 +307,9 @@ export default {
 				action: "share",
 				payload: {...this.share}
 			})
+		},
+		routeToPublicationDetailComments() {
+			this.toPublicationDetail(this.publication.id, "comments")
 		}
 	}
 }

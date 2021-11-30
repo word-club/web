@@ -10,8 +10,20 @@
 				<v-carousel-item
 					v-for="(image, index) in medias"
 					:key="index"
-					:src="$link(image.image || image.image_url)"
-				/>
+				>
+					<v-img
+						contain height="350"
+						:src="$link(image.image || image.image_url)"
+					>
+						<div class="fill-height">
+							<v-btn icon dark
+								class="fullscreen-btn"
+							>
+								<v-icon>mdi-fullscreen</v-icon>
+							</v-btn>
+						</div>
+					</v-img>
+				</v-carousel-item>
 			</v-carousel>
 		</v-card>
 	</v-card-text>
@@ -35,3 +47,19 @@ export default {
 	}
 }
 </script>
+<style lang="scss" scoped>
+.fill-height {
+	position: relative;
+	.fullscreen-btn {
+		visibility: hidden;
+		position: absolute;
+		bottom: 2px; right: 2px;
+		transition: visibility ease-in-out;
+	}
+}
+.fill-height:hover {
+	.fullscreen-btn {
+		visibility: visible;
+	}
+}
+</style>

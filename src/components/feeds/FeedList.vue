@@ -10,7 +10,7 @@
 				v-for="publication in publications.results"
 				:key="publication.id"
 				:publication="publication"
-				@init="fetchPublications"
+				@init="getPublications"
 				class="mb-4"
 			/>
 		</div>
@@ -26,22 +26,14 @@ import {mapGetters} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import PublicationType from "@/mixin/PublicationType.js";
 import PublicationInstance from "@/views/home/components/PublicationInstance.vue";
+import FetchPublications from "@/mixin/FetchPublications.js";
 
 export default {
 	name: "FeedList",
 	components: {PublicationInstance},
-	mixins: [RouteMixin, PublicationType],
-	props: {
-		payload: {
-			type: Object,
-			default: () => ({
-				is_published: true,
-				depth: 3
-			})
-		}
-	},
+	mixins: [RouteMixin, PublicationType, FetchPublications],
 	data: () => ({
-		isLoading: true
+		isLoading: false,
 	}),
 	computed: {
 		...mapGetters({
@@ -49,13 +41,27 @@ export default {
 		})
 	},
 	async created() {
-		await this.fetchPublications()
+		await this.getPublications()
+	},
+	watch: {
+		"$route.params.sortBy": {
+			async handler(v) {
+				await this.getPublications(v)
+			}
+		}
 	},
 	methods: {
-		async fetchPublications() {
-			await this.$store.dispatch("publication/filter", this.payload)
+		async getPublications(sortString = "best") {
+			this.isLoading = true
+			const sortBy = this.$route.params.sortBy
+			if (sortBy) sortString = sortBy
+
+			sortString = this.$helper.parseSortString(sortString)
+
+			await this.$store.dispatch("publication/setFilterset", sortString)
+			await this.fetchPublications({sort_by: sortString})
 			this.isLoading = false
 		}
-	}
+	},
 }
 </script>
