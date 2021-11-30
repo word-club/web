@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d2308d1"],{ed84:function(e,n,t){"use strict";t.r(n);var o=function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div")},u=[],a={name:"ModMail",props:{},data:function(){return{}},computed:{},methods:{}},c=a,d=t("2877"),r=Object(d["a"])(c,o,u,!1,null,"92e30412",null);n["default"]=r.exports}}]);
-//# sourceMappingURL=chunk-2d2308d1.0119c383.js.map
