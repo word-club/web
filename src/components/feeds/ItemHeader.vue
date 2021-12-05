@@ -1,5 +1,5 @@
 <template>
-	<v-card-text class="d-flex align-center pa-1 px-2 flex-wrap justify-space-between grey lighten-4">
+	<v-card-text class="d-flex align-center pa-1 px-2 flex-wrap justify-space-between grey lighten-4 rounded-t">
 		<community-hover-box
 			v-if="item.community && $route.name !== 'Community'"
 			:community="item.community"

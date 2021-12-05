@@ -1,73 +1,92 @@
 <template>
-	<v-card outlined :loading="loading"
-		class="mx-auto" max-width="800"
+	<v-card outlined
+		class="mx-auto"
+		max-width="800"
 	>
-		<div v-if="publication">
-			<item-header :item="publication" />
-			<v-card-title class="pa-2 publication-title">
-				{{ publication.title }}
-			</v-card-title>
-			<item-images v-if="publication.type === 'media'" :item="publication" />
-			<item-link v-if="publication.type === 'link'" :link="publication.link"/>
-			<item-content v-if="publication.type ==='editor'" :content="JSON.parse(publication.content)" />
-			<item-actions :publication="publication" @init="refreshPublication"/>
-			<v-divider />
-			<v-card-text>
-				<div v-if="!publication.comments.length" class="d-flex justify-end pb-2">
-					<v-chip color="primary">Be the first to comment!</v-chip>
-				</div>
-				<comment-field :publication="publication"
-					@init="fetchDetail(model)"
-				/>
-			</v-card-text>
-			<div id="pub-comments">
+		<v-scale-transition>
+			<div v-if="loading">
+				<v-progress-linear rounded indeterminate color="primary" height="6" />
 				<v-card-text>
-					<v-menu offset-y>
-						<template #activator="{on, attrs}">
-							<v-btn
-								depressed small
-								v-bind="attrs"
-								v-on="on"
-							>
-								<span class="px10 font-weight-bold primary--text">
-									Sort by: {{ commentSortBy.name }}
-								</span>
-								<v-icon small
-									color="primary"
-								>
-									mdi-chevron-down
-								</v-icon>
-							</v-btn>
-						</template>
-						<v-list dense>
-							<v-list-item
-								v-for="(item, index) in commentSort"
-								:key="index" @click="toSort(item)"
-								class="weight-500 px13"
-							>
-								{{ item.name }}
-							</v-list-item>
-						</v-list>
-					</v-menu>
-					<v-divider class="my-2" />
-					<div class="d-flex">
-						<v-spacer />
-						<div class="px12 font-weight-bold primary--text">
-							View discussions in other communities
-						</div>
-					</div>
-				</v-card-text>
-				<v-card-text class="py-0">
-					<comment-item v-for="(comment, index) in commentList"
-						:key="index"
-						:index="index"
-						:comment="comment"
-						:count="commentList.length"
-						@init="refreshPublication"
-					/>
+					Fetching publication
 				</v-card-text>
 			</div>
-		</div>
+
+			<div v-else>
+				<v-fab-transition>
+					<div v-if="publication"
+						class="publication-detail"
+					>
+						<item-header :item="publication" />
+						<v-card-title class="pa-2 publication-title">
+							{{ publication.title }}
+						</v-card-title>
+						<item-images v-if="publication.type === 'media'" :item="publication" />
+						<item-link v-if="publication.type === 'link'" :link="publication.link"/>
+						<item-content v-if="publication.type ==='editor'" :content="JSON.parse(publication.content)" />
+						<item-actions :publication="publication" @init="refreshPublication"/>
+						<v-divider />
+						<v-card-text>
+							<div v-if="!publication.comments.length" class="d-flex justify-end pb-2">
+								<v-chip color="primary">Be the first to comment!</v-chip>
+							</div>
+							<comment-field :publication="publication"
+								@init="fetchDetail(model)"
+							/>
+						</v-card-text>
+						<div id="pub-comments">
+							<v-card-text>
+								<v-menu offset-y>
+									<template #activator="{on, attrs}">
+										<v-btn
+											depressed small
+											v-bind="attrs"
+											v-on="on"
+										>
+											<span class="px10 font-weight-bold primary--text">
+												Sort by: {{ commentSortBy.name }}
+											</span>
+											<v-icon small
+												color="primary"
+											>
+												mdi-chevron-down
+											</v-icon>
+										</v-btn>
+									</template>
+									<v-list dense>
+										<v-list-item
+											v-for="(item, index) in commentSort"
+											:key="index" @click="toSort(item)"
+											class="weight-500 px13"
+										>
+											{{ item.name }}
+										</v-list-item>
+									</v-list>
+								</v-menu>
+								<v-divider class="my-2" />
+								<div class="d-flex">
+									<v-spacer />
+									<div class="px12 font-weight-bold primary--text">
+										View discussions in other communities
+									</div>
+								</div>
+							</v-card-text>
+							<v-card-text class="py-0">
+								<comment-item v-for="(comment, index) in commentList"
+									:key="index"
+									:index="index"
+									:comment="comment"
+									:count="commentList.length"
+									@init="refreshPublication"
+								/>
+							</v-card-text>
+						</div>
+					</div>
+					<div v-else>
+						<v-card-text>Publication Not Found.</v-card-text>
+					</div>
+				</v-fab-transition>
+			</div>
+		</v-scale-transition>
 	</v-card>
 </template>
 
@@ -79,13 +98,13 @@ import FetchMixin from "@/mixin/FetchMixin.js";
 export default {
 	name: "Publication",
 	components: {
-		CommentField: () => import("@/components/form/CommentField.vue"),
-		CommentItem: () => import("@/views/publication/CommentItem.vue"),
-		ItemActions: () => import("@/components/feeds/ItemActions.vue"),
-		ItemLink: () => import("@/components/feeds/ItemLink.vue"),
-		ItemImages: () => import("@/components/feeds/ItemImages.vue"),
-		ItemContent: () => import("@/components/feeds/ItemContent.vue"),
-		ItemHeader: () => import("@/components/feeds/ItemHeader.vue")
+		CommentField: () => import("@/components/form/CommentField"),
+		CommentItem: () => import("@/views/publication/CommentItem"),
+		ItemActions: () => import("@/components/feeds/ItemActions"),
+		ItemLink: () => import("@/components/feeds/ItemLink"),
+		ItemImages: () => import("@/components/feeds/ItemImages"),
+		ItemContent: () => import("@/components/feeds/ItemContent"),
+		ItemHeader: () => import("@/components/feeds/ItemHeader")
 	},
 	mixins: [RouteMixin, FetchMixin],
 	data: () => ({
