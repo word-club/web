@@ -1,4 +1,6 @@
-# web
+# WordClub Frontend
+Reddit based feeds management system.
+Integrates editorJs as an Editor interface.
 
 ## Project setup
 ```
