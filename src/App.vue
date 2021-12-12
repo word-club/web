@@ -10,7 +10,7 @@
 				class="home-sidebar"
 				:permanent="mdAndUp"
 				:temporary="!mdAndUp"
-				:width="$vuetify.breakpoint.md ? 180 : 300"
+				:width="$vuetify.breakpoint.md ? 180 : 200"
 			>
 				<div class="py-2" />
 				<drawer-list />
@@ -20,11 +20,9 @@
 			<v-navigation-drawer
 				v-if="userSettingRoute"
 				v-model="profileSettingsDrawer"
-				app clipped
+				app clipped permanent
 				color="grey lighten-3"
 				class="home-sidebar"
-				:permanent="mdAndUp"
-				:temporary="!mdAndUp"
 				:width="$vuetify.breakpoint.md ? 250 : 300"
 			>
 				<div class="py-2" />
@@ -34,15 +32,11 @@
 		<v-navigation-drawer
 			v-if="withSidebarRoute"
 			v-model="sidebar"
-			app right
-			clipped
+			app right clipped permanent
 			color="grey lighten-3"
 			class="home-sidebar"
-			:permanent="mdAndUp"
-			:temporary="!mdAndUp"
 			:width="$vuetify.breakpoint.md ? 320 : 350"
 		>
-			<div class="py-2" />
 			<transition
 				name="view"
 			>
@@ -50,13 +44,12 @@
 			</transition>
 		</v-navigation-drawer>
 		<v-main>
-			<v-container fluid
-				class="pa-0"
+			<v-container fluid class="app-container px-0"
+				:class="appColor"
 			>
 				<v-card
 					v-if="$route.name"
-					flat tile
-					:color="appColor"
+					flat tile color="transparent"
 					class="app-card"
 					:class="{
 						'app-padding': ! $route.name.includes('Community') &&
@@ -80,8 +73,12 @@
 </template>
 
 <script>
+import AppTopStyle from "@/mixin/AppTopStyle.js";
+import {mapMutations} from "vuex";
+
 export default {
 	name: "App",
+	mixins: [AppTopStyle],
 	components: {
 		DrawerList: () => import("@/views/home/components/DrawerList"),
 		UserCogDrawer: () => import("@/views/home/components/UserCogDrawer"),
@@ -89,12 +86,35 @@ export default {
 		TheSnackbar: () => import("@/components/utils/TheSnackbar"),
 		ScrollToTop: () => import("@/components/utils/ScrollToTop"),
 	},
+	watch: {
+		"$vuetify.breakpoint.width": {
+			handler() {
+				this.setAppBarTopStyle()
+			}
+		}
+	},
 	data: () => ({
-		sidebar: null,
-		mainDrawer: null,
 		profileSettingsDrawer: null
 	}),
 	computed: {
+		sidebar: {
+			get() {
+				return this.$store.getters.sidebarState
+			},
+			set(v) {
+				this.SET_SIDEBAR_STATE(v)
+			}
+		},
+		mainDrawer: {
+			get() {
+				const state = this.$store.getters.mainDrawerState
+				console.log(state)
+				return state
+			},
+			set(v) {
+				this.SET_DRAWER_STATE(v)
+			}
+		},
 		appColor() {
 			return this.$route.name === "Submit" ? "grey lighten-2": "grey lighten-4"
 		},
@@ -115,6 +135,7 @@ export default {
 		this.checkForLoggedInUser()
 	},
 	methods: {
+		...mapMutations(["SET_SIDEBAR_STATE", "SET_DRAWER_STATE"]),
 		checkForLoggedInUser() {
 			const token = this.$helper.getAccessToken()
 			const currentUser = this.$helper.getCurrentUser()
@@ -198,12 +219,8 @@ export default {
 	border: 2px solid var(--amber) !important;
 	background-color: whitesmoke;
 }
-
-.app-card {
-	min-height: calc(100vh - 55px) !important;
-}
 .app-padding {
-	padding: 10px 10px 0 10px
+	padding: 0 10px 0 10px
 }
 .v-label {
 	font-size: 14px !important;

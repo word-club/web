@@ -1,83 +1,24 @@
 <template>
 	<v-app-bar
-		app
-		flat
+		app flat
 		color="white"
-		height="55"
-		clipped-left
+		height="auto"
 		clipped-right
 		class="the-app-bar"
 	>
 		<div class="d-flex align-center px-2">
-			<v-avatar size="40" color="white">
-				<v-img :src="require('@/assets/w_art.jpg')"/>
-			</v-avatar>
+			<v-btn
+				icon v-if="$vuetify.breakpoint.smAndDown"
+				@click="toggleDrawer"
+			>
+				<v-icon v-if="$store.getters.mainDrawerState">mdi-menu-close</v-icon>
+				<v-icon v-else>mdi-menu-open</v-icon>
+			</v-btn>
 			<div class="px-2"/>
 			<h3 class="cursor" @click="toHome">WordClub</h3>
 		</div>
-		<v-responsive
-			v-if="$route.name"
-			max-width="200"
-			height="100%"
-			class="d-flex align-center justify-center px-2"
-		>
-			<v-text-field
-				v-model="searchCommunities"
-				dense outlined hide-details
-				clearable aria-autocomplete="search_communities"
-				:placeholder="placeHolder"
-				color="primary"
-			>
-				<template #prepend-inner>
-					<v-icon v-if="routeNameIs('Home')" size="22"> mdi-home</v-icon>
-					<v-avatar
-						v-if="routeNameStartsWith('User')"
-						size="30"
-						:color="(userInView && userInView.avatar) ? 'white': 'primary'"
-						class="mt-0 mb-2"
-					>
-						<v-img
-							v-if="userInView.avatar"
-							:src="userInView.avatar.image"
-						/>
-						<div v-else class="full-width white--text text-center weight-500">
-							{{userInView.username[0].toUpperCase()}}
-						</div>
-					</v-avatar>
-					<v-avatar
-						v-if="communityInView"
-						size="30"
-						:color="(communityInView && communityInView.avatar)
-							? 'white': communityInView.theme.color"
-						class="mt-0 mb-2"
-					>
-						<v-img
-							v-if="communityInView.avatar"
-							:src="$link(communityInView.avatar.image)"
-						/>
-						<div v-else class="full-width white--text text-center weight-500">
-							{{communityInView.name[0].toUpperCase()}}
-						</div>
-					</v-avatar>
-				</template>
-			</v-text-field>
-		</v-responsive>
-		<v-responsive
-			max-width="1200"
-			height="100%"
-			class="d-flex align-center justify-center px-2"
-		>
-			<v-text-field
-				v-model="searchPublications"
-				dense outlined clearable
-				hide-details aria-autocomplete="search_publication"
-				placeholder="Search WordClub"
-			>
-				<template #prepend-inner>
-					<v-icon size="22">mdi-magnify</v-icon>
-				</template>
-			</v-text-field>
-		</v-responsive>
+		<community-search v-if="$vuetify.breakpoint.smAndUp" />
+		<publication-search v-if="criticalWidth" />
 		<v-spacer/>
 
 		<tooltip-icon-btn
@@ -128,56 +69,52 @@
 			Login
 		</v-btn>
 		<auth-dialog/>
+		<template
+			v-if="!criticalWidth"
+			#extension
+		>
+			<community-search v-if="$vuetify.breakpoint.xs" />
+			<publication-search />
+		</template>
 	</v-app-bar>
 </template>
 
 <script>
+import {mapGetters, mapMutations} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
-import {mapGetters} from "vuex";
-import TooltipIconBtn from "@/components/TooltipIconBtn.vue";
+import AppTopStyle from "@/mixin/AppTopStyle.js";
 
 export default {
 	name: "TheAppBar",
+	mixins: [RouteMixin, AppTopStyle],
 	components: {
-		TooltipIconBtn,
+		TooltipIconBtn: () => import("@/components/TooltipIconBtn.vue"),
 		AuthDialog: () => import("@/views/auth/AuthDialog.vue"),
-		ProfileDrop: () => import("@/components/utils/ProfileDrop"),
+		ProfileDrop: () => import("@/components/appbar/ProfileDrop.vue"),
+		CommunitySearch: () => import("@/components/appbar/CommunitySearch"),
+		PublicationSearch: () => import("@/components/appbar/PublicationSearch"),
 		NotificationMenu: () =>
 			import("@/views/notification/NotificationMenu"),
 	},
-	mixins: [RouteMixin],
 	data: () => ({
 		searchCommunities: "",
 		searchPublications: "",
 	}),
+	mounted() {
+		this.setAppBarTopStyle()
+	},
 	computed: {
 		...mapGetters({
 			currentUser: "user/current",
-			userInView: "user/inView",
-			communityInView: "community/inView",
 		}),
-		placeHolder() {
-			if (this.userInView) {
-				return "u/" + this.userInView.username;
-			} else if (this.communityInView) {
-				return "c/" + this.communityInView.unique_id;
-			} else {
-				return this.$route.name;
-			}
-		},
+		criticalWidth() {
+			return this.$vuetify.breakpoint.width >= 850
+		}
 	},
 	methods: {
-		routeNameIs(name) {
-			if (this.$route && this.$route.name) {
-				return this.$route.name === name;
-			}
-			return false;
-		},
-		routeNameStartsWith(text) {
-			if (this.$route && this.$route.name) {
-				return this.$route.name.startsWith(text);
-			}
-			return false;
+		...mapMutations(["SET_DRAWER_STATE"]),
+		toggleDrawer() {
+			this.SET_DRAWER_STATE(!this.$store.getters.mainDrawerState)
 		},
 		login() {
 			this.$store.dispatch("setAuthMode", {state: true, mode: "login"});

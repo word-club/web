@@ -16,9 +16,12 @@ export default new Vuex.Store({
 		draftDialog: false,
 		ruleDialog: false,
 		rule: null,
-		top: {}
+		top: {}, sidebar: null,
+		mainDrawer: null,
 	},
 	getters: {
+		sidebarState: state => state.sidebar,
+		mainDrawerState: state => state.mainDrawer,
 		topItems: state => state.top,
 		authMode: state => state.auth,
 		draftState: state => state.draftDialog,
@@ -30,7 +33,9 @@ export default new Vuex.Store({
 		SET_DRAFT_STATE: (state, value) => state.draftDialog = value,
 		SET_RULE_STATE: (state, value) => state.ruleDialog = value,
 		SET_RULE_IN_EDIT: (state, value) => state.rule = value,
-		SET_TOP: (state, value) => state.top = value
+		SET_TOP: (state, value) => state.top = value,
+		SET_SIDEBAR_STATE: (state, value) => state.sidebar = value,
+		SET_DRAWER_STATE: (state, value) => state.mainDrawer = value,
 	},
 	actions: {
 		setAuthMode({commit}, value) {

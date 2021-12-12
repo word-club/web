@@ -5,7 +5,7 @@
 				<v-progress-linear indeterminate height="6" rounded />
 			</div>
 		</v-scale-transition>
-		<div v-if="publications.results.length">
+		<div v-if="pubs">
 			<publication-instance
 				v-for="publication in publications.results"
 				:key="publication.id"
@@ -38,7 +38,12 @@ export default {
 	computed: {
 		...mapGetters({
 			publications: "publication/list"
-		})
+		}),
+		pubs() {
+			if (!this.publications) return false
+			if (!this.publications.results) return false
+			return this.publications.results.length
+		}
 	},
 	async created() {
 		await this.getPublications()
