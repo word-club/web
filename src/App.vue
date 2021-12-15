@@ -1,80 +1,33 @@
 <template>
 	<v-app>
-		<the-app-bar />
-		<v-slide-x-transition>
-			<v-navigation-drawer
-				v-if="!drawerFreeRoute"
-				v-model="mainDrawer"
-				app clipped
-				color="grey lighten-3"
-				class="home-sidebar"
-				:permanent="mdAndUp"
-				:temporary="!mdAndUp"
-				:width="$vuetify.breakpoint.md ? 180 : 300"
-			>
-				<div class="py-2" />
-				<drawer-list />
-			</v-navigation-drawer>
-		</v-slide-x-transition>
-		<v-slide-x-reverse-transition>
-			<v-navigation-drawer
-				v-if="userSettingRoute"
-				v-model="profileSettingsDrawer"
-				app clipped
-				color="grey lighten-3"
-				class="home-sidebar"
-				:permanent="mdAndUp"
-				:temporary="!mdAndUp"
-				:width="$vuetify.breakpoint.md ? 250 : 300"
-			>
-				<div class="py-2" />
-				<user-cog-drawer />
-			</v-navigation-drawer>
-		</v-slide-x-reverse-transition>
-		<v-navigation-drawer
-			v-if="withSidebarRoute"
-			v-model="sidebar"
-			app right
-			clipped
-			color="grey lighten-3"
-			class="home-sidebar"
-			:permanent="mdAndUp"
-			:temporary="!mdAndUp"
-			:width="$vuetify.breakpoint.md ? 320 : 350"
-		>
-			<div class="py-2" />
-			<transition
-				name="view"
-			>
-				<router-view name="sidebar" />
-			</transition>
-		</v-navigation-drawer>
+		<div class="sticky">
+			<the-app-bar />
+		</div>
+		<home-drawer />
+		<user-settings-drawer />
+		<root-sidebar />
 		<v-main>
-			<v-container fluid
-				class="pa-0"
+			<v-card
+				v-if="$route.name"
+				flat tile :color="appColor"
+				class="app-card"
+				:class="{
+					'app-padding': ! $route.name.includes('Community') &&
+						!$route.name.includes('User') &&
+						!$route.name.includes('Profile') &&
+						!$route.name.includes('Top'),
+					'px-0': $route.name.includes('Community'),
+					'px-0': $route.name.includes('User'),
+					'px-0': $route.name.includes('Profile')
+				}"
 			>
-				<v-card
-					v-if="$route.name"
-					flat tile
-					:color="appColor"
-					class="app-card"
-					:class="{
-						'app-padding': ! $route.name.includes('Community') &&
-							!$route.name.includes('User') &&
-							!$route.name.includes('Profile') &&
-							!$route.name.includes('Top'),
-						'px-0': $route.name.includes('Community'),
-						'px-0': $route.name.includes('User'),
-						'px-0': $route.name.includes('Profile')
-					}"
-				>
-					<the-snackbar />
-					<transition name="view">
-						<router-view />
-					</transition>
-					<scroll-to-top />
-				</v-card>
-			</v-container>
+
+				<the-snackbar />
+				<transition name="view">
+					<router-view />
+				</transition>
+				<scroll-to-top />
+			</v-card>
 		</v-main>
 	</v-app>
 </template>
@@ -83,32 +36,17 @@
 export default {
 	name: "App",
 	components: {
-		DrawerList: () => import("@/views/home/components/DrawerList"),
-		UserCogDrawer: () => import("@/views/home/components/UserCogDrawer"),
-		TheAppBar: () => import("@/components/TheAppBar"),
+		UserSettingsDrawer: () => import("@/components/drawers/UserSettingsDrawer"),
+		HomeDrawer: () => import("@/components/drawers/HomeDrawer"),
+		RootSidebar: () => import("@/components/drawers/RootSidebar"),
+		TheAppBar: () => import("@/components/appbar/TheAppBar"),
 		TheSnackbar: () => import("@/components/utils/TheSnackbar"),
 		ScrollToTop: () => import("@/components/utils/ScrollToTop"),
 	},
-	data: () => ({
-		sidebar: null,
-		mainDrawer: null,
-		profileSettingsDrawer: null
-	}),
+
 	computed: {
 		appColor() {
 			return this.$route.name === "Submit" ? "grey lighten-2": "grey lighten-4"
-		},
-		drawerFreeRoute() {
-			return this.$route.matched.some(route => route.meta["drawer_free"])
-		},
-		userSettingRoute() {
-			return this.$route.matched.some(route => route.meta["user_settings"])
-		},
-		mdAndUp() {
-			return this.$vuetify.breakpoint.mdAndUp
-		},
-		withSidebarRoute() {
-			return this.$route.matched.some(route => route.meta["sidebar"])
 		}
 	},
 	created() {
@@ -198,12 +136,8 @@ export default {
 	border: 2px solid var(--amber) !important;
 	background-color: whitesmoke;
 }
-
-.app-card {
-	min-height: calc(100vh - 55px) !important;
-}
 .app-padding {
-	padding: 10px 10px 0 10px
+	padding: 0 10px 0 10px
 }
 .v-label {
 	font-size: 14px !important;
@@ -328,5 +262,10 @@ export default {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
 	background: #727272;
+}
+.sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0; z-index: 5;
 }
 </style>

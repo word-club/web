@@ -12,7 +12,7 @@
 export default {
 	name: "CommentList",
 	components: {
-		CommentItem: () => import("@/views/publication/CommentItem.vue")
+		CommentItem: () => import("@/views/publication/CommentItem")
 	},
 	props: {},
 	data: () => ({}),

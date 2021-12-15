@@ -138,9 +138,6 @@
 </template>
 
 <script>
-import TextField from "@/components/form/TextField.vue";
-import SelectField from "@/components/form/SelectField.vue";
-import FileField from "@/components/form/FileField.vue";
 import {mapGetters} from "vuex";
 import Snack from "@/mixin/Snack.js";
 import PatchMixin from "@/mixin/PatchMixin.js";
@@ -148,7 +145,6 @@ import CommunityProgress from "@/mixin/CommunityProgress.js";
 
 export default {
 	name: "Display",
-	components: {FileField, SelectField, TextField},
 	mixins: [Snack, CommunityProgress, PatchMixin],
 	data: () => ({
 		theme: {

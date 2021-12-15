@@ -69,15 +69,12 @@
 </template>
 
 <script>
-import UserHoverBox from "@/components/utils/UserHoverBox.vue";
-import CommunityHoverBox from "@/components/utils/CommunityHoverBox.vue";
-
 export default {
 	name: "ItemHeader",
 	props: {item: {type: Object, default: () => {}}},
 	components: {
-		UserHoverBox,
-		CommunityHoverBox,
+		UserHoverBox: () => import("@/components/utils/UserHoverBox"),
+		CommunityHoverBox: () => import("@/components/utils/CommunityHoverBox"),
 	},
 	computed: {
 		theme() {

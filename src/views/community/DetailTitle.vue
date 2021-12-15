@@ -64,13 +64,14 @@
 
 <script>
 import {mapGetters} from "vuex";
-import CommunityTab from "@/views/community/CommunityTab.vue";
 import CommunityActions from "@/mixin/CommunityActions.js";
 
 export default {
 	name: "DetailTitle",
 	mixins: [CommunityActions],
-	components: {CommunityTab},
+	components: {
+		CommunityTab: () => import("@/views/community/CommunityTab")
+	},
 	computed: {
 		...mapGetters({
 			community: "community/inView"

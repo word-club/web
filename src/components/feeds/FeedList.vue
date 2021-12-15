@@ -5,7 +5,7 @@
 				<v-progress-linear indeterminate height="6" rounded />
 			</div>
 		</v-scale-transition>
-		<div v-if="publications.results.length">
+		<div v-if="pubs">
 			<publication-instance
 				v-for="publication in publications.results"
 				:key="publication.id"
@@ -25,12 +25,13 @@
 import {mapGetters} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import PublicationType from "@/mixin/PublicationType.js";
-import PublicationInstance from "@/views/home/components/PublicationInstance.vue";
 import FetchPublications from "@/mixin/FetchPublications.js";
 
 export default {
 	name: "FeedList",
-	components: {PublicationInstance},
+	components: {
+		PublicationInstance: () => import("@/views/home/components/PublicationInstance")
+	},
 	mixins: [RouteMixin, PublicationType, FetchPublications],
 	data: () => ({
 		isLoading: false,
@@ -38,7 +39,12 @@ export default {
 	computed: {
 		...mapGetters({
 			publications: "publication/list"
-		})
+		}),
+		pubs() {
+			if (!this.publications) return false
+			if (!this.publications.results) return false
+			return this.publications.results.length
+		}
 	},
 	async created() {
 		await this.getPublications()

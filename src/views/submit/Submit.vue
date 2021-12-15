@@ -214,17 +214,18 @@ import PostMixin from "@/mixin/PostMixin.js";
 import PatchMixin from "@/mixin/PatchMixin.js";
 import Snack from "@/mixin/Snack.js";
 import EditorMixin from "@/mixin/EditorMixin.js";
-import SubmitTab from "@/views/submit/components/SubmitTab.vue";
-import DraftsDialog from "@/views/submit/components/DraftsDialog.vue";
 import CheckRequiredMixin from "@/mixin/CheckRequiredMixin.js";
-import ImageList from "@/views/submit/components/ImageList.vue";
-import SubmitMedia from "@/views/submit/components/SubmitMedia.vue";
-import LinkPreview from "@/views/submit/components/LinkPreview.vue";
-import UploadLink from "@/views/submit/components/UploadLink.vue";
 
 export default {
 	name: "Submit",
-	components: {UploadLink, LinkPreview, SubmitMedia, ImageList, DraftsDialog, SubmitTab},
+	components: {
+		SubmitTab: () => import("@/views/submit/components/SubmitTab"),
+		DraftsDialog: () => import("@/views/submit/components/DraftsDialog"),
+		ImageList: () => import("@/views/submit/components/ImageList"),
+		SubmitMedia: () => import("@/views/submit/components/SubmitMedia"),
+		LinkPreview: () => import("@/views/submit/components/LinkPreview"),
+		UploadLink: () => import("@/views/submit/components/UploadLink"),
+	},
 	mixins: [PostMixin, PatchMixin, Snack, EditorMixin, CheckRequiredMixin],
 	data: () => ({
 		tab: null,

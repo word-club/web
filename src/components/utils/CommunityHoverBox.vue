@@ -40,11 +40,12 @@
 
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
-import CommunityPeek from "@/views/community/CommunityPeek.vue";
 
 export default {
 	name: "CommunityHoverBox",
-	components: {CommunityPeek},
+	components: {
+		CommunityPeek: () => import("@/views/community/CommunityPeek")
+	},
 	mixins: [RouteMixin],
 	props: {
 		community: {

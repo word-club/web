@@ -19,7 +19,7 @@ export default {
 	name: "RegisterCommunity",
 	mixins: [CheckPendingCommunities],
 	components: {
-		CreatePendingDialog: () => import("@/views/community/register/components/CreatePendingDialog.vue")
+		CreatePendingDialog: () => import("@/views/community/register/components/CreatePendingDialog")
 	},
 	created() {
 		const itemInProgress = this.$helper.getCommunityInProgress()

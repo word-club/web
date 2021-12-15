@@ -99,7 +99,6 @@
 </template>
 
 <script>
-import TextField from "@/components/form/TextField.vue";
 import {mapGetters} from "vuex";
 import PatchMixin from "@/mixin/PatchMixin.js";
 import Snack from "@/mixin/Snack.js";
@@ -108,7 +107,6 @@ import CommunityProgress from "@/mixin/CommunityProgress.js";
 export default {
 	name: "Authorization",
 	mixins: [Snack, CommunityProgress, PatchMixin],
-	components: {TextField},
 	data: () => ({
 		email: null,
 		confirmCode: null,
