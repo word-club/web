@@ -1,9 +1,9 @@
 <template>
 	<v-app-bar
-		app flat
-		color="white"
+		flat color="white"
 		height="auto"
 		clipped-right
+		clipped-left
 		class="the-app-bar"
 	>
 		<div class="d-flex align-center px-2">
@@ -82,11 +82,10 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
-import AppTopStyle from "@/mixin/AppTopStyle.js";
 
 export default {
 	name: "TheAppBar",
-	mixins: [RouteMixin, AppTopStyle],
+	mixins: [RouteMixin],
 	components: {
 		TooltipIconBtn: () => import("@/components/TooltipIconBtn.vue"),
 		AuthDialog: () => import("@/views/auth/AuthDialog.vue"),
@@ -100,9 +99,6 @@ export default {
 		searchCommunities: "",
 		searchPublications: "",
 	}),
-	mounted() {
-		this.setAppBarTopStyle()
-	},
 	computed: {
 		...mapGetters({
 			currentUser: "user/current",

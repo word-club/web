@@ -1,141 +1,60 @@
 <template>
 	<v-app>
-		<the-app-bar />
-		<v-slide-x-transition>
-			<v-navigation-drawer
-				v-if="!drawerFreeRoute"
-				v-model="mainDrawer"
-				app clipped
-				color="grey lighten-3"
-				class="home-sidebar"
-				:permanent="mdAndUp"
-				:temporary="!mdAndUp"
-				:width="$vuetify.breakpoint.md ? 180 : 200"
-			>
-				<div class="py-2" />
-				<drawer-list />
-			</v-navigation-drawer>
-		</v-slide-x-transition>
-		<v-slide-x-reverse-transition>
-			<v-navigation-drawer
-				v-if="userSettingRoute"
-				v-model="profileSettingsDrawer"
-				app clipped permanent
-				color="grey lighten-3"
-				class="home-sidebar"
-				:width="$vuetify.breakpoint.md ? 250 : 300"
-			>
-				<div class="py-2" />
-				<user-cog-drawer />
-			</v-navigation-drawer>
-		</v-slide-x-reverse-transition>
-		<v-navigation-drawer
-			v-if="withSidebarRoute"
-			v-model="sidebar"
-			app right clipped permanent
-			color="grey lighten-3"
-			class="home-sidebar"
-			:width="$vuetify.breakpoint.md ? 320 : 350"
-		>
-			<transition
-				name="view"
-			>
-				<router-view name="sidebar" />
-			</transition>
-		</v-navigation-drawer>
+		<div class="sticky">
+			<the-app-bar />
+		</div>
+		<home-drawer />
+		<user-settings-drawer />
+		<root-sidebar />
 		<v-main>
-			<v-container fluid class="app-container px-0"
-				:class="appColor"
+			<v-card
+				v-if="$route.name"
+				flat tile :color="appColor"
+				class="app-card"
+				:class="{
+					'app-padding': ! $route.name.includes('Community') &&
+						!$route.name.includes('User') &&
+						!$route.name.includes('Profile') &&
+						!$route.name.includes('Top'),
+					'px-0': $route.name.includes('Community'),
+					'px-0': $route.name.includes('User'),
+					'px-0': $route.name.includes('Profile')
+				}"
 			>
-				<v-card
-					v-if="$route.name"
-					flat tile color="transparent"
-					class="app-card"
-					:class="{
-						'app-padding': ! $route.name.includes('Community') &&
-							!$route.name.includes('User') &&
-							!$route.name.includes('Profile') &&
-							!$route.name.includes('Top'),
-						'px-0': $route.name.includes('Community'),
-						'px-0': $route.name.includes('User'),
-						'px-0': $route.name.includes('Profile')
-					}"
-				>
-					<the-snackbar />
-					<transition name="view">
-						<router-view />
-					</transition>
-					<scroll-to-top />
-				</v-card>
-			</v-container>
+
+				<the-snackbar />
+				<transition name="view">
+					<router-view />
+				</transition>
+				<scroll-to-top />
+			</v-card>
 		</v-main>
 	</v-app>
 </template>
 
 <script>
-import AppTopStyle from "@/mixin/AppTopStyle.js";
 import {mapMutations} from "vuex";
 
 export default {
 	name: "App",
-	mixins: [AppTopStyle],
 	components: {
-		DrawerList: () => import("@/views/home/components/DrawerList"),
-		UserCogDrawer: () => import("@/views/home/components/UserCogDrawer"),
+		UserSettingsDrawer: () => import("@/components/utils/UserSettingsDrawer"),
+		HomeDrawer: () => import("@/components/utils/HomeDrawer"),
+		RootSidebar: () => import("@/components/utils/RootSidebar"),
 		TheAppBar: () => import("@/components/TheAppBar"),
 		TheSnackbar: () => import("@/components/utils/TheSnackbar"),
 		ScrollToTop: () => import("@/components/utils/ScrollToTop"),
 	},
-	watch: {
-		"$vuetify.breakpoint.width": {
-			handler() {
-				this.setAppBarTopStyle()
-			}
-		}
-	},
-	data: () => ({
-		profileSettingsDrawer: null
-	}),
+
 	computed: {
-		sidebar: {
-			get() {
-				return this.$store.getters.sidebarState
-			},
-			set(v) {
-				this.SET_SIDEBAR_STATE(v)
-			}
-		},
-		mainDrawer: {
-			get() {
-				const state = this.$store.getters.mainDrawerState
-				console.log(state)
-				return state
-			},
-			set(v) {
-				this.SET_DRAWER_STATE(v)
-			}
-		},
 		appColor() {
 			return this.$route.name === "Submit" ? "grey lighten-2": "grey lighten-4"
-		},
-		drawerFreeRoute() {
-			return this.$route.matched.some(route => route.meta["drawer_free"])
-		},
-		userSettingRoute() {
-			return this.$route.matched.some(route => route.meta["user_settings"])
-		},
-		mdAndUp() {
-			return this.$vuetify.breakpoint.mdAndUp
-		},
-		withSidebarRoute() {
-			return this.$route.matched.some(route => route.meta["sidebar"])
 		}
 	},
 	created() {
 		this.checkForLoggedInUser()
 	},
 	methods: {
-		...mapMutations(["SET_SIDEBAR_STATE", "SET_DRAWER_STATE"]),
 		checkForLoggedInUser() {
 			const token = this.$helper.getAccessToken()
 			const currentUser = this.$helper.getCurrentUser()
@@ -345,5 +264,10 @@ export default {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
 	background: #727272;
+}
+.sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0; z-index: 5;
 }
 </style>

@@ -3,8 +3,12 @@
 		max-width="800"
 		flat
 	>
-		<add-post-box v-if="currentUser" class="my-4" />
-		<hot-bar class="my-4" />
+		<div class="py-4">
+			<add-post-box v-if="currentUser" />
+		</div>
+		<div class="py-4">
+			<hot-bar />
+		</div>
 		<feed-list />
 	</v-card>
 </template>
