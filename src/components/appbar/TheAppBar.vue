@@ -87,9 +87,9 @@ export default {
 	name: "TheAppBar",
 	mixins: [RouteMixin],
 	components: {
-		TooltipIconBtn: () => import("@/components/TooltipIconBtn.vue"),
-		AuthDialog: () => import("@/views/auth/AuthDialog.vue"),
-		ProfileDrop: () => import("@/components/appbar/ProfileDrop.vue"),
+		TooltipIconBtn: () => import("@/components/utils/TooltipIconBtn"),
+		AuthDialog: () => import("@/views/auth/AuthDialog"),
+		ProfileDrop: () => import("@/components/appbar/ProfileDrop"),
 		CommunitySearch: () => import("@/components/appbar/CommunitySearch"),
 		PublicationSearch: () => import("@/components/appbar/PublicationSearch"),
 		NotificationMenu: () =>

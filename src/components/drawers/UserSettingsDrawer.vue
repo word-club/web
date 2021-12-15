@@ -18,7 +18,7 @@
 export default {
 	name: "UserSettingsDrawer",
 	components: {
-		SidebarTopPadding: () => import("@/components/utils/SidebarTopPadding"),
+		SidebarTopPadding: () => import("@/components/drawers/SidebarTopPadding"),
 		UserCogDrawer: () => import("@/views/home/components/UserCogDrawer"),
 	},
 	data: () => ({

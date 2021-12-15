@@ -12,7 +12,7 @@
 export default {
 	name: "Sidebar",
 	components: {
-		PostingToWordClub: () => import("@/components/utils/PostingToWordClub.vue")
+		PostingToWordClub: () => import("@/components/utils/PostingToWordClub")
 	}
 }
 </script>

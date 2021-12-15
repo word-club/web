@@ -33,15 +33,13 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
-
 export default {
 	name: "App",
 	components: {
-		UserSettingsDrawer: () => import("@/components/utils/UserSettingsDrawer"),
-		HomeDrawer: () => import("@/components/utils/HomeDrawer"),
-		RootSidebar: () => import("@/components/utils/RootSidebar"),
-		TheAppBar: () => import("@/components/TheAppBar"),
+		UserSettingsDrawer: () => import("@/components/drawers/UserSettingsDrawer"),
+		HomeDrawer: () => import("@/components/drawers/HomeDrawer"),
+		RootSidebar: () => import("@/components/drawers/RootSidebar"),
+		TheAppBar: () => import("@/components/appbar/TheAppBar"),
 		TheSnackbar: () => import("@/components/utils/TheSnackbar"),
 		ScrollToTop: () => import("@/components/utils/ScrollToTop"),
 	},

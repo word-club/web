@@ -62,14 +62,15 @@
 </template>
 
 <script>
-import UserSelect from "@/components/form/UserSelect.vue";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import {mapGetters} from "vuex";
 import CommunityProgress from "@/mixin/CommunityProgress.js";
 
 export default {
 	name: "Administration",
-	components: {UserSelect},
+	components: {
+		UserSelect: () => import("@/components/form/UserSelect")
+	},
 	mixins: [RouteMixin, CommunityProgress],
 	data: () => ({
 		payload: {

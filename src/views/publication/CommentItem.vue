@@ -208,14 +208,15 @@
 </template>
 
 <script>
-import ReplyField from "@/components/form/ReplyField.vue";
 import PostMixin from "@/mixin/PostMixin.js";
 import Snack from "@/mixin/Snack.js";
 import CommentActions from "@/mixin/CommentActions.js";
 
 export default {
 	name: "CommentItem",
-	components: {ReplyField},
+	components: {
+		ReplyField: () => import("@/components/form/ReplyField")
+	},
 	mixins: [PostMixin, Snack, CommentActions],
 	props: {
 		index: {type: Number, required: true},

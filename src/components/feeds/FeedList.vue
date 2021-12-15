@@ -25,12 +25,13 @@
 import {mapGetters} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import PublicationType from "@/mixin/PublicationType.js";
-import PublicationInstance from "@/views/home/components/PublicationInstance.vue";
 import FetchPublications from "@/mixin/FetchPublications.js";
 
 export default {
 	name: "FeedList",
-	components: {PublicationInstance},
+	components: {
+		PublicationInstance: () => import("@/views/home/components/PublicationInstance")
+	},
 	mixins: [RouteMixin, PublicationType, FetchPublications],
 	data: () => ({
 		isLoading: false,

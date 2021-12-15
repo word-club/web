@@ -41,7 +41,7 @@ import {mapMutations} from "vuex";
 export default {
 	name: "RootSidebar",
 	components: {
-		SidebarTopPadding: () => import("@/components/utils/SidebarTopPadding"),
+		SidebarTopPadding: () => import("@/components/drawers/SidebarTopPadding"),
 	},
 	data: () => ({
 		showSidebarContent: true,

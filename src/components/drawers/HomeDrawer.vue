@@ -22,7 +22,7 @@ import {mapMutations} from "vuex";
 export default {
 	name: "HomeDrawer",
 	components: {
-		SidebarTopPadding: () => import("@/components/utils/SidebarTopPadding"),
+		SidebarTopPadding: () => import("@/components/drawers/SidebarTopPadding"),
 		DrawerList: () => import("@/views/home/components/DrawerList"),
 	},
 	data: () => ({}),
