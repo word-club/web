@@ -18,7 +18,7 @@
     "@editorjs/text-variant-tune": "^1.0.1",
     "@editorjs/underline": "^1.0.0",
     "@mdi/font": "5.9.55",
-    "axios": "^0.23.0",
+    "axios": "^0.24.0",
     "editorjs-drag-drop": "^1.0.0",
     "editorjs-html": "^3.4.2",
     "editorjs-paragraph-with-alignment": "3.x",
@@ -28,26 +28,26 @@
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "v-tooltip": "^2.0.3",
-    "vue": "^2.6.11",
+    "vue": "^2.6.14",
     "vue-emoji-picker": "^1.0.3",
     "vue-mention": "^1.1.0",
-    "vue-router": "^3.2.0",
+    "vue-router": "^3.5.3",
     "vuetify": "^2.4.0",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-babel": "^4.5.15",
+    "@vue/cli-plugin-eslint": "^4.5.15",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-service": "^4.5.15",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0-beta.4",
+    "eslint": "7.14.0",
+    "eslint-plugin-vue": "^8.2.0",
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
     "vue-cli-plugin-vuetify": "~2.4.3",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.7.0"
+    "vuetify-loader": "^1.7.3"
   }
 }

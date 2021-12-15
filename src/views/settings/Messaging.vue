@@ -8,7 +8,7 @@
 
 <script>
 export default {
-	name: "Messaging",
+	name: "MessagingSetting",
 	data: () => ({}),
 	computed: {},
 	created() {
