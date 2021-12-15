@@ -8,7 +8,7 @@
 
 <script>
 export default {
-	name: "Notifications",
+	name: "NotificationsSetting",
 	data: () => ({}),
 	computed: {},
 	created() {

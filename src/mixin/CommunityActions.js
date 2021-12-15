@@ -1,10 +1,10 @@
 const CommunityActions = {
 	computed: {},
 	methods: {
-		unSubscribe(item) {},
-		subscribe(item) {},
-		disableNotification(item) {},
-		enableNotification(item) {},
+		unSubscribe(item) {console.log(item)},
+		subscribe(item) {console.log(item)},
+		disableNotification(item) {console.log(item)},
+		enableNotification(item) {console.log(item)},
 	}
 }
 

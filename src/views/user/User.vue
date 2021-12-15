@@ -53,7 +53,7 @@ import {mapGetters} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
 
 export default {
-	name: "User",
+	name: "UserView",
 	mixins: [RouteMixin],
 	data: () => ({}),
 	computed: {
