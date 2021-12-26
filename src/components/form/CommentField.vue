@@ -119,7 +119,12 @@ export default {
 	created() {
 		this.$axios.get("mention-list/")
 			.then(res => {
-				this.mentionList = res
+				this.mentionList = res.map(item => {
+					return {
+						name: item.name,
+						value: item.username
+					}
+				})
 			})
 	},
 	methods: {

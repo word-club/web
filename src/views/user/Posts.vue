@@ -4,7 +4,7 @@
 		<div class="py-2" />
 		<v-card v-if="!publications.length" flat min-height="79vh">
 			<v-card-title class="empty-content">
-				hmm... looks like you haven't posted anything yet
+				{{emptyText}}
 			</v-card-title>
 		</v-card>
 		<div v-for="item in publications"
@@ -31,12 +31,17 @@ export default {
 			user: "user/inView"
 		}),
 		publications() {
-			if (!this.user && !this.user.published_publications) return []
-			return this.user.published_publications
+			if (this.user && this.user.published_publications) return this.user.published_publications
+			return []
 		},
 		drafts() {
 			if (!this.user && !this.user.drafts) return []
 			return this.user.drafts
+		},
+		emptyText() {
+			const currentRoute = this.$route.name
+			const pronoun = currentRoute.includes("Profile") ? "you" : "the user"
+			return `hmm... looks like ${pronoun} haven't posted anything yet`
 		}
 	}
 }

@@ -113,16 +113,11 @@ export default {
 		logout() {
 			const url = this.$urls.user.logout
 			this.post(url).then(() => {
-				if (this.success) {
-					this.$helper.clearAccessToken()
-					this.$helper.clearCurrentUser()
-					this.$store.dispatch("user/setCurrentUser", null)
-					this.afterAuth()
-					this.openSuccessSnack("Logged out successfully.")
-				} else {
-					// logout errors are traced inside detail key
-					this.openSnack(this.formErrors.detail)
-				}
+				this.$helper.clearAccessToken()
+				this.$helper.clearCurrentUser()
+				this.$store.dispatch("user/setCurrentUser", null)
+				this.afterAuth()
+				this.openSuccessSnack("Logged out successfully.")
 			})
 		}
 	}

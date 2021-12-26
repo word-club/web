@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
+import {mapGetters} from "vuex";
 import RuleMixin from "@/mixin/RuleMixin.js";
 
 export default {

@@ -2,8 +2,9 @@
 	"top": "top/",
 	"user": {
 		"me": "me/",
-		"list": "user/",
-		"detail": "user/%s/",
+		"list": "users/",
+		"detail": "users/%s/",
+		"retrieve": "user/%s/",
 		"register": "register/",
 		"login": "login/",
 		"logout": "logout/",
@@ -18,7 +19,8 @@
 		"block": "user/%s/block/",
 		"unBlock": "block/%s/",
 		"removeReport": "report/%s/",
-		"profileList": "profile/filter/"
+		"profileList": "profile/filter/",
+		"follow": "user/%s/follow/"
 	},
 	"community": {
 		"list": "community-view/",

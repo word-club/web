@@ -1,23 +1,22 @@
 <template>
 	<v-card flat color="transparent">
 		<v-scale-transition>
-			<div class="pt-2" v-if="isLoading">
-				<v-progress-linear indeterminate height="6" rounded />
-				<div class="pt-2">
-					<v-card>
-						<v-card-text>
-							<v-card-title>
-								We're fetching publications. Just a moment...
-							</v-card-title>
-						</v-card-text>
-					</v-card>
-				</div>
-			</div>
+			<v-card v-if="isLoading">
+				<v-card-text>
+					<v-card-title>
+						We're fetching publications. Just a moment...
+					</v-card-title>
+					<v-card-subtitle>
+						<v-progress-linear indeterminate height="6" rounded />
+					</v-card-subtitle>
+				</v-card-text>
+			</v-card>
 			<div v-else>
 				<div v-if="pubs">
 					<publication-instance
 						v-for="publication in publications.results"
 						:key="publication.id"
+						:id="`publication-${publication.id}`"
 						:publication="publication"
 						@init="getPublications"
 						class="mb-4"
@@ -45,7 +44,7 @@ export default {
 	},
 	mixins: [RouteMixin, PublicationType, FetchPublications],
 	data: () => ({
-		isLoading: false,
+		isLoading: true,
 	}),
 	computed: {
 		...mapGetters({
@@ -57,8 +56,11 @@ export default {
 			return this.publications.results.length
 		}
 	},
-	async created() {
-		await this.getPublications()
+	created() {
+		setTimeout(() => {
+			this.getPublications()
+				.then(() => {this.isLoading = false})
+		}, 3000)
 	},
 	watch: {
 		"$route.params.sortBy": {
@@ -69,7 +71,6 @@ export default {
 	},
 	methods: {
 		async getPublications(sortString = "best") {
-			this.isLoading = true
 			const sortBy = this.$route.params.sortBy
 			if (sortBy) sortString = sortBy
 
@@ -77,7 +78,6 @@ export default {
 
 			await this.$store.dispatch("publication/setFilterset", sortString)
 			await this.fetchPublications({sort_by: sortString})
-			this.isLoading = false
 		}
 	},
 }

@@ -19,6 +19,7 @@
 					color="accent"
 					:block="showSidebarContent"
 					:fab="!showSidebarContent"
+					height="56"
 				>
 					<v-scale-transition>
 						<v-icon v-if="!showSidebarContent">mdi-menu-open</v-icon>
