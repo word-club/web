@@ -10,10 +10,11 @@ const FetchMixin = {
 	},
 	methods: {
 		fetchDetail(model) {
-			this.routeId = this.$route.params.id
+			this.routeId = this.$route.params.id || this.$route.params.username
 			this.loading = true
+			const url = this.$urls[model]["retrieve"] || this.$urls[model]["detail"]
 			return this.$axios
-				.get(this.$util.format(this.$urls[model].detail, this.routeId))
+				.get(this.$util.format(url, this.routeId))
 				.then(res => {
 					this.SET_TO_VIEW(res)
 				})

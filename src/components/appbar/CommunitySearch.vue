@@ -15,18 +15,20 @@
 			<template #prepend-inner>
 				<v-icon v-if="routeNameIs('Home')" size="22"> mdi-home</v-icon>
 				<v-avatar
-					v-if="routeNameStartsWith('User')"
+					v-if="routeNameStartsWith('User') && userInView"
 					size="30"
 					:color="(userInView && userInView.avatar) ? 'white': 'primary'"
 					class="mt-0 mb-2"
 				>
-					<v-img
-						v-if="userInView.avatar"
-						:src="userInView.avatar.image"
-					/>
-					<div v-else class="full-width white--text text-center weight-500">
-						{{userInView.username[0].toUpperCase()}}
-					</div>
+					<template #default>
+						<v-img
+							v-if="userInView.avatar"
+							:src="userInView.avatar.image"
+						/>
+						<div v-else class="full-width white--text text-center weight-500">
+							{{userInView.username[0].toUpperCase()}}
+						</div>
+					</template>
 				</v-avatar>
 				<v-avatar
 					v-if="communityInView"
@@ -35,13 +37,15 @@
 						? 'white': communityInView.theme.color"
 					class="mt-0 mb-2"
 				>
-					<v-img
-						v-if="communityInView.avatar"
-						:src="$link(communityInView.avatar.image)"
-					/>
-					<div v-else class="full-width white--text text-center weight-500">
-						{{communityInView.name[0].toUpperCase()}}
-					</div>
+					<template #default>
+						<v-img
+							v-if="communityInView.avatar"
+							:src="$link(communityInView.avatar.image)"
+						/>
+						<div v-else class="full-width white--text text-center weight-500">
+							{{communityInView.name[0].toUpperCase()}}
+						</div>
+					</template>
 				</v-avatar>
 			</template>
 		</v-text-field>
@@ -71,8 +75,6 @@ export default {
 				return this.$route.name;
 			}
 		},
-	},
-	created() {
 	},
 	methods: {
 		routeNameIs(name) {

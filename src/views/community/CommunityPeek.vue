@@ -1,6 +1,7 @@
 <template>
 	<v-card outlined
 		max-width="350"
+		v-if="community"
 	>
 		<v-card
 			:color="community.theme.color"

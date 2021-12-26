@@ -4,7 +4,7 @@
 		<div class="py-2" />
 		<v-card v-if="!comments.length" flat min-height="79vh">
 			<v-card-title class="empty-content">
-				hmm... looks like you haven't commented yet
+				{{ emptyText }}
 			</v-card-title>
 		</v-card>
 		<div v-for="item in comments"
@@ -25,9 +25,14 @@ export default {
 			user: "user/inView"
 		}),
 		comments() {
-			if (!this.user && !this.user.comments) return []
-			return this.user.comments
+			if (this.user && this.user.comments) return this.user.comments
+			return []
 		},
+		emptyText() {
+			const currentRoute = this.$route.name
+			const pronoun = currentRoute.includes("Profile") ? "you" : "the user"
+			return `hmm... looks like ${pronoun} haven't posted anything yet`
+		}
 	}
 }
 </script>

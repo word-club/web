@@ -1,6 +1,8 @@
 <template>
 	<v-card outlined
-		max-width="350">
+		max-width="350"
+		v-if="user"
+	>
 		<v-card flat
 			color="primary" height="70"
 			class="rounded-b-0"
@@ -14,6 +16,9 @@
 				<v-img v-if="user.avatar"
 					:src="user.avatar"
 				/>
+				<div v-else class="full-width text-center white--text display-3">
+					{{user.username[0].toUpperCase()}}
+				</div>
 			</v-avatar>
 		</v-card-text>
 		<v-card-title class="d-flex justify-center">
@@ -38,7 +43,7 @@
 						mdi-thumb-up-outline
 					</v-icon>
 					<div class="pl-3 px14 weight-500">
-						{{ user.reactions }}
+						{{ userReactions || 0 }}
 					</div>
 				</div>
 			</div>
@@ -61,20 +66,22 @@
 				</div>
 			</div>
 		</v-card-text>
-		<v-card-text class="px-2 px12 d-flex">
+		<v-card-text class="px-2 px12 d-flex"  v-if="user.bio">
 			<v-avatar size="30"
 				color="grey"
 			/>
-			<div class="pl-2 px14" v-if="user.bio">
+			<div class="pl-2 px14">
 				{{ user.bio }}
 			</div>
 		</v-card-text>
+		<div class="py-2" v-else />
 		<v-card-actions class="px-4 py-0 justify-space-between flex-wrap">
 			<v-btn depressed
 				color="primary" rounded
-				dark
+				:dark="!followed" :disabled="followed"
+				@click="followUser"
 			>
-				Follow
+				{{ (followed) ? 'Following' : 'Follow' }}
 			</v-btn>
 			<v-btn depressed
 				color="primary" rounded
@@ -88,71 +95,111 @@
 		<v-divider />
 		<v-card-actions class="px-6 pt-2">
 			<v-spacer />
-			<div
-				v-if="!moreOptions"
-				class="px14 weight-600 cursor primary--text"
-				@click="moreOptions = true"
-			>
-				More Options
-			</div>
+			<v-scale-transition>
+				<div
+					v-if="!moreOptions"
+					class="px14 weight-600 cursor primary--text"
+					@click="moreOptions = true"
+				>
+					More Options
+				</div>
+			</v-scale-transition>
 		</v-card-actions>
-		<div v-if="moreOptions"
-			class="px-4"
-		>
-			<div>
-				<v-btn rounded text
-					small color="primary"
-					class="weight-600"
-				>
-					Send Message
-				</v-btn>
-			</div>
-			<div class="py-1">
-				<v-btn rounded text
-					small color="primary"
-					class="weight-600"
-				>
-					Block User
-				</v-btn>
-			</div>
-			<div>
-				<v-btn rounded text
-					small color="primary"
-					class="weight-600"
-				>
-					Report User
-				</v-btn>
-			</div>
-		</div>
-		<v-card-actions
-			v-if="moreOptions"
-		>
-			<v-spacer />
-			<div
-				class="px14 weight-600 cursor primary--text"
-				@click="moreOptions = false"
+		<v-scale-transition>
+			<div v-if="moreOptions"
+				class="px-4"
 			>
-				Fewer Options
+				<div>
+					<v-btn rounded text
+						small color="primary"
+						class="weight-600"
+					>
+						Send Message
+					</v-btn>
+				</div>
+				<div class="py-1">
+					<v-btn rounded text
+						small color="primary"
+						class="weight-600"
+					>
+						Block User
+					</v-btn>
+				</div>
+				<div>
+					<v-btn rounded text
+						small color="primary"
+						class="weight-600"
+					>
+						Report User
+					</v-btn>
+				</div>
 			</div>
-		</v-card-actions>
+		</v-scale-transition>
+		<v-scale-transition>
+			<v-card-actions
+				v-if="moreOptions"
+			>
+				<v-spacer />
+				<div
+					class="px14 weight-600 cursor primary--text"
+					@click="moreOptions = false"
+				>
+					Fewer Options
+				</div>
+			</v-card-actions>
+		</v-scale-transition>
 	</v-card>
 </template>
 
 <script>
 
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
+import PostMixin from "@/mixin/PostMixin.js";
+import Snack from "@/mixin/Snack.js";
+import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
+import FetchMixin from "@/mixin/FetchMixin.js";
 
 export default {
 	name: "UserPeek",
+	mixins: [PostMixin, Snack, RefreshMeMixin, FetchMixin],
 	data: () => ({
 		moreOptions: false
 	}),
 	computed: {
 		...mapGetters({
 			user: "user/inView"
-		})
+		}),
+		userReactions() {
+			// TODO: return recieved reactions count
+			return null
+		},
+		currentUser() {
+			return this.$helper.getCurrentUser()
+		},
+		followed() {
+			if (this.user && this.currentUser) {
+				return this.user.followers.filter(user => user.id === this.currentUser.id).length > 0
+			} return false
+		}
 	},
-	methods: {}
+	methods: {
+		...mapMutations("user", ["SET_TO_VIEW"]),
+		followUser() {
+			if (this.currentUser) {
+				const url = this.$util.format(this.$urls.user.follow, this.user.id)
+				this.post(url).then(() => {
+					if(this.success) {
+						this.openSuccessSnack(`Follow success. You're now following user ${this.user.username}`)
+						this.fetchDetail("user")
+						this.refreshMe()
+					}
+					else this.openSnack("Follow failed. Something went wrong. Please try again.")
+				})
+			} else {
+				this.$store.dispatch("setAuthMode", {state: true, mode: "login"});
+			}
+		}
+	},
 }
 </script>
 

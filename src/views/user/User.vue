@@ -25,12 +25,6 @@
 					>
 						Comments
 					</div>
-					<div class="user-top-btn cursor"
-						:class="{'user-top-btn-active': $route.name === 'User Awards'}"
-						@click="toUserAwards(userInView.username)"
-					>
-						Awards Received
-					</div>
 				</v-card-actions>
 			</v-card>
 		</div>
@@ -49,19 +43,24 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
+import FetchMixin from "@/mixin/FetchMixin.js";
 
 export default {
 	name: "UserView",
-	mixins: [RouteMixin],
-	data: () => ({}),
+	mixins: [RouteMixin, FetchMixin],
 	computed: {
 		...mapGetters({
 			userInView: "user/inView"
 		})
 	},
-	methods: {}
+	created() {
+		this.fetchDetail("user")
+	},
+	methods: {
+		...mapMutations("user", ["SET_TO_VIEW"])
+	}
 }
 </script>
 
