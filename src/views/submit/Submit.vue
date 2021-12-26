@@ -188,13 +188,17 @@
 								depressed color="grey lighten-2 ma-1"
 								class="weight-600 grey--text text--darken-3"
 								@click="saveAsDraft"
+								:disabled="!payload.title"
 							>
 								Save as Draft
 							</v-btn>
-							<v-btn rounded v-if="!editMode"
-								dark depressed
+							<v-btn rounded
+								v-if="!editMode"
+								depressed
+								:dark="inProgress"
 								:color="theme.color"
 								class="weight-600 ma-1"
+								:disabled="!inProgress"
 								@click="publish"
 							>
 								Publish

@@ -21,7 +21,7 @@
 					class="full-width rounded"
 					@click="toCreatePost"
 				>
-					<v-icon size="22" class="mb-1">
+					<v-icon size="22" class="">
 						mdi-home
 					</v-icon>
 					<span class="px-2 weight-500 grey--text text--darken-1 px14">
@@ -29,10 +29,10 @@
 					</span>
 				</v-chip>
 			</v-responsive>
-			<v-btn icon>
+			<v-btn icon v-if="smAndUp">
 				<v-icon>mdi-image-outline</v-icon>
 			</v-btn>
-			<v-btn icon>
+			<v-btn icon v-if="smAndUp">
 				<v-icon>mdi-link-variant</v-icon>
 			</v-btn>
 		</v-card-actions>
@@ -42,10 +42,11 @@
 <script>
 import {mapGetters} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
+import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
 
 export default {
 	name: "AddPostBox",
-	mixins: [RouteMixin],
+	mixins: [RouteMixin, ScreenSizeMixin],
 	props: {
 		color: {
 			default: "primary lighten-1",

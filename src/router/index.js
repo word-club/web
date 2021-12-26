@@ -5,7 +5,11 @@ Vue.use(VueRouter)
 
 const routes = [
 	{
-		path: "/:sortBy?",
+		path: "/",
+		redirect: "/filter="
+	},
+	{
+		path: "/filter=:sortBy?",
 		name: "Home",
 		components: {
 			default: () => import("@/views/home/Home"),
@@ -52,7 +56,8 @@ const routes = [
 		},
 		meta: {
 			drawer_free: true,
-			sidebar: true
+			sidebar: true,
+			login_required: true
 		}
 	},
 	{
@@ -63,7 +68,8 @@ const routes = [
 			sidebar: () => import("@/views/community/RegisterSidebar")
 		},
 		meta: {
-			sidebar: true
+			sidebar: true,
+			login_required: true
 		},
 		children: [
 			{
@@ -170,7 +176,8 @@ const routes = [
 			sidebar: () => import("@/views/profile/Sidebar")
 		},
 		meta: {
-			sidebar: true
+			sidebar: true,
+			login_required: true
 		},
 		children: [
 			{
@@ -224,7 +231,11 @@ const routes = [
 		path: "/settings",
 		component: () => import("@/views/settings/Settings"),
 		name: "User Settings",
-		meta: { user_settings: true, drawer_free: true },
+		meta: {
+			user_settings: true,
+			drawer_free: true,
+			login_required: true
+		},
 		children: [
 			{
 				path: "account",
@@ -263,14 +274,16 @@ const routes = [
 		name: "Notification",
 		component: () => import("@/views/notification/Notification"),
 		meta: {
-			sidebar: true
+			sidebar: true,
+			login_required: true
 		},
 	},
 ]
 
 const router = new VueRouter({
 	base: process.env.BASE_URL,
-	routes
+	routes,
+	mode: "history"
 })
 
 export default router

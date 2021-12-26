@@ -10,7 +10,11 @@
 			:temporary="!mdAndUp"
 			:width="$vuetify.breakpoint.md ? 180 : 200"
 		>
-			<sidebar-top-padding />
+			<sidebar-top-padding v-if="mdAndUp" />
+			<div v-else class="site-title">
+				<v-img :src="require('@/assets/site-title.png')" />
+			</div>
+
 			<drawer-list />
 		</v-navigation-drawer>
 	</v-slide-x-transition>
@@ -51,5 +55,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.site-title {
+	padding: 10px;
+	background-color: whitesmoke;
+}
 </style>

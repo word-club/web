@@ -14,9 +14,11 @@
 			<div :class="{
 				'text-center': !showSidebarContent,
 				'text-right': showSidebarContent
-			}" v-if="!mdAndUp" class="px-2">
-				<v-btn fab @click="toggleSidebarWidth"
+			}" v-if="!mdAndUp" class="px-2 pt-16">
+				<v-btn @click="toggleSidebarWidth"
 					color="accent"
+					:block="showSidebarContent"
+					:fab="!showSidebarContent"
 				>
 					<v-scale-transition>
 						<v-icon v-if="!showSidebarContent">mdi-menu-open</v-icon>
@@ -37,9 +39,11 @@
 
 <script>
 import {mapMutations} from "vuex";
+import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
 
 export default {
 	name: "RootSidebar",
+	mixins: [ScreenSizeMixin],
 	components: {
 		SidebarTopPadding: () => import("@/components/drawers/SidebarTopPadding"),
 	},
@@ -55,12 +59,6 @@ export default {
 			set(v) {
 				this.SET_SIDEBAR_STATE(v)
 			}
-		},
-		mdAndUp() {
-			return this.$vuetify.breakpoint.mdAndUp
-		},
-		xs() {
-			return this.$vuetify.breakpoint.xs
 		},
 		withSidebarRoute() {
 			return this.$route.matched.some(route => route.meta["sidebar"])

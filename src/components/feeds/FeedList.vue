@@ -3,22 +3,33 @@
 		<v-scale-transition>
 			<div class="pt-2" v-if="isLoading">
 				<v-progress-linear indeterminate height="6" rounded />
+				<div class="pt-2">
+					<v-card>
+						<v-card-text>
+							<v-card-title>
+								We're fetching publications. Just a moment...
+							</v-card-title>
+						</v-card-text>
+					</v-card>
+				</div>
+			</div>
+			<div v-else>
+				<div v-if="pubs">
+					<publication-instance
+						v-for="publication in publications.results"
+						:key="publication.id"
+						:publication="publication"
+						@init="getPublications"
+						class="mb-4"
+					/>
+				</div>
+				<v-card v-else outlined min-height="70vh" class="pt-16">
+					<v-card-text class="px16 weight-500 text-center pt-16">
+						Hmm... Sorry we're out of posts. Please visit us later.
+					</v-card-text>
+				</v-card>
 			</div>
 		</v-scale-transition>
-		<div v-if="pubs">
-			<publication-instance
-				v-for="publication in publications.results"
-				:key="publication.id"
-				:publication="publication"
-				@init="getPublications"
-				class="mb-4"
-			/>
-		</div>
-		<v-card v-else outlined min-height="70vh" class="pt-16">
-			<v-card-text class="px16 weight-500 text-center pt-16">
-				Hmm... Sorry we're out of posts. Please visit us later.
-			</v-card-text>
-		</v-card>
 	</v-card>
 </template>
 <script>

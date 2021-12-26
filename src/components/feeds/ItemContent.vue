@@ -28,7 +28,8 @@
 			<template
 				v-if="block.type === 'image'"
 			>
-				<v-img height="300" :src="block.data.file.url" class="rounded-t"/>
+
+				<card-img height="300" :src="block.data.file.url" class="rounded-t" />
 				<v-card outlined v-if="block.data.caption" class="rounded-t-0">
 					<v-card-subtitle class="px16 weight-500 grey--text text--darken-2">{{block.data.caption}}</v-card-subtitle>
 				</v-card>

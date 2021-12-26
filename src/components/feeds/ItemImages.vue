@@ -11,18 +11,10 @@
 					v-for="(image, index) in medias"
 					:key="index"
 				>
-					<v-img
-						contain height="350"
-						:src="$link(image.image || image.image_url)"
-					>
-						<div class="fill-height">
-							<v-btn icon dark
-								class="fullscreen-btn"
-							>
-								<v-icon>mdi-fullscreen</v-icon>
-							</v-btn>
-						</div>
-					</v-img>
+					<card-img
+						:contain="true" height="350"
+						:src="image.image || image.image_url"
+					/>
 				</v-carousel-item>
 			</v-carousel>
 		</v-card>

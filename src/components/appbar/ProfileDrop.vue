@@ -14,7 +14,7 @@
 				<span v-else class="px22 white--text text-uppercase mb-1">{{currentUser.username[0]}}</span>
 			</v-avatar>
 		</template>
-		<v-list width="200"
+		<v-list width="220"
 			dense
 		>
 			<v-list-item-group>
@@ -49,6 +49,12 @@
 					<v-list-item-icon><v-icon>mdi-cog-outline</v-icon></v-list-item-icon>
 					<v-list-item-content>
 						<v-list-item-title>User Settings</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+				<v-list-item to="/notifications">
+					<v-list-item-icon><v-icon>mdi-bell-outline</v-icon></v-list-item-icon>
+					<v-list-item-content>
+						<v-list-item-title>Notifications</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
 			</v-list-item-group>

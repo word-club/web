@@ -1,7 +1,7 @@
 <template>
 	<v-responsive
 		v-if="$route.name"
-		max-width="200"
+		:max-width="$vuetify.breakpoint.xs ? '' : 200"
 		height="100%"
 		class="d-flex align-center justify-center px-2"
 	>
@@ -10,7 +10,7 @@
 			dense outlined hide-details
 			clearable aria-autocomplete="search_communities"
 			:placeholder="placeHolder"
-			color="primary"
+			color="primary" full-width
 		>
 			<template #prepend-inner>
 				<v-icon v-if="routeNameIs('Home')" size="22"> mdi-home</v-icon>

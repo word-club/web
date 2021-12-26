@@ -17,7 +17,6 @@
 				@focus="pickerColor = 'primary'"
 				@blur="pickerColor = 'grey'" class="full-width"
 				:error-messages="formErrors['comment']"
-				autofocus
 			/>
 			<template #no-result>
 				<div class="dim">
@@ -120,7 +119,6 @@ export default {
 	created() {
 		this.$axios.get("mention-list/")
 			.then(res => {
-				console.log(res)
 				this.mentionList = res
 			})
 	},

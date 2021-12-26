@@ -12,7 +12,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		auth: { state: false, mode: null },
+		auth: { state: false, mode: null, next: null },
 		draftDialog: false,
 		ruleDialog: false,
 		rule: null,

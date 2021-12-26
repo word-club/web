@@ -6,7 +6,7 @@ import vuetify from "./plugins/vuetify"
 import "@mdi/font/css/materialdesignicons.css"
 import moment from "moment"
 import AXIOS from "@/axios"
-import helper from "@/helper"
+import helper, {getAccessToken} from "@/helper"
 import {generateFullLink} from "@/utils.js";
 
 Vue.config.productionTip = false
@@ -35,6 +35,16 @@ Vue.component("CardImg", () => import("@/components/utils/CardImage"))
 Vue.component("HotBar", () => import("@/views/user/components/HotBar"))
 Vue.component("CommentInstance", () => import("@/views/home/components/CommentInstance"))
 Vue.component("PublicationInstance", () => import("@/views/home/components/PublicationInstance"))
+
+router.beforeEach((to, from, next) => {
+	const loginRequired = to.matched.some(route => route.meta["login_required"])
+	if (loginRequired && !getAccessToken()) {
+		store.commit("SET_AUTH_MODE", {
+			state: true, mode: "login", next: to.fullPath
+		})
+	}
+	else next()
+})
 
 new Vue({
 	router,

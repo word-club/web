@@ -211,7 +211,11 @@ export default {
 			}
 		},
 		closeAuthDialog() {
-			this.$store.dispatch("setAuthMode", {state: false, mode: null})
+			this.$store.dispatch("setAuthMode", {
+				state: false,
+				mode: null,
+				next: null
+			})
 			this.formErrors = {}
 		},
 		login() {
@@ -225,8 +229,14 @@ export default {
 					this.$helper.setAccessToken(this.postInstance.token)
 					this.$helper.setCurrentUser(this.postInstance.data)
 					this.$store.dispatch("user/setCurrentUser", this.postInstance.data)
-					this.closeAuthDialog()
-					this.afterAuth()
+					if (this.authMode.next) {
+						this.closeAuthDialog()
+						this.afterAuth()
+						this.$router.push(this.authMode.next)
+					} else {
+						this.closeAuthDialog()
+						this.afterAuth()
+					}
 				} else {
 					if (this.statusCode < 500 && this.statusCode >= 400) {
 						const nonFieldErrors = this.formErrors["non_field_errors"]

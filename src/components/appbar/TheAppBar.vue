@@ -15,7 +15,7 @@
 				<v-icon v-else>mdi-menu-open</v-icon>
 			</v-btn>
 			<div class="px-2"/>
-			<h3 class="cursor" @click="toHome">WordClub</h3>
+			<div class="site-title cursor" @click="toHome">WordClub</div>
 		</div>
 		<community-search v-if="$vuetify.breakpoint.smAndUp" />
 		<publication-search v-if="criticalWidth" />
@@ -23,7 +23,7 @@
 
 		<tooltip-icon-btn
 			size="40"
-			v-if="currentUser"
+			v-if="currentUser && viewportWidth> 440"
 			icon="mdi-finance"
 			tooltip="Popular"
 			:to="{ name: 'Home', params: {sortBy: 'popular'} }"
@@ -31,20 +31,20 @@
 
 		<tooltip-icon-btn
 			size="40"
-			v-if="currentUser"
+			v-if="currentUser  && viewportWidth> 440"
 			icon="mdi-chart-gantt"
 			tooltip="Top Discussed"
 			:to="{ name: 'Home', params: {sortBy: 'discussed'} }"
 		/>
 		<tooltip-icon-btn
 			size="40"
-			v-if="currentUser"
+			v-if="currentUser  && viewportWidth> 440"
 			icon="mdi-plus"
 			tooltip="Create Publication"
 			:to="{ name: 'Submit' }"
 		/>
 
-		<notification-menu v-if="currentUser"/>
+		<notification-menu v-if="currentUser  && viewportWidth> 310"/>
 
 		<div class="px-4"/>
 		<profile-drop v-if="currentUser"/>
@@ -73,7 +73,6 @@
 			v-if="!criticalWidth"
 			#extension
 		>
-			<community-search v-if="$vuetify.breakpoint.xs" />
 			<publication-search />
 		</template>
 	</v-app-bar>
@@ -82,10 +81,11 @@
 <script>
 import {mapGetters, mapMutations} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
+import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
 
 export default {
 	name: "TheAppBar",
-	mixins: [RouteMixin],
+	mixins: [RouteMixin, ScreenSizeMixin],
 	components: {
 		TooltipIconBtn: () => import("@/components/utils/TooltipIconBtn"),
 		AuthDialog: () => import("@/views/auth/AuthDialog"),
@@ -121,8 +121,12 @@ export default {
 	},
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .the-app-bar {
 	border-bottom: 1px solid #d2d2d2 !important;
+	.site-title {
+		font-size: 1.2rem;
+		font-weight: 500;
+	}
 }
 </style>

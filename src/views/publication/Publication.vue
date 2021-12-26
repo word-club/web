@@ -1,39 +1,45 @@
 <template>
-	<v-card outlined
-		class="mx-auto"
-		max-width="800"
-	>
-		<v-scale-transition>
-			<div v-if="loading">
-				<v-progress-linear rounded indeterminate color="primary" height="6" />
-				<v-card-text>
-					Fetching publication
-				</v-card-text>
-			</div>
+	<div class="py-4">
+		<v-card outlined
+			class="mx-auto"
+			max-width="800"
+		>
+			<v-scale-transition>
+				<div v-if="loading">
+					<v-progress-linear rounded indeterminate color="primary" height="6" />
+					<div class="py-2">
+						<v-card>
+							<v-card-text>
+								<v-card-title>
+									We're fetching publication for you. Just a moment...
+								</v-card-title>
+							</v-card-text>
+						</v-card>
+					</div>
+				</div>
 
-			<div v-else>
-				<v-fab-transition>
-					<div v-if="publication"
-						class="publication-detail"
-					>
-						<item-header :item="publication" />
-						<v-card-title class="pa-2 publication-title">
-							{{ publication.title }}
-						</v-card-title>
-						<item-images v-if="publication.type === 'media'" :item="publication" />
-						<item-link v-if="publication.type === 'link'" :link="publication.link"/>
-						<item-content v-if="publication.type ==='editor'" :content="JSON.parse(publication.content)" />
-						<item-actions :publication="publication" @init="refreshPublication"/>
-						<v-divider />
-						<v-card-text>
-							<div v-if="!publication.comments.length" class="d-flex justify-end pb-2">
-								<v-chip color="primary">Be the first to comment!</v-chip>
-							</div>
-							<comment-field :publication="publication"
-								@init="fetchDetail(model)"
-							/>
-						</v-card-text>
-						<div id="pub-comments">
+				<div v-else>
+					<v-fab-transition>
+						<div v-if="publication"
+							class="publication-detail"
+						>
+							<item-header :item="publication" />
+							<v-card-title class="pa-2 publication-title">
+								{{ publication.title }}
+							</v-card-title>
+							<item-images v-if="publication.type === 'media'" :item="publication" />
+							<item-link v-if="publication.type === 'link'" :link="publication.link"/>
+							<item-content v-if="publication.type ==='editor'" :content="JSON.parse(publication.content)" />
+							<item-actions :publication="publication" @init="refreshPublication"/>
+							<v-divider />
+							<v-card-text>
+								<div v-if="!publication.comments.length" class="d-flex justify-end pb-2">
+									<v-chip color="primary">Be the first to comment!</v-chip>
+								</div>
+								<comment-field :publication="publication"
+									@init="fetchDetail(model)"
+								/>
+							</v-card-text>
 							<v-card-text>
 								<v-menu offset-y>
 									<template #activator="{on, attrs}">
@@ -70,7 +76,7 @@
 									</div>
 								</div>
 							</v-card-text>
-							<v-card-text class="py-0">
+							<v-card-text class="py-0 comment-list">
 								<comment-item v-for="(comment, index) in commentList"
 									:key="index"
 									:index="index"
@@ -80,14 +86,14 @@
 								/>
 							</v-card-text>
 						</div>
-					</div>
-					<div v-else>
-						<v-card-text>Publication Not Found.</v-card-text>
-					</div>
-				</v-fab-transition>
-			</div>
-		</v-scale-transition>
-	</v-card>
+						<div v-else>
+							<v-card-text>Publication Not Found.</v-card-text>
+						</div>
+					</v-fab-transition>
+				</div>
+			</v-scale-transition>
+		</v-card>
+	</div>
 </template>
 
 <script>
@@ -96,7 +102,7 @@ import {mapGetters, mapMutations} from "vuex";
 import FetchMixin from "@/mixin/FetchMixin.js";
 
 export default {
-	name: "Publication",
+	name: "PublicationDetail",
 	components: {
 		CommentField: () => import("@/components/form/CommentField"),
 		CommentItem: () => import("@/views/publication/CommentItem"),
@@ -131,8 +137,11 @@ export default {
 		this.refreshPublication()
 			.then(() => {
 				const view = this.$route.params.view
-				if (view) {
-					if (view === "comments") this.$vuetify.goTo("#pub-comments")
+				if (view === "comments") {
+					setTimeout(() => {
+						const commentList = document.querySelector(".comment-list")
+						commentList.scrollIntoView({ behavior: "smooth" })
+					}, 1000)
 				}
 			})
 	},
@@ -144,22 +153,20 @@ export default {
 		getPublicationComments(sortCommentBy="fresh") {
 			const payload = {}
 			payload["sort_by"] = this.$helper.parseSortString(sortCommentBy, true)
-			console.log(payload)
 			payload["publication"] = this.$route.params.id
 			this.$store.dispatch("comment/filter", payload)
 				.then(() => {
 					console.log(this.comments)
+					// TODO: send comment filter request for a publication
 				})
 		},
 		async toSort(item) {
 			this.commentSortBy = item
-			console.log(this.commentSortBy)
 			await this.$store.dispatch("comment/filter", {
 				publication: this.$route.params.id,
 				sort_by: this.commentSortBy.sort
 			})
-			console.log(this.comments)
-
+			// TODO: push filter route
 			// this.$router.push({name: "Publication", params: {sortCommentBy: item.sort}})
 		}
 	}

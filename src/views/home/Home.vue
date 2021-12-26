@@ -17,7 +17,7 @@
 import {mapGetters} from "vuex";
 
 export default {
-	name: "Home",
+	name: "HomeView",
 	components: {
 		FeedList: () => import("@/components/feeds/FeedList"),
 		HotBar: () => import("@/views/home/components/HotBar"),

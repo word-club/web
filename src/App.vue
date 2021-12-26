@@ -10,7 +10,7 @@
 			<v-card
 				v-if="$route.name"
 				flat tile :color="appColor"
-				class="app-card"
+				class="app-card fill-height"
 				:class="{
 					'app-padding': ! $route.name.includes('Community') &&
 						!$route.name.includes('User') &&

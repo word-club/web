@@ -2,7 +2,7 @@
 	<v-card :height="height"
 		:max-width="maxWidth"
 		class="card-image"
-		dark rounded
+		dark flat tile
 	>
 		<v-card-actions class="actions rounded flex-wrap align-center">
 			<v-btn icon
@@ -78,7 +78,7 @@ export default {
 		position: absolute;
 		top: 0;
 		width: 100%;
-		background-color: #184a617a;
+		background-color: #3377d20a;
 		z-index: 1;
 		height: 45px;
 	}
