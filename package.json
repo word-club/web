@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "cypress:first": "cypress run --spec cypress/integration/init/first.spec.js --headed"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.22.2",
