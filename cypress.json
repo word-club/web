@@ -1,3 +1,5 @@
 {
-    "baseUrl": "https://wc.foodswipe.com.np"
+    "baseUrl": "https://wc.foodswipe.com.np",
+    "screenshotOnRunFailure": false,
+    "video": false
 }
