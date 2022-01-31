@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "cypress:first": "cypress run --spec cypress/integration/example.spec.js --headed --no-exit"
+    "cypress:first": "cypress run --spec cypress/integration/example.spec.js --headed --no-exit",
+    "cypress:educative": "cypress run --spec cypress/integration/educative.spec.js --headed --no-exit"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.22.2",
