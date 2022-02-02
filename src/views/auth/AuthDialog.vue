@@ -4,7 +4,7 @@
 		:value="authMode.state"
 		max-width="600"
 	>
-		<v-card class="rounded-tl-0 rounded-bl rounded-br mx-auto">
+		<v-card class="auth-card rounded-tl-0 rounded-bl rounded-br mx-auto">
 			<v-row no-gutters>
 				<v-col cols="2">
 					<v-img :src="require('@/assets/auth.jpg')"
@@ -39,6 +39,7 @@
 							v-if="isSignUpMode"
 						>
 							<text-field
+								id="firstname-field"
 								v-model="payload.first_name"
 								icon="mdi-form-textbox"
 								name="first_name"
@@ -50,6 +51,7 @@
 							v-if="isSignUpMode"
 						>
 							<text-field
+								id="lastname-field"
 								v-model="payload.last_name"
 								icon="mdi-form-textbox"
 								name="last_name"
@@ -59,6 +61,7 @@
 						</div>
 						<div class="py-4">
 							<text-field
+								id="username-field"
 								v-model="payload.username"
 								icon="mdi-account"
 								name="username"
@@ -71,6 +74,7 @@
 							v-if="isSignUpMode"
 						>
 							<date-picker
+								id="birthdate-field"
 								v-model="payload.profile.birth_date"
 								icon="mdi-calendar"
 								name="birth_date"
@@ -80,6 +84,7 @@
 						</div>
 						<div class="py-4">
 							<text-field
+								id="password-field"
 								v-model="payload.password"
 								type="password"
 								icon="mdi-lock"
@@ -93,6 +98,7 @@
 							v-if="isSignUpMode"
 						>
 							<text-field
+								id="confirm-password-field"
 								v-model="payload.confirm_password"
 								type="password"
 								icon="mdi-lock-check"
@@ -110,17 +116,23 @@
 						</div>
 					</div>
 					<v-card-actions class="justify-space-between">
-						<v-btn v-if="!isResetMode" text x-small class="auth-text-btn" rounded
+						<v-btn
+							id="forget-password-btn"
+							v-if="!isResetMode" text x-small class="auth-text-btn" rounded
 							@click="$store.dispatch('setAuthMode', {state: true, mode: 'reset'})"
 						>
 							Forget Password?
 						</v-btn>
-						<v-btn v-if="!isSignUpMode" text x-small class="auth-text-btn" rounded
+						<v-btn
+							id="register-btn"
+						  v-if="!isSignUpMode" text x-small class="auth-text-btn" rounded
 							@click="$store.dispatch('setAuthMode', {state: true, mode: 'signup'})"
 						>
 							Register
 						</v-btn>
-						<v-btn v-if="!isLoginMode" text x-small class="auth-text-btn" rounded
+						<v-btn
+							id="login-btn"
+						  v-if="!isLoginMode" text x-small class="auth-text-btn" rounded
 							@click="$store.dispatch('setAuthMode', {state: true, mode: 'login'})"
 						>
 							Login
@@ -129,6 +141,7 @@
 					<div class="py-4"></div>
 					<v-card-actions>
 						<v-btn
+							id="submit-login"
 							v-if="isLoginMode"
 							block color="primary"
 							depressed rounded
@@ -138,6 +151,7 @@
 							Login
 						</v-btn>
 						<v-btn
+							id="submit-signup"
 							v-if="isSignUpMode"
 							block color="primary"
 							depressed rounded
@@ -147,6 +161,7 @@
 							Sign Up
 						</v-btn>
 						<v-btn
+							id="submit-reset-pw"
 							v-if="isResetMode"
 							block color="primary"
 							depressed rounded

@@ -53,7 +53,7 @@
 			outlined
 			color="primary"
 			rounded
-			class="mx-1"
+			class="mx-1 signup-btn"
 			@click="signUp"
 		>
 			Sign Up
@@ -63,7 +63,7 @@
 			color="primary"
 			dark
 			rounded
-			class="mx-1"
+			class="mx-1 login-btn"
 			@click="login"
 		>
 			Login
