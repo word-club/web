@@ -10,6 +10,7 @@ const AXIOS = {
 			headers: {
 				"Content-Type": contentType || "application/json",
 				Accept: "*/*",
+				"Access-Control-Allow-Origin": "*",
 				Authorization:
 					typeof $helper.getAccessToken() !== "string"
 						? null
