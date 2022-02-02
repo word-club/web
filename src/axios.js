@@ -4,11 +4,12 @@ import $helper from "@/helper.js";
 const BACKEND_HOST = process.env.VUE_APP_BACKEND_HOST
 
 const AXIOS = {
-	setHeaders: function (contentType) {
+	setHeaders: function (headers = {}) {
 		return axios.create({
 			baseURL: `${BACKEND_HOST}/api/`,
 			headers: {
-				"Content-Type": contentType || "application/json",
+				...headers,
+				"Content-Type": "application/json",
 				Accept: "*/*",
 				Authorization:
 					typeof $helper.getAccessToken() !== "string"
@@ -27,18 +28,18 @@ const AXIOS = {
 		const response = await instance.get(target, {params: payload})
 		return response.data
 	},
-	async post(target, body, contentType) {
-		const instance = await this.setHeaders(contentType)
+	async post(target, body, headers) {
+		const instance = await this.setHeaders(headers)
 		const response = await instance.post(target, body)
 		return response.data
 	},
-	async put(target, body, contentType) {
-		const instance = await this.setHeaders(contentType)
+	async put(target, body, headers) {
+		const instance = await this.setHeaders(headers)
 		const response = await instance.put(target, body)
 		return response.data
 	},
-	async patch(target, body, contentType) {
-		const instance = await this.setHeaders(contentType)
+	async patch(target, body, headers) {
+		const instance = await this.setHeaders(headers)
 		const response = await instance.patch(target, body)
 		return response.data
 	},

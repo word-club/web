@@ -10,7 +10,9 @@ const PostMixin = {
 		post(url, payload = null) {
 			this.posting = true
 			return this
-				.$axios.post(url, payload)
+				.$axios.post(url, payload, {
+					'X-HTTP-Method-Override': 'OPTIONS'
+				})
 				.then(res => {
 					this.success = true
 					this.postInstance = res
