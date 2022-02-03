@@ -7,17 +7,20 @@ describe("Login feature", () => {
 	before(() => {
 		cy.intercept("POST", Cypress.env('BACKEND_URL') + "login/")
 			.as("login")
+		// cypress custom commands
+		// delete user to be created before hand if already present
 		cy.deleteUserIfPresent(actor.username)
+		// create user to be used in tests
 		cy.createUser(actor)
 	})
 	it("should display the login page", () => {
-		cy.visit("/");
+		cy.visit("/")
 		cy.get('.login-btn')
 			.should("be.visible")
 			.click()
-			cy.get('.auth-card')
-				.should("be.visible")
-			cy.contains("Login to WordClub")
+		cy.get('.auth-card')
+			.should("be.visible")
+		cy.contains("Login to WordClub")
 		cy.get('#username-field')
 			.should('be.visible')
 			.find('input')

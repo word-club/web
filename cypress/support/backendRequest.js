@@ -24,19 +24,16 @@ Cypress.Commands.add("adminRequest", ({
 	body = null,
 	as = 'adminRequest'
 } = {}) => {
-	if (!Cypress.env('admin_token')) {
-		cy.request("POST", backendUrl + "login/", {
-			username: "admin",
-			password: "admin"
-		}).then(response => {
-			Cypress.env('admin_token', response.body.token)
-		})
-	}
-	return cy.request({
-		method: method,
-		url: backendUrl + url,
-		headers: {
-			Authorization: "Token " + Cypress.env('admin_token')
-		}
-	}).as(as)
+	cy.request("POST", backendUrl + "login/", {
+		username: "admin",
+		password: "admin"
+	}).its('body.token').then(token => {
+		cy.request({
+			method: method,
+			url: backendUrl + url,
+			headers: {
+				Authorization: "Token " + token
+			}
+		}).as(as)
+	})
 })
