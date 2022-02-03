@@ -1,6 +1,14 @@
 describe("Login feature", () => {
+	const actor = {
+		first_name: "Alice",
+		username: "alice",
+		password: "XYBV123456789!@#",
+	}
 	before(() => {
-		cy.intercept("POST", "https://wordclub.foodswipe.com.np/api/login").as("login");
+		cy.intercept("POST", Cypress.env('BACKEND_URL') + "login/")
+			.as("login")
+		cy.deleteUserIfPresent(actor.username)
+		cy.createUser(actor)
 	})
 	it("should display the login page", () => {
 		cy.visit("/");
@@ -13,14 +21,19 @@ describe("Login feature", () => {
 		cy.get('#username-field')
 			.should('be.visible')
 			.find('input')
-			.type('admin')
+			.type(actor.username)
 		cy.get('#password-field')
 			.should('be.visible')
 			.find('input')
-			.type('admin')
+			.type(actor.password)
 		cy.get('#submit-login').click()
 		cy.wait("@login")
 		cy.get('.auth-card')
-			.should("not.exist")
+			.should("not.be.visible")
+		cy.get('.v-snack__content')
+			.should("be.visible")
+			.contains(`Welcome ${actor.first_name}!`)
+		cy.get('.v-snack__content', { timeout: 5000 })
+			.should("not.be.visible")
 	})
 })
