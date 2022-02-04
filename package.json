@@ -11,7 +11,8 @@
     "cypress:notFound": "cypress run --spec cypress/integration/notFound.spec.js --headed --no-exit",
     "cypress:login": "cypress run --spec cypress/integration/webui/login.spec.js --headed --no-exit",
     "cypress:visitSubmit": "cypress run --spec cypress/integration/webui/visitSubmit.spec.js --headed --no-exit",
-    "cypress:slowSelector": "cypress run --spec cypress/integration/webui/slowSelector.spec.js --headed --no-exit"
+    "cypress:slowSelector": "cypress run --spec cypress/integration/webui/slowSelector.spec.js --headed --no-exit",
+    "cypress:xpathSelector": "cypress run --spec cypress/integration/webui/xpathSelector.spec.js --headed --no-exit"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.22.2",
