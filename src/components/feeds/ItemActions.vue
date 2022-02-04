@@ -54,7 +54,7 @@
 			<v-btn
 				:small="smAndDown"
 				outlined
-				class="item-action-btn"
+				class="item-action-btn to-comments"
 				color="grey darken-1"
 				@click="routeToPublicationDetailComments"
 			>
@@ -63,10 +63,12 @@
 			</v-btn>
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
-					<v-btn v-if="!smAndDown" outlined class="item-action-btn"
-						v-bind="attrs"
+					<v-btn v-if="!smAndDown"
+						outlined
 						v-on="on"
+						v-bind="attrs"
 						color="grey darken-1"
+						class="item-action-btn share-action"
 					>
 						<v-icon left>mdi-share-outline</v-icon>Share
 					</v-btn>
@@ -74,7 +76,7 @@
 				<v-list dense>
 					<v-list-item
 						v-model="clipboardContent"
-						class="menu-item"
+						class="menu-item copy-action"
 						@click="copyLink"
 					>
 						<v-list-item-icon class="mr-2">
@@ -85,7 +87,7 @@
 					<v-divider v-if="!isMyPublication" />
 					<v-list-item
 						v-if="!isMyPublication"
-						class="menu-item"
+						class="menu-item cross-post-action"
 						@click="shareMode=true"
 					>
 						<v-list-item-icon class="mr-2">
@@ -98,7 +100,7 @@
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
 					<v-btn
-						v-if="!isMyPublication"
+						v-if="!isMyPublication" class="more-actions"
 						icon outlined color="grey darken-1" v-bind="attrs" v-on="on">
 						<v-icon>mdi-dots-vertical</v-icon>
 					</v-btn>
@@ -106,7 +108,8 @@
 				<v-list dense>
 					<v-menu>
 						<template #activator="{on, attrs}">
-							<v-list-item v-if="smAndDown" class="menu-item"
+							<v-list-item v-if="smAndDown"
+								class="menu-item share-action"
 								v-bind="attrs"
 								v-on="on"
 							>
@@ -117,7 +120,8 @@
 							</v-list-item>
 						</template>
 						<v-list dense>
-							<v-list-item class="menu-item"
+							<v-list-item
+								class="menu-item copy-action"
 								@click="copyLink"
 							>
 								<v-list-item-icon class="mr-2">
@@ -127,7 +131,7 @@
 							</v-list-item>
 							<v-divider />
 							<v-list-item
-								class="menu-item"
+								class="menu-item cross-post-action"
 								@click="shareMode=true"
 							>
 								<v-list-item-icon class="mr-2">
@@ -138,7 +142,8 @@
 						</v-list>
 					</v-menu>
 					<v-divider v-if="smAndDown" />
-					<v-list-item @click="bookmark()" class="menu-item"
+					<v-list-item @click="bookmark()"
+						class="menu-item bookmark-action"
 						active-class="menu-item-active"
 						:class="{'menu-item-active': ((bookmarkStatus))}"
 					>
@@ -148,7 +153,8 @@
 						</v-list-item-content>
 					</v-list-item>
 					<v-divider />
-					<v-list-item @click="hide()" class="menu-item"
+					<v-list-item @click="hide()"
+						class="menu-item hide-action"
 						active-class="menu-item-active"
 						:class="{'menu-item-active': ((hiddenStatus))}"
 					>
@@ -158,8 +164,12 @@
 						</v-list-item-content>
 					</v-list-item>
 					<v-divider />
-					<v-list-item @click="report()" class="menu-item">
-						<v-list-item-icon class="mr-2"><v-icon>mdi-flag-outline</v-icon></v-list-item-icon>
+					<v-list-item @click="report()"
+						class="menu-item report-action"
+					>
+						<v-list-item-icon class="mr-2">
+							<v-icon>mdi-flag-outline</v-icon>
+						</v-list-item-icon>
 						<v-list-item-content>
 							<v-list-item-title>Report</v-list-item-title>
 						</v-list-item-content>
@@ -167,19 +177,26 @@
 				</v-list>
 			</v-menu>
 			<v-spacer v-if="!smAndDown" />
-			<v-chip color="primary" small v-if="reactions === 0" class="mx-1">Add First Reaction</v-chip>
+			<v-chip color="primary"
+				small v-if="reactions === 0"
+				class="mx-1 add-first-reaction"
+			>
+				Add First Reaction
+			</v-chip>
 			<v-btn icon @click="sendUpVote()"
-				color="primary" class="mx-0"
+				color="primary"
 				:value="upVote"
+				class="mx-0 upvote-action"
 			>
 				<v-icon>
 					mdi-arrow-up-bold{{ (upVote) ? '' : '-outline' }}
 				</v-icon>
 			</v-btn>
-			<div v-if="reactions > 0" class="grey--text text--darken-3 weight-500 px-1">{{reactions}}</div>
+			<div v-if="reactions > 0" class="grey--text text--darken-3 weight-500 px-1 reactions-count">{{reactions}}</div>
 			<v-btn icon @click="sendDownVote()"
-				color="grey darken-2" class="mx-0"
+				color="grey darken-2"
 				:value="downVote"
+				class="mx-0 downvote-action"
 			>
 				<v-icon>
 					mdi-arrow-down-bold{{ (downVote) ? '' : '-outline' }}
