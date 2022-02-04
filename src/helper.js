@@ -1,3 +1,5 @@
+const WORD_CLUB_SESSION = "word-club-session"
+
 module.exports = {
 	registrationSteps: [
 		{state: "0", title: "Community Mainframe", icon: "mdi-ballot", to: "/register-community/mainframe"},
@@ -22,25 +24,31 @@ module.exports = {
 	getProgressState(state) {
 		return this.registrationSteps.find(item => item.state === state)
 	},
-	clearCurrentUser() {
-		localStorage.removeItem("word-club-current-user")
+	clearSession() {
+		localStorage.removeItem(WORD_CLUB_SESSION)
 	},
 	setCurrentUser(value) {
-		localStorage.setItem("word-club-current-user", JSON.stringify(value))
+		localStorage.setItem(WORD_CLUB_SESSION, JSON.stringify({
+			token: this.getAccessToken(),
+			user: value
+		}))
 	},
 	getCurrentUser() {
-		const value = localStorage.getItem("word-club-current-user")
-		if (value) return JSON.parse(value)
+		const value = localStorage.getItem(WORD_CLUB_SESSION)
+		if (value) return JSON.parse(value).user
 		return null
 	},
 	getAccessToken() {
-		return localStorage.getItem("word-club-api-access-token")
+		const session =  localStorage.getItem(WORD_CLUB_SESSION)
+		if (session) return JSON.parse(session).token
+		return null
 	},
 	setAccessToken(value) {
-		return localStorage.setItem("word-club-api-access-token", value)
-	},
-	clearAccessToken() {
-		return localStorage.removeItem("word-club-api-access-token")
+		const user = this.getCurrentUser()
+		localStorage.setItem(WORD_CLUB_SESSION, JSON.stringify({
+			token: value,
+			user: user
+		}))
 	},
 	getThemeColor(community) {
 		if (community.theme) return community.theme.color

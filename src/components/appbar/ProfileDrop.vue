@@ -113,8 +113,7 @@ export default {
 		logout() {
 			const url = this.$urls.user.logout
 			this.post(url).then(() => {
-				this.$helper.clearAccessToken()
-				this.$helper.clearCurrentUser()
+				this.$helper.clearSession()
 				this.$store.dispatch("user/setCurrentUser", null)
 				this.afterAuth()
 				this.openSuccessSnack("Logged out successfully.")
