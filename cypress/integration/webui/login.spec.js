@@ -36,7 +36,7 @@ describe("Login feature", () => {
 		cy.get(".v-snack__content")
 			.should("be.visible")
 			.contains(`Welcome ${actor.first_name}!`)
-		cy.get(".v-snack__content", { timeout: 5000 })
+		cy.get(".v-snack__content")
 			.should("not.be.visible")
 	})
 })
