@@ -1,6 +1,8 @@
-Cypress.Commands.add("deleteUserIfPresent", (username) => {
+import PostList from "../fixtures/postList.json";
+
+Cypress.Commands.add("deleteUserIfPresent", (user) => {
 	cy.backendRequest({
-		url: `user/${username}/`,
+		url: `user/${user.username}/`,
 		failOnStatusCode: false,
 		as: "searchAlice"
 	})
@@ -33,4 +35,21 @@ Cypress.Commands.add("createUser", ({
 		},
 		as: "registerAlice"
 	})
+})
+
+Cypress.Commands.add("interceptFilter", () => {
+	const filterUrl = "s/publication/*"
+	// stubbing the filter API hit at homepage mount
+	cy.intercept({
+		method: "GET",
+		url: Cypress.env("BACKEND_URL") + filterUrl
+	}, {
+		statusCode: 200,
+		body: PostList
+	})
+		.as("list")
+})
+
+Cypress.Commands.add("mockLogin", (data) => {
+	window.localStorage.setItem("word-club-session", JSON.stringify(data))
 })

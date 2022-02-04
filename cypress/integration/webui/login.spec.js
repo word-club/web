@@ -1,15 +1,16 @@
+const actor = {
+	first_name: "Alice",
+	username: "alice",
+	password: "XYBV123456789!@#",
+}
+
 describe("Login feature", () => {
-	const actor = {
-		first_name: "Alice",
-		username: "alice",
-		password: "XYBV123456789!@#",
-	}
 	before(() => {
 		cy.intercept("POST", Cypress.env("BACKEND_URL") + "login/")
 			.as("login")
 		// cypress custom commands
 		// delete user to be created before hand if already present
-		cy.deleteUserIfPresent(actor.username)
+		cy.deleteUserIfPresent(actor)
 		// create user to be used in tests
 		cy.createUser(actor)
 	})

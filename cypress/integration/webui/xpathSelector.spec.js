@@ -1,17 +1,6 @@
-import PostList from "./../../fixtures/postList.json"
-
 describe("demonstrates xpath selector", () => {
 	before(() => {
-		const filterUrl = "s/publication/*"
-		// stubbing the filter API hit at homepage mount
-		cy.intercept({
-			method: "GET",
-			url: Cypress.env("BACKEND_URL") + filterUrl
-		}, {
-			statusCode: 200,
-			body: PostList
-		})
-			.as("list")
+		cy.interceptFilter()
 	})
 	it("should show correct number of publications", () => {
 		cy.visit("/")

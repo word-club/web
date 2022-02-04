@@ -6,13 +6,16 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "cypress:open": "cypress open",
     "cypress:first": "cypress run --spec cypress/integration/example.spec.js --headed --no-exit",
     "cypress:educative": "cypress run --spec cypress/integration/educative.spec.js --headed --no-exit",
     "cypress:notFound": "cypress run --spec cypress/integration/notFound.spec.js --headed --no-exit",
     "cypress:login": "cypress run --spec cypress/integration/webui/login.spec.js --headed --no-exit",
     "cypress:visitSubmit": "cypress run --spec cypress/integration/webui/visitSubmit.spec.js --headed --no-exit",
     "cypress:slowSelector": "cypress run --spec cypress/integration/webui/slowSelector.spec.js --headed --no-exit",
-    "cypress:xpathSelector": "cypress run --spec cypress/integration/webui/xpathSelector.spec.js --headed --no-exit"
+    "cypress:xpathSelector": "cypress run --spec cypress/integration/webui/xpathSelector.spec.js --headed --no-exit",
+    "cypress:profileAvatar:correct": "cypress run --spec cypress/integration/webui/profileAvatar.spec.js --headed --no-exit",
+    "cypress:profileAvatar:incorrect": "cypress run --spec cypress/integration/webui/profileAvatarIncorrectUsage.spec.js --headed --no-exit"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.22.2",
