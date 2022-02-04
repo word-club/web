@@ -6,7 +6,7 @@ Cypress.Commands.add("backendRequest", ({
 	body = null,
 	headers = {},
 	failOnStatusCode = true,
-	as = 'backendRequest'
+	as = "backendRequest"
 } = {}) => {
 	return cy.request({
 		method: method,
@@ -19,15 +19,15 @@ Cypress.Commands.add("backendRequest", ({
 
 
 Cypress.Commands.add("adminRequest", ({
-	method = 'GET',
-	url = '',
+	method = "GET",
+	url = "",
 	body = null,
-	as = 'adminRequest'
+	as = "adminRequest"
 } = {}) => {
 	cy.request("POST", backendUrl + "login/", {
 		username: "admin",
 		password: "admin"
-	}).its('body.token').then(token => {
+	}).its("body.token").then(token => {
 		cy.request({
 			method: method,
 			url: backendUrl + url,

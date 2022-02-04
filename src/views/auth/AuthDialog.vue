@@ -125,14 +125,14 @@
 						</v-btn>
 						<v-btn
 							id="register-btn"
-						  v-if="!isSignUpMode" text x-small class="auth-text-btn" rounded
+							v-if="!isSignUpMode" text x-small class="auth-text-btn" rounded
 							@click="$store.dispatch('setAuthMode', {state: true, mode: 'signup'})"
 						>
 							Register
 						</v-btn>
 						<v-btn
 							id="login-btn"
-						  v-if="!isLoginMode" text x-small class="auth-text-btn" rounded
+							v-if="!isLoginMode" text x-small class="auth-text-btn" rounded
 							@click="$store.dispatch('setAuthMode', {state: true, mode: 'login'})"
 						>
 							Login

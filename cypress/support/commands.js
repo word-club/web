@@ -2,7 +2,7 @@ Cypress.Commands.add("deleteUserIfPresent", (username) => {
 	cy.backendRequest({
 		url: `user/${username}/`,
 		failOnStatusCode: false,
-		as: 'searchAlice'
+		as: "searchAlice"
 	})
 	cy.get("@searchAlice").then(response => {
 		if (response.status === 200) {
@@ -15,11 +15,11 @@ Cypress.Commands.add("deleteUserIfPresent", (username) => {
 })
 
 Cypress.Commands.add("createUser", ({
-	username = 'alice',
+	username = "alice",
 	password = "XYBV123456789!@#",
 	first_name = "Alice",
 	last_name = "Hansen",
-	profile = { birth_date: "2000-01-01" }
+	profile = {birth_date: "2000-01-01"}
 } = {}) => {
 	cy.backendRequest({
 		method: "POST",
@@ -31,6 +31,6 @@ Cypress.Commands.add("createUser", ({
 			last_name: last_name,
 			profile: profile
 		},
-		as: 'registerAlice'
+		as: "registerAlice"
 	})
 })
