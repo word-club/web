@@ -6,6 +6,7 @@
 		class="d-flex align-center justify-center px-2"
 	>
 		<v-text-field
+			id="community-search"
 			v-model="search"
 			dense outlined hide-details
 			clearable aria-autocomplete="search_communities"

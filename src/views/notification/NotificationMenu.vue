@@ -8,9 +8,10 @@
 			<v-badge
 				color="primary lighten-1"
 				overlap
+				class="notification-badge"
 			>
 				<template #badge>
-					<span class="font-weight-bold">55</span>
+					<span class="font-weight-bold notification-count">55</span>
 				</template>
 				<v-btn
 					id="notification-bell"

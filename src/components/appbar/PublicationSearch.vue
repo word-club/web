@@ -5,6 +5,7 @@
 		class="d-flex align-center justify-center px-2"
 	>
 		<v-text-field
+			id="publication-search"
 			v-model="search"
 			dense outlined clearable
 			hide-details aria-autocomplete="search_publication"

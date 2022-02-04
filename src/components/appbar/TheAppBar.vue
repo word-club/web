@@ -8,6 +8,7 @@
 	>
 		<div class="d-flex align-center px-2">
 			<v-btn
+				class="toggle-drawer"
 				icon v-if="$vuetify.breakpoint.smAndDown"
 				@click="toggleDrawer"
 			>
@@ -22,6 +23,7 @@
 		<v-spacer/>
 
 		<tooltip-icon-btn
+			id="popular"
 			size="40"
 			v-if="currentUser && viewportWidth> 440"
 			icon="mdi-finance"
@@ -30,6 +32,7 @@
 		/>
 
 		<tooltip-icon-btn
+			id="top-discussed"
 			size="40"
 			v-if="currentUser  && viewportWidth> 440"
 			icon="mdi-chart-gantt"
@@ -37,6 +40,7 @@
 			:to="{ name: 'Home', params: {sortBy: 'discussed'} }"
 		/>
 		<tooltip-icon-btn
+			id="create-publication"
 			size="40"
 			v-if="currentUser  && viewportWidth> 440"
 			icon="mdi-plus"
