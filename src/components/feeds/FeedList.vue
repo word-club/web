@@ -12,14 +12,14 @@
 				</v-card-text>
 			</v-card>
 			<div v-else>
-				<div v-if="pubs">
+				<div v-if="pubs" class="publication-list">
 					<publication-instance
 						v-for="publication in publications.results"
 						:key="publication.id"
 						:id="`publication-${publication.id}`"
 						:publication="publication"
 						@init="getPublications"
-						class="mb-4"
+						class="mb-4 publication-item"
 					/>
 				</div>
 				<v-card v-else outlined min-height="70vh" class="pt-16">
