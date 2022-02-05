@@ -24,6 +24,7 @@ describe("Upvote Feature", () => {
 				}, as: "login"
 			})
 			cy.get("@login").then(response => {
+				console.log(response)
 				// visits the homepage with the login data
 				// substitution in the browser localStorage
 				cy.mockLogin({
