@@ -57,10 +57,7 @@ export default {
 			const token = this.$helper.getAccessToken()
 			const currentUser = this.$helper.getCurrentUser()
 			if (token && currentUser) this.$store.dispatch("user/setCurrentUser", currentUser)
-			else {
-				this.$helper.clearSession()
-				this.$store.dispatch("user/setCurrentUser", null)
-			}
+			else this.$store.dispatch("user/setCurrentUser", null)
 		}
 	}
 }

@@ -192,7 +192,11 @@
 					mdi-arrow-up-bold{{ (upVote) ? '' : '-outline' }}
 				</v-icon>
 			</v-btn>
-			<div v-if="reactions > 0" class="grey--text text--darken-3 weight-500 px-1 reactions-count">{{reactions}}</div>
+			<div v-if="reactions > 0"
+				class="grey--text text--darken-3 weight-500 px-1 reactions-count"
+			>
+				{{reactions}}
+			</div>
 			<v-btn icon @click="sendDownVote()"
 				color="grey darken-2"
 				:value="downVote"
