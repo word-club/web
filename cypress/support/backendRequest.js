@@ -24,19 +24,11 @@ Cypress.Commands.add("adminRequest", ({
 	body = null,
 	as = "adminRequest"
 } = {}) => {
-	cy.request("POST", backendUrl + "login/", {
-		username: "admin",
-		password: "admin"
-	})
-		.then(response => {
-			console.log(response)
-			const token = response.body.token
-			cy.request({
-				method: method,
-				url: backendUrl + url,
-				headers: {
-					Authorization: "Token " + token
-				}, body: body
-			}).as(as)
-		})
+	cy.request({
+		method: method,
+		url: backendUrl + url,
+		headers: {
+			Authorization: "Token 46a3fc00d15b90c5dffb42e9de9de0876e90649a"
+		}, body: body
+	}).as(as)
 })
