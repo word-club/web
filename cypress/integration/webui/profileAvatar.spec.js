@@ -6,9 +6,8 @@ describe("Profile Avatar (Correct Usage)", () => {
 			.then(data => {
 				expectedUser = data.user
 				cy.mockLogin(data)
+				cy.wait("@list")
 			})
-		cy.visit("/")
-		cy.wait("@list")
 	})
 	it("should set capitalized first letter of username on profile avatar", () => {
 		let avatarTextContent = null

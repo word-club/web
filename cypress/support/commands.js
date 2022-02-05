@@ -51,5 +51,20 @@ Cypress.Commands.add("interceptFilter", () => {
 })
 
 Cypress.Commands.add("mockLogin", (data) => {
-	window.localStorage.setItem("word-club-session", JSON.stringify(data))
+	cy.window()
+		.then(win => {
+			const WORD_CLUB_SESSION = "word-club-session"
+			win.localStorage.setItem(WORD_CLUB_SESSION, JSON.stringify(data))
+		})
+	cy.visit("/")
+})
+
+Cypress.Commands.add("interceptBackend", ({
+	method = "GET",
+	url, as = ""
+} = {}) => {
+	cy.intercept({
+		method: method,
+		url: Cypress.env("BACKEND_URL") + url
+	}).as(as)
 })

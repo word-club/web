@@ -15,7 +15,8 @@
     "cypress:slowSelector": "cypress run --spec cypress/integration/webui/slowSelector.spec.js --headed --no-exit",
     "cypress:xpathSelector": "cypress run --spec cypress/integration/webui/xpathSelector.spec.js --headed --no-exit",
     "cypress:profileAvatar:correct": "cypress run --spec cypress/integration/webui/profileAvatar.spec.js --headed --no-exit",
-    "cypress:profileAvatar:incorrect": "cypress run --spec cypress/integration/webui/profileAvatarIncorrectUsage.spec.js --headed --no-exit"
+    "cypress:profileAvatar:incorrect": "cypress run --spec cypress/integration/webui/profileAvatarIncorrectUsage.spec.js --headed --no-exit",
+    "cypress:upvote": "cypress run --spec cypress/integration/webui/upvote.spec.js --headed --no-exit"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.22.2",
