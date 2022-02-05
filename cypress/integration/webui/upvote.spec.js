@@ -15,6 +15,10 @@ describe("Upvote Feature", () => {
 			cy.deleteUserIfPresent(actor)
 			cy.createUser(actor)
 
+			cy.request({
+				url: Cypress.env("BACKEND_URL") + "/robots.txt"
+			})
+
 			// a programmatic login
 			cy.backendRequest({
 				method: "POST", url: "login/",

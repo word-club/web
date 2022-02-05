@@ -4,6 +4,6 @@
     "video": false,
     "defaultCommandTimeout": 8000,
     "env": {
-        "BACKEND_URL": "https://wordclub.foodswipe.com.np/api/"
+        "BACKEND_URL": "https://wordclub.foodswipe.com.np"
     }
 }

@@ -1,4 +1,4 @@
-const backendUrl = Cypress.env("BACKEND_URL")
+const backendUrl = Cypress.env("BACKEND_URL") + "/api/"
 
 Cypress.Commands.add("backendRequest", ({
 	method = "GET",

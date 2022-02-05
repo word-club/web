@@ -65,6 +65,6 @@ Cypress.Commands.add("interceptBackend", ({
 } = {}) => {
 	cy.intercept({
 		method: method,
-		url: Cypress.env("BACKEND_URL") + url
+		url: Cypress.env("BACKEND_URL") + "/api/" + url
 	}).as(as)
 })
