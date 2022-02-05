@@ -37,19 +37,6 @@ Cypress.Commands.add("createUser", ({
 	})
 })
 
-Cypress.Commands.add("interceptFilter", () => {
-	const filterUrl = "s/publication/*"
-	// stubbing the filter API hit at homepage mount
-	cy.intercept({
-		method: "GET",
-		url: Cypress.env("BACKEND_URL") + filterUrl
-	}, {
-		statusCode: 200,
-		body: PostList
-	})
-		.as("list")
-})
-
 Cypress.Commands.add("mockLogin", (data) => {
 	cy.window()
 		.then(win => {
@@ -67,4 +54,17 @@ Cypress.Commands.add("interceptBackend", ({
 		method: method,
 		url: Cypress.env("BACKEND_URL") + "/api/" + url
 	}).as(as)
+})
+
+Cypress.Commands.add("interceptFilter", () => {
+	const filterUrl = "/api/s/publication/*"
+	// stubbing the filter API hit at homepage mount
+	cy.intercept({
+		method: "GET",
+		url: Cypress.env("BACKEND_URL") + filterUrl
+	}, {
+		statusCode: 200,
+		body: PostList
+	})
+		.as("list")
 })
