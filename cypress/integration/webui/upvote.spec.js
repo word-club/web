@@ -20,21 +20,14 @@ describe("Upvote Feature", () => {
 			})
 
 			// a programmatic login
-			cy.backendRequest({
-				method: "POST", url: "login/",
-				body: {
-					username: actor.username,
-					password: actor.password
-				}, as: "login"
+			cy.adminRequest({
+				url: `user/${actor.username}/inspect/`,
+				as: "login"
 			})
 			cy.get("@login").then(response => {
-				console.log(response)
 				// visits the homepage with the login data
 				// substitution in the browser localStorage
-				cy.mockLogin({
-					token: response.body.token,
-					user: response.body.data
-				})
+				cy.mockLogin(response.body)
 				cy.wait("@list")
 			})
 		})
