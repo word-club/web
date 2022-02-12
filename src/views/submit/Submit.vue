@@ -195,7 +195,7 @@
 							<v-btn rounded
 								v-if="!editMode"
 								depressed
-								:dark="inProgress"
+								:dark="!!inProgress"
 								:color="theme.color"
 								class="weight-600 ma-1"
 								:disabled="!inProgress"

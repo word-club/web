@@ -7,6 +7,7 @@
 				v-bind="attrs"
 				class="elevation-4 profile-avatar"
 				v-on="on"
+				v-ripple
 			>
 				<v-img v-if="currentUser.profile.avatar"
 					:src="$link(currentUser.profile.avatar.image)"

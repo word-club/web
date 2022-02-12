@@ -1,6 +1,7 @@
 const DeleteMixin = {
 	data: () => ({
 		deleteErrors: {},
+		deleted: false,
 		deleting: false,
 		deleteResponse: null
 	}),
@@ -10,6 +11,7 @@ const DeleteMixin = {
 			return this
 				.$axios.delete(url)
 				.then(res => {
+					this.deleted = true
 					this.deleteResponse = res
 				})
 				.catch(err => {

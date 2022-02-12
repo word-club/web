@@ -23,10 +23,10 @@
 						<tr v-for="(item, index) in trendingCommunities"
 							:key="index"
 						>
-							<td>
-								<div>{{ index + 1 }}</div>
+							<td class="px-1">
+								<div class="pl-2">{{ index + 1 }}</div>
 							</td>
-							<td>
+							<td class="px-1">
 								<div class="d-flex align-center py-1">
 									<v-avatar size="30"
 										color="grey darken-2"
@@ -36,7 +36,7 @@
 									</div>
 								</div>
 							</td>
-							<td>
+							<td class="px-1">
 								<v-btn rounded
 									color="primary"
 									x-small

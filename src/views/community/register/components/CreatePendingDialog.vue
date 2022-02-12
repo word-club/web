@@ -13,7 +13,9 @@
 						:key="item.id"
 						@click="setCommunityInProgress(item)"
 					>
-						<v-list-item-avatar :color="`${item.theme.color} lighten-1`"
+						<v-list-item-avatar
+							v-if="item.theme"
+							:color="`${item.theme.color} lighten-1`"
 							class="white--text px22"
 						>
 							{{item.name[0].toUpperCase()}}
@@ -26,6 +28,7 @@
 								<v-progress-linear
 									striped rounded
 									height="10"
+									v-if="item.theme"
 									:color="item.theme.color"
 									:value="completedPercentage(item.create_progress)"
 								/>
@@ -34,6 +37,7 @@
 
 						<v-list-item-action>
 							<v-btn
+								v-if="item.theme"
 								rounded :color="`${item.theme.color} lighten-2`" dark
 								@click="setCommunityInProgress(item)">Continue</v-btn>
 						</v-list-item-action>

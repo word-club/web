@@ -24,7 +24,7 @@
 				</div>
 				<v-card v-else outlined min-height="70vh" class="pt-16">
 					<v-card-text class="px16 weight-500 text-center pt-16">
-						Hmm... Sorry we're out of posts. Please visit us later.
+						Hmm... Sorry we're out of posts. Please visit us later :)
 					</v-card-text>
 				</v-card>
 			</div>
@@ -58,6 +58,7 @@ export default {
 	},
 	created() {
 		setTimeout(() => {
+			console.log(this.loading)
 			this.getPublications()
 				.then(() => {this.isLoading = false})
 		}, 3000)

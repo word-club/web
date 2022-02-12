@@ -87,7 +87,7 @@ export default {
 				this.sidebarWidth = 80
 				this.showSidebarContent = false
 			} else {
-				this.sidebarWidth = 320
+				this.sidebarWidth = 300
 				this.showSidebarContent = true
 			}
 		},

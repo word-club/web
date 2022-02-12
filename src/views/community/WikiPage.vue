@@ -62,12 +62,19 @@
 					<v-card-title :class="{'pt-0': index !==0}">
 						{{rule.title}}
 						<v-spacer />
-						<v-btn icon :color="community.theme.color"
+						<v-btn
+							v-if="isCommunityManager"
+							icon :color="community.theme.color"
 							@click="$store.dispatch('setRuleInEdit', rule)"
 						>
 							<v-icon>mdi-pencil</v-icon>
 						</v-btn>
-						<v-btn icon color="error"><v-icon>mdi-delete</v-icon></v-btn>
+						<v-btn
+							icon color="error"
+							v-if="isCommunityManager"
+						>
+							<v-icon>mdi-delete</v-icon>
+						</v-btn>
 					</v-card-title>
 					<v-card-subtitle>{{rule.description}}</v-card-subtitle>
 				</v-card-text>
@@ -88,8 +95,21 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			community: "community/inView"
-		})
+			community: "community/inView",
+			currentUser: "user/current"
+		}),
+		isCommunityManager() {
+			const managedCommunities = this.currentUser.managed_communities
+			if (!managedCommunities.length) return false
+			let present = false
+			for (let i=0; i<managedCommunities.length; i++) {
+				if (managedCommunities[i].id === this.community.id)  {
+					present = true
+					break
+				}
+			}
+			return present
+		}
 	},
 	methods: {}
 }

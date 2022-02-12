@@ -17,7 +17,7 @@
 					/>
 				</v-card>
 			</v-card-text>
-			<detail-title />
+			<detail-title @refresh="refreshCommunity" />
 			<v-card-text class="pt-4">
 				<v-card max-width="800"
 					class="mx-auto"
@@ -53,13 +53,16 @@ export default {
 		})
 	},
 	created() {
-		this.fetchDetail("community")
-			.then(() => {
-				this.setTabListeners(this.community.theme.color)
-			})
+		this.refreshCommunity()
 	},
 	methods: {
 		...mapMutations("community", ["SET_TO_VIEW"]),
+		refreshCommunity() {
+			this.fetchDetail("community")
+				.then(() => {
+					this.setTabListeners(this.community.theme.color)
+				})
+		},
 		setTabListeners(color) {
 			function onMouseOver(e) {
 				e.target.classList.add(`${color}--text`)

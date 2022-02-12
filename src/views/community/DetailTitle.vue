@@ -1,5 +1,9 @@
 <template>
 	<v-card-title class="pa-0 white">
+		<confirm-dialog
+			@refreshMe="refreshMe"
+			@refreshCommunity="$emit('refresh')"
+		/>
 		<v-card max-width="800"
 			width="800"
 			class="mx-auto"
@@ -28,34 +32,103 @@
 				</div>
 				<v-spacer />
 				<div class="px-2" />
-				<v-btn
-					v-if="subscription && subscription.is_approved"
-					rounded depressed :color="community.theme.color"
-					@click="unSubscribe(community)" dark
+				<div class="d-flex"
+					v-if="$vuetify.breakpoint.smAndUp"
 				>
-					Joined
-				</v-btn>
-				<v-btn
-					v-else outlined rounded
-					:color="community.theme.color"
-					@click="subscribe(community)" dark
+					<v-btn
+						v-if="subscription && subscription.is_approved"
+						rounded depressed :color="community.theme.color"
+						@click="unSubscribe(community)" dark
+					>
+						Joined
+					</v-btn>
+					<v-tooltip v-else-if="subscription && !subscription.is_approved" bottom>
+						<template #activator="{on, attrs}">
+							<v-btn
+								@click="unSubscribe(community)"
+								:color="community.theme.color + ' lighten-1'"
+								v-bind="attrs"
+								v-on="on" rounded
+							>
+								Requested
+							</v-btn>
+						</template>
+						<span>Subscription request is in approval progress.</span>
+						<span class="pl-1">Click to revoke your request.</span>
+					</v-tooltip>
+					<v-btn
+						v-else outlined rounded
+						:color="community.theme.color"
+						@click="subscribe(community)" dark
+					>
+						Join
+					</v-btn>
+					<div class="px-2" />
+					<v-btn
+						v-if="subscription && !subscription.disable_notification"
+						icon :color="community.theme.color"
+						@click="disableNotification(community)"
+					>
+						<v-icon>mdi-bell</v-icon>
+					</v-btn>
+					<v-btn
+						v-if="subscription && subscription.disable_notification"
+						icon :color="community.theme.color"
+						@click="enableNotification(community)"
+					>
+						<v-icon>mdi-bell-outline</v-icon>
+					</v-btn>
+				</div>
+				<v-menu
+					v-else
+					bottom
+					nudge-bottom="38"
+					nudge-right="-145"
 				>
-					Join
-				</v-btn>
-				<div class="px-2" />
-				<v-btn
-					v-if="subscription && !subscription.disable_notification"
-					icon :color="community.theme.color"
-					@click="disableNotification(community)"
-				>
-					<v-icon>mdi-bell</v-icon>
-				</v-btn>
-				<v-btn
-					v-else icon :color="community.theme.color"
-					@click="enableNotification(community)"
-				>
-					<v-icon>mdi-bell-outline</v-icon>
-				</v-btn>
+					<template #activator="{on, attrs}">
+						<v-btn icon
+							v-bind="attrs"
+							v-on="on"
+						>
+							<v-icon>mdi-dots-vertical</v-icon>
+						</v-btn>
+					</template>
+					<v-list dense outlined rounded>
+						<v-list-item
+							v-if="!subscription"
+							@click="subscribe()"
+						>
+							Request Subscription
+						</v-list-item>
+						<v-list-item
+							v-if="subscription && !subscription.is_approved"
+							@click="unSubscribe()"
+						>
+							Revoke Subscription
+						</v-list-item>
+						<v-list-item
+							v-if="subscription && !subscription.disable_notification"
+							@click="disableNotification()"
+						>
+							Disable Notifications
+						</v-list-item>
+						<v-list-item
+							v-if="subscription && subscription.disable_notification"
+							@click="enableNotification()"
+						>
+							Enable Notifications
+						</v-list-item>
+						<v-list-item @click="reportCommunity()">
+							Report Community
+						</v-list-item>
+						<v-list-item
+							v-if="subscription && subscription.is_approved"
+							@click="unSubscribe()"
+						>
+							Unsubscribe
+						</v-list-item>
+					</v-list>
+				</v-menu>
 			</v-card-text>
 			<community-tab />
 		</v-card>
@@ -65,11 +138,15 @@
 <script>
 import {mapGetters} from "vuex";
 import CommunityActions from "@/mixin/CommunityActions.js";
+import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
+import FetchMixin from "@/mixin/FetchMixin.js";
 
 export default {
 	name: "DetailTitle",
-	mixins: [CommunityActions],
+	emits: ["refresh"],
+	mixins: [CommunityActions, RefreshMeMixin, FetchMixin],
 	components: {
+		ConfirmDialog: () => import("@/components/ConfirmDialog.vue"),
 		CommunityTab: () => import("@/views/community/CommunityTab")
 	},
 	computed: {
@@ -80,7 +157,7 @@ export default {
 			if (!this.community) return false
 			return this.community.subscription
 		}
-	},
+	}
 }
 </script>
 
