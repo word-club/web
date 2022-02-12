@@ -1,13 +1,14 @@
 <template>
 	<v-card outlined
 		rounded
+		class="overflow-hidden"
 	>
 		<v-card flat
 			height="80"
 			class="d-flex align-end rounded-b-0"
 			color="primary"
 			dark
-			img="https://www.wealthmanagement.com/sites/wealthmanagement.com/files/styles/article_featured_standard/public/fastest-growing-rias-promo.jpg?itok=20oq5xhc"
+			:img="trendingImg"
 		>
 			<v-card-title class="sidebar-card-title py-0 pb-2">
 				Today's Top Growing Communities
@@ -58,7 +59,7 @@
 				View All
 			</v-btn>
 		</v-card-actions>
-		<v-card-actions>
+		<v-card-actions class="px-1 top-tags">
 			<v-btn class="primary--text tag-btn"
 				color="grey lighten-4"
 				rounded depressed
@@ -91,6 +92,7 @@
 export default {
 	name: "TrendingCommunities",
 	data: () => ({
+		trendingImg: "https://www.wealthmanagement.com/sites/wealthmanagement.com/files/styles/article_featured_standard/public/fastest-growing-rias-promo.jpg?itok=20oq5xhc",
 		trendingCommunities: [
 			{name: "AntiWork"},
 			{name: "ShitPosting"},
@@ -102,9 +104,15 @@ export default {
 }
 </script>
 
-<style scoped>
-.tag-btn {
-	height: 25px !important; font-size: 11px; font-weight: 700;
-	padding: 0 4px !important;
+<style scoped lang="scss">
+.top-tags {
+	overflow: auto;
+	white-space: nowrap;
+	.tag-btn {
+		font-size: 11px;
+		font-weight: 700;
+		height: 25px !important;
+		padding: 0 4px !important;
+	}
 }
 </style>

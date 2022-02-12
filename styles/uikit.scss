@@ -1,0 +1,65 @@
+.app-padding {
+	padding: 0 10px 0 10px
+}
+.v-label {
+	font-size: 14px !important;
+	font-weight: 500;
+}
+.v-input {
+	font-size: 14px !important;
+}
+.sidebar-card-title {
+	font-size: 16px !important;
+}
+.footer-items {
+	div {
+		font-size: 14px;
+		cursor: pointer;
+	}
+	div:hover {
+		color: black
+	}
+}
+.cursor {
+	cursor: pointer;
+}
+.hover-underline:hover {
+	text-decoration: underline;
+}
+.full-width {
+	width: 100%
+}
+.normal-whitespace {
+	white-space: normal !important;
+}
+.transparent-bg {
+	background-color: transparent!important;
+}
+.empty-content {
+	color: #5d5d5d
+}
+.drawer-item {
+	padding-left: 10px;
+	font-weight: 500;
+	color: #5d5d5d;
+}
+.form-header {
+	font-size: 18px;
+	padding-top: 20px;
+	font-weight: 500;
+	color: #4a4a4a;
+}
+.form-description {
+	color: #8e8e8e;
+	font-size: 13px;
+	padding-bottom: 10px;
+}
+.overline {
+	font-weight: 700;
+	letter-spacing: 1px !important;
+}
+.sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0; z-index: 5;
+}

@@ -148,6 +148,9 @@
 				</div>
 			</v-card-actions>
 		</v-scale-transition>
+		<confirm-dialog @refreshMe="refreshMe"
+			@refresh="fetchDetail('user')"
+		/>
 	</v-card>
 </template>
 
@@ -158,10 +161,14 @@ import PostMixin from "@/mixin/PostMixin.js";
 import Snack from "@/mixin/Snack.js";
 import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
 import FetchMixin from "@/mixin/FetchMixin.js";
+import ConfirmDialog from "@/mixin/ConfirmDialog.js";
 
 export default {
 	name: "UserPeek",
-	mixins: [PostMixin, Snack, RefreshMeMixin, FetchMixin],
+	components: {
+		ConfirmDialog: () => import("@/components/ConfirmDialog"),
+	},
+	mixins: [PostMixin, Snack, RefreshMeMixin, FetchMixin, ConfirmDialog],
 	data: () => ({
 		moreOptions: false
 	}),
@@ -170,15 +177,18 @@ export default {
 			user: "user/inView"
 		}),
 		userReactions() {
-			// TODO: return recieved reactions count
-			return null
+			if (!this.user?.profile) return
+			return this.user.profile.popularity +
+				this.user.profile.supports
 		},
 		currentUser() {
 			return this.$helper.getCurrentUser()
 		},
 		followed() {
 			if (this.user && this.currentUser) {
-				return this.user.followers.filter(user => user.id === this.currentUser.id).length > 0
+				return this.user.followers
+					.filter(user => user.id === this.currentUser.id)
+					.length > 0
 			} return false
 		}
 	},
@@ -187,14 +197,14 @@ export default {
 		followUser() {
 			if (this.currentUser) {
 				const url = this.$util.format(this.$urls.user.follow, this.user.id)
-				this.post(url).then(() => {
-					if(this.success) {
-						this.openSuccessSnack(`Follow success. You're now following user ${this.user.username}`)
-						this.fetchDetail("user")
-						this.refreshMe()
-					}
-					else this.openSnack("Follow failed. Something went wrong. Please try again.")
-				})
+				this.openConfirmDialog(
+					`Are you sure you want to follow user <code>${this.user.username}</code>`,
+					"POST",
+					url,
+					["refreshMe", "refresh"],
+					`Follow success. You're now following user ${this.user.username}`,
+					"Follow failed. Something went wrong. Please try again."
+				)
 			} else {
 				this.$store.dispatch("setAuthMode", {state: true, mode: "login"});
 			}

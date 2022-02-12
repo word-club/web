@@ -14,7 +14,7 @@
 			<div :class="{
 				'text-center': !showSidebarContent,
 				'text-right': showSidebarContent
-			}" v-if="!mdAndUp" class="px-2 pt-16">
+			}" v-if="!mdAndUp" class="px-2 pt-12 pb-4">
 				<v-btn @click="toggleSidebarWidth"
 					color="accent"
 					:block="showSidebarContent"
@@ -50,7 +50,7 @@ export default {
 	},
 	data: () => ({
 		showSidebarContent: true,
-		sidebarWidth: 320,
+		sidebarWidth: 300,
 	}),
 	computed: {
 		sidebar: {
@@ -79,7 +79,7 @@ export default {
 		...mapMutations(["SET_SIDEBAR_STATE"]),
 		toggleSidebarWidth() {
 			this.showSidebarContent = !this.showSidebarContent
-			if (this.sidebarWidth === 80) this.sidebarWidth = 320
+			if (this.sidebarWidth === 80) this.sidebarWidth = 300
 			else this.sidebarWidth = 80
 		},
 		sidebarWidthManager() {
