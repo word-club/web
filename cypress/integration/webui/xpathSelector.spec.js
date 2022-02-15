@@ -1,3 +1,5 @@
+import PostList from "../../fixtures/postList.json";
+
 describe("demonstrates xpath selector", () => {
 	before(() => {
 		cy.interceptFilter()
