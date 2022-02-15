@@ -1,7 +1,7 @@
 <template>
-	<v-card outlined
-		max-width="350"
+	<v-card
 		v-if="community"
+		outlined max-width="350"
 	>
 		<v-card
 			:color="community.theme.color"
@@ -38,7 +38,7 @@
 		<v-card-text class="d-flex align-center pa-3 weight-500 justify-space-between">
 			<div>
 				<div class="px18">
-					{{community.subscribers}}
+					{{ community["subscribers_count"] }}
 				</div>
 				<div class="px14">
 					{{ community.theme.to_call_subscriber }}
@@ -47,7 +47,7 @@
 			<div class="px-1" />
 			<div>
 				<div class="px18">
-					{{community.reactions}}
+					{{community.rating }}
 				</div>
 				<div class="px14">
 					{{ community.theme.state_after_subscription }}
@@ -60,7 +60,7 @@
 				mdi-routes-clock
 			</v-icon>
 			<div class="px-2 px16 weight-500">
-				Created {{ $moment(community.date_of_registration).format("MM DD, YYYY") }}
+				Created {{ dateOfRegistration }}
 			</div>
 		</v-card-text>
 		<v-card-text class="pa-3">
@@ -122,8 +122,13 @@ export default {
 		seeOptions: false,
 		seeTheme: true
 	}),
-	computed: {},
-	methods: {}
+	computed: {
+		dateOfRegistration() {
+			return this
+				.$moment(community["date_of_registration"])
+				.format("MM DD, YYYY")
+		}
+	}
 }
 </script>
 

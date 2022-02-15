@@ -44,7 +44,7 @@ export default {
 	},
 	mixins: [RouteMixin, PublicationType, FetchPublications],
 	data: () => ({
-		isLoading: true,
+		isLoading: false,
 	}),
 	computed: {
 		...mapGetters({
@@ -57,11 +57,12 @@ export default {
 		}
 	},
 	created() {
+		// only set loading to true if the store is empty
+		this.isLoading = this.publications?.count === undefined
 		setTimeout(() => {
-			console.log(this.loading)
 			this.getPublications()
 				.then(() => {this.isLoading = false})
-		}, 3000)
+		}, 2000)
 	},
 	watch: {
 		"$route.params.sortBy": {

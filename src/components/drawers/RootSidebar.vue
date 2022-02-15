@@ -14,7 +14,7 @@
 			<div :class="{
 				'text-center': !showSidebarContent,
 				'text-right': showSidebarContent
-			}" v-if="!mdAndUp" class="px-2 pt-12 pb-4">
+			}" v-if="!mdAndUp" class="px-2 py-4">
 				<v-btn @click="toggleSidebarWidth"
 					color="accent"
 					:block="showSidebarContent"
