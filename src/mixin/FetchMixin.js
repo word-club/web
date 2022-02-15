@@ -11,9 +11,8 @@ const FetchMixin = {
 		next()
 	},
 	methods: {
-		fetchDetail(model, {pk = null, toView = true} = {}) {
+		fetchDetail(model, {pk = null} = {}) {
 			this.loading = true
-			this.toView = toView
 			const routeId = this.$route.params.id || this.$route.params.username
 			const url = this.$urls[model]["retrieve"] || this.$urls[model]["detail"]
 			return this.$axios

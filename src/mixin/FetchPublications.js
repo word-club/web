@@ -1,12 +1,12 @@
 const FetchPublications = {
 	data: () => ({
-		isLoading: false
+		fetchingPubs: false
 	}),
 	methods: {
 		async fetchPublications(
 			payload = {}
 		) {
-			this.isLoading = true
+			this.fetchingPubs = true
 			payload = {
 				is_published: true,
 				depth: 3,
@@ -14,7 +14,7 @@ const FetchPublications = {
 				...payload,
 			}
 			await this.$store.dispatch("publication/filter", payload)
-			this.isLoading = false
+			this.fetchingPubs = false
 		}
 	}
 }

@@ -508,8 +508,9 @@ export default {
 		},
 		processInitWithCommunity() {
 			const communityToInitWith = this.$route.params.community
+			this.toView = false
 			if (communityToInitWith) {
-				this.fetchDetail("community", {pk: communityToInitWith, toView: false})
+				this.fetchDetail("community", {pk: communityToInitWith})
 					.then(() => {
 						if (this.fetchRes) {
 							this.setCommunity(this.fetchRes)

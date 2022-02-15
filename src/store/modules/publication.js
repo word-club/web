@@ -43,7 +43,7 @@ const actions = {
 	filter({commit}, payload) {
 		return axios.getWithPayload(urls.list, payload)
 			.then(res => {
-				commit("SET_LIST", res)
+				if (state.publications.count !== res.count) commit("SET_LIST", res)
 			})
 	},
 	setDrafts({commit}, value) {

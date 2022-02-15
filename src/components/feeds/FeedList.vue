@@ -12,7 +12,7 @@
 				</v-card-text>
 			</v-card>
 			<div v-else>
-				<div v-if="pubs" class="publication-list">
+				<div v-if="publications.results.length" class="publication-list">
 					<publication-instance
 						v-for="publication in publications.results"
 						:key="publication.id"
@@ -50,15 +50,10 @@ export default {
 		...mapGetters({
 			publications: "publication/list"
 		}),
-		pubs() {
-			if (!this.publications) return false
-			if (!this.publications.results) return false
-			return this.publications.results.length
-		}
 	},
 	created() {
 		// only set loading to true if the store is empty
-		this.isLoading = this.publications?.count === undefined
+		this.isLoading = !this.publications?.count
 		setTimeout(() => {
 			this.getPublications()
 				.then(() => {this.isLoading = false})
