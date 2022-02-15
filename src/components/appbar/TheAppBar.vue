@@ -16,7 +16,6 @@
 				<v-icon v-if="$store.getters.mainDrawerState">mdi-menu-close</v-icon>
 				<v-icon v-else>mdi-menu-open</v-icon>
 			</v-btn>
-			<div class="px-2"/>
 			<div class="the-app-bar--site-title" @click="toHome">WordClub</div>
 		</div>
 
@@ -142,9 +141,16 @@ export default {
 .the-app-bar {
 	border-bottom: 1px solid #d2d2d2 !important;
 	&--site-title {
-		font-size: 1.2rem;
-		font-weight: 500;
+		font-size: 1.4rem;
+		font-weight: 800;
 		cursor: pointer;
+		background: linear-gradient(90deg, #3f51b5, #1979c4);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		transition: text-shadow ease .3s;
+		&:hover {
+			text-shadow: 1px 1px rgba(78, 78, 78, 0.1);
+		}
 	}
 }
 </style>
