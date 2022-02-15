@@ -10,11 +10,14 @@
 			class="home-sidebar"
 			:width="sidebarWidth"
 		>
-			<sidebar-top-padding />
-			<div :class="{
-				'text-center': !showSidebarContent,
-				'text-right': showSidebarContent
-			}" v-if="!mdAndUp" class="px-2 py-4">
+			<div
+				v-if="!mdAndUp || viewportWidth < 300"
+				class="home-sidebar--toggle"
+				:class="{
+					'text-center': !showSidebarContent,
+					'text-right': showSidebarContent
+				}"
+			>
 				<v-btn @click="toggleSidebarWidth"
 					color="accent"
 					:block="showSidebarContent"
@@ -27,7 +30,9 @@
 					</v-scale-transition>
 				</v-btn>
 			</div>
-			<div v-show="showSidebarContent">
+			<div v-show="showSidebarContent"
+				class="home-sidebar--content"
+			>
 				<transition
 					name="view"
 				>
@@ -45,9 +50,6 @@ import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
 export default {
 	name: "RootSidebar",
 	mixins: [ScreenSizeMixin],
-	components: {
-		SidebarTopPadding: () => import("@/components/drawers/SidebarTopPadding"),
-	},
 	data: () => ({
 		showSidebarContent: true,
 		sidebarWidth: 300,
@@ -83,7 +85,7 @@ export default {
 			else this.sidebarWidth = 80
 		},
 		sidebarWidthManager() {
-			if (!this.mdAndUp) {
+			if (!this.mdAndUp && !this.xs) {
 				this.sidebarWidth = 80
 				this.showSidebarContent = false
 			} else {
@@ -96,5 +98,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.home-sidebar {
+	&--toggle {
+		padding: 8px;
+	}
+	::v-deep.v-navigation-drawer__content {
+		transition: margin-top ease .5s;
+		margin-top: 56px;
+		@media only screen and (max-width: 849px) and (min-width: 600px) {
+			// when the appbar height is extended
+			margin-top: 105px;
+		}
+		@media only screen and (max-width: 600px) {
+			margin-top: 0;
+		}
+	}
+}
 </style>

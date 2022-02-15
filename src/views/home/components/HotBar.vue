@@ -1,46 +1,56 @@
 <template>
-	<v-card outlined>
+	<v-card outlined class="hot-bar">
 		<v-card-actions
-			class="pa-3 flex-wrap"
+			class="flex-wrap"
 		>
-			<v-btn
-				rounded depressed
-				:outlined="!isOnBest"
-				:color="color" active-class="active-filter"
-				:class="{
-					'active-filter': isOnBest
-				}"
-				:to="{name: 'Home', params: {sortBy: bestItem.queryName}}"
-			>
-				<v-icon left>
-					{{ bestItem.icon }}
-				</v-icon>
-				{{ bestItem.name }}
-			</v-btn>
-			<v-btn
+			<div class="hot-bar--action-btn">
+				<v-btn
+					:outlined="!isOnBest"
+					rounded depressed :color="color"
+					active-class="active-filter"
+					:class="{
+						'active-filter': isOnBest
+					}"
+					:to="{name: 'Home', params: {sortBy: bestItem.queryName}}"
+				>
+					<v-icon left>
+						{{ bestItem.icon }}
+					</v-icon>
+					{{ bestItem.name }}
+				</v-btn>
+			</div>
+			<div class="hot-bar--action-btn"
 				v-for="(item, index) in filterItems"
-				:key="index" rounded depressed
-				:outlined="$route.params.sortBy !== item.queryName"
-				:color="color" active-class="active-filter"
-				:class="{
-					'active-filter': $route.params.sortBy === item.queryName
-				}"
-				:to="{name: 'Home', params: {sortBy: item.queryName}}"
+				:key="index"
 			>
-				<v-icon left>
-					{{ item.icon }}
-				</v-icon>
-				{{ item.name }}
-			</v-btn>
+				<v-btn
+					active-class="active-filter"
+					rounded depressed :color="color"
+					:outlined="$route.params.sortBy !== item.queryName"
+					:to="{name: 'Home', params: {sortBy: item.queryName}}"
+					:class="{
+						'active-filter': $route.params.sortBy === item.queryName
+					}"
+				>
+					<v-icon left>
+						{{ item.icon }}
+					</v-icon>
+					{{ item.name }}
+				</v-btn>
+			</div>
 			<v-spacer v-if="!lgAndUp" />
 			<v-menu offset-y absolute close-delay="100"
 				v-if="listItems.length" rounded="xl"
 				transition="scale-transition"
 			>
 				<template #activator="{on, attrs}">
-					<v-btn icon v-bind="attrs" v-on="on">
-						<v-icon>mdi-dots-horizontal</v-icon>
-					</v-btn>
+					<div class="hot-bar--action-btn"
+						v-bind="attrs" v-on="on"
+					>
+						<v-btn icon>
+							<v-icon>mdi-dots-horizontal</v-icon>
+						</v-btn>
+					</div>
 				</template>
 				<v-list rounded dense>
 					<v-list-item
@@ -48,14 +58,14 @@
 						:key="index" class="filter-drop"
 						active-class="active-filter-drop"
 						:class="{
-							'active-filte-drop': $route.params.sortBy === item.queryName
+							'active-filter-drop': $route.params.sortBy === item.queryName
 						}"
 						:to="{name: 'Home', params: {sortBy: item.queryName}}"
 					>
 						<v-list-item-icon>
-							<v-icon
-								:color="$route.params.sortBy === item.queryName ? 'white' : 'primary'"
-							>{{item.icon}}</v-icon>
+							<v-icon :color="dropColor(item)">
+								{{item.icon}}
+							</v-icon>
 						</v-list-item-icon>
 						<v-list-item-content>
 							<v-list-item-title>{{item.name}}</v-list-item-title>
@@ -65,9 +75,9 @@
 			</v-menu>
 			<v-spacer v-if="lgAndUp" />
 			<v-avatar size="50"
-				v-if="lgAndUp"
+				v-if="mdAndUp"
 			>
-				<v-img :src="require('@/assets/w_art.jpg')"></v-img>
+				<v-img :src="wArt" />
 			</v-avatar>
 		</v-card-actions>
 	</v-card>
@@ -87,6 +97,7 @@ export default {
 		}
 	},
 	data: () => ({
+		wArt: require("@/assets/w_art.jpg"),
 		payload: {is_published: true, asc: 0},
 		bestItem: {icon: "mdi-rocket", name: "Best", queryName: "best", sortBy: "support"},
 		popularItem: {icon: "mdi-fire", name: "Popular", queryName: "popular", sortBy: "popularity"},
@@ -147,7 +158,7 @@ export default {
 					this.topDiscussedItem
 				]
 			}
-		}
+		},
 	},
 	created() {
 		this.$store.dispatch("publication/setFilterset", {
@@ -155,6 +166,11 @@ export default {
 			...this.payload
 		})
 	},
+	methods: {
+		dropColor(item) {
+			return this.$route.params.sortBy === item.queryName ? "white" : "primary"
+		}
+	}
 }
 </script>
 
@@ -163,7 +179,8 @@ export default {
 	font-size: 13px;
 	font-weight: 600;
 	color: #454545;
-	padding: 0 8px !important;
+	padding: 2px 8px !important;
+	margin: 2px;
 }
 .filter-drop {
 	border: 1px solid var(--primary);

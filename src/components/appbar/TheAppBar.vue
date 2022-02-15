@@ -6,9 +6,10 @@
 		clipped-left
 		class="the-app-bar"
 	>
+
 		<div class="d-flex align-center px-2">
 			<v-btn
-				class="toggle-drawer"
+				class="the-app-bar--toggle"
 				icon v-if="$vuetify.breakpoint.smAndDown"
 				@click="toggleDrawer"
 			>
@@ -16,16 +17,19 @@
 				<v-icon v-else>mdi-menu-open</v-icon>
 			</v-btn>
 			<div class="px-2"/>
-			<div class="site-title cursor" @click="toHome">WordClub</div>
+			<div class="the-app-bar--site-title" @click="toHome">WordClub</div>
 		</div>
-		<community-search v-if="$vuetify.breakpoint.smAndUp" />
+
+		<community-search v-if="smAndUp" />
+
 		<publication-search v-if="criticalWidth" />
+
 		<v-spacer/>
 
 		<tooltip-icon-btn
 			id="popular"
 			size="40"
-			v-if="currentUser && viewportWidth> 440"
+			v-if="currentUser && smAndUp"
 			icon="mdi-finance"
 			tooltip="Popular"
 			:to="{ name: 'Home', params: {sortBy: 'popular'} }"
@@ -34,7 +38,7 @@
 		<tooltip-icon-btn
 			id="top-discussed"
 			size="40"
-			v-if="currentUser  && viewportWidth> 440"
+			v-if="currentUser  && smAndUp"
 			icon="mdi-chart-gantt"
 			tooltip="Top Discussed"
 			:to="{ name: 'Home', params: {sortBy: 'discussed'} }"
@@ -42,16 +46,18 @@
 		<tooltip-icon-btn
 			id="create-publication"
 			size="40"
-			v-if="currentUser  && viewportWidth> 440"
+			v-if="currentUser  && smAndUp"
 			icon="mdi-plus"
 			tooltip="Create Publication"
 			:to="{ name: 'Submit' }"
 		/>
 
-		<notification-menu v-if="currentUser  && viewportWidth> 310"/>
+		<notification-menu v-if="currentUser  && viewportWidth > 310"/>
 
-		<div class="px-4"/>
+		<div class="pl-5" />
+
 		<profile-drop v-if="currentUser"/>
+
 		<v-btn
 			v-if="!currentUser"
 			outlined
@@ -62,6 +68,7 @@
 		>
 			Sign Up
 		</v-btn>
+
 		<v-btn
 			v-if="!currentUser"
 			color="primary"
@@ -72,12 +79,18 @@
 		>
 			Login
 		</v-btn>
+
 		<auth-dialog/>
+
 		<template
 			v-if="!criticalWidth"
 			#extension
 		>
 			<publication-search />
+
+			<tooltip-icon-btn tooltip="Sidebar" icon="mdi-page-layout-sidebar-right"
+				@click="SET_SIDEBAR_STATE(!sidebarState)"
+			/>
 		</template>
 	</v-app-bar>
 </template>
@@ -91,28 +104,28 @@ export default {
 	name: "TheAppBar",
 	mixins: [RouteMixin, ScreenSizeMixin],
 	components: {
-		TooltipIconBtn: () => import("@/components/utils/TooltipIconBtn"),
 		AuthDialog: () => import("@/views/auth/AuthDialog"),
 		ProfileDrop: () => import("@/components/appbar/ProfileDrop"),
+		TooltipIconBtn: () => import("@/components/utils/TooltipIconBtn"),
 		CommunitySearch: () => import("@/components/appbar/CommunitySearch"),
+		NotificationMenu: () => import("@/views/notification/NotificationMenu"),
 		PublicationSearch: () => import("@/components/appbar/PublicationSearch"),
-		NotificationMenu: () =>
-			import("@/views/notification/NotificationMenu"),
 	},
 	data: () => ({
 		searchCommunities: "",
 		searchPublications: "",
 	}),
 	computed: {
+		...mapGetters(["sidebarState"]),
 		...mapGetters({
 			currentUser: "user/current",
 		}),
 		criticalWidth() {
-			return this.$vuetify.breakpoint.width >= 850
+			return this.viewportWidth >= 850
 		}
 	},
 	methods: {
-		...mapMutations(["SET_DRAWER_STATE"]),
+		...mapMutations(["SET_DRAWER_STATE", "SET_SIDEBAR_STATE"]),
 		toggleDrawer() {
 			this.SET_DRAWER_STATE(!this.$store.getters.mainDrawerState)
 		},
@@ -128,7 +141,7 @@ export default {
 <style scoped lang="scss">
 .the-app-bar {
 	border-bottom: 1px solid #d2d2d2 !important;
-	.site-title {
+	&--site-title {
 		font-size: 1.2rem;
 		font-weight: 500;
 	}
