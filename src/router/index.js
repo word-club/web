@@ -6,10 +6,10 @@ Vue.use(VueRouter)
 const routes = [
 	{
 		path: "/",
-		redirect: "/filter="
+		redirect: "/filter/"
 	},
 	{
-		path: "/filter=:sortBy?",
+		path: "/filter/:sortBy?",
 		name: "Home",
 		components: {
 			default: () => import("@/views/home/Home"),
@@ -48,7 +48,7 @@ const routes = [
 		]
 	},
 	{
-		path: "/submit/:toEdit?",
+		path: "/submit/edit/:toEdit?/community/:community?",
 		name: "Submit",
 		components: {
 			default: () => import("@/views/submit/Submit"),

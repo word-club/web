@@ -1,5 +1,9 @@
 <template>
-	<v-dialog :value="dialogState" persistent>
+	<v-dialog
+		:value="dialogState"
+		persistent
+		max-width="600"
+	>
 		<v-card>
 			<v-card-title>
 				CONFIRMATION

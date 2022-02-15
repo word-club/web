@@ -2,24 +2,28 @@ const FetchMixin = {
 	name: "FetchMixin",
 	data: () => ({
 		loading: true,
-		notFound: null
+		fetchErr: null,
+		fetchRes: null,
+		toView: true,
 	}),
 	beforeRouteLeave(to, from, next){
-		this.SET_TO_VIEW(null)
+		if (this.toView) this.SET_TO_VIEW(null)
 		next()
 	},
 	methods: {
-		fetchDetail(model) {
-			this.routeId = this.$route.params.id || this.$route.params.username
+		fetchDetail(model, {pk = null, toView = true} = {}) {
 			this.loading = true
+			this.toView = toView
+			const routeId = this.$route.params.id || this.$route.params.username
 			const url = this.$urls[model]["retrieve"] || this.$urls[model]["detail"]
 			return this.$axios
-				.get(this.$util.format(url, this.routeId))
+				.get(this.$util.format(url, pk || routeId))
 				.then(res => {
-					this.SET_TO_VIEW(res)
+					if (this.toView) this.SET_TO_VIEW(res)
+					this.fetchRes = res
 				})
-				.catch(() => {
-					this.notFound = true
+				.catch((err) => {
+					this.fetchErr = err
 				})
 				.finally(() => {
 					this.loading = false

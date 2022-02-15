@@ -209,6 +209,45 @@
 			</v-col>
 		</v-row>
 		<v-card-text />
+		<v-dialog max-width="600"
+			:value="communityState.dialog"
+			persistent
+		>
+			<v-card>
+				<v-card-title class="d-flex align-center">
+					<div>
+						Start post with community
+					</div>
+					<v-spacer></v-spacer>
+					<v-btn fab small @click="clearCommunityInit"><v-icon>mdi-close</v-icon></v-btn>
+				</v-card-title>
+				<v-card-text>
+					<div class="error--text px16">
+						<span v-if="communityState.status === 404">
+							Sorry, The requested community is not available in our server.
+						</span>
+						<span v-if="communityState.status === 403">
+							Sorry, You've not yet subscribed for the requested community.
+							Please subscribe the community before adding a publication for it.
+						</span>
+						<span v-if="communityState.status === 500">
+							Sorry, your publication cannot be started with the requested community.
+						</span>
+					</div>
+					<div class="pt-2 d-flex align-center">
+						<v-btn color="primary" class="ma-1" :to="{name: 'Home'}">Home</v-btn>
+						<v-btn color="success" class="ma-1" @click="clearCommunityInit">Clear Community</v-btn>
+						<v-spacer />
+						<tooltip-icon-btn
+							@click="$router.back()"
+							tooltip="Go Back"
+							icon="mdi-arrow-left"
+							color="grey darken-3"
+						/>
+					</div>
+				</v-card-text>
+			</v-card>
+		</v-dialog>
 	</v-card>
 </template>
 
@@ -219,10 +258,13 @@ import PatchMixin from "@/mixin/PatchMixin.js";
 import Snack from "@/mixin/Snack.js";
 import EditorMixin from "@/mixin/EditorMixin.js";
 import CheckRequiredMixin from "@/mixin/CheckRequiredMixin.js";
+import FetchMixin from "@/mixin/FetchMixin.js";
+import TooltipIconBtn from "@/components/utils/TooltipIconBtn.vue";
 
 export default {
 	name: "Submit",
 	components: {
+		TooltipIconBtn,
 		SubmitTab: () => import("@/views/submit/components/SubmitTab"),
 		DraftsDialog: () => import("@/views/submit/components/DraftsDialog"),
 		ImageList: () => import("@/views/submit/components/ImageList"),
@@ -230,8 +272,13 @@ export default {
 		LinkPreview: () => import("@/views/submit/components/LinkPreview"),
 		UploadLink: () => import("@/views/submit/components/UploadLink"),
 	},
-	mixins: [PostMixin, PatchMixin, Snack, EditorMixin, CheckRequiredMixin],
+	mixins: [PostMixin, PatchMixin, Snack, EditorMixin, CheckRequiredMixin, FetchMixin],
 	data: () => ({
+		communityState: {
+			dialog: false,
+			status: null
+		},
+
 		tab: null,
 		tagArray: [],
 		payload: {
@@ -258,13 +305,8 @@ export default {
 	created() {
 		this.fetchDrafts()
 		this.fetchSubscribedCommunities()
-		const publicationToEdit = this.$route.params.toEdit
-		if (publicationToEdit) {
-			this.$store.dispatch("publication/setInProgress", {id: publicationToEdit})
-			this.refreshInProgress(true)
-		} else {
-			this.initEditor(null)
-		}
+		this.processPublicationEdit() // 1st priority
+		this.processInitWithCommunity() // 2nd priority
 	},
 	computed: {
 		...mapGetters({
@@ -417,9 +459,18 @@ export default {
 			if(e) this.theme = e.theme
 			else this.theme = {color: "primary"}
 		},
-		setCommunity() {
+		setCommunity(target = null) {
+			if (!target) target = this.inProgress?.community
 			this.payload.community = this.subscribedCommunities
-				.find(item => item.id === this.inProgress.community.id)
+				.find(item => item.id === target.id)
+			this.onChangeCommunity(this.payload.community)
+			if (!this.payload.community) {
+				this.communityState.dialog = true
+				this.communityState.status = 403
+			} else {
+				this.communityState.dialog = false
+				this.communityState.status = null
+			}
 		},
 		setHashtags() {
 			if (this.inProgress.hashtags) {
@@ -445,6 +496,40 @@ export default {
 			this.payload.type = this.inProgress.type
 			if (this.payload.type === "editor")
 				this.initEditor(this.inProgress)
+		},
+		processPublicationEdit() {
+			const publicationToEdit = this.$route.params.toEdit
+			if (publicationToEdit) {
+				this.$store.dispatch("publication/setInProgress", {id: publicationToEdit})
+				this.refreshInProgress(true)
+			} else {
+				this.initEditor(null)
+			}
+		},
+		processInitWithCommunity() {
+			const communityToInitWith = this.$route.params.community
+			if (communityToInitWith) {
+				this.fetchDetail("community", {pk: communityToInitWith, toView: false})
+					.then(() => {
+						if (this.fetchRes) {
+							this.setCommunity(this.fetchRes)
+						} else {
+							if (this.fetchErr.response.status === 404) {
+								this.communityState.dialog = true
+								this.communityState.status = 404
+							} else {
+								this.communityState.dialog = true
+								this.communityState.status = 500
+							}
+						}
+					})
+			}
+		},
+		clearCommunityInit() {
+			this.communityState.dialog = false
+			this.communityState.status = null
+			this.$router.push({name: "Submit"})
+			this.initEditor()
 		}
 	}
 }

@@ -124,8 +124,9 @@ export default {
 	}),
 	computed: {
 		dateOfRegistration() {
+			if (!this.community["date_of_registration"]) return "-"
 			return this
-				.$moment(community["date_of_registration"])
+				.$moment(this.community["date_of_registration"])
 				.format("MM DD, YYYY")
 		}
 	}

@@ -32,8 +32,10 @@ const EditorMixin = {
 			this.editor = new EditorJS({
 				onReady: () => {
 					const editor = this.editor
-					new Undo({ editor });
-					new DragDrop(editor);
+					if(editor) {
+						new Undo({ editor });
+						new DragDrop(editor);
+					}
 				},
 				autofocus: false,
 				holder: "editor-js",

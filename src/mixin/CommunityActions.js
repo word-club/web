@@ -22,7 +22,7 @@ const CommunityActions = {
 		},
 		async subscribe(item) {
 			await this.openConfirmDialog(
-				"Are you sure you want to revoke your subscription?",
+				"Are you sure you want to subscribe this community?",
 				"POST",
 				this.$util.format(this.$urls.community.subscribe, item.id),
 				["refreshMe", "refreshCommunity"],

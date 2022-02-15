@@ -144,6 +144,7 @@ export default {
 	&--site-title {
 		font-size: 1.2rem;
 		font-weight: 500;
+		cursor: pointer;
 	}
 }
 </style>

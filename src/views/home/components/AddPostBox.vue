@@ -46,7 +46,7 @@ import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
 
 export default {
 	name: "AddPostBox",
-	mixins: [RouteMixin, ScreenSizeMixin],
+	mixins: [ScreenSizeMixin],
 	props: {
 		color: {
 			default: "primary lighten-1",
@@ -57,9 +57,23 @@ export default {
 	computed: {
 		...mapGetters({
 			currentUser: "user/current"
-		})
+		}),
+		getCommunityId() {
+			if (this.$route.name.includes("Community")) {
+				return this.$route.params.id
+			} return undefined
+		}
 	},
-	methods: {}
+	methods: {
+		toCreatePost() {
+			this.$router.push({
+				name: "Submit",
+				params: {
+					community: this.getCommunityId
+				}
+			})
+		}
+	}
 }
 </script>
 
