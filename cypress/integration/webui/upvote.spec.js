@@ -9,7 +9,7 @@ describe("Upvote Feature", () => {
 			// stub necessary api routes involved
 			cy.interceptBackend({ url: "s/publication/*", as: "list" })
 			cy.interceptBackend({ url: "me/", as: "refreshMe" })
-			cy.interceptBackend({ method: "POST", url: "publication/10/up-vote/", as: "upvote"})
+			cy.interceptBackend({ method: "POST", url: "publication/3/up-vote/", as: "upvote"})
 
 			// seed a user in the backend
 			cy.deleteUserIfPresent(actor)
@@ -36,7 +36,7 @@ describe("Upvote Feature", () => {
 
 			// selectors that we need for the test
 			const selectors = {
-				targetPublication: "#publication-1",
+				targetPublication: "#publication-3",
 				reactionsCount: ".reactions-count",
 				upvoteButton: ".upvote-action"
 			}

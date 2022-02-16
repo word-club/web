@@ -1,7 +1,7 @@
 describe("Visit submit", () => {
 	describe("unauthenticated feature", () => {
 		it("should not allow unauthenticated routes to submit page", () => {
-			cy.visit("/#/submit")
+			cy.visit("/#/submit/edit/community/")
 			cy.get(".auth-card")
 				.should("be.visible")
 			cy.contains("Login to WordClub")
@@ -17,10 +17,17 @@ describe("Visit submit", () => {
 				window.localStorage.setItem("word-club-session", JSON.stringify(data))
 			})
 			cy.interceptFilter()
+			cy.intercept({
+				method: "GET",
+				url: Cypress.env("BACKEND_URL") + "/api/subscribed-community/filter/",
+			}, {
+				statusCode: 200,
+				body: []
+			}).as("subscribedCommunity")
 		})
 
 		it("should allow authenticated route to submit page", () => {
-			cy.visit("/#/submit")
+			cy.visit("/#/submit/edit/community/")
 			cy.get(".auth-card")
 				.should("not.exist")
 			cy.contains("Create post")

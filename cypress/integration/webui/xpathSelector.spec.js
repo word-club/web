@@ -7,7 +7,7 @@ describe("demonstrates xpath selector", () => {
 	it("should show correct number of publications", () => {
 		cy.visit("/")
 		cy.wait("@list").its("response.statusCode").should("eq", 200)
-		cy.xpath("//div[@class='publication-list']")
+		cy.xpath("//div[contains(@class, 'publication-list')]")
 			.should("be.visible")
 			.within(() => {
 				cy.xpath("//div[contains(@class, 'publication-item')]")

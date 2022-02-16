@@ -9,7 +9,7 @@ describe("With firefox browser", () => {
 	}, () => {
 		cy.visit("/")
 		cy.wait("@list")
-		cy.get(".site-title")
+		cy.get(".the-app-bar--site-title")
 			.should("be.visible")
 			.and("have.text", "WordClub")
 	})
