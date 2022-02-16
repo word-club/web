@@ -36,7 +36,7 @@ describe("Upvote Feature", () => {
 
 			// selectors that we need for the test
 			const selectors = {
-				targetPublication: "#publication-10",
+				targetPublication: "#publication-1",
 				reactionsCount: ".reactions-count",
 				upvoteButton: ".upvote-action"
 			}

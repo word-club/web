@@ -6,7 +6,7 @@ const actor = {
 
 describe("Login feature", () => {
 	before(() => {
-		cy.intercept("POST", Cypress.env("BACKEND_URL") + "login/")
+		cy.intercept("POST", Cypress.env("BACKEND_URL") + "/api/login/")
 			.as("login")
 		// cypress custom commands
 		// delete user to be created before hand if already present

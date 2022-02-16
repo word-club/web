@@ -28,7 +28,7 @@ Cypress.Commands.add("adminRequest", ({
 		method: method,
 		url: backendUrl + url,
 		headers: {
-			Authorization: "Token 46a3fc00d15b90c5dffb42e9de9de0876e90649a"
+			Authorization: "Token 187f36f6d5d9e31ef91e3804672f186e2dbe3d12"
 		}, body: body
 	}).as(as)
 })

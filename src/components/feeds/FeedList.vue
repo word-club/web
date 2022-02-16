@@ -12,7 +12,13 @@
 				</v-card-text>
 			</v-card>
 			<div v-else>
-				<div v-if="publications.results.length" class="publication-list">
+				<v-card
+					v-if="publications.results.length"
+					class="publication-list"
+					flat color="primary"
+					:loading="fetchingPubs"
+					loader-height="6"
+				>
 					<publication-instance
 						v-for="publication in publications.results"
 						:key="publication.id"
@@ -21,7 +27,7 @@
 						@init="getPublications"
 						class="mb-4 publication-item"
 					/>
-				</div>
+				</v-card>
 				<v-card v-else outlined min-height="70vh" class="pt-16">
 					<v-card-text class="px16 weight-500 text-center pt-16">
 						Hmm... Sorry we're out of posts. Please visit us later :)
@@ -79,3 +85,8 @@ export default {
 	},
 }
 </script>
+<style scoped lang="scss">
+.publication-list {
+	background-color: transparent !important;
+}
+</style>

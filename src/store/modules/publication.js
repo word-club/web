@@ -1,5 +1,7 @@
 const urls = require("@/urls.json").publication
 import axios from "@/axios";
+const _ = require("lodash");
+
 
 const state = {
 	publications: { results: []},
@@ -43,7 +45,7 @@ const actions = {
 	filter({commit}, payload) {
 		return axios.getWithPayload(urls.list, payload)
 			.then(res => {
-				if (state.publications.count !== res.count) commit("SET_LIST", res)
+				if (!_.isEqual(state.publications.results, res.results)) commit("SET_LIST", res)
 			})
 	},
 	setDrafts({commit}, value) {

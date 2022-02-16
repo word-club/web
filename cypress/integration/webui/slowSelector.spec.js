@@ -1,10 +1,10 @@
 describe("Demonstrates slow selectors", () => {
 	it("should wait for slow loading elements", () => {
 		cy.visit("/")
-		cy.get("#publication-10")
+		cy.get("#publication-1")
 			.should("be.visible")
 			.within(() => {
-				cy.contains("Radioactivity is a boon")
+				cy.contains("Welcome to the WordClub")
 					.should("be.visible")
 			})
 	})

@@ -5,7 +5,7 @@
 			max-width="800"
 		>
 			<v-scale-transition>
-				<div v-if="loading">
+				<div v-if="isLoading">
 					<v-progress-linear rounded indeterminate color="primary" height="6" />
 					<div class="py-2">
 						<v-card>
@@ -20,8 +20,10 @@
 
 				<div v-else>
 					<v-fab-transition>
-						<div v-if="publication"
+						<v-card v-if="publication"
 							class="publication-detail"
+							flat color="primary"
+							:loading="fetching"
 						>
 							<item-header :item="publication" />
 							<v-card-title class="pa-2 publication-title">
@@ -85,7 +87,7 @@
 									@init="refreshPublication"
 								/>
 							</v-card-text>
-						</div>
+						</v-card>
 						<div v-else>
 							<v-card-text>Publication Not Found.</v-card-text>
 						</div>
@@ -114,6 +116,7 @@ export default {
 	},
 	mixins: [RouteMixin, FetchMixin],
 	data: () => ({
+		isLoading: true,
 		commentSortBy: {sort: "created_at", name: "Fresh"},
 		commentSort: [
 			{sort: "discussions", name: "Top (Suggested)"},
@@ -137,6 +140,7 @@ export default {
 		this.refreshPublication()
 			.then(() => {
 				const view = this.$route.params.view
+				this.isLoading = false
 				if (view === "comments") {
 					setTimeout(() => {
 						const commentList = document.querySelector(".comment-list")
@@ -174,6 +178,9 @@ export default {
 </script>
 
 <style scoped>
+.publication-detail {
+	background-color: transparent !important;
+}
 .publication-title {
 	font-size: 32px; line-height: 32px;
 }
