@@ -124,7 +124,6 @@ export default {
 		checkAlignmentTune(tunes, alignment) {
 			if (tunes) {
 				const alignmentTune = tunes.alignmentTune
-				// console.log(alignmentTune, alignment)
 				if (alignmentTune) return alignmentTune.alignment === alignment
 				else return false
 			} return false

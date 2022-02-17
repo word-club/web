@@ -160,7 +160,6 @@ export default {
 			payload["publication"] = this.$route.params.id
 			this.$store.dispatch("comment/filter", payload)
 				.then(() => {
-					console.log(this.comments)
 					// TODO: send comment filter request for a publication
 				})
 		},

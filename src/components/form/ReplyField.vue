@@ -99,15 +99,12 @@ export default {
 		insert(emoji) {
 			const replyTextarea = document.querySelector(`#reply-input-${this.comment.id}`)
 			if (replyTextarea) {
-				console.log(replyTextarea)
 				const cursorPosition = replyTextarea.selectionStart
 				if (cursorPosition === this.reply.length) {
-					console.log("hrere", this.reply, emoji)
 					this.reply += emoji
 				} else {
 					const firstPart = this.reply.substring(0, cursorPosition)
 					const secondPart = this.reply.substring(cursorPosition, this.reply.length)
-					console.log("hrereee", this.reply, emoji, firstPart, secondPart)
 					this.reply = firstPart + emoji + secondPart
 				}
 			}

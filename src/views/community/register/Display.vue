@@ -45,7 +45,7 @@
 					/>
 					<v-fab-transition>
 						<v-btn
-							:loading="addingAv"
+							:loading="adding"
 							v-if="avatar" icon
 							class="ml-2" :color="community.theme.color"
 							@click="addAvatar"><v-icon>mdi-upload</v-icon></v-btn>
@@ -61,7 +61,7 @@
 					/>
 					<v-fab-transition>
 						<v-btn
-							:loading="addingCv"
+							:loading="adding"
 							:color="community.theme.color"
 							v-if="cover" icon
 							class="ml-2" @click="addCover"
@@ -124,13 +124,18 @@
 		<div class="px-6"><v-divider /></div>
 		<v-card-actions class="px-6">
 			<v-spacer />
-			<v-btn class="ma-1" color="grey lighten-1" depressed
-				:to="{name: 'Community Rules'}" dark
+			<v-btn
+				class="ma-1"
+				depressed dark
+				color="grey lighten-1"
+				:to="{name: 'Community Rules'}"
 				@click="skip"
 			>
 				Skip
 			</v-btn>
-			<v-btn class="ma-1" :color="theme.color || 'primary'"
+			<v-btn
+				class="ma-1"
+				:color="theme.color || 'primary'"
 				@click="next" dark
 			>
 				Next
@@ -154,9 +159,8 @@ export default {
 			to_call_subscriber: null,
 			state_after_subscription: null
 		},
-		addingAv: false,
 		avatar: null,
-		addingCv: false,
+		adding: false,
 		cover: null,
 		themeFormErrors: {},
 		avatarFormErrors: {},
@@ -211,7 +215,7 @@ export default {
 			})
 		},
 		addAvatar() {
-			this.addingAv = true
+			this.adding = true
 			const fd = new FormData()
 			fd.append("image", this.avatar)
 			this.post(
@@ -231,11 +235,11 @@ export default {
 					this.openSnack("Avatar upload failed. Try again.")
 				}
 			}).finally(() => {
-				this.addingAv = false
+				this.adding = false
 			})
 		},
 		addCover() {
-			this.addingCv = true
+			this.adding = true
 			const fd = new FormData()
 			fd.append("image", this.cover)
 			this.post(
@@ -255,7 +259,7 @@ export default {
 					this.openSnack("Cover upload failed. Try again.")
 				}
 			}).finally(() => {
-				this.addingCv = true
+				this.adding = true
 			})
 		},
 	}

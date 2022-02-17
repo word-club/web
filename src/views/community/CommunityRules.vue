@@ -25,6 +25,9 @@
 					</tbody>
 				</template>
 			</v-simple-table>
+			<div v-else-if="currentUserIsAdmin" class="py-4 px16">
+				No rules set yet.
+			</div>
 			<v-btn block class="mt-2" v-if="currentUserIsAdmin">Add Rules</v-btn>
 		</v-card-text>
 	</v-card>
@@ -41,12 +44,17 @@ export default {
 			currentUser: "user/current"
 		}),
 		currentUserIsAdmin() {
-			const managedCommunities = this.currentUser.managed_communities
+			if (!this.currentUser) return false
+			const managedCommunities = this.currentUser["managed_communities"]
 			if (!managedCommunities.length) return false
-			managedCommunities.forEach(community => {
-				if (community.id === this.community.id) return true
-			})
-			return false
+			let found = false
+			for (let i=0; i<managedCommunities.length; i++) {
+				if (managedCommunities[i].id === this.community.id) {
+					found = true
+					break
+				}
+			}
+			return found
 		}
 	}
 }

@@ -47,13 +47,11 @@ export default {
 	}),
 	watch: {
 		search(val) {
-			console.log(val)
 			if (this.isLoading) return
 			this.isLoading = true
 
 			this.$axios.get(this.url, {search: val})
 				.then(res => {
-					console.log(res)
 					this.users = res
 				})
 				.catch(() => {
