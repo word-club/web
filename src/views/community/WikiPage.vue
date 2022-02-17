@@ -5,7 +5,8 @@
 			<v-spacer />
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
-					<v-btn icon
+					<v-btn
+						icon
 						v-bind="attrs" v-on="on"
 					>
 						<v-icon>mdi-dots-horizontal</v-icon>
@@ -13,6 +14,7 @@
 				</template>
 				<v-list dense>
 					<v-list-item
+						v-if="isCommunityManager"
 						@click="$store.dispatch('setRuleState', true)"
 					>
 						New Rule
@@ -99,6 +101,7 @@ export default {
 			currentUser: "user/current"
 		}),
 		isCommunityManager() {
+			if (!this.currentUser) return false
 			const managedCommunities = this.currentUser.managed_communities
 			if (!managedCommunities.length) return false
 			let present = false
