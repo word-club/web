@@ -49,6 +49,12 @@ export default {
 		PublicationInstance: () => import("@/views/home/components/PublicationInstance")
 	},
 	mixins: [RouteMixin, PublicationType, FetchPublications],
+	props: {
+		payload: {
+			required: false,
+			default: () => {}
+		}
+	},
 	data: () => ({
 		isLoading: false,
 	}),
@@ -61,7 +67,7 @@ export default {
 		// only set loading to true if the store is empty
 		this.isLoading = !this.publications?.count
 		setTimeout(() => {
-			this.getPublications()
+			this.getPublications({payload: this.payload})
 				.then(() => {this.isLoading = false})
 		}, 2000)
 	},
@@ -73,14 +79,14 @@ export default {
 		}
 	},
 	methods: {
-		async getPublications(sortString = "best") {
+		async getPublications({sortString = "best", payload = {}} = {}) {
 			const sortBy = this.$route.params.sortBy
 			if (sortBy) sortString = sortBy
 
 			sortString = this.$helper.parseSortString(sortString)
 
 			await this.$store.dispatch("publication/setFilterset", sortString)
-			await this.fetchPublications({sort_by: sortString})
+			await this.fetchPublications({sort_by: sortString, ...payload})
 		}
 	},
 }

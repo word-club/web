@@ -74,7 +74,7 @@ export default {
 		completedPercentage(progressArray) {
 			let count = 0
 			progressArray.forEach(step => {
-				if (step.is_completed) count++
+				if (step["is_completed"]) count++
 			})
 			return count*20
 		}

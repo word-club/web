@@ -1,4 +1,5 @@
 const WORD_CLUB_SESSION = "word-club-session"
+const COMMUNITY_CREATE_IN_PROGRESS = "community-create-in-progress"
 
 module.exports = {
 	registrationSteps: [
@@ -26,6 +27,7 @@ module.exports = {
 	},
 	clearSession() {
 		localStorage.removeItem(WORD_CLUB_SESSION)
+		localStorage.removeItem(COMMUNITY_CREATE_IN_PROGRESS)
 	},
 	setCurrentUser(value) {
 		localStorage.setItem(WORD_CLUB_SESSION, JSON.stringify({
@@ -55,13 +57,13 @@ module.exports = {
 		else return "primary"
 	},
 	setCommunityInProgress(value) {
-		localStorage.setItem("CommunityCreateInProgress", JSON.stringify(value))
+		localStorage.setItem(COMMUNITY_CREATE_IN_PROGRESS, JSON.stringify(value))
 	},
 	clearCommunityInProgress() {
-		localStorage.removeItem("CommunityCreateInProgress")
+		localStorage.removeItem(COMMUNITY_CREATE_IN_PROGRESS)
 	},
 	getCommunityInProgress() {
-		const value = localStorage.getItem("CommunityCreateInProgress")
+		const value = localStorage.getItem(COMMUNITY_CREATE_IN_PROGRESS)
 		if (value) return JSON.parse(value)
 		return null
 	},

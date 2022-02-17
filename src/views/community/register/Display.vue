@@ -45,6 +45,7 @@
 					/>
 					<v-fab-transition>
 						<v-btn
+							:loading="addingAv"
 							v-if="avatar" icon
 							class="ml-2" :color="community.theme.color"
 							@click="addAvatar"><v-icon>mdi-upload</v-icon></v-btn>
@@ -60,6 +61,7 @@
 					/>
 					<v-fab-transition>
 						<v-btn
+							:loading="addingCv"
 							:color="community.theme.color"
 							v-if="cover" icon
 							class="ml-2" @click="addCover"
@@ -152,7 +154,9 @@ export default {
 			to_call_subscriber: null,
 			state_after_subscription: null
 		},
+		addingAv: false,
 		avatar: null,
+		addingCv: false,
 		cover: null,
 		themeFormErrors: {},
 		avatarFormErrors: {},
@@ -207,6 +211,7 @@ export default {
 			})
 		},
 		addAvatar() {
+			this.addingAv = true
 			const fd = new FormData()
 			fd.append("image", this.avatar)
 			this.post(
@@ -225,9 +230,12 @@ export default {
 					this.avatarFormErrors = this.formErrors
 					this.openSnack("Avatar upload failed. Try again.")
 				}
+			}).finally(() => {
+				this.addingAv = false
 			})
 		},
 		addCover() {
+			this.addingCv = true
 			const fd = new FormData()
 			fd.append("image", this.cover)
 			this.post(
@@ -246,6 +254,8 @@ export default {
 					this.coverFormErrors = this.formErrors
 					this.openSnack("Cover upload failed. Try again.")
 				}
+			}).finally(() => {
+				this.addingCv = true
 			})
 		},
 	}

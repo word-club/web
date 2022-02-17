@@ -182,6 +182,11 @@ export default {
 	padding: 2px 8px !important;
 	margin: 2px;
 }
+.v-btn.active-filter {
+	::v-deep.v-btn__content {
+		color: white;
+	}
+}
 .filter-drop {
 	border: 1px solid var(--primary);
 	color: var(--primary) !important;

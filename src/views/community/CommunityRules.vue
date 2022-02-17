@@ -25,7 +25,7 @@
 					</tbody>
 				</template>
 			</v-simple-table>
-			<v-btn block class="mt-2">Add Rules</v-btn>
+			<v-btn block class="mt-2" v-if="currentUserIsAdmin">Add Rules</v-btn>
 		</v-card-text>
 	</v-card>
 </template>
@@ -37,8 +37,17 @@ export default {
 	name: "CommunityRules",
 	computed: {
 		...mapGetters({
-			community: "community/inView"
-		})
+			community: "community/inView",
+			currentUser: "user/current"
+		}),
+		currentUserIsAdmin() {
+			const managedCommunities = this.currentUser.managed_communities
+			if (!managedCommunities.length) return false
+			managedCommunities.forEach(community => {
+				if (community.id === this.community.id) return true
+			})
+			return false
+		}
 	}
 }
 </script>
