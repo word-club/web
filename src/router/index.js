@@ -48,7 +48,7 @@ const routes = [
 		]
 	},
 	{
-		path: "/submit/edit/:toEdit?/community/:community?",
+		path: "/submit/type/:type/edit/:toEdit?/community/:community?",
 		name: "Submit",
 		components: {
 			default: () => import("@/views/submit/Submit"),

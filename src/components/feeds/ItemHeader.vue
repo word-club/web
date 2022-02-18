@@ -40,7 +40,7 @@
 			</template>
 			<v-list dense>
 				<v-list-item v-if="$helper.ifCurrentUserIs(item.created_by)"
-					:to="{name: 'Submit', params: {toEdit: item.id}}"
+					:to="{ name: 'Submit', params: { toEdit: item.id, type: item.type } }"
 				>
 					<v-list-item-icon class="mr-2"><v-icon color="primary lighten-1">mdi-pencil</v-icon></v-list-item-icon>
 					<v-list-item-content><v-list-item-title>Edit Publication</v-list-item-title></v-list-item-content>

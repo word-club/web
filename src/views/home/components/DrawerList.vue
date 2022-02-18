@@ -41,7 +41,7 @@ export default {
 				{
 					icon: "mdi-plus",
 					title: "Post",
-					to: {name: "Submit"},
+					to: { name: "Submit", params: { type: "editor" } },
 					exact: true
 				},
 				{

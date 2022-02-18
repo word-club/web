@@ -1,7 +1,7 @@
 <template>
 	<v-card
 		v-if="community"
-		outlined max-width="350"
+		outlined :max-width="maxWidth"
 	>
 		<v-card
 			:color="community.theme.color"
@@ -11,10 +11,10 @@
 			<v-img
 				v-if="community.cover"
 				:src="$link(community.cover)"
-				height="35"
+				height="45"
 			/>
 		</v-card>
-		<v-card-text class="pa-3 d-flex align-center">
+		<v-card-text class="px-3 py-0 d-flex align-center">
 			<v-avatar :color="community.theme.color"
 				size="45"
 			>
@@ -32,12 +32,12 @@
 				</v-card-subtitle>
 			</div>
 		</v-card-text>
-		<v-card-text v-if="community.quote" class="pa-2">
+		<v-card-text v-if="community.quote" class="px-2 py-0">
 			{{ community.quote }}
 		</v-card-text>
-		<v-card-text class="d-flex align-center pa-3 weight-500 justify-space-between">
+		<v-card-text class="d-flex align-center px-4 py-0 weight-500 justify-space-between">
 			<div>
-				<div class="px18">
+				<div class="px22">
 					{{ community["subscribers_count"] }}
 				</div>
 				<div class="px14">
@@ -46,7 +46,7 @@
 			</div>
 			<div class="px-1" />
 			<div>
-				<div class="px18">
+				<div class="px22">
 					{{community.rating }}
 				</div>
 				<div class="px14">
@@ -54,7 +54,7 @@
 				</div>
 			</div>
 		</v-card-text>
-		<v-divider class="mx-3" />
+		<v-divider class="mt-3" />
 		<v-card-text class="pa-3 d-flex align-center">
 			<v-icon>
 				mdi-routes-clock
@@ -63,7 +63,7 @@
 				Created {{ dateOfRegistration }}
 			</div>
 		</v-card-text>
-		<v-card-text class="pa-3">
+		<v-card-text class="pa-3 pb-4">
 			<v-btn
 				block rounded
 				outlined :color="community.theme.color"
@@ -71,7 +71,7 @@
 				Join
 			</v-btn>
 		</v-card-text>
-		<v-divider class="mx-3" />
+		<v-divider />
 		<v-card-text>
 			<v-btn
 				depressed small
@@ -116,6 +116,10 @@ export default {
 		community: {
 			required: true,
 			type: Object
+		},
+		maxWidth: {
+			required: false,
+			default: 350
 		}
 	},
 	data: () => ({

@@ -1,5 +1,5 @@
 <template>
-	<div class="px-2 pb-16" v-if="community">
+	<div class="pa-2 pb-16" v-if="community">
 		<about-community />
 		<div class="py-2" />
 		<community-rules />

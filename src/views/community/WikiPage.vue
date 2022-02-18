@@ -19,7 +19,7 @@
 					>
 						New Rule
 					</v-list-item>
-					<v-divider />
+					<v-divider v-if="isCommunityManager" />
 					<v-list-item>Copy URL</v-list-item>
 				</v-list>
 			</v-menu>

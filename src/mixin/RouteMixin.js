@@ -70,7 +70,7 @@ const RouteMixin = {
 			await this.$router.push({name: "Profile Shares"})
 		},
 		async toCreatePost() {
-			await this.$router.push({name: "Submit"})
+			await this.$router.push({ name: "Submit", params: { type: "editor" } })
 		}
 	}
 }

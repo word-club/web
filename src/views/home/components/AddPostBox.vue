@@ -19,7 +19,7 @@
 			>
 				<v-chip
 					class="full-width rounded"
-					@click="toCreatePost"
+					@click="toCreatePost('editor')"
 				>
 					<v-icon size="22" class="">
 						mdi-home
@@ -29,10 +29,14 @@
 					</span>
 				</v-chip>
 			</v-responsive>
-			<v-btn icon v-if="smAndUp">
+			<v-btn icon v-if="smAndUp"
+				@click="toCreatePost('media')"
+			>
 				<v-icon>mdi-image-outline</v-icon>
 			</v-btn>
-			<v-btn icon v-if="smAndUp">
+			<v-btn icon v-if="smAndUp"
+				@click="toCreatePost('link')"
+			>
 				<v-icon>mdi-link-variant</v-icon>
 			</v-btn>
 		</v-card-actions>
@@ -41,7 +45,6 @@
 
 <script>
 import {mapGetters} from "vuex";
-import RouteMixin from "@/mixin/RouteMixin.js";
 import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
 
 export default {
@@ -65,12 +68,14 @@ export default {
 		}
 	},
 	methods: {
-		toCreatePost() {
+		toCreatePost(type) {
+			let params = {
+				type: type
+			}
+			if (this.getCommunityId) params["community"] = this.getCommunityId
 			this.$router.push({
 				name: "Submit",
-				params: {
-					community: this.getCommunityId
-				}
+				params: params
 			})
 		}
 	}

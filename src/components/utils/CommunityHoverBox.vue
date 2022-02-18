@@ -34,7 +34,7 @@
 				</div>
 			</div>
 		</template>
-		<community-peek :community="community" />
+		<community-peek :community="community" max-width="300" />
 	</v-menu>
 </template>
 

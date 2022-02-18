@@ -58,7 +58,8 @@
 					<submit-tab
 						:theme="theme"
 						:payload="payload"
-						@setType="setTypeBeforeSave" />
+						@setType="setTypeBeforeSave"
+					/>
 					<v-card flat
 						class="rounded-t-0"
 					>
@@ -278,7 +279,6 @@ export default {
 			dialog: false,
 			status: null
 		},
-
 		tab: null,
 		tagArray: [],
 		payload: {
@@ -303,10 +303,12 @@ export default {
 		editMode: false,
 	}),
 	created() {
+		this.validateRouteParams()
 		this.fetchDrafts()
 		this.fetchSubscribedCommunities()
 		this.processPublicationEdit() // 1st priority
 		this.processInitWithCommunity() // 2nd priority
+		if (!this.inProgress && this.payload.type === "editor") this.initEditor(null)
 	},
 	computed: {
 		...mapGetters({
@@ -320,6 +322,15 @@ export default {
 		}
 	},
 	methods: {
+		validateRouteParams() {
+			const type = this.$route.params.type
+			if (["editor", "link", "media", "poll"].includes(type)) {
+				this.payload.type = type
+			} else this.$router.push({name: "Submit", params: {
+				... this.$route.params,
+				type: "editor"
+			}})
+		},
 		initDraft() {
 			this.initSubmit()
 			this.draftMode = true
@@ -390,6 +401,7 @@ export default {
 				const url = this.$util.format(this.$urls.publication.detail, this.inProgress.id)
 
 				payload["title"] = this.payload.title
+				payload["type"] = this.$route.params.type
 
 				// prepare tags for payload
 				payload["tags"] = this.getSelectedTagsString()
@@ -502,8 +514,6 @@ export default {
 			if (publicationToEdit) {
 				this.$store.dispatch("publication/setInProgress", {id: publicationToEdit})
 				this.refreshInProgress(true)
-			} else {
-				this.initEditor(null)
 			}
 		},
 		processInitWithCommunity() {
@@ -529,7 +539,7 @@ export default {
 		clearCommunityInit() {
 			this.communityState.dialog = false
 			this.communityState.status = null
-			this.$router.push({name: "Submit"})
+			this.$router.push({ name: "Submit", params: { type: "editor" } })
 			this.initEditor()
 		}
 	}

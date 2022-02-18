@@ -20,7 +20,6 @@ import SocialPost from "editorjs-social-post-plugin";
 const EditorMixin = {
 	data: () => ({
 		editor: null,
-
 	}),
 	methods: {
 		initEditor(publication) {

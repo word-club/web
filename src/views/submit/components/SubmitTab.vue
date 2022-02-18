@@ -47,19 +47,23 @@ export default {
 			return [
 				{
 					type: "editor", title: "Post", icon: "mdi-post",
-					active: this.payload.type === "editor"
+					active: this.payload.type === "editor",
+					to: {name: "Submit", params: {type: "editor"}}
 				},
 				{
-					type: "media", title: "Images/Videos", icon: "mdi-image-size-select-actual",
-					active: this.payload.type === "media"
+					type: "media", title: "Media", icon: "mdi-image-size-select-actual",
+					active: this.payload.type === "media",
+					to: {name: "Submit", params: {type: "media"}}
 				},
 				{
 					type: "link", title: "Link", icon: "mdi-link-variant",
-					active: this.payload.type === "link"
+					active: this.payload.type === "link",
+					to: {name: "Submit", params: {type: "link"}}
 				},
 				{
 					type: "poll", title: "Poll", icon: "mdi-chart-box-outline",
-					disabled: true, active: false
+					disabled: true, active: false,
+					to: {name: "Submit", params: {type: "poll"}}
 				},
 			]
 		},
@@ -67,6 +71,7 @@ export default {
 	methods: {
 		setActiveTab(item) {
 			this.$emit("setType", item.type)
+			this.$router.push(item.to)
 		},
 	}
 }
