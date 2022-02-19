@@ -6,14 +6,14 @@
 		<div v-if="community && community.theme">
 			<v-card-text class="pa-0">
 				<v-card
-					:height="(community.cover) ? 300 : 100"
+					:height="coverHeight"
 					:color="community.theme.color"
 					tile flat
 				>
 					<v-img
 						v-if="community.cover"
 						:src="$link(community.cover.image)"
-						height="300"
+						:height="coverHeight"
 					/>
 				</v-card>
 			</v-card-text>
@@ -50,7 +50,12 @@ export default {
 	computed: {
 		...mapGetters({
 			community: "community/inView"
-		})
+		}),
+		coverHeight() {
+			if (this.$route.name.includes("Community MOD Settings")) return 100
+			if (!this.community.cover) return 100
+			return 300
+		}
 	},
 	created() {
 		this.refreshCommunity()

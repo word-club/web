@@ -5,6 +5,7 @@
 		</div>
 		<home-drawer />
 		<user-settings-drawer />
+		<community-mod-cog-drawer />
 		<root-sidebar />
 		<v-main>
 			<v-card
@@ -37,6 +38,7 @@ export default {
 	name: "App",
 	components: {
 		UserSettingsDrawer: () => import("@/components/drawers/UserSettingsDrawer"),
+		CommunityModCogDrawer: () => import("@/components/drawers/CommunityMODCogDrawer"),
 		HomeDrawer: () => import("@/components/drawers/HomeDrawer"),
 		RootSidebar: () => import("@/components/drawers/RootSidebar"),
 		TheAppBar: () => import("@/components/appbar/TheAppBar"),

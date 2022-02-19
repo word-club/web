@@ -1,10 +1,17 @@
 <template>
 	<v-card outlined>
-		<v-card-title class="px-3 py-2 d-flex justify-space-between align-center white--text"
+		<v-card-title class="about-community"
 			:class="community.theme.color"
 		>
-			<div class="px14 weight-500">
+			<div class="about-community--title">
 				About Community
+			</div>
+			<div class="about-community--mod-cog"
+				v-ripple
+				@click="$router.push({name: 'Community MOD Settings Reports'})"
+			>
+				<v-icon dark class="px-1 mb-1">mdi-cogs</v-icon>
+				MOD TOOLS
 			</div>
 			<v-btn icon
 				small dark
@@ -103,6 +110,23 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.about-community {
+	padding: 6px 4px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: whitesmoke;
+	&--title {
+		font-size: 16px;
+		font-weight: 500;
+	}
+	&--mod-cog {
+		padding: 0 4px;
+		border-radius: 4px;
+		font-size: 12px;
+		border: 1px solid whitesmoke;
+		cursor: pointer;
+	}
+}
 </style>

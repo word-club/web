@@ -6,7 +6,7 @@
 			app clipped permanent
 			color="grey lighten-3"
 			class="home-sidebar"
-			:width="$vuetify.breakpoint.md ? 250 : 300"
+			:width="md ? 250 : 300"
 		>
 			<sidebar-top-padding />
 			<user-cog-drawer />
@@ -15,26 +15,23 @@
 </template>
 
 <script>
+import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
+
 export default {
 	name: "UserSettingsDrawer",
 	components: {
 		SidebarTopPadding: () => import("@/components/drawers/SidebarTopPadding"),
 		UserCogDrawer: () => import("@/views/home/components/UserCogDrawer"),
 	},
+	mixins: [ScreenSizeMixin],
 	data: () => ({
 		profileSettingsDrawer: null,
 	}),
 	computed: {
 		userSettingRoute() {
 			return this.$route.matched.some(route => route.meta["user_settings"])
-		},
-		mdAndUp() {
-			return this.$vuetify.breakpoint.mdAndUp
-		},
-	},
-	created() {
-	},
-	methods: {}
+		}
+	}
 }
 </script>
 

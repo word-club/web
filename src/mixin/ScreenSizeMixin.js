@@ -3,8 +3,8 @@ const ScreenSizeMixin = {
 		xs() {
 			return this.$vuetify.breakpoint.xs
 		},
-		sm() {
-			return this.$vuetify.breakpoint.sm
+		md() {
+			return this.$vuetify.breakpoint.md
 		},
 		smAndDown() {
 			return this.$vuetify.breakpoint.smAndDown
