@@ -6,7 +6,7 @@
 		"detail": "users/%s/",
 		"retrieve": "user/%s/",
 		"register": "register/",
-		"login": "login/",
+		"login": "wc-sign-in/",
 		"logout": "logout/",
 		"updatePassword": "update-password/",
 		"requestResetPassword": "reset-password/",
