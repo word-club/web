@@ -5,17 +5,17 @@ const BACKEND_HOST = process.env.VUE_APP_BACKEND_HOST
 
 const AXIOS = {
 	setHeaders: function (headers = {}) {
+		const HEADERS = {
+			...headers,
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		}
+		if (typeof $helper.getAccessToken() === "string") {
+			HEADERS["Authorization"] = `Token ${$helper.getAccessToken()}`
+		}
 		return axios.create({
 			baseURL: `${BACKEND_HOST}/api/`,
-			headers: {
-				...headers,
-				"Content-Type": "application/json",
-				Accept: "*/*",
-				Authorization:
-					typeof $helper.getAccessToken() !== "string"
-						? null
-						: `Token ${$helper.getAccessToken()}`
-			}
+			headers: HEADERS
 		})
 	},
 	async get(target) {
