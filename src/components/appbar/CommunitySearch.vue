@@ -33,10 +33,10 @@
 				</v-avatar>
 				<v-avatar
 					v-if="communityInView"
-					size="30"
+					size="20"
 					:color="(communityInView && communityInView.avatar)
 						? 'white': communityInView.theme.color"
-					class="mt-0 mb-2"
+					style="margin-top: 2px;"
 				>
 					<template #default>
 						<v-img
@@ -95,5 +95,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+::v-deep.v-text-field {
+	#community-search {
+		font-size: .94rem;
+	}
+	fieldset {
+		border: none;
+	}
+	&:hover {
+		fieldset {
+			border: 1px solid grey;
+		}
+	}
+}
 </style>

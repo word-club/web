@@ -44,7 +44,7 @@ import RouteMixin from "@/mixin/RouteMixin.js";
 export default {
 	name: "CommunityHoverBox",
 	components: {
-		CommunityPeek: () => import("@/views/community/CommunityPeek")
+		CommunityPeek: () => import("@/views/community/sidebar/CommunityPeek.vue")
 	},
 	mixins: [RouteMixin],
 	props: {

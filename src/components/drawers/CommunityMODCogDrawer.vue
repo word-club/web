@@ -2,14 +2,22 @@
 	<v-slide-x-reverse-transition>
 		<v-navigation-drawer
 			v-if="communityModCogRoute"
-			v-model="communityModCogDrawer"
-			app clipped permanent
+			v-model="mainDrawer"
+			app clipped
 			color="grey lighten-3"
-			class="home-sidebar"
-			:width="md ? 220 : 280"
+			:class="{'home-sidebar': mdAndUp}"
+			:permanent="mdAndUp"
+			:temporary="!mdAndUp"
+			:width="$vuetify.breakpoint.md ? 220 : 240"
 		>
-			<sidebar-top-padding />
-			<v-list rounded dense>
+			<div v-if="!mdAndUp" class="pa-4">
+				<h3>COMMUNITY MOD</h3>
+				<div class="underline" />
+			</div>
+			<v-list
+				v-if="community"
+				rounded dense
+			>
 				<v-list-item-group v-for="(item, index) in items"
 					:key="index"
 				>
@@ -20,8 +28,9 @@
 						</span>
 					</v-subheader>
 					<v-list-item
+						:color="community.theme.color"
 						v-for="(item, index) in item.children"
-						:key="index" color="primary"
+						:key="index"
 						:to="{name: item.to}"
 						class="px-0"
 					>
@@ -37,24 +46,22 @@
 					</v-list-item>
 				</v-list-item-group>
 			</v-list>
-			<div class="py-16" />
 		</v-navigation-drawer>
 	</v-slide-x-reverse-transition>
 </template>
 
 <script>
 import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
+import MainDrawer from "@/mixin/MainDrawer.js";
+import {mapGetters} from "vuex";
 
 export default {
 	name: "CommunityMODCogDrawer",
-	components: {
-		SidebarTopPadding: () => import("@/components/drawers/SidebarTopPadding"),
-	},
-	mixins: [ScreenSizeMixin],
-	data: () => ({
-		communityModCogDrawer: null,
-	}),
+	mixins: [ScreenSizeMixin, MainDrawer],
 	computed: {
+		...mapGetters({
+			community: "community/inView"
+		}),
 		communityModCogRoute() {
 			return this.$route.matched.some(route => route.meta["community_mod"])
 		},
@@ -147,5 +154,22 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+@import "styles/sidebar";
+.underline {
+	width: 64%;
+	height: 4px;
+	background-color: #1d1d1d;
+	border-radius: 4px;
+	position: relative;
+	&::before {
+		content: "";
+		position: absolute;
+		height: 4px;
+		width: 4px;
+		background-color: white;
+		border-radius: 50%;
+		left: 20px;
+		top: 0;
+	}
+}
 </style>

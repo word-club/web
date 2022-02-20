@@ -9,8 +9,9 @@
 			class="mx-auto"
 			flat color="white"
 		>
-			<v-card-text class="pa-3 pt-0 pb-1 d-flex align-center"
-				style="width: 100%"
+			<v-card-text
+				class="pa-3 pt-0 pb-1 d-flex align-center full-width"
+				v-if="community"
 			>
 				<v-avatar
 					class="community-avatar"
@@ -146,8 +147,8 @@ export default {
 	emits: ["refresh"],
 	mixins: [CommunityActions, RefreshMeMixin, FetchMixin],
 	components: {
-		ConfirmDialog: () => import("@/components/ConfirmDialog.vue"),
-		CommunityTab: () => import("@/views/community/CommunityTab")
+		ConfirmDialog: () => import("@/components/ConfirmDialog"),
+		CommunityTab: () => import("@/views/community/components/CommunityTab")
 	},
 	computed: {
 		...mapGetters({

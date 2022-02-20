@@ -87,7 +87,9 @@
 		>
 			<publication-search />
 
-			<tooltip-icon-btn tooltip="Sidebar" icon="mdi-page-layout-sidebar-right"
+			<tooltip-icon-btn
+				v-if="xs" tooltip="Sidebar"
+				icon="mdi-page-layout-sidebar-right"
 				@click="SET_SIDEBAR_STATE(!sidebarState)"
 			/>
 		</template>

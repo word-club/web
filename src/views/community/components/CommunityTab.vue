@@ -1,5 +1,8 @@
 <template>
-	<v-card-actions class="flex-wrap px14 weight-500 py-0">
+	<v-card-actions
+		v-if="community"
+		class="flex-wrap px14 weight-500 py-0"
+	>
 		<div
 			class="community-top-button ma-2 mb-0 cursor"
 			@click="toCommunityDetail(community.id)"

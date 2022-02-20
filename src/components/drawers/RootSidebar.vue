@@ -96,22 +96,6 @@ export default {
 	}
 }
 </script>
-
-<style scoped lang="scss">
-.home-sidebar {
-	&--toggle {
-		padding: 8px;
-	}
-	::v-deep.v-navigation-drawer__content {
-		transition: margin-top ease .5s;
-		margin-top: 56px;
-		@media only screen and (max-width: 849px) and (min-width: 600px) {
-			// when the appbar height is extended
-			margin-top: 105px;
-		}
-		@media only screen and (max-width: 600px) {
-			margin-top: 0;
-		}
-	}
-}
+<style lang="scss" scoped>
+@import "styles/sidebar";
 </style>

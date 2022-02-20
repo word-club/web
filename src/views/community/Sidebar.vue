@@ -16,9 +16,9 @@ import {mapGetters} from "vuex";
 export default {
 	name: "Sidebar",
 	components: {
-		AboutCommunity: () =>  import("@/views/community/AboutCommunity"),
-		CommunityRules: () =>  import("@/views/community/CommunityRules"),
-		MessageModerators: () =>  import("@/views/community/MessageModerators"),
+		AboutCommunity: () =>  import("@/views/community/sidebar/AboutCommunity.vue"),
+		CommunityRules: () =>  import("@/views/community/sidebar/CommunityRules.vue"),
+		MessageModerators: () =>  import("@/views/community/sidebar/MessageModerators.vue"),
 	},
 	computed: {
 		...mapGetters({

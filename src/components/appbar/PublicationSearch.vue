@@ -32,5 +32,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+::v-deep.v-text-field {
+	#publication-search {
+		font-size: .94rem;
+	}
+}
 </style>

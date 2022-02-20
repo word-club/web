@@ -10,8 +10,7 @@
 			:temporary="!mdAndUp"
 			:width="$vuetify.breakpoint.md ? 180 : 200"
 		>
-			<sidebar-top-padding v-if="mdAndUp" />
-			<div v-else class="site-title">
+			<div v-if="!mdAndUp" class="site-title">
 				<v-img :src="require('@/assets/site-title.png')" />
 			</div>
 
@@ -21,24 +20,15 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
+import MainDrawer from "@/mixin/MainDrawer.js";
 
 export default {
 	name: "HomeDrawer",
 	components: {
-		SidebarTopPadding: () => import("@/components/drawers/SidebarTopPadding"),
 		DrawerList: () => import("@/views/home/components/DrawerList"),
 	},
-	data: () => ({}),
+	mixins: [MainDrawer],
 	computed: {
-		mainDrawer: {
-			get() {
-				return this.$store.getters.mainDrawerState
-			},
-			set(v) {
-				this.SET_DRAWER_STATE(v)
-			}
-		},
 		drawerFreeRoute() {
 			return this.$route.matched.some(route => route.meta["drawer_free"])
 		},
@@ -46,11 +36,6 @@ export default {
 			return this.$vuetify.breakpoint.mdAndUp
 		},
 	},
-	created() {
-	},
-	methods: {
-		...mapMutations(["SET_DRAWER_STATE"]),
-	}
 }
 </script>
 

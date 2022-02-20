@@ -3,21 +3,10 @@
 		class="mx-auto transparent"
 		flat :loading="loading"
 	>
-		<div v-if="community && community.theme">
-			<v-card-text class="pa-0">
-				<v-card
-					:height="coverHeight"
-					:color="community.theme.color"
-					tile flat
-				>
-					<v-img
-						v-if="community.cover"
-						:src="$link(community.cover.image)"
-						:height="coverHeight"
-					/>
-				</v-card>
-			</v-card-text>
-			<detail-title @refresh="refreshCommunity" />
+		<div>
+			<community-cover v-if="!modRoutes" />
+			<detail-title v-if="!modRoutes" @refresh="refreshCommunity" />
+			<community-breadcrumb v-else />
 			<v-card-text class="pt-4">
 				<v-card max-width="800"
 					class="mx-auto"
@@ -38,10 +27,13 @@
 import {mapGetters, mapMutations} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import FetchMixin from "@/mixin/FetchMixin.js";
+
 export default {
 	name: "Community",
 	components: {
-		DetailTitle: () => import("@/views/community/DetailTitle")
+		CommunityCover: () => import("@/views/community/components/CommunityCover"),
+		DetailTitle: () => import("@/views/community/components/DetailTitle"),
+		CommunityBreadcrumb: () => import("@/views/community/components/CommunityBreadcrumb")
 	},
 	mixins: [RouteMixin, FetchMixin],
 	data: () => ({
@@ -55,6 +47,9 @@ export default {
 			if (this.$route.name.includes("Community MOD Settings")) return 100
 			if (!this.community.cover) return 100
 			return 300
+		},
+		modRoutes() {
+			return this.$route.matched.some(route => route.meta["community_mod"])
 		}
 	},
 	created() {

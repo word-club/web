@@ -87,9 +87,13 @@
 
 <script>
 import {mapGetters} from "vuex";
+import UserRoles from "@/mixin/UserRoles.js";
 export default {
 	name: "WikiPage",
-	components: {RuleDialog: () => import("@/views/community/RuleDialog")},
+	components: {
+		RuleDialog: () => import("@/views/community/RuleDialog")
+	},
+	mixins: [UserRoles],
 	data: () => ({
 		options: {
 			lineNumbers: false
@@ -99,20 +103,7 @@ export default {
 		...mapGetters({
 			community: "community/inView",
 			currentUser: "user/current"
-		}),
-		isCommunityManager() {
-			if (!this.currentUser) return false
-			const managedCommunities = this.currentUser.managed_communities
-			if (!managedCommunities.length) return false
-			let present = false
-			for (let i=0; i<managedCommunities.length; i++) {
-				if (managedCommunities[i].id === this.community.id)  {
-					present = true
-					break
-				}
-			}
-			return present
-		}
+		})
 	},
 	methods: {}
 }

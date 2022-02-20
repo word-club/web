@@ -6,21 +6,51 @@
 			<div class="about-community--title">
 				About Community
 			</div>
-			<div class="about-community--mod-cog"
-				v-ripple
-				@click="$router.push({name: 'Community MOD Settings Reports'})"
-			>
-				<v-icon dark class="px-1 mb-1">mdi-cogs</v-icon>
-				MOD TOOLS
-			</div>
-			<v-btn icon
-				small dark
-			>
-				<v-icon>mdi-dots-horizontal</v-icon>
-			</v-btn>
+			<v-menu bottom nudge-bottom="30">
+				<template #activator="{on, attrs}">
+					<v-btn
+						v-if="isCommunityManager"
+						icon small dark
+						v-bind="attrs" v-on="on"
+
+					>
+						<v-icon>mdi-dots-horizontal</v-icon>
+					</v-btn>
+				</template>
+				<v-list dense outlined>
+					<v-list-item
+						@click="$router.push({name: 'Community MOD Settings Reports'})"
+					>
+						<v-list-item-icon><v-icon>mdi-cog</v-icon></v-list-item-icon>
+						<v-list-item-content>
+							<v-list-item-title>MOD Tools</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
+				</v-list>
+			</v-menu>
 		</v-card-title>
 		<v-card-text class="pa-3">
-			{{ community.quote }}
+			<div class="about-community--quote"
+				v-if="community.description"
+			>
+				{{ community.description }}
+			</div>
+			<text-area
+				v-else
+				v-model="description"
+				name="description"
+				label="Community Quote"
+				icon="mdi-format-quote-close"
+				counter="256"
+			/>
+			<v-btn block
+				dark
+				v-if="description"
+				@click="patchQuote"
+				:color="community.theme.color"
+			>
+				Update
+			</v-btn>
 		</v-card-text>
 		<v-card-text class="d-flex align-center pa-3 weight-500 justify-space-between">
 			<div>
@@ -94,19 +124,34 @@
 
 <script>
 import {mapGetters} from "vuex";
+import UserRoles from "@/mixin/UserRoles.js";
+import PatchMixin from "@/mixin/PatchMixin.js";
+import Snack from "@/mixin/Snack.js";
 
 export default {
 	name: "AboutCommunity",
-	props: {},
+	mixins: [UserRoles, PatchMixin, Snack],
 	data: () => ({
+		description: null,
 		options: false,
 		seeTheme: true
 	}),
 	computed: {
 		...mapGetters({
-			community: "community/inView"
+			community: "community/inView",
+			currentUser: "user/current"
 		})
 	},
+	methods: {
+		patchQuote() {
+			this.patch(this.$util.format(this.$urls.community.detail, this.community.id), {
+				description: this.description
+			}).then(() => {
+				if (this.patchSuccess) this.openSuccessSnack("Community quote updated!")
+				else this.openSnack("Community quote update failed.")
+			})
+		}
+	}
 }
 </script>
 
@@ -120,13 +165,6 @@ export default {
 	&--title {
 		font-size: 16px;
 		font-weight: 500;
-	}
-	&--mod-cog {
-		padding: 0 4px;
-		border-radius: 4px;
-		font-size: 12px;
-		border: 1px solid whitesmoke;
-		cursor: pointer;
 	}
 }
 </style>

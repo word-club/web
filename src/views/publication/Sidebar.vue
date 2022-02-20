@@ -18,7 +18,7 @@ import {mapGetters} from "vuex";
 export default {
 	name: "DetailSidebar",
 	components: {
-		CommunityPeek: () => import("@/views/community/CommunityPeek"),
+		CommunityPeek: () => import("@/views/community/sidebar/CommunityPeek.vue"),
 		PostingToWordClub: () => import("@/components/utils/PostingToWordClub"),
 	},
 	computed: {

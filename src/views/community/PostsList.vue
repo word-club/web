@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="community">
 		<add-post-box :color="community.theme.color" />
 		<div class="py-2" />
 		<hot-bar :color="community.theme.color" />

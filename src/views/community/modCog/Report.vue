@@ -1,5 +1,5 @@
 <template>
-	<v-card flat dark>
+	<v-card flat>
 		<v-card-title>
 			Report
 		</v-card-title>
