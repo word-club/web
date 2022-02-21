@@ -1,7 +1,7 @@
 describe("Visit submit", () => {
 	describe("unauthenticated feature", () => {
 		it("should not allow unauthenticated routes to submit page", () => {
-			cy.visit("/#/submit/edit/community/")
+			cy.visit("/#/submit/type/editor/edit/community/")
 			cy.get(".auth-card")
 				.should("be.visible")
 			cy.contains("Login to WordClub")
@@ -27,7 +27,7 @@ describe("Visit submit", () => {
 		})
 
 		it("should allow authenticated route to submit page", () => {
-			cy.visit("/#/submit/edit/community/")
+			cy.visit("/#/submit/type/editor/edit/community/")
 			cy.get(".auth-card")
 				.should("not.exist")
 			cy.contains("Create post")
