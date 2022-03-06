@@ -1,6 +1,11 @@
 {
 	"administration": {
-		"top": "top/"
+		"top": "top/",
+		"list": "administration/",
+		"pageView": {
+			"list": "page-view/",
+			"detail": "page-view/"
+		}
 	},
 	"user": {
 		"me": "me/",
