@@ -5,10 +5,14 @@
 	>
 		<div>
 			<community-cover v-if="!modRoutes" />
-			<detail-title v-if="!modRoutes" @refresh="refreshCommunity" />
+			<detail-title v-if="!modRoutes"
+				@refresh="refreshCommunity"
+			/>
 			<community-breadcrumb v-else />
 			<v-card-text class="pt-4">
-				<v-card max-width="800"
+				<v-card
+					v-if="community"
+					max-width="800"
 					class="mx-auto"
 					flat color="transparent"
 				>

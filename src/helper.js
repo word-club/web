@@ -52,9 +52,8 @@ module.exports = {
 			user: user
 		}))
 	},
-	getThemeColor(community) {
-		if (community.theme) return community.theme.color
-		else return "primary"
+	isLoggedIn() {
+		return this.getAccessToken() !== null
 	},
 	setCommunityInProgress(value) {
 		localStorage.setItem(COMMUNITY_CREATE_IN_PROGRESS, JSON.stringify(value))

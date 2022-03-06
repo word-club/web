@@ -1,6 +1,6 @@
 <template>
 	<v-card flat>
-		<v-card-text>
+		<v-card-text class="pa-0">
 			<transition name="view">
 				<router-view />
 			</transition>

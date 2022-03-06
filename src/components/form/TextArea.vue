@@ -31,7 +31,7 @@ export default {
 		label: {type: String, required: true},
 		counter: {type: [String, Boolean], required: true},
 		errors: {type: Object, required: false, default: () => {}},
-		icon: {type: String, required: true},
+		icon: {type: String, default: "mdi-form-textbox"},
 		color: {type: String, default: "primary"},
 		clearable: {type: Boolean, default: true}
 	},

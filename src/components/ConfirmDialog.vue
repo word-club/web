@@ -10,7 +10,7 @@
 				<v-spacer />
 				<v-btn
 					fab small
-					@click="closeDialog"
+					@click="closeConfirmDialog"
 				>
 					<v-icon>mdi-close</v-icon>
 				</v-btn>
@@ -21,10 +21,10 @@
 			<v-card-actions>
 				<v-spacer />
 				<v-btn color="error"
-					@click="closeDialog"
+					@click="closeConfirmDialog"
 				>Cancel</v-btn>
 				<v-btn color="success"
-					@click="proceedDialog"
+					@click="proceedConfirmDialog"
 				>Proceed</v-btn>
 			</v-card-actions>
 		</v-card>
@@ -32,14 +32,12 @@
 </template>
 
 <script>
+import ConfirmDialog from "@/mixin/ConfirmDialog.js";
 import {mapGetters} from "vuex";
-import axios from "axios"
-import Snack from "@/mixin/Snack.js";
 
 export default {
 	name: "ConfirmDialog",
-	mixins: [Snack],
-	emits: ["refreshMe", "refreshCommunity"],
+	mixins: [ConfirmDialog],
 	computed: {
 		...mapGetters("confirmDialog",
 			[
@@ -47,35 +45,13 @@ export default {
 				"dialogMessage",
 				"dialogMethod",
 				"dialogUrl",
+				"dialogPayload",
+				"dialogParams",
 				"dialogSuccessEvents",
 				"dialogSuccessMessage",
 				"dialogFailureMessage"
 			]
 		),
-	},
-	methods: {
-		closeDialog() {
-			this.$store.dispatch("confirmDialog/close")
-		},
-		proceedDialog() {
-			const BACKEND_HOST = process.env.VUE_APP_BACKEND_HOST
-			axios({
-				headers: {
-					"Authorization": "Token " + this.$helper.getAccessToken()
-				},
-				method: this.dialogMethod,
-				url: `${BACKEND_HOST}/api/` + this.dialogUrl,
-			}).then(()  => {
-				this.openSuccessSnack(this.dialogSuccessMessage)
-				this.dialogSuccessEvents.forEach(e => {
-					this.$emit(e)
-				})
-				this.closeDialog()
-			})
-				.catch(() => {
-					this.openSnack(this.dialogFailureMessage)
-				})
-		}
 	}
 }
 </script>

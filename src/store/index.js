@@ -8,6 +8,7 @@ import hashtag from "@/store/modules/hashtag"
 import user from "@/store/modules/user"
 import comment from "@/store/modules/comment"
 import confirmDialog from "@/store/modules/confirmDialog"
+import reportDialog from "@/store/modules/report"
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
 		auth: { state: false, mode: null, next: null },
 		draftDialog: false,
 		ruleDialog: false,
+		reportDialog: {state: false, model: null, obj: null},
 		rule: null,
 		top: {}, sidebar: null,
 		mainDrawer: null,
@@ -27,7 +29,8 @@ export default new Vuex.Store({
 		authMode: state => state.auth,
 		draftState: state => state.draftDialog,
 		ruleState: state => state.ruleDialog,
-		ruleInEdit: state => state.rule
+		ruleInEdit: state => state.rule,
+		reportState: state => state.reportDialog,
 	},
 	mutations: {
 		SET_AUTH_MODE: (state, value) => state.auth = value,
@@ -37,6 +40,7 @@ export default new Vuex.Store({
 		SET_TOP: (state, value) => state.top = value,
 		SET_SIDEBAR_STATE: (state, value) => state.sidebar = value,
 		SET_DRAWER_STATE: (state, value) => state.mainDrawer = value,
+		SET_REPORT_STATE: (state, value) => state.reportDialog = value,
 	},
 	actions: {
 		setAuthMode({commit}, value) {
@@ -44,6 +48,9 @@ export default new Vuex.Store({
 		},
 		setDraftState({commit}, value) {
 			commit("SET_DRAFT_STATE", value)
+		},
+		setReportState({commit}, value) {
+			commit("SET_REPORT_STATE", value)
 		},
 		setRuleState({commit}, value) {
 			commit("SET_RULE_STATE", value)
@@ -58,6 +65,7 @@ export default new Vuex.Store({
 	modules: {
 		snack, community,
 		publication, hashtag,
-		user, comment, confirmDialog
+		user, comment, confirmDialog,
+		reportDialog
 	}
 })

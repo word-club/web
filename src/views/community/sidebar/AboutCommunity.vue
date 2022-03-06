@@ -9,16 +9,24 @@
 			<v-menu bottom nudge-bottom="30">
 				<template #activator="{on, attrs}">
 					<v-btn
-						v-if="isCommunityManager"
 						icon small dark
 						v-bind="attrs" v-on="on"
-
+						v-if="$helper.isLoggedIn()"
 					>
 						<v-icon>mdi-dots-horizontal</v-icon>
 					</v-btn>
 				</template>
 				<v-list dense outlined>
+					<v-list-item @click="openReportDialog('community', community)">
+						<v-list-item-icon>
+							<v-icon>mdi-flag</v-icon>
+						</v-list-item-icon>
+						<v-list-item-content>
+							<v-list-item-title>Report</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
 					<v-list-item
+						v-if="isCommunityManager"
 						@click="$router.push({name: 'Community MOD Settings Reports'})"
 					>
 						<v-list-item-icon><v-icon>mdi-cog</v-icon></v-list-item-icon>
@@ -127,10 +135,11 @@ import {mapGetters} from "vuex";
 import UserRoles from "@/mixin/UserRoles.js";
 import PatchMixin from "@/mixin/PatchMixin.js";
 import Snack from "@/mixin/Snack.js";
+import ReportDialog from "@/mixin/ReportDialog.js";
 
 export default {
 	name: "AboutCommunity",
-	mixins: [UserRoles, PatchMixin, Snack],
+	mixins: [UserRoles, PatchMixin, Snack, ReportDialog],
 	data: () => ({
 		description: null,
 		options: false,

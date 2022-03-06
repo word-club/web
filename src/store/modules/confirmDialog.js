@@ -3,6 +3,8 @@ const state = {
 	message: null,
 	method: null,
 	url:  null,
+	payload: null,
+	params: null,
 	successMessage: null,
 	failureMessage: null,
 	successEvents: []
@@ -15,7 +17,9 @@ const getters = {
 	dialogUrl: state => state.url,
 	dialogSuccessEvents: state => state.successEvents,
 	dialogSuccessMessage: state => state.successMessage,
-	dialogFailureMessage:  state => state.failureMessage
+	dialogFailureMessage:  state => state.failureMessage,
+	dialogPayload: state => state.payload,
+	dialogParams: state => state.params
 }
 
 const mutations = {
@@ -26,6 +30,8 @@ const mutations = {
 	SET_SUCCESS_EVENTS: (state, value) => state.successEvents = value,
 	SET_SUCCESS_MESSAGE: (state, value) => state.successMessage = value,
 	SET_FAILURE_MESSAGE: (state, value) => state.failureMessage = value,
+	SET_PAYLOAD: (state, value) => state.payload = value,
+	SET_PARAMS: (state, value) => state.params = value,
 	CLOSE: (state) => {
 		state.dialog = false
 		state.message = null
@@ -58,6 +64,12 @@ const actions = {
 	},
 	setFailureMessage({commit}, v) {
 		commit("SET_FAILURE_MESSAGE", v)
+	},
+	setPayload({commit}, v) {
+		commit("SET_PAYLOAD", v)
+	},
+	setParams({commit}, v) {
+		commit("SET_PARAMS", v)
 	},
 	close({commit}) {
 		commit("CLOSE")

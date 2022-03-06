@@ -45,6 +45,7 @@ module.exports = {
 		"quotes": ["error", "double"],
 		"vue/require-prop-types": "off",
 		"vue/multi-word-component-names": "off",
+		"vue/valid-v-slot": "off",
 		"no-undef": "off"
 	}
 }
