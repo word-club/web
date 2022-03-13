@@ -119,12 +119,12 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/mixin/ConfirmDialog.js";
+import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin.js";
 import {mapGetters} from "vuex";
 
 export default {
 	name: "ReportAdminDialog",
-	mixins: [ConfirmDialog],
+	mixins: [ConfirmDialogMixin],
 	data: () => ({
 		resolve_text: "",
 	}),

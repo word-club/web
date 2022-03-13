@@ -1,24 +1,5 @@
 <template>
 	<v-list class="py-0" flat>
-		<v-dialog v-model="itemForShare" max-width="600"
-			persistent transition="scale-transition"
-		>
-			<v-card color="primary" dark>
-				<v-card-title>
-					Share comment
-					<v-spacer />
-					<v-btn icon @click="itemForShare = null"><v-icon>mdi-close</v-icon></v-btn>
-				</v-card-title>
-				<v-card-text>
-					<v-card>
-						<v-card-title>Comment Item</v-card-title>
-					</v-card>
-				</v-card-text>
-				<v-card-actions>
-					<v-btn block>Share</v-btn>
-				</v-card-actions>
-			</v-card>
-		</v-dialog>
 		<v-list-item-group class="comment-item-wrapper">
 			<v-list-item class="comment-item">
 				<div v-if="replies.length" class="bottom-field-line" />
@@ -30,28 +11,44 @@
 					color="grey"
 				>
 					<v-img v-if="comment.created_by.avatar" :src="$link(comment.created_by.avatar)" />
-					<div class="full-width text-center px16 weight-500 white--text">{{ comment.created_by.username[0].toUpperCase() }}</div>
+					<div class="full-width text-center px16 weight-500 white--text">{{
+						comment.created_by.username[0].toUpperCase()
+					}}</div>
 				</v-list-item-avatar>
 				<v-list-item-content class="pl-4">
 					<v-list-item-subtitle class="d-flex align-center px14">
 						<div>{{ comment.created_by.username }}</div>
 						<div><v-icon>mdi-circle-small</v-icon></div>
-						<div>{{$moment(comment.created_at).fromNow()}}</div>
+						<div>{{ $moment(comment["created_at"]).fromNow() }}</div>
 					</v-list-item-subtitle>
 					<v-list-item-title class="comment-text px16">
-						{{comment.comment}}
+						<v-slide-x-transition>
+							<comment-field
+								v-if="editComment"
+								:target="comment"
+								:edit-mode="true"
+								@init="handleInit()"
+							/>
+							<div v-else>
+								{{ comment.comment }}
+							</div>
+						</v-slide-x-transition>
 					</v-list-item-title>
 					<v-list-item-subtitle class="d-flex align-center pt-2">
-						<v-btn icon :color="comment.up_vote ? 'primary' : 'grey'"
-							small @click="upVoteComment()"
+						<v-btn
+							icon small
+							:color="myUpVote() ? 'primary' : 'grey'"
+							@click="sendUpVote()"
 						>
 							<v-icon>mdi-chevron-up</v-icon>
 						</v-btn>
 						<div class="px-1">
-							{{ comment.popularity }}
+							{{ comment["popularity"] }}
 						</div>
-						<v-btn icon :color="comment.down_vote ? 'primary' : 'grey'"
-							small @click="downVoteComment()"
+						<v-btn
+							icon small
+							:color="myDownVote() ? 'primary' : 'grey'"
+							@click="sendDownVote()"
 						>
 							<v-icon>mdi-chevron-down</v-icon>
 						</v-btn>
@@ -64,38 +61,38 @@
 						</v-btn>
 						<v-btn
 							small text rounded
-							@click="itemForShare = comment"
+							@click="createShare()"
 						>
 							Share
 						</v-btn>
 						<v-btn
-							v-if="!isMyComment"
+							v-if="!isMyItem"
 							small text rounded
-							@click="saveComment()"
+							@click="bookmark()"
 						>
 							Save
 						</v-btn>
-						<v-btn v-if="!isMyComment"
+						<v-btn v-if="!isMyItem"
 							small text rounded
-							@click="reportComment()"
+							@click="addReport()"
 						>
 							Report
 						</v-btn>
-						<v-btn v-if="!isMyComment"
+						<v-btn v-if="!isMyItem"
 							small text rounded
-							@click="hideComment()"
+							@click="hide()"
 						>
 							HIDE
 						</v-btn>
-						<v-btn v-if="isMyComment"
+						<v-btn v-if="isMyItem"
 							text small rounded
-							@click="initCommentEdit"
+							@click="initCommentEdit()"
 						>
 							EDIT
 						</v-btn>
-						<v-btn v-if="isMyComment"
+						<v-btn v-if="isMyItem"
 							text small rounded
-							@click="initCommentDelete"
+							@click="initCommentDelete()"
 						>
 							DELETE
 						</v-btn>
@@ -138,7 +135,9 @@
 					color="grey" class="comment-avatar"
 				>
 					<v-img v-if="comment.created_by.avatar" :src="$link(comment.created_by.avatar)" />
-					<div class="full-width text-center px16 weight-500 white--text">{{ comment.created_by.username[0].toUpperCase() }}</div>
+					<div class="full-width text-center px16 weight-500 white--text">
+						{{ comment.created_by.username[0].toUpperCase() }}
+					</div>
 				</v-list-item-avatar>
 				<v-list-item-content class="pl-3">
 					<v-list-item-subtitle class="d-flex align-center px14">
@@ -147,56 +146,66 @@
 						<div>{{$moment(reply.created_at).fromNow() }}</div>
 					</v-list-item-subtitle>
 					<v-list-item-title class="comment-text px16">
-						{{reply.comment}}
+						<v-slide-x-transition>
+							<comment-field
+								v-if="editReply"
+								:target="reply"
+								:edit-mode="true"
+								@init="handleInit()"
+							/>
+							<div v-else>
+								{{ reply.comment }}
+							</div>
+						</v-slide-x-transition>
 					</v-list-item-title>
 					<v-list-item-subtitle class="d-flex align-center">
-						<v-btn icon :color="reply.up_vote ? 'primary' : 'grey'"
-							small @click="upVoteComment(reply)"
+						<v-btn icon :color="myUpVote(reply) ? 'primary' : 'grey'"
+							small @click="sendUpVote(reply)"
 						>
 							<v-icon>mdi-chevron-up</v-icon>
 						</v-btn>
 						<div class="px-1">
-							{{ reply.popularity }}
+							{{ reply["popularity"] }}
 						</div>
 						<v-btn icon
-							small :color="reply.down_vote ? 'primary' : 'grey'"
-							@click="downVoteComment(reply)"
+							small :color="myDownVote(reply) ? 'primary' : 'grey'"
+							@click="sendDownVote(reply)"
 						>
 							<v-icon>mdi-chevron-down</v-icon>
 						</v-btn>
 						<v-btn
 							small text rounded
-							@click="itemForShare = reply"
+							@click="createShare(reply)"
 						>
 							Share
 						</v-btn>
 						<v-btn v-if="!isMyReply(reply)"
 							small text rounded
-							@click="saveComment(reply)"
+							@click="bookmark(reply)"
 						>
 							Save
 						</v-btn>
 						<v-btn v-if="!isMyReply(reply)"
 							small text rounded
-							@click="reportComment(reply)"
+							@click="addReport(reply)"
 						>
 							Report
 						</v-btn>
 						<v-btn v-if="!isMyReply(reply)"
 							small text rounded
-							@click="hideComment(reply)"
+							@click="hide(reply)"
 						>
 							HIDE
 						</v-btn>
 						<v-btn v-if="isMyReply(reply)"
 							text small rounded
-							@click="initReplyEdit"
+							@click="initCommentEdit(reply)"
 						>
 							EDIT
 						</v-btn>
 						<v-btn v-if="isMyReply(reply)"
 							text small rounded
-							@click="initReplyDelete"
+							@click="initCommentDelete(reply.id)"
 						>
 							DELETE
 						</v-btn>
@@ -204,29 +213,35 @@
 				</v-list-item-content>
 			</v-list-item>
 		</v-list-item-group>
+		<confirm-dialog
+			@init="handleInit()"
+		/>
 	</v-list>
 </template>
 
 <script>
 import PostMixin from "@/mixin/PostMixin.js";
 import Snack from "@/mixin/Snack.js";
-import CommentActions from "@/mixin/CommentActions.js";
-
+import CommentActionsMixin from "@/mixin/CommentActionsMixin.js";
+import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin.js";
 export default {
 	name: "CommentItem",
+	mixins: [PostMixin, Snack, CommentActionsMixin, ConfirmDialogMixin],
 	components: {
+		CommentField: () => import("@/components/form/CommentField"),
 		ReplyField: () => import("@/components/form/ReplyField")
 	},
-	mixins: [PostMixin, Snack, CommentActions],
 	props: {
 		index: {type: Number, required: true},
 		comment: {type: Object, required: true},
 		count: {type: Number, required: true}
 	},
+	data: () => ({
+		addReply: false,
+		editComment: false,
+		editReply: false,
+	}),
 	computed: {
-		isMyComment() {
-			return this.$helper.ifCurrentUserIs(this.comment.created_by)
-		},
 		replies() {
 			return this.comment.replies
 		}
@@ -234,6 +249,29 @@ export default {
 	methods: {
 		isMyReply(reply) {
 			return this.$helper.ifCurrentUserIs(reply.created_by)
+		},
+		initCommentEdit(item = null) {
+			if (!item) {
+				this.editComment = !this.editComment;
+			} else {
+				this.editReply = !this.editReply
+			}
+		},
+		initCommentDelete(itemId = null) {
+			if (!itemId) itemId = this.comment.id
+			this.openConfirmDialog(
+				"Are you sure you want to delete this comment?",
+				"DELETE",
+				this.$util.format(this.$urls.comment.detail, itemId),
+				["init"],
+				"Comment removed successfully.",
+				"Sorry, something went wrong,"
+			)
+		},
+		handleInit() {
+			this.editComment = false
+			this.editReply = false
+			this.$emit("init")
 		}
 	}
 }

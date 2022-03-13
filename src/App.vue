@@ -29,18 +29,16 @@
 				</transition>
 				<scroll-to-top />
 				<report-dialog />
-				<confirm-dialog />
+				<share-dialog />
 			</v-card>
 		</v-main>
 	</v-app>
 </template>
 
 <script>
-import ReportDialog from "@/components/dialogs/AddReportDialog.vue";
 export default {
 	name: "App",
 	components: {
-		ReportDialog,
 		UserSettingsDrawer: () => import("@/components/drawers/UserSettingsDrawer"),
 		CommunityModCogDrawer: () => import("@/components/drawers/CommunityMODCogDrawer"),
 		HomeDrawer: () => import("@/components/drawers/HomeDrawer"),
@@ -48,7 +46,8 @@ export default {
 		TheAppBar: () => import("@/components/appbar/TheAppBar"),
 		TheSnackbar: () => import("@/components/utils/TheSnackbar"),
 		ScrollToTop: () => import("@/components/utils/ScrollToTop"),
-		ConfirmDialog: () => import("@/components/ConfirmDialog")
+		ReportDialog: () => import("@/components/dialogs/AddReportDialog"),
+		ShareDialog: () => import("@/components/dialogs/ShareDialog"),
 	},
 
 	computed: {

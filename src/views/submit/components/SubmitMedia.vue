@@ -89,7 +89,7 @@ export default {
 	methods: {
 		postImage(item, index) {
 			const id = this.inProgress.id
-			const url = this.$util.format(this.$urls.publication.addImage, id)
+			const url = this.$util.format(this.$urls.image.publication, id)
 			const fd = this.$helper.createFormData({image: this.files[index]})
 			this.post(url, fd).then(() => {
 				if (this.success) {

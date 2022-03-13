@@ -1,12 +1,12 @@
 <template>
-	<div v-if="publication" class="comment-box">
+	<div v-if="target" class="comment-box">
 		<Mentionable
 			:keys="['@']"
 			:items="mentionList"
 			insert-space
 		>
 			<v-textarea
-				:id="`comment-input-${this.publication.id}`"
+				:id="`comment-input-${this.target.id}`"
 				outlined hide-details="auto"
 				v-model="comment" name="comment"
 				prepend-inner-icon="mdi-comment-outline"
@@ -88,7 +88,7 @@
 				class="mt-2" v-if="comment"
 				@click="addComment"
 			>
-				Add Comment
+				{{ editMode ? 'Update' : 'Add' }} Comment
 			</v-btn>
 		</v-fab-transition>
 	</div>
@@ -98,17 +98,18 @@
 import EmojiPicker from "vue-emoji-picker";
 import PostMixin from "@/mixin/PostMixin.js";
 import { Mentionable } from "vue-mention"
+import Snack from "@/mixin/Snack.js";
 
 export default {
 	name: "CommentField",
-	mixins: [PostMixin],
+	mixins: [Snack, PostMixin],
 	components: {
 		EmojiPicker,
 		Mentionable
 	},
 	props: {
-		publication: {type: Object, default: () => {}},
-		reply: {type: Object, default: () => {}}
+		target: {type: Object, default: () => {}},
+		editMode: {type: Boolean, default: false},
 	},
 	data: () => ({
 		search: "",
@@ -117,30 +118,44 @@ export default {
 		mentionList: []
 	}),
 	created() {
-		this.$axios.get("mention-list/")
-			.then(res => {
-				this.mentionList = res.map(item => {
-					return {
-						name: item.name,
-						value: item.username
-					}
+		if (this.$helper.isUserLoggedIn()) {
+			this.$axios.get(this.$urls.user.mentionList)
+				.then(res => {
+					this.mentionList = res.map(item => {
+						return {
+							name: item.name,
+							value: item.username
+						}
+					})
 				})
-			})
+		}
+		if (this.editMode) {
+			this.comment = this.target.comment;
+		}
 	},
 	methods: {
 		addComment() {
-			this.post(
-				this.$util.format(this.$urls.comment.add, this.publication.id),
+			let url
+			// if edit mode, then target is a comment instance
+			if (this.editMode) url = this.$util.format(this.$urls.comment.detail, this.target.id)
+			// else target is a publication instance
+			else url = this.$util.format(this.$urls.comment.add, this.target.id)
+			this.$axios.send(
+				(this.editMode) ? "PATCH" : "POST",
+				url,
 				{ comment: this.comment }
 			).then(() => {
-				if(this.success) {
-					this.$emit("init")
-					this.comment = null
-				}
+				this.openSuccessSnack("Comment updated successfully.")
+				this.$emit("init")
+				this.comment = null
+				this.comment = null
 			})
+				.catch(() => {
+					this.openSnack("Sorry, something went wrong.")
+				})
 		},
 		insert(emoji) {
-			const commentTextarea = document.querySelector(`#comment-input-${this.publication.id}`)
+			const commentTextarea = document.querySelector(`#comment-input-${this.target.id}`)
 			if (commentTextarea) {
 				const cursorPosition = commentTextarea.selectionStart
 				if (cursorPosition === this.comment.length) {

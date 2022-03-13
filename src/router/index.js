@@ -116,7 +116,7 @@ const routes = [
 		}
 	},
 	{
-		path: "/community/:id",
+		path: "/community/:uniqueId",
 		components: {
 			default: () => import("@/views/community/Community"),
 			sidebar: () => import("@/views/community/Sidebar")
@@ -421,6 +421,11 @@ const routes = [
 			login_required: true
 		},
 	},
+	{
+		name: "Site Administration",
+		path: "/site-administration",
+		component: () => import("@/views/siteAdmin/SiteAdmin")
+	}
 ]
 
 const router = new VueRouter({

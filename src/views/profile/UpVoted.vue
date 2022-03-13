@@ -1,50 +1,39 @@
 <template>
 	<div>
-		<v-card v-if="!items.length"
+		<v-card v-if="!upVotes.length"
 			height="86vh" flat
 		>
 			<v-card-title class="empty-content">
 				hmm... looks like you haven't upvoted anything yet
 			</v-card-title>
 		</v-card>
-		<div v-for="item in items"
+		<div v-for="item in upVotes"
 			:key="item.id"
 			class="pb-4"
 		>
 			<publication-instance
-				v-if="Array.isArray(item.comments)"
-				:publication="item"
-				@init="handler"
+				v-if="item.publication"
+				:publication="item.publication"
 			/>
-			<comment-instance v-else :comment="item" />
+			<comment-instance v-else :comment="item.comment" />
 		</div>
 	</div>
 </template>
 
 <script>
-import FeedMixin from "@/mixin/FeedMixin.js";
 import {mapGetters} from "vuex";
 
 export default {
 	name: "UpVoted",
-	mixins: [FeedMixin],
 	computed: {
 		...mapGetters({
 			user: "user/inView"
 		}),
-		publications() {
+		upVotes() {
 			if (!this.user) return []
-			if (!this.user.up_voted_publications) return []
-			return this.user.up_voted_publications
+			if (!this.user.my_votes) return []
+			return this.user.my_votes.filter(vote => vote.up === true)
 		},
-		comments() {
-			if (!this.user) return []
-			if (!this.user.up_voted_comments) return []
-			return this.user.up_voted_comments
-		}
-	},
-	created() {
-		this.sortItems()
 	}
 }
 </script>

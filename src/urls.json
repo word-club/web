@@ -32,13 +32,13 @@
 		"subscription": {
 			"add": "community/%s/subscribe/",
 			"notifications": {
-				"disable": "community/%s/disable-notifications/",
-				"removeDisable": "community/notifications/%s/disable/"
+				"disable": "subscription/%s/disable-notifications/",
+				"removeDisable": "subscription/%s/enable-notifications/"
 			},
-			"detail": "community/subscription/%s/",
-			"filter": "community/subscription/filter/",
-			"acceptReject": "community/subscriber/%s/approve/",
-			"banUnban": "community/subscriber/%s/ban/"
+			"detail": "subscription/%s/",
+			"filter": "subscription/filter/",
+			"acceptReject": "subscriber/%s/approve/",
+			"banUnban": "subscriber/%s/ban/"
 		},
 		"subscriberFilter": "community/%s/subscriber/filter/",
 		"addHashtag": "community/%s/hashtag/",

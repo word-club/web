@@ -147,16 +147,17 @@ export default {
 	emits: ["refresh"],
 	mixins: [CommunityActions, RefreshMeMixin, FetchMixin],
 	components: {
-		ConfirmDialog: () => import("@/components/ConfirmDialog"),
 		CommunityTab: () => import("@/views/community/components/CommunityTab")
 	},
 	computed: {
 		...mapGetters({
-			community: "community/inView"
+			community: "community/inView",
+			currentUser: "user/current"
 		}),
 		subscription() {
 			if (!this.community) return false
-			return this.community.subscription
+			if (!this.currentUser) return false
+			return this.currentUser["my_subscriptions"].find(s => s.community.id === this.community.id && s.is_approved && !s.is_banned)
 		}
 	}
 }

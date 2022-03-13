@@ -11,7 +11,7 @@
 					<v-btn
 						icon small dark
 						v-bind="attrs" v-on="on"
-						v-if="$helper.isLoggedIn()"
+						v-if="$helper.isUserLoggedIn()"
 					>
 						<v-icon>mdi-dots-horizontal</v-icon>
 					</v-btn>
@@ -135,11 +135,11 @@ import {mapGetters} from "vuex";
 import UserRoles from "@/mixin/UserRoles.js";
 import PatchMixin from "@/mixin/PatchMixin.js";
 import Snack from "@/mixin/Snack.js";
-import ReportDialog from "@/mixin/ReportDialog.js";
+import ReportDialogMixin from "@/mixin/ReportDialogMixin.js";
 
 export default {
 	name: "AboutCommunity",
-	mixins: [UserRoles, PatchMixin, Snack, ReportDialog],
+	mixins: [UserRoles, PatchMixin, Snack, ReportDialogMixin],
 	data: () => ({
 		description: null,
 		options: false,

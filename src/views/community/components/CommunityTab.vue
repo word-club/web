@@ -5,7 +5,7 @@
 	>
 		<div
 			class="community-top-button ma-2 mb-0 cursor"
-			@click="toCommunityDetail(community.id)"
+			@click="toCommunityDetail(community.unique_id)"
 			:class="($route.name==='Community Detail') ? community.theme.color + '--text': ''"
 		>
 			<div class="px-1">Posts</div>

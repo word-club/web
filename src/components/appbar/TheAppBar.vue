@@ -16,7 +16,7 @@
 				<v-icon v-if="$store.getters.mainDrawerState">mdi-menu-close</v-icon>
 				<v-icon v-else>mdi-menu-open</v-icon>
 			</v-btn>
-			<div class="the-app-bar--site-title" @click="toHome">WordClub</div>
+			<div class="the-app-bar--site-title" @click="toHome()">WordClub</div>
 		</div>
 
 		<community-search v-if="smAndUp" />

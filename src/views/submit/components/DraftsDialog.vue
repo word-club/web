@@ -6,8 +6,8 @@
 		<v-card>
 			<v-card-title>Your Drafts</v-card-title>
 			<v-card-text>
-				<v-list v-if="drafts.results">
-					<v-list-item v-for="(draft, index) in drafts.results"
+				<v-list v-if="myDrafts">
+					<v-list-item v-for="(draft, index) in myDrafts"
 						:key="draft.id"
 					>
 						<v-list-item-avatar color="error lighten-5"
@@ -30,15 +30,15 @@
 							</v-list-item-subtitle>
 						</v-list-item-content>
 						<v-list-item-action>
-							<v-btn rounded :color="(draft.community) ? draft.community.theme.color : 'primary'"
+							<v-btn rounded
+								:color="getDraftTheme(draft)"
 								@click="startEditingDraft(draft)"
 								:disabled="(inProgress && inProgress.id === draft.id)"
 							>
-								{{	inProgress
-									? inProgress.id === draft.id
+								{{
+									inProgress &&inProgress.id === draft.id
 										? 'In Progress'
 										:'Start Editing'
-									: 'Start Editing'
 								}}
 							</v-btn>
 						</v-list-item-action>
@@ -46,22 +46,30 @@
 				</v-list>
 				<div v-else>No drafts saved yet.</div>
 			</v-card-text>
+			<confirm-dialog
+				@refreshMe="$emit('refreshMe')"
+				@startNew="$emit('startNew')"
+			/>
 		</v-card>
 	</v-dialog>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
-import Snack from "@/mixin/Snack.js";
+import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin.js";
 
 export default {
 	name: "DraftsDialog",
-	mixins: [Snack],
+	mixins: [ConfirmDialogMixin],
 	computed: {
 		...mapGetters({
 			inProgress: "publication/inProgress",
-			drafts: "publication/draftList",
+			currentUser: "user/current",
 		}),
+		myDrafts() {
+			if (!this.currentUser) return [];
+			return this.currentUser["my_publications"].filter(p => !p.is_published);
+		},
 		draftDialog: {
 			get() {
 				return this.$store.getters.draftState
@@ -72,33 +80,29 @@ export default {
 		},
 	},
 	methods: {
-		startEditingDraft(draft) {
+		getDraftTheme(draft) {
+			return (draft.community) ? draft.community.theme.color : "primary"
+		},
+		async startEditingDraft(draft) {
 			// TODO: check for current content and save for edit
 			// do not start in progress draft
 			if (this.inProgress) {
-				if(this.inProgress.id === draft.id) return
+				if (this.inProgress.id === draft.id) return
 			}
-			this.$store.dispatch("publication/setInProgress", draft)
-			this.draftDialog = false
+			await this.$store.dispatch("publication/setInProgress", draft)
 			this.$emit("initDraft")
+			this.draftDialog = false
 		},
 		deleteDraft(id) {
 			const url = this.$util.format(this.$urls.publication.detail, id)
-			this.$axios.delete(url)
-				.then(() => {
-					if (id === this.inProgress.id) {
-						this.$store.dispatch("publication/setInProgress", null)
-						this.$emit("startNew")
-					}
-					this.$store.dispatch("publication/removeDraftItem", id)
-						.then(() => {
-							if (this.drafts.count === 0) this.draftDialog = false
-						})
-					this.openSuccessSnack("Draft deleted successfully.")
-				})
-				.catch(() => {
-					this.openSnack("Something went wrong. Please try again.")
-				})
+			this.openConfirmDialog(
+				"Are you sure you want to delete this draft?",
+				"DELETE",
+				url,
+				["startNew", "refreshMe"],
+				"Draft deleted successfully.",
+				"Something went wrong. Please try again."
+			)
 		},
 	}
 }

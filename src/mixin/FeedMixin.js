@@ -15,8 +15,8 @@ const FeedMixin = {
 			const items = this.comments.concat(this.publications)
 			if (items.length) {
 				items.sort((a, b) => {
-					const t1 = this.$moment(a.timestamp).unix()
-					const t2 = this.$moment(b.timestamp).unix()
+					const t1 = this.$moment(a["created_at"]).unix()
+					const t2 = this.$moment(b["created_at"]).unix()
 					return t2 - t1 // latest first
 				})
 			}

@@ -71,7 +71,6 @@
 				Create
 			</v-btn>
 		</v-card-actions>
-		<register-progress-dialog />
 	</div>
 </template>
 
@@ -80,13 +79,11 @@ import PostMixin from "@/mixin/PostMixin.js";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import Snack from "@/mixin/Snack.js";
 import CheckRequiredMixin from "@/mixin/CheckRequiredMixin.js";
+import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
 
 export default {
 	name: "Mainframe",
-	mixins: [PostMixin, RouteMixin, Snack, CheckRequiredMixin],
-	components: {
-		RegisterProgressDialog: () => import("@/views/community/register/components/RegisterProgressDialog")
-	},
+	mixins: [PostMixin, RouteMixin, Snack, CheckRequiredMixin, RefreshMeMixin],
 	data: () => ({
 		payload: {
 			name: null,
@@ -121,9 +118,8 @@ export default {
 				this.post(this.$urls.community.list, this.payload)
 					.then(() => {
 						if (Object.keys(this.formErrors).length === 0) {
-							this.toRegisterCommunityTheme()
-							this.$helper.setCommunityInProgress(this.postInstance)
-							this.$store.dispatch("community/setInProgress", this.postInstance)
+							this.refreshMe()
+							this.toCommunityDetail(this.payload.unique_id);
 						}
 					})
 			}

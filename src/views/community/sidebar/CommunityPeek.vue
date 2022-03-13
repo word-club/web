@@ -32,7 +32,7 @@
 				</v-card-subtitle>
 			</div>
 		</v-card-text>
-		<v-card-text v-if="community.quote" class="px-2 py-0">
+		<v-card-text v-if="community.quote" class="pt-0">
 			{{ community.quote }}
 		</v-card-text>
 		<v-card-text class="d-flex align-center px-4 py-0 weight-500 justify-space-between">

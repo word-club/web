@@ -161,14 +161,11 @@ import PostMixin from "@/mixin/PostMixin.js";
 import Snack from "@/mixin/Snack.js";
 import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
 import FetchMixin from "@/mixin/FetchMixin.js";
-import ConfirmDialog from "@/mixin/ConfirmDialog.js";
+import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin.js";
 
 export default {
 	name: "UserPeek",
-	components: {
-		ConfirmDialog: () => import("@/components/ConfirmDialog"),
-	},
-	mixins: [PostMixin, Snack, RefreshMeMixin, FetchMixin, ConfirmDialog],
+	mixins: [PostMixin, Snack, RefreshMeMixin, FetchMixin, ConfirmDialogMixin],
 	data: () => ({
 		moreOptions: false
 	}),

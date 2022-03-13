@@ -85,8 +85,8 @@ export default {
 			this.reports = this.community ? this.community.reports : []
 		},
 		viewItem(item) {
-			this.$store.dispatch("reportDialog/clearReport")
-			this.$store.dispatch("reportDialog/setReportInView", {
+			this.$store.dispatch("dialog/clearDialog")
+			this.$store.dispatch("dialog/setReportInView", {
 				model: "community",
 				object: item
 			})

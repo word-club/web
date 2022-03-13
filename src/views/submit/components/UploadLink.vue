@@ -31,20 +31,25 @@ export default {
 	},
 	methods: {
 		createLink() {
-			if (!this.linkUrl) return
+			if (!this.linkUrl) {
+				this.formErrors = {}
+				return
+			}
 			if (this.inProgress && this.inProgress.link) {
-				const url = this.$util.format(this.$urls.publication.linkDetail, this.inProgress.link.id)
+				const url = this.$util.format(this.$urls.link.detail, this.inProgress.link.id)
 				this.patch(url, {link: this.linkUrl})
 					.then(() => {
 						if(this.patchSuccess) {
+							this.linkUrl = null
 							this.$emit("refresh")
 						}
 					})
 			} else {
-				const url = this.$util.format(this.$urls.publication.addLink, this.inProgress.id)
+				const url = this.$util.format(this.$urls.link.publication, this.inProgress.id)
 				this.post(url, {link: this.linkUrl})
 					.then(() => {
 						if(this.success) {
+							this.linkUrl = null
 							this.$emit("refresh")
 						}
 					})

@@ -1,22 +1,22 @@
 <template>
 	<div>
-		<v-card v-if="!items.length"
+		<v-card v-if="!hides.length"
 			height="86vh" flat
 		>
 			<v-card-title class="empty-content">
 				hmm... looks like you haven't hidden anything yet
 			</v-card-title>
 		</v-card>
-		<div v-for="item in items"
+		<div v-for="item in hides"
 			:key="item.id"
 			class="pb-4"
 		>
 			<publication-instance
-				v-if="Array.isArray(item.comments)"
-				:publication="item"
+				v-if="item.publication"
+				:publication="item.publication"
 				@init="handler"
 			/>
-			<comment-instance v-else :comment="item" />
+			<comment-instance v-else :comment="item.comment" />
 		</div>
 	</div>
 </template>
@@ -32,19 +32,11 @@ export default {
 		...mapGetters({
 			user: "user/inView"
 		}),
-		publications() {
+		hides() {
 			if (!this.user) return []
-			if (!this.user.hidden_publications) return []
-			return this.user.hidden_publications
+			if (!this.user.my_hides) return []
+			return this.user.my_hides
 		},
-		comments() {
-			if (!this.user) return []
-			if (!this.user.hidden_comments) return []
-			return this.user.hidden_comments
-		}
-	},
-	created() {
-		this.sortItems()
 	}
 }
 </script>

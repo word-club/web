@@ -17,15 +17,18 @@
 					</card-img>
 				</v-col>
 			</v-row>
+			<confirm-dialog @refresh="$emit('refresh')" />
 		</v-col>
 	</v-scale-transition>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
+import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin.js";
 
 export default {
 	name: "ImageList",
+	mixins: [ConfirmDialogMixin],
 	computed: {
 		...mapGetters({
 			inProgress: "publication/inProgress"
@@ -33,11 +36,15 @@ export default {
 	},
 	methods: {
 		deleteImage(itemID) {
-			const url = this.$util.format(this.$urls.publication.imageDetail, itemID)
-			this.$axios.delete(url)
-				.then(() => {
-					this.$store.dispatch("publication/removeImageItem", this.inProgress.id, itemID)
-				})
+			const url = this.$util.format(this.$urls.image.detail, itemID)
+			this.openConfirmDialog(
+				"Are you sure you want to delete this image?",
+				"DELETE",
+				url,
+				["refresh"],
+				"Image removed successfully.",
+				"Image could not be removed."
+			)
 		},
 	}
 }

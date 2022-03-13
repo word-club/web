@@ -25,8 +25,9 @@ export default {
 			user: "user/inView"
 		}),
 		comments() {
-			if (this.user && this.user.comments) return this.user.comments
-			return []
+			if (!this.user) return []
+			if (this.user["my_comments"]) return this.user["my_comments"]
+			else return []
 		},
 		emptyText() {
 			const currentRoute = this.$route.name

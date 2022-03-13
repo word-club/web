@@ -3,7 +3,7 @@
 		<hot-bar />
 		<div class="py-2" />
 		<v-card color="transparent" flat>
-			<v-card v-if="!items.length" flat min-height="79vh">
+			<v-card v-if="items.length === 0" flat min-height="79vh">
 				<v-card-title class="empty-content">
 					hmm... looks like you haven't done anything yet
 				</v-card-title>
@@ -13,12 +13,8 @@
 				:key="item.id"
 				class="pb-4"
 			>
-				<publication-instance
-					v-if="Array.isArray(item.comments)"
-					:publication="item"
-					@init="handler"
-				/>
-				<comment-instance v-else :comment="item" />
+				<comment-instance v-if="item['publication']" :comment="item" />
+				<publication-instance v-else :publication="item" @init="handler" />
 			</div>
 		</v-card>
 		<div class="py-2" />
@@ -43,11 +39,11 @@ export default {
 		}),
 		comments() {
 			if (!this.user) return []
-			return this.user.comments
+			return this.user["my_comments"]
 		},
 		publications() {
 			if (!this.user) return []
-			return this.user.published_publications
+			return this.user["my_publications"]
 		},
 	},
 	created() {

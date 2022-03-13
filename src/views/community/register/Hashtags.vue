@@ -56,11 +56,10 @@
 <script>
 import {mapGetters} from "vuex";
 import PostMixin from "@/mixin/PostMixin.js";
-import CommunityProgress from "@/mixin/CommunityProgress.js";
 
 export default {
 	name: "Hashtags",
-	mixins: [PostMixin, CommunityProgress],
+	mixins: [PostMixin],
 	data: () => ({
 		payload: {
 			tags: []

@@ -5,7 +5,7 @@
 			class="submit-tab-item"
 			:class="{
 				'submit-tab-item-active': item.active,
-				'submit-tab-item-disabled': inProgress ? !(inProgress.type === item.type): item.disabled
+				'submit-tab-item-disabled': item.disabled
 			}"
 			@click="setActiveTab(item)"
 		>
@@ -43,27 +43,33 @@ export default {
 		...mapGetters({
 			inProgress: "publication/inProgress"
 		}),
+		publicationTypes() {
+			return this.$constants.PUBLICATION_TYPE
+		},
 		tabItems() {
 			return [
 				{
 					type: "editor", title: "Post", icon: "mdi-post",
-					active: this.payload.type === "editor",
-					to: {name: "Submit", params: {type: "editor"}}
+					active: this.payload.type === this.publicationTypes.EDITOR,
+					to: {name: "Submit", params: {type: this.publicationTypes.EDITOR}},
+					disabled: this.inProgress && this.inProgress.type !== this.publicationTypes.EDITOR
 				},
 				{
 					type: "media", title: "Media", icon: "mdi-image-size-select-actual",
-					active: this.payload.type === "media",
-					to: {name: "Submit", params: {type: "media"}}
+					active: this.payload.type === this.publicationTypes.MEDIA,
+					to: {name: "Submit", params: {type: this.publicationTypes.MEDIA}},
+					disabled: this.inProgress && this.inProgress.type !== this.publicationTypes.MEDIA
 				},
 				{
 					type: "link", title: "Link", icon: "mdi-link-variant",
-					active: this.payload.type === "link",
-					to: {name: "Submit", params: {type: "link"}}
+					active: this.payload.type === this.publicationTypes.LINK,
+					to: {name: "Submit", params: {type: this.publicationTypes.LINK}},
+					disabled: this.inProgress && this.inProgress.type !== this.publicationTypes.LINK
 				},
 				{
 					type: "poll", title: "Poll", icon: "mdi-chart-box-outline",
 					disabled: true, active: false,
-					to: {name: "Submit", params: {type: "poll"}}
+					to: {name: "Submit", params: {type: this.publicationTypes.POLL}},
 				},
 			]
 		},

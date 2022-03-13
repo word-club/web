@@ -3,11 +3,11 @@
 		:value="value"
 		outlined :label="label"
 		:prepend-inner-icon="icon"
-		multiple :items="hashtags"
+		multiple :items="options"
 		item-value="id" item-text="tag"
 		background-color="white"
 		:placeholder="placeholder"
-		:loading="fetching" name="tags"
+		:loading="loading" name="tags"
 		:color="color" hide-details="auto"
 		@change="$emit('change', $event)"
 		@input="$emit('input', $event)"
@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
 import FormFieldError from "@/mixin/FormFieldError.js";
 
 export default {
@@ -46,32 +45,10 @@ export default {
 		label: {type: String, default: "Add hashtags"},
 		color: {type: String, default: "primary"},
 		icon: {type:String, default: "mdi-pound"},
+		options: {type: Array, default: () => []},
 		placeholder: {type:String, default: "Start typing"},
-		errors: {type: Object, default: () => {}}
-	},
-	data: () => ({
-		fetching: true,
-		tags: []
-	}),
-	created() {
-		this.fetchTags()
-	},
-	computed: {
-		...mapGetters({
-			hashtags: "hashtag/list"
-		})
-	},
-	methods: {
-		...mapMutations("hashtag", ["SET_LIST"]),
-		fetchTags() {
-			this.$axios.get(this.$urls.hashtag.list)
-				.then(res => {
-					this.SET_LIST(res.results)
-				})
-				.finally(() => {
-					this.fetching = false
-				})
-		}
+		errors: {type: Object, default: () => {}},
+		loading: {type: Boolean, default: false}
 	}
 }
 </script>

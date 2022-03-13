@@ -175,13 +175,11 @@ export default {
 			return this.$moment(date).format("YYYY-M-D")
 		},
 		getUpvotes() {
-			const publications = this.user.published_publications
-			const comments = this.user.comments
+			const publications = this.user["my_publications"]
+			const comments = this.user["my_comments"]
+			const items = publications.concat(comments)
 			let count = 0
-			publications.forEach(item => {
-				count += item.popularity
-			})
-			comments.forEach(item => {
+			items.forEach(item => {
 				count += item.popularity
 			})
 			return count

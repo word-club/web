@@ -1,46 +1,53 @@
 import Snack from "@/mixin/Snack.js";
-import axios from "axios";
+import {mapGetters} from "vuex";
 
-const ConfirmDialog = {
+const ConfirmDialogMixin = {
 	mixins: [Snack],
-	emits: ["refreshMe", "refreshCommunity"],
+	emits: ["refreshMe", "refreshCommunity", "startNew"],
 	data: () => ({
 		confirmSuccess: false,
 		confirmErrors: false,
 		confirmResponse: null,
 	}),
+	computed: {
+		...mapGetters("confirmDialog",
+			[
+				"dialogState",
+				"dialogMessage",
+				"dialogMethod",
+				"dialogUrl",
+				"dialogPayload",
+				"dialogParams",
+				"dialogSuccessEvents",
+				"dialogSuccessMessage",
+				"dialogFailureMessage"
+			]
+		),
+	},
 	methods: {
 		async closeConfirmDialog() {
 			await this.$store.dispatch("confirmDialog/close")
 		},
 		proceedConfirmDialog() {
-			const BACKEND_HOST = process.env.VUE_APP_BACKEND_HOST
-			const opts = {
-				headers: {
-					"Authorization": "Token " + this.$helper.getAccessToken()
-				},
-				method: this.dialogMethod,
-				url: `${BACKEND_HOST}/api/` + this.dialogUrl,
-			}
-			if (this.dialogPayload) {
-				opts.data =  this.dialogPayload
-			}
-			if (this.dialogParams) {
-				opts.params = this.dialogParams
-			}
-			axios(opts).then((res)  => {
+
+			this.$axios.send(
+				this.dialogMethod,
+				this.dialogUrl,
+				this.dialogPayload,
+				this.dialogParams,
+			).then(async (res) => {
 				this.confirmResponse = res
 				this.confirmSuccess = true
 				this.openSuccessSnack(this.dialogSuccessMessage)
 				this.dialogSuccessEvents.forEach(e => {
 					this.$emit(e)
 				})
-				this.closeDialog()
+				await this.closeConfirmDialog()
 			})
 				.catch((err) => {
 					this.confirmResponse = err.response
 					this.confirmSuccess = false
-					this.confirmErrors = err.response.data
+					this.confirmErrors = err.response?.data
 					this.openSnack(this.dialogFailureMessage)
 				})
 		},
@@ -62,4 +69,4 @@ const ConfirmDialog = {
 	}
 }
 
-export default ConfirmDialog
+export default ConfirmDialogMixin

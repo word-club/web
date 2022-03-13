@@ -29,11 +29,12 @@
 			</v-card>
 		</div>
 		<v-card
+			:loading="loading"
 			flat tile
 			max-width="800" class="mx-auto"
 			color="transparent"
 		>
-			<v-card-text class="pb-0">
+			<v-card-text v-if="userInView" class="pb-0">
 				<transition name="view">
 					<router-view />
 				</transition>
