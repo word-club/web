@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import FeedMixin from "@/mixin/FeedMixin.js";
 import {mapGetters} from "vuex";
 
 export default {

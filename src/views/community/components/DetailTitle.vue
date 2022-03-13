@@ -157,7 +157,7 @@ export default {
 		subscription() {
 			if (!this.community) return false
 			if (!this.currentUser) return false
-			return this.currentUser["my_subscriptions"].find(s => s.community === this.community.id && s.is_approved && !s.is_banned)
+			return this.currentUser["my_subscriptions"].find(s => s.community.id === this.community.id && s.is_approved && !s.is_banned)
 		}
 	}
 }

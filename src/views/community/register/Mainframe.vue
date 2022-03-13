@@ -79,10 +79,11 @@ import PostMixin from "@/mixin/PostMixin.js";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import Snack from "@/mixin/Snack.js";
 import CheckRequiredMixin from "@/mixin/CheckRequiredMixin.js";
+import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
 
 export default {
 	name: "Mainframe",
-	mixins: [PostMixin, RouteMixin, Snack, CheckRequiredMixin],
+	mixins: [PostMixin, RouteMixin, Snack, CheckRequiredMixin, RefreshMeMixin],
 	data: () => ({
 		payload: {
 			name: null,
@@ -117,6 +118,7 @@ export default {
 				this.post(this.$urls.community.list, this.payload)
 					.then(() => {
 						if (Object.keys(this.formErrors).length === 0) {
+							this.refreshMe()
 							this.toCommunityDetail(this.payload.unique_id);
 						}
 					})

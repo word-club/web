@@ -33,7 +33,6 @@
 
 <script>
 import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin.js";
-import {mapGetters} from "vuex";
 
 export default {
 	name: "ConfirmDialog",
