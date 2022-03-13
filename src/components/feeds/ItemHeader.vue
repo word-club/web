@@ -17,7 +17,7 @@
 		</div>
 		<user-hover-box :user="item.created_by" />
 		<div class="info-text pl-2 pr-1">
-			{{ $moment(item.timestamp).fromNow() }}
+			{{ $moment(item.published_at).fromNow() }}
 		</div>
 		<v-icon class="px-1" v-if="item.type === 'link'">mdi-link</v-icon>
 		<v-chip class="text-lowercase px12 mx-1"
@@ -34,7 +34,10 @@
 			transition="slide-y-transition"
 		>
 			<template #activator="{on, attrs}">
-				<v-btn icon v-bind="attrs" v-on="on">
+				<v-btn
+					v-if="!share"
+					icon v-bind="attrs" v-on="on"
+				>
 					<v-icon>mdi-dots-horizontal</v-icon>
 				</v-btn>
 			</template>
@@ -71,7 +74,10 @@
 <script>
 export default {
 	name: "ItemHeader",
-	props: {item: {type: Object, default: () => {}}},
+	props: {
+		item: {type: Object, default: () => {}},
+		share: {type: Boolean, default: false},
+	},
 	components: {
 		UserHoverBox: () => import("@/components/utils/UserHoverBox"),
 		CommunityHoverBox: () => import("@/components/utils/CommunityHoverBox"),

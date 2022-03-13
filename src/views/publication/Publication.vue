@@ -23,7 +23,7 @@
 						<v-card v-if="publication"
 							class="publication-detail"
 							flat color="primary"
-							:loading="fetching"
+							:loading="loading"
 						>
 							<item-header :item="publication" />
 							<v-card-title class="pa-2 publication-title">
@@ -31,14 +31,15 @@
 							</v-card-title>
 							<item-images v-if="publication.type === 'media'" :item="publication" />
 							<item-link v-if="publication.type === 'link'" :link="publication.link"/>
-							<item-content v-if="publication.type ==='editor'" :content="JSON.parse(publication.content)" />
-							<item-actions :publication="publication" @init="refreshPublication"/>
+							<item-content v-if="publication.type ==='editor'" :content="editorContent" />
+							<item-actions :item="publication" @init="refreshPublication"/>
 							<v-divider />
 							<v-card-text>
 								<div v-if="!publication.comments.length" class="d-flex justify-end pb-2">
 									<v-chip color="primary">Be the first to comment!</v-chip>
 								</div>
-								<comment-field :publication="publication"
+								<comment-field
+									:target="publication"
 									@init="fetchDetail(model)"
 								/>
 							</v-card-text>
@@ -78,7 +79,7 @@
 									</div>
 								</div>
 							</v-card-text>
-							<v-card-text class="py-0 comment-list">
+							<v-card-text class="pt-0 pb-6 comment-list">
 								<comment-item v-for="(comment, index) in commentList"
 									:key="index"
 									:index="index"
@@ -102,6 +103,7 @@
 import RouteMixin from "@/mixin/RouteMixin.js";
 import {mapGetters, mapMutations} from "vuex";
 import FetchMixin from "@/mixin/FetchMixin.js";
+import EditorContentMixin from "@/mixin/EditorContentMixin.js";
 
 export default {
 	name: "PublicationDetail",
@@ -114,7 +116,7 @@ export default {
 		ItemContent: () => import("@/components/feeds/ItemContent"),
 		ItemHeader: () => import("@/components/feeds/ItemHeader")
 	},
-	mixins: [RouteMixin, FetchMixin],
+	mixins: [RouteMixin, FetchMixin, EditorContentMixin],
 	data: () => ({
 		isLoading: true,
 		commentSortBy: {sort: "created_at", name: "Fresh"},
@@ -129,16 +131,16 @@ export default {
 	computed: {
 		...mapGetters({
 			publication: "publication/inView",
-			comments: "comment/list"
 		}),
 		commentList() {
-			if (this.comments.count) return this.comments.results
+			if (!this.publication) return []
 			return this.publication.comments
 		}
 	},
 	created() {
 		this.refreshPublication()
 			.then(() => {
+				// handle scroll to comment
 				const view = this.$route.params.view
 				this.isLoading = false
 				if (view === "comments") {

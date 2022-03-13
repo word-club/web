@@ -4,11 +4,10 @@ import Vuex from "vuex"
 import snack from "@/store/modules/snack"
 import community from "@/store/modules/community"
 import publication from "@/store/modules/publication"
-import hashtag from "@/store/modules/hashtag"
 import user from "@/store/modules/user"
 import comment from "@/store/modules/comment"
 import confirmDialog from "@/store/modules/confirmDialog"
-import reportDialog from "@/store/modules/report"
+import dialog from "@/store/modules/dialog.js"
 
 Vue.use(Vuex)
 
@@ -17,10 +16,11 @@ export default new Vuex.Store({
 		auth: { state: false, mode: null, next: null },
 		draftDialog: false,
 		ruleDialog: false,
-		reportDialog: {state: false, model: null, obj: null},
 		rule: null,
 		top: {}, sidebar: null,
 		mainDrawer: null,
+		notFound: {dialog: false, status: null},
+
 	},
 	getters: {
 		sidebarState: state => state.sidebar,
@@ -30,7 +30,7 @@ export default new Vuex.Store({
 		draftState: state => state.draftDialog,
 		ruleState: state => state.ruleDialog,
 		ruleInEdit: state => state.rule,
-		reportState: state => state.reportDialog,
+		notFoundState: state => state.notFound,
 	},
 	mutations: {
 		SET_AUTH_MODE: (state, value) => state.auth = value,
@@ -40,7 +40,7 @@ export default new Vuex.Store({
 		SET_TOP: (state, value) => state.top = value,
 		SET_SIDEBAR_STATE: (state, value) => state.sidebar = value,
 		SET_DRAWER_STATE: (state, value) => state.mainDrawer = value,
-		SET_REPORT_STATE: (state, value) => state.reportDialog = value,
+		SET_NOT_FOUND: (state, value) => state.notFound = value
 	},
 	actions: {
 		setAuthMode({commit}, value) {
@@ -48,9 +48,6 @@ export default new Vuex.Store({
 		},
 		setDraftState({commit}, value) {
 			commit("SET_DRAFT_STATE", value)
-		},
-		setReportState({commit}, value) {
-			commit("SET_REPORT_STATE", value)
 		},
 		setRuleState({commit}, value) {
 			commit("SET_RULE_STATE", value)
@@ -60,12 +57,18 @@ export default new Vuex.Store({
 		},
 		setTop({commit}, value) {
 			commit("SET_TOP", value)
-		}
+		},
+		setNotFound({commit}, {dialog = false, status = null} = {}) {
+			commit("SET_NOT_FOUND", {
+				dialog, status
+			})
+		},
 	},
 	modules: {
 		snack, community,
-		publication, hashtag,
-		user, comment, confirmDialog,
-		reportDialog
+		publication,
+		user, comment,
+		confirmDialog,
+		dialog
 	}
 })

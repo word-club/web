@@ -32,27 +32,12 @@
 </template>
 
 <script>
-import ConfirmDialog from "@/mixin/ConfirmDialog.js";
+import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin.js";
 import {mapGetters} from "vuex";
 
 export default {
 	name: "ConfirmDialog",
-	mixins: [ConfirmDialog],
-	computed: {
-		...mapGetters("confirmDialog",
-			[
-				"dialogState",
-				"dialogMessage",
-				"dialogMethod",
-				"dialogUrl",
-				"dialogPayload",
-				"dialogParams",
-				"dialogSuccessEvents",
-				"dialogSuccessMessage",
-				"dialogFailureMessage"
-			]
-		),
-	}
+	mixins: [ConfirmDialogMixin],
 }
 </script>
 

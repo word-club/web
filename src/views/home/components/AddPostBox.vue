@@ -19,7 +19,7 @@
 			>
 				<v-chip
 					class="full-width rounded"
-					@click="toCreatePost('editor')"
+					@click="toCreatePost($constants.PUBLICATION_TYPE.EDITOR)"
 				>
 					<v-icon size="22" class="">
 						mdi-home
@@ -30,12 +30,12 @@
 				</v-chip>
 			</v-responsive>
 			<v-btn icon v-if="smAndUp"
-				@click="toCreatePost('media')"
+				@click="toCreatePost($constants.PUBLICATION_TYPE.MEDIA)"
 			>
 				<v-icon>mdi-image-outline</v-icon>
 			</v-btn>
 			<v-btn icon v-if="smAndUp"
-				@click="toCreatePost('link')"
+				@click="toCreatePost($constants.PUBLICATION_TYPE.LINK)"
 			>
 				<v-icon>mdi-link-variant</v-icon>
 			</v-btn>
@@ -68,7 +68,7 @@ export default {
 		}
 	},
 	methods: {
-		toCreatePost(type) {
+		toCreatePost(type=this.$constants.PUBLICATION_TYPE.EDITOR) {
 			let params = {
 				type: type
 			}

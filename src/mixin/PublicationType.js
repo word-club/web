@@ -2,10 +2,10 @@ const PublicationType = {
 	computed: {},
 	methods: {
 		getTypeString(type) {
-			if (type === "editor") return null
-			else if(type === "link") return "LINK"
-			else if(type === "media") return "MEDIA"
-			else if(type === "poll") return "POLL"
+			if (type === this.$constants.PUBLICATION_TYPE.EDITOR) return null
+			else if(type === this.$constants.PUBLICATION_TYPE.LINK) return "LINK"
+			else if(type === this.$constants.PUBLICATION_TYPE.MEDIA) return "MEDIA"
+			else if(type === this.$constants.PUBLICATION_TYPE.POLL) return "POLL"
 			else return null
 		}
 	}

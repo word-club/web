@@ -14,8 +14,11 @@ const PostMixin = {
 				.then(res => {
 					this.success = true
 					this.postInstance = res
+					this.formErrors = {}
 				})
 				.catch(err => {
+					this.success = false
+					this.postInstance = null
 					this.statusCode = err.response.status
 					this.formErrors = err.response.data
 				})

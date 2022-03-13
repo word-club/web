@@ -23,7 +23,9 @@ const EditorMixin = {
 	}),
 	methods: {
 		initEditor(publication) {
-			if(this.editor) this.editor.destroy()
+			if(this.editor && typeof(this.editor.destroy) === "function") {
+				this.editor.destroy()
+			}
 			let content = ""
 			if(publication && publication.content) {
 				content = JSON.parse((publication.content))

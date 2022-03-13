@@ -8,20 +8,21 @@
 		</v-card-title>
 		<item-images v-if="publication.type === 'media'" :item="publication" />
 		<item-link v-if="publication.type === 'link'" :link="publication.link"/>
-		<item-content v-if="publication.type ==='editor'" :content="JSON.parse(publication.content)" />
-		<item-actions @init="$emit('init')" :publication="publication"/>
+		<item-content v-if="publication.type ==='editor'" :content="editorContent" />
+		<item-actions @init="$emit('init')" :item="publication"/>
 	</v-card>
 </template>
 
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
+import EditorContentMixin from "@/mixin/EditorContentMixin.js";
 
 export default {
 	name: "PublicationInstance",
 	props: {
 		publication: {type: Object, required: true}
 	},
-	mixins: [RouteMixin],
+	mixins: [RouteMixin, EditorContentMixin],
 	components: {
 		ItemHeader: () => import("@/components/feeds/ItemHeader"),
 		ItemImages: () => import("@/components/feeds/ItemImages"),

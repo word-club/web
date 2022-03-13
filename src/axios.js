@@ -18,6 +18,24 @@ const AXIOS = {
 			headers: HEADERS
 		})
 	},
+	send(method, url, data = {}, params = {}) {
+		const opts = {
+			method: method,
+			url: `${BACKEND_HOST}/api/${url}`,
+		}
+		if (data) opts.data =  data
+		if (params) opts.params = params
+
+		opts.headers = {
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		}
+		if (typeof $helper.getAccessToken() === "string") {
+			opts.headers["Authorization"] = `Token ${$helper.getAccessToken()}`
+		}
+
+		return axios(opts)
+	},
 	async get(target) {
 		const instance = await this.setHeaders()
 		const response = await instance.get(target)
@@ -31,11 +49,6 @@ const AXIOS = {
 	async post(target, body, headers) {
 		const instance = await this.setHeaders(headers)
 		const response = await instance.post(target, body)
-		return response.data
-	},
-	async put(target, body, headers) {
-		const instance = await this.setHeaders(headers)
-		const response = await instance.put(target, body)
 		return response.data
 	},
 	async patch(target, body, headers) {

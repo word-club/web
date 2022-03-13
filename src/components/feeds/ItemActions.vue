@@ -1,50 +1,5 @@
 <template>
 	<v-card class="rounded-t-0" color="grey lighten-4" flat>
-		<v-dialog v-model="shareMode" max-width="600" scrollable>
-			<v-card color="primary" dark>
-				<v-card-title>
-					Share details
-					<v-spacer />
-					<v-icon>mdi-share</v-icon>
-				</v-card-title>
-				<v-divider />
-				<div class="py-2"></div>
-				<v-card-text>
-					<v-text-field
-						outlined hide-details="auto"
-						v-model="share.title"
-						name="title"
-						prepend-inner-icon="mdi-format-title"
-						label="TITLE"
-						:error-messages="formErrors['title']"
-					/>
-				</v-card-text>
-				<v-card-text style="max-height: 400px;"
-					class="share-scrollbar"
-				>
-					<v-card outlined light>
-						<item-header :item="publication" />
-						<v-divider />
-						<v-card-title>
-							{{ publication.title }}
-							<v-spacer />
-							<v-chip v-if="getTypeString(publication.type)" outlined>{{ getTypeString(publication.type) }}</v-chip>
-						</v-card-title>
-						<item-images v-if="publication.type === 'media'" :item="publication" />
-						<item-link v-if="publication.type === 'link'" :link="publication.link"/>
-						<item-content v-if="publication.type ==='editor'" :content="JSON.parse(publication.content)" />
-						<v-card-text class="grey lighten-4 d-flex flex-wrap align-center pa-2">
-							<div class="pa-1">{{ publication.view_count }} Views</div>
-							<v-icon>mdi-circle-small</v-icon>
-							<div class="pa-1">{{ publication.discussions }} Comments</div>
-						</v-card-text>
-					</v-card>
-				</v-card-text>
-				<v-card-actions class="primary lighten-3">
-					<v-btn block color="primary" @click="createShare">Share</v-btn>
-				</v-card-actions>
-			</v-card>
-		</v-dialog>
 		<v-divider />
 		<v-card-actions class="flex-wrap"
 			:class="{
@@ -59,7 +14,7 @@
 				@click="routeToPublicationDetailComments"
 			>
 				<v-icon left>mdi-comment-outline</v-icon>
-				{{ publication.discussions }} Comments
+				{{ item["discussions"] }} Comments
 			</v-btn>
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
@@ -84,11 +39,11 @@
 						</v-list-item-icon>
 						Copy Link
 					</v-list-item>
-					<v-divider v-if="!isMyPublication" />
+					<v-divider v-if="!isMyItem" />
 					<v-list-item
-						v-if="!isMyPublication"
+						v-if="!isMyItem"
 						class="menu-item cross-post-action"
-						@click="shareMode=true"
+						@click="createShare()"
 					>
 						<v-list-item-icon class="mr-2">
 							<v-icon color="grey">mdi-source-branch</v-icon>
@@ -100,7 +55,7 @@
 			<v-menu offset-y>
 				<template #activator="{on, attrs}">
 					<v-btn
-						v-if="!isMyPublication" class="more-actions"
+						v-if="!isMyItem" class="more-actions"
 						icon outlined color="grey darken-1" v-bind="attrs" v-on="on">
 						<v-icon>mdi-dots-vertical</v-icon>
 					</v-btn>
@@ -122,7 +77,7 @@
 						<v-list dense>
 							<v-list-item
 								class="menu-item copy-action"
-								@click="copyLink"
+								@click="copyLink()"
 							>
 								<v-list-item-icon class="mr-2">
 									<v-icon color="grey">mdi-link</v-icon>
@@ -132,7 +87,7 @@
 							<v-divider />
 							<v-list-item
 								class="menu-item cross-post-action"
-								@click="shareMode=true"
+								@click="createShare()"
 							>
 								<v-list-item-icon class="mr-2">
 									<v-icon color="grey">mdi-post</v-icon>
@@ -145,7 +100,7 @@
 					<v-list-item @click="bookmark()"
 						class="menu-item bookmark-action"
 						active-class="menu-item-active"
-						:class="{'menu-item-active': ((bookmarkStatus))}"
+						:class="{'menu-item-active': ((myBookmark))}"
 					>
 						<v-list-item-icon class="mr-2"><v-icon>mdi-bookmark-outline</v-icon></v-list-item-icon>
 						<v-list-item-content>
@@ -156,7 +111,7 @@
 					<v-list-item @click="hide()"
 						class="menu-item hide-action"
 						active-class="menu-item-active"
-						:class="{'menu-item-active': ((hiddenStatus))}"
+						:class="{'menu-item-active': ((myHide))}"
 					>
 						<v-list-item-icon class="mr-2"><v-icon>mdi-eye-off-outline</v-icon></v-list-item-icon>
 						<v-list-item-content>
@@ -164,7 +119,7 @@
 						</v-list-item-content>
 					</v-list-item>
 					<v-divider />
-					<v-list-item @click="report()"
+					<v-list-item @click="addReport()"
 						class="menu-item report-action"
 					>
 						<v-list-item-icon class="mr-2">
@@ -185,11 +140,11 @@
 			</v-chip>
 			<v-btn icon @click="sendUpVote()"
 				color="primary"
-				:value="upVote"
+				:value="myUpVote"
 				class="mx-0 upvote-action"
 			>
 				<v-icon>
-					mdi-arrow-up-bold{{ (upVote) ? '' : '-outline' }}
+					mdi-arrow-up-bold{{ (myUpVote) ? '' : '-outline' }}
 				</v-icon>
 			</v-btn>
 			<div v-if="reactions > 0"
@@ -199,11 +154,11 @@
 			</div>
 			<v-btn icon @click="sendDownVote()"
 				color="grey darken-2"
-				:value="downVote"
+				:value="myDownVote"
 				class="mx-0 downvote-action"
 			>
 				<v-icon>
-					mdi-arrow-down-bold{{ (downVote) ? '' : '-outline' }}
+					mdi-arrow-down-bold{{ (myDownVote) ? '' : '-outline' }}
 				</v-icon>
 			</v-btn>
 		</v-card-actions>
@@ -211,127 +166,30 @@
 </template>
 
 <script>
-import PublicationType from "@/mixin/PublicationType.js";
-import Snack from "@/mixin/Snack.js";
-import PostMixin from "@/mixin/PostMixin.js";
 import {mapGetters} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
-import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
+import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
+import PublicationActionsMixin from "@/mixin/PublicationActionsMixin.js";
 
 export default {
 	name: "ItemActions",
-	components: {
-		ItemContent: () => import("@/components/feeds/ItemContent"),
-		ItemLink: () => import("@/components/feeds/ItemLink"),
-		ItemImages: () => import("@/components/feeds/ItemImages"),
-		ItemHeader: () => import("@/components/feeds/ItemHeader"),
-	},
-	mixins: [PublicationType, Snack, PostMixin, RouteMixin, RefreshMeMixin],
+	mixins: [
+		RouteMixin,
+		ScreenSizeMixin,
+		PublicationActionsMixin
+	],
 	props: {
-		publication: {type: Object, default: () => {}},
+		item: {type: Object, default: () => {}},
 	},
-	data: () => ({
-		clipboardContent: null,
-		shareMode: false,
-		share: {
-			title: null
-		},
-		reportMessage: null
-	}),
 	computed: {
 		...mapGetters({
 			currentUser: "user/current"
 		}),
-		getLink() {
-			return "something"
-		},
-		smAndDown() {
-			return this.$vuetify.breakpoint.width < 600
-		},
-		reactions() {
-			return this.publication.popularity + this.publication.dislikes
-		},
-		isMyPublication() {
-			return this.$helper.ifCurrentUserIs(this.publication.created_by)
-		},
-		upVote() {
-			return this.publication.up_vote
-		},
-		downVote() {
-			return this.publication.down_vote
-		},
-		hiddenStatus() {
-			return this.publication.hidden_status
-		},
-		bookmarkStatus() {
-			return this.publication.bookmark_status
-		}
 	},
 	methods: {
-		copyLink() {
-			navigator.clipboard.writeText(this.getLink)
-				.then(() => {
-					this.clipboardContent = true
-					this.openSnack("Publication link copied to the clipboard", {color: "success"})
-				})
-		},
-		sendActionRequest({id, payload, action, revoke = false}) {
-			const url = this.$util.format(this.$urls.publication[action], id || this.publication.id)
-			if (revoke) {
-				this.$axios.delete(url).then(() => {
-					this.$emit("init")
-					this.refreshMe()
-				})
-			} else {
-				this.post(url, payload).then(() => {
-					if(this.success) {
-						this.$emit("init")
-						this.refreshMe()
-					}
-				})
-			}
-		},
-		bookmark() {
-			this.sendActionRequest({
-				action: (this.bookmarkStatus) ? "bookmarkDetail" : "addBookmark",
-				revoke: !!(this.bookmarkStatus),
-				id: (this.bookmarkStatus) ? this.bookmarkStatus.id : null
-			})
-		},
-		hide() {
-			this.sendActionRequest({
-				action: "addHiddenStatus"
-			})
-		},
-		report() {
-			this.sendActionRequest({
-				action: "addReport",
-				payload: {title: this.reportMessage}
-			})
-		},
-		sendUpVote() {
-			this.sendActionRequest({
-				action: (this.upVote) ? "removeUpVote" : "addUpVote",
-				revoke: !!(this.upVote),
-				id: (this.upVote) ? this.upVote.id : null
-			})
-		},
-		sendDownVote() {
-			this.sendActionRequest({
-				action: (this.downVote) ? "removeDownVote" : "addDownVote",
-				revoke: !!(this.downVote),
-				id: (this.downVote) ? this.downVote.id : null
-			})
-		},
-		createShare() {
-			this.sendActionRequest({
-				action: "share",
-				payload: {...this.share}
-			})
-		},
 		routeToPublicationDetailComments() {
-			this.toPublicationDetail(this.publication.id, "comments")
-		}
+			this.toPublicationDetail(this.item.id, "comments")
+		},
 	}
 }
 </script>

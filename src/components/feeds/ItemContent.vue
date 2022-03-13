@@ -34,7 +34,6 @@
 					<v-card-subtitle class="px16 weight-500 grey--text text--darken-2">{{block.data.caption}}</v-card-subtitle>
 				</v-card>
 			</template>
-
 			<template
 				v-if="block.type === 'paragraph'"
 			>
@@ -53,7 +52,7 @@
 					v-html="findOembedHtml(block.data.source)"
 				/>
 				<v-card v-else-if="block.data.service === 'youtube'" width="100%" height="320">
-					<iframe :src="block.data.embed" frameborder="0" height="320" width="100%" allowfullscreen/>
+					<iframe :src="block.data.embed" height="320" width="100%" allowfullscreen class="wc-iframe" />
 				</v-card>
 			</template>
 			<template
@@ -64,7 +63,6 @@
 					<div class="quote-caption">{{block.data.caption}}</div>
 				</div>
 			</template>
-
 			<template
 				v-if="block.type === 'list'"
 			>
@@ -92,7 +90,7 @@ export default {
 	data: () => ({
 		iframes: [],}),
 	props: {
-		content: {type:Object, default: () => {}}
+		content: {type:Object, default: () => {}},
 	},
 	async created() {
 		await this.prepareEmbedUrls()
@@ -132,6 +130,9 @@ export default {
 }
 </script>
 <style lang="scss">
+.wc-iframe {
+	border: none;
+}
 .cdx-marker {
 	background: grey;
 	color: white;

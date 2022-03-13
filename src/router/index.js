@@ -421,6 +421,11 @@ const routes = [
 			login_required: true
 		},
 	},
+	{
+		name: "Site Administration",
+		path: "/site-administration",
+		component: () => import("@/views/siteAdmin/SiteAdmin")
+	}
 ]
 
 const router = new VueRouter({

@@ -1,24 +1,32 @@
 <template>
 	<v-dialog
-		:value="report.state"
+		:value="dialog"
 		persistent
 		max-width="600"
 	>
-		<v-card v-if="report.obj && report.model">
+		<v-card v-if="report && model">
 			<v-card-title class="d-flex justify-space-between align-center">
 				<div>
-					Report {{report.model}} <code>{{ report.obj.name }}</code>
+					Report {{model}} <code v-if="objectDisplayName">{{ objectDisplayName }}</code>
 				</div>
 				<v-btn icon @click="closeReportDialog"><v-icon>mdi-close</v-icon></v-btn>
 			</v-card-title>
 			<v-divider class="mb-6" />
 			<v-card-text>
+				<text-field
+					label="Report title"
+					name="title"
+					:errors="formErrors"
+					icon="mdi-format-title"
+					v-model="reportPayload.title"
+				/>
+				<div class="py-2" />
 				<text-area
-					v-model="reason"
-					name="reason"
+					v-model="reportPayload.content"
+					name="content"
 					:errors="formErrors"
 					counter="1000"
-					label="Reason for reporting"
+					label="Report Content"
 				/>
 			</v-card-text>
 			<v-card-actions>
@@ -29,14 +37,21 @@
 </template>
 
 <script>
-import ReportDialog from "@/mixin/ReportDialog.js";
+import ReportDialogMixin from "@/mixin/ReportDialogMixin.js";
 
 export default {
 	name: "AddReportDialog",
-	mixins: [ReportDialog],
+	mixins: [ReportDialogMixin],
 	computed: {
 		isDisabled() {
-			return !this.reason || this.reason === ""
+			return !this.reportPayload.title || !this.reportPayload.content;
+		},
+		objectDisplayName() {
+			if (this.model === "publication") return this.report.title
+			else if (this.model === "community") return this.report.name
+			else if (this.model === "user") return this.report.username
+			else if (this.model === "comment") return this.report.comment
+			else return false
 		}
 	}
 }

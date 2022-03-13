@@ -31,7 +31,6 @@ export default {
 			user: "user/inView"
 		}),
 		publications() {
-			console.log(this.user)
 			if (this.user && this.user.published_publications) return this.user.published_publications
 			return []
 		},

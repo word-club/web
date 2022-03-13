@@ -80,7 +80,7 @@ export default {
 	},
 	methods: {
 		closeDialog() {
-			this.rule = {title: null, description: null}
+			this.rule = { title: null, description: null }
 			this.$store.dispatch("setRuleState", false)
 			this.$store.dispatch("setRuleInEdit", null)
 		},

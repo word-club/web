@@ -2,26 +2,6 @@ const WORD_CLUB_SESSION = "word-club-session"
 const COMMUNITY_CREATE_IN_PROGRESS = "community-create-in-progress"
 
 module.exports = {
-	registrationSteps: [
-		{state: "0", title: "Community Mainframe", icon: "mdi-ballot", to: "/register-community/mainframe"},
-		{state: "1", title: "Add Community Theme", icon: "mdi-camera-image", to: "/register-community/display"},
-		{state: "2", title: "Set Community Rules", icon: "mdi-ruler-square-compass", to: "/register-community/rules"},
-		{state: "3", title: "Community Hashtags", icon: "mdi-pound", to: "/register-community/hashtags"},
-		{state: "4", title: "Authorize Your Community", icon: "mdi-check-bold", to: "/register-community/authorization"},
-		{state: "5", title: "Community Administration", icon: "mdi-account-cowboy-hat", to: "/register-community/administration"},
-	],
-	colorsForSelect: [
-		{value: "primary", name: "Primary"},
-		{value: "orange", name: "Orange"},
-		{value: "red", name: "Red"},
-		{value: "pink", name: "Pink"},
-		{value: "teal", name: "Teal"},
-		{value: "green", name: "Green"},
-		{value: "indigo", name: "Indigo"},
-		{value: "grey", name: "Grey"},
-		{value: "deep-purple", name: "Purple"},
-		{value: "amber", name: "Amber"},
-	],
 	getProgressState(state) {
 		return this.registrationSteps.find(item => item.state === state)
 	},
@@ -52,8 +32,13 @@ module.exports = {
 			user: user
 		}))
 	},
-	isLoggedIn() {
+	isUserLoggedIn() {
 		return this.getAccessToken() !== null
+	},
+	isUserSuperAdmin() {
+		const user = this.getCurrentUser()
+		if (user) return user.is_superuser
+		return false
 	},
 	setCommunityInProgress(value) {
 		localStorage.setItem(COMMUNITY_CREATE_IN_PROGRESS, JSON.stringify(value))

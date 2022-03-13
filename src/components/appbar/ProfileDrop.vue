@@ -64,6 +64,16 @@
 						<v-list-item-title>Notifications</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
+				<v-list-item
+					v-if="$helper.isUserSuperAdmin()"
+					to="/site-administration"
+					class="to-site-administration"
+				>
+					<v-list-item-icon><v-icon>mdi-sitemap</v-icon></v-list-item-icon>
+					<v-list-item-content>
+						<v-list-item-title>Site Administration</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
 			</v-list-item-group>
 			<v-list-item-group>
 				<v-subheader class="text-uppercase">
