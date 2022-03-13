@@ -102,11 +102,10 @@
 import {mapGetters} from "vuex";
 import PatchMixin from "@/mixin/PatchMixin.js";
 import Snack from "@/mixin/Snack.js";
-import CommunityProgress from "@/mixin/CommunityProgress.js";
 
 export default {
 	name: "Authorization",
-	mixins: [Snack, CommunityProgress, PatchMixin],
+	mixins: [Snack, PatchMixin],
 	data: () => ({
 		email: null,
 		confirmCode: null,

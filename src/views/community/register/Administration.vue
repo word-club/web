@@ -52,7 +52,7 @@
 				</v-btn>
 				<v-spacer />
 				<v-btn color="primary"
-					@click="toCommunityDetail(community.id)"
+					@click="toCommunityDetail(community.unique_id)"
 				>
 					Submit
 				</v-btn>
@@ -64,14 +64,13 @@
 <script>
 import RouteMixin from "@/mixin/RouteMixin.js";
 import {mapGetters} from "vuex";
-import CommunityProgress from "@/mixin/CommunityProgress.js";
 
 export default {
 	name: "Administration",
 	components: {
 		UserSelect: () => import("@/components/form/UserSelect")
 	},
-	mixins: [RouteMixin, CommunityProgress],
+	mixins: [RouteMixin],
 	data: () => ({
 		payload: {
 			admins: [],

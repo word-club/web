@@ -13,7 +13,7 @@ const FetchMixin = {
 	methods: {
 		fetchDetail(model, {pk = null} = {}) {
 			this.loading = true
-			const routeId = this.$route.params.id || this.$route.params.username
+			const routeId = this.$route.params.id || this.$route.params.username || this.$route.params.uniqueId
 			const url =
 				this.$urls[model]["view"] ||
 				this.$urls[model]["retrieve"] ||

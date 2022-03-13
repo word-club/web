@@ -3,8 +3,8 @@ const RouteMixin = {
 		async toPublicationDetail(id, view) {
 			await this.$router.push({name: "Publication", params: {id: id, view: view}})
 		},
-		async toCommunityDetail(id) {
-			await this.$router.push({name: "Community Detail", params: {id: id}})
+		async toCommunityDetail(uniqueId) {
+			await this.$router.push({name: "Community Detail", params: {uniqueId}})
 		},
 		async toCommunityWiki(id) {
 			await this.$router.push({name: "Community Detail Wiki", params: {id: id}})
@@ -18,19 +18,8 @@ const RouteMixin = {
 		async toRegisterCommunityTheme() {
 			await this.$router.push({name: "Community Display"})
 		},
-		async toRegisterCommunityRules() {
-			await this.$router.push({name: "Community Rules"})
-		},
-		async toRegisterCommunityTags() {
-			await this.$router.push({name: "Community Hashtags"})
-		},
-		async toRegisterCommunityAuthorization() {
-			await this.$router.push({name: "Community Authorization"})
-		},
-		async toRegisterCommunityAdmin() {
-			await this.$router.push({name: "Community Administration"})
-		},
 		async toHome() {
+			if (this.$route.name === "Home") return
 			await this.$router.push("/")
 		},
 		async toUserOverview(username) {
@@ -41,9 +30,6 @@ const RouteMixin = {
 		},
 		async toUserComments(username) {
 			await this.$router.push({name: "User Comments", params: {username: username}})
-		},
-		async toUserAwards(username) {
-			await this.$router.push({name: "User Awards", params: {username: username}})
 		},
 		async toProfileOverview() {
 			await this.$router.push({name: "Profile Overview"})

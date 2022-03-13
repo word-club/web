@@ -148,11 +148,10 @@
 import {mapGetters} from "vuex";
 import Snack from "@/mixin/Snack.js";
 import PatchMixin from "@/mixin/PatchMixin.js";
-import CommunityProgress from "@/mixin/CommunityProgress.js";
 
 export default {
 	name: "Display",
-	mixins: [Snack, CommunityProgress, PatchMixin],
+	mixins: [Snack, PatchMixin],
 	data: () => ({
 		theme: {
 			color: null,

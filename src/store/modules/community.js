@@ -3,15 +3,12 @@ const state = {
 	toView: null,
 	toEdit: null,
 	createInProgress: null,
-	createPendingList: [],
 }
 
 const mutations = {
 	SET_LIST: (state, value) => state.communities = value,
 	SET_TO_VIEW: (state, value) => state.toView = value,
 	SET_IN_PROGRESS: (state, value) => state.createInProgress = value,
-	SET_PENDING_LIST: (state, value) => state.createPendingList = value
-
 }
 
 const getters = {
@@ -19,7 +16,6 @@ const getters = {
 	inView: state => state.toView,
 	toEdit: state => state.toEdit,
 	inProgress: state => state.createInProgress,
-	pendingList: state => state.createPendingList
 }
 
 const actions = {

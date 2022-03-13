@@ -24,7 +24,7 @@
 						v-if="community"
 						class="px14 weight-600 cursor hover-underline"
 						:class="`${community.theme.color}--text`"
-						@click="toCommunityDetail(community.id)"
+						@click="toCommunityDetail(community.unique_id)"
 					>
 						{{ community.unique_id }}
 					</div>
