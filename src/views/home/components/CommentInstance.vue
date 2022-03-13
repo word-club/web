@@ -32,9 +32,9 @@
 				<div class="px14 weight-400">
 					Posted by
 					<span class="cursor hover-underline weight-600"
-						@click="toUserOverview(publication.created_by.username)"
+						@click="toUserOverview(publicationCreatedBy.username)"
 					>
-						{{ publication.created_by.username }}
+						{{ publicationCreatedBy.username }}
 					</span>
 				</div>
 			</div>
@@ -98,7 +98,7 @@
 					</v-menu>
 					<v-spacer />
 					<v-btn small icon><v-icon>mdi-arrow-up-bold</v-icon></v-btn>
-					<div>{{comment.popularity}}</div>
+					<div>{{comment["popularity"]}}</div>
 					<v-btn icon small><v-icon>mdi-arrow-down-bold</v-icon></v-btn>
 				</v-card-actions>
 			</v-card>
@@ -134,7 +134,13 @@ export default {
 			return this.publication.community
 		},
 		createdBy() {
-			if (this.comment.created_by) return this.comment.created_by
+			if (this.comment["created_by"]) return this.comment.created_by
+			else return {
+				username: this.userInView.username
+			}
+		},
+		publicationCreatedBy() {
+			if (this.publication["created_by"]) return this.publication.created_by
 			else return {
 				username: this.userInView.username
 			}

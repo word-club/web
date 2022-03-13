@@ -140,7 +140,6 @@ export default {
 			if (this.editMode) url = this.$util.format(this.$urls.comment.detail, this.target.id)
 			// else target is a publication instance
 			else url = this.$util.format(this.$urls.comment.add, this.target.id)
-			console.log(url)
 			this.$axios.send(
 				(this.editMode) ? "PATCH" : "POST",
 				url,

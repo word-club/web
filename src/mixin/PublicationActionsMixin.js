@@ -15,23 +15,25 @@ const PublicationActionsMixin = {
 		},
 		isMyItem() {
 			if (!this.currentUser) return false
+			// created by is not shown for profile items as they are all my items
+			if (!this.item.created_by) return true
 			return this.item.created_by.id === this.currentUser.id
 		},
 		myUpVote() {
 			if (!this.currentUser) return false
-			return this.currentUser["my_votes"].find(vote => vote.up && vote[MODEL] === this.item.id)
+			return this.currentUser["my_votes"].find(vote => vote.up && vote[MODEL]?.id === this.item.id)
 		},
 		myDownVote() {
 			if (!this.currentUser) return false
-			return this.currentUser["my_votes"].find(vote => !vote.up && vote[MODEL] === this.item.id)
+			return this.currentUser["my_votes"].find(vote => !vote.up && vote[MODEL]?.id === this.item.id)
 		},
 		myHide() {
 			if (!this.currentUser) return false
-			return this.currentUser["my_hides"].find(hide => hide[MODEL] === this.item.id)
+			return this.currentUser["my_hides"].find(hide => hide[MODEL]?.id === this.item.id)
 		},
 		myBookmark() {
 			if (!this.currentUser) return false
-			return this.currentUser["my_bookmarks"].find(bookmark => bookmark[MODEL] === this.item.id)
+			return this.currentUser["my_bookmarks"].find(bookmark => bookmark[MODEL]?.id === this.item.id)
 		},
 	},
 	methods: {

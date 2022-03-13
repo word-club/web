@@ -7,7 +7,7 @@
 			<h4>{{ publication.title }}</h4>
 		</v-card-title>
 		<item-images v-if="publication.type === 'media'" :item="publication" />
-		<item-link v-if="publication.type === 'link'" :link="publication.link"/>
+		<item-link v-if="publication.type === 'link'" :link="publication.links"/>
 		<item-content v-if="publication.type ==='editor'" :content="editorContent" />
 		<item-actions @init="$emit('init')" :item="publication"/>
 	</v-card>

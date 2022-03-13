@@ -37,22 +37,22 @@ const CommentActionsMixin = {
 		myUpVote(item = null) {
 			if (!item) item = this.comment
 			if (!this.currentUser) return false
-			return this.currentUser["my_votes"].find(vote => vote.up && vote[MODEL] === item.id)
+			return this.currentUser["my_votes"].find(vote => vote.up && vote[MODEL]?.id === item.id)
 		},
 		myDownVote(item = null) {
 			if (!item) item = this.comment
 			if (!this.currentUser) return false
-			return this.currentUser["my_votes"].find(vote => !vote.up && vote[MODEL] === item.id)
+			return this.currentUser["my_votes"].find(vote => !vote.up && vote[MODEL]?.id === item.id)
 		},
 		myHide(item = null) {
 			if (!item) item = this.comment
 			if (!this.currentUser) return false
-			return this.currentUser["my_hides"].find(hide => hide[MODEL] === item.id)
+			return this.currentUser["my_hides"].find(hide => hide[MODEL]?.id === item.id)
 		},
 		myBookmark(item = null) {
 			if (!item) item = this.comment
 			if (!this.currentUser) return false
-			return this.currentUser["my_bookmarks"].find(bookmark => bookmark[MODEL] === item.id)
+			return this.currentUser["my_bookmarks"].find(bookmark => bookmark[MODEL]?.id === item.id)
 		},
 		bookmark(item = null) {
 			if (!item) item = this.comment
