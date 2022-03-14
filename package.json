@@ -48,6 +48,7 @@
     "vue-emoji-picker": "^1.0.3",
     "vue-mention": "^1.1.0",
     "vue-router": "^3.5.3",
+    "vue-tweet-embed": "^2.4.0",
     "vuetify": "^2.4.0",
     "vuex": "^3.4.0"
   },

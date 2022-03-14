@@ -28,6 +28,7 @@
 		"list": "wc-community/",
 		"detail": "community/%s/",
 		"top": "community/top/",
+		"trending": "community/trending/",
 		"view": "community/%s/view/",
 		"subscription": {
 			"add": "community/%s/subscribe/",

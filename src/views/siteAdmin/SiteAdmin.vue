@@ -204,7 +204,7 @@ export default {
 				...this.administration
 			})
 				.then(() => {
-					if(this.success) this.openSnack("Site administration updated successfully.")
+					if(this.success) this.openSuccessSnack("Site administration updated successfully.")
 				})
 				.finally(() => {
 					this.loadingSiteAdmin = false

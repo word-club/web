@@ -1,5 +1,6 @@
 <template>
-	<v-card color="transparent" flat>
+	<v-card color="transparent" flat tile>
+		<v-progress-linear v-if="loading" height="6" color="primary" indeterminate />
 		<v-card-text class="d-flex justify-start align-center white px-3 pb-0 pt-3">
 			<div class="tab-item"
 				v-for="(item, index) in tabItems"
@@ -42,15 +43,36 @@ export default {
 				{name: "Users", route: "Top Users"},
 				{name: "Commentators", route: "Top Commentators"},
 			]
-		}
+		},
+		administrationData() {
+			return this.$helper.getAdministrationData()
+		},
 	},
 	created() {
+		this.fetchAdministrationDataIfNotPresent()
 		this.fetchItems()
 	},
 	methods: {
+		fetchAdministrationDataIfNotPresent() {
+			this.loading = true
+			console.log(this.administrationData)
+			if (!this.administrationData) {
+				this.$axios.get(this.$urls.administration.list)
+					.then(response => {
+						console.log(response)
+						this.$helper.setAdministrationData(response)
+					})
+					.catch(() => {
+						this.openSnack("Failed to fetch administration data")
+					})
+					.finally(() => {
+						this.loading = false
+					})
+			}
+		},
 		fetchItems() {
 			this.loading = true
-			this.$axios.get(this.$urls.top)
+			this.$axios.get(this.$urls.administration.top)
 				.then(res => {
 					this.$store.dispatch("setTop", res)
 				})

@@ -1,7 +1,7 @@
 <template>
 	<v-card flat color="transparent">
 		<v-card-title>
-			Top 50 Communities
+			Top {{ administrationData.top_count }} Communities
 		</v-card-title>
 		<v-card-text>
 			<v-list class="py-0" outlined
@@ -64,7 +64,10 @@ export default {
 		}),
 		topCommunities() {
 			return this.topItems["communities"]
-		}
+		},
+		administrationData() {
+			return this.$helper.getAdministrationData()
+		},
 	}
 }
 </script>

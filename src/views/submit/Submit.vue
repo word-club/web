@@ -33,7 +33,11 @@
 		</v-card-title>
 		<v-divider/>
 		<v-row class="ma-0 pa-0">
-			<v-col cols="6"
+			<v-col cols="12"
+				xl="6"
+				lg="6"
+				md="6"
+				sm="12"
 				class="px-0"
 			>
 				<community-select
@@ -173,7 +177,7 @@
 								:color="theme.color"
 								class="weight-600 ma-1"
 								:disabled="!inProgress"
-								@click="publishPublication"
+								@click="publishPublication()"
 							>
 								Publish
 							</v-btn>

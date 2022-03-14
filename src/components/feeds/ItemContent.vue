@@ -49,8 +49,9 @@
 				<v-card
 					v-if="block.data.service === 'twitter'"
 					class="mx-auto" flat
-					v-html="findOembedHtml(block.data.source)"
-				/>
+				>
+					<Tweet :id="block.data.source.split('/').slice(-1)[0]" />
+				</v-card>
 				<v-card v-else-if="block.data.service === 'youtube'" width="100%" height="320">
 					<iframe :src="block.data.embed" height="320" width="100%" allowfullscreen class="wc-iframe" />
 				</v-card>
@@ -84,41 +85,19 @@
 </template>
 
 <script>
+import {Tweet } from "vue-tweet-embed"
 
 export default {
 	name: "ItemContent",
+	components: {
+		Tweet,
+	},
 	data: () => ({
 		iframes: [],}),
 	props: {
 		content: {type:Object, default: () => {}},
 	},
-	async created() {
-		await this.prepareEmbedUrls()
-	},
 	methods: {
-		findOembedHtml(source) {
-			const frame = this.iframes.find(item => item.source === source)
-			if (frame) {
-				const html = frame.oembed.html
-				return html.split("\n")[0]
-			}
-			else {
-				return ""
-			}
-		},
-		async prepareEmbedUrls() {
-			const embeds = this.content.blocks.filter(item => item.type === "embed")
-			for (const embed of embeds) {
-				if (embed.data.service === "twitter") {
-					const response = await this.getOembedTwitter(embed.data.source)
-					if(response) this.iframes.push(response)
-				}
-			}
-		},
-		async getOembedTwitter(source) {
-			return await this.$axios.post("get-twitter-embed/",
-				{source: source})
-		},
 		checkAlignmentTune(tunes, alignment) {
 			if (tunes) {
 				const alignmentTune = tunes.alignmentTune

@@ -61,7 +61,6 @@ const DraftMixin = {
 					this.formErrors = {...this.patchErrors}
 				} else {
 					this.openSuccessSnack(`${isDraft ? "Draft" : "Publication"} saved successfully.`)
-					await this.startNew()
 					if (refreshMe) await this.refreshMe()
 				}
 			}

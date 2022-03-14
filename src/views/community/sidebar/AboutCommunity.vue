@@ -63,16 +63,16 @@
 		<v-card-text class="d-flex align-center pa-3 weight-500 justify-space-between">
 			<div>
 				<div class="px18">
-					{{ community.subscriptions.subscribers }}
+					{{ community.subscriptions.length }}
 				</div>
 				<div class="px14">
-					{{ community.theme.to_call_subscriber }}
+					{{ community.theme.subscriber_nickname }}
 				</div>
 			</div>
 			<div class="px-1" />
 			<div>
 				<div class="px18">
-					{{ community.subscriptions.notification_disables }}
+					{{ community.subscriptions.filter(item => item.disable_notification === false).length }}
 				</div>
 				<div class="px14">
 					{{ community.theme.state_after_subscription }}
@@ -93,6 +93,7 @@
 				block rounded
 				:color="community.theme.color"
 				depressed dark
+				:to="{ name: 'Submit', params: {community: community.unique_id, type: 'editor'}}"
 			>
 				Create Post
 			</v-btn>
@@ -150,6 +151,9 @@ export default {
 			community: "community/inView",
 			currentUser: "user/current"
 		})
+	},
+	created() {
+		console.log(this.community)
 	},
 	methods: {
 		patchQuote() {

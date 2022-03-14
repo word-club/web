@@ -2,7 +2,11 @@ const WORD_CLUB_SESSION = "word-club-session"
 
 module.exports = {
 	clearSession() {
-		localStorage.removeItem(WORD_CLUB_SESSION)
+		localStorage.clear()
+	},
+	setSession(session) {
+		localStorage.clear()
+		localStorage.setItem(WORD_CLUB_SESSION, JSON.stringify(session))
 	},
 	setCurrentUser(value) {
 		localStorage.setItem(WORD_CLUB_SESSION, JSON.stringify({
@@ -20,11 +24,23 @@ module.exports = {
 		if (session) return JSON.parse(session).token
 		return null
 	},
+	getAdministrationData() {
+		const session =  localStorage.getItem(WORD_CLUB_SESSION)
+		if (session) return JSON.parse(session).administration
+		return null
+	},
 	setAccessToken(value) {
-		const user = this.getCurrentUser()
 		localStorage.setItem(WORD_CLUB_SESSION, JSON.stringify({
 			token: value,
-			user: user
+			user: this.getCurrentUser(),
+			administration: this.getAdministrationData()
+		}))
+	},
+	setAdministrationData(value) {
+		localStorage.setItem(WORD_CLUB_SESSION, JSON.stringify({
+			token: this.getAccessToken(),
+			user: this.getCurrentUser(),
+			administration: value
 		}))
 	},
 	isUserLoggedIn() {

@@ -3,6 +3,7 @@
 		rounded
 		class="overflow-hidden"
 	>
+		<v-progress-linear indeterminate v-if="loading" height="6"/>
 		<v-card flat
 			height="80"
 			class="d-flex align-end rounded-b-0"
@@ -30,16 +31,22 @@
 							<td class="px-1">
 								<div class="d-flex align-center py-1">
 									<v-avatar size="30"
-										color="grey darken-2"
-									/>
+										:color="item.theme.color"
+									>
+										<v-img v-if="item.avatar" :src="item.avatar"
+											class="rounded-full"
+										/>
+										<span v-else class="white--text">{{item.name[0].toUpperCase()}}</span>
+									</v-avatar>
 									<div class="pl-2">
 										{{ item.name }}
 									</div>
 								</div>
 							</td>
-							<td class="px-1">
-								<v-btn rounded
-									color="primary"
+							<td v-if="isSubscribed(item)" class="px-1">
+								<v-btn
+									rounded
+									:color="item.theme.color"
 									x-small
 								>
 									Join
@@ -89,18 +96,38 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
 	name: "TrendingCommunities",
 	data: () => ({
-		trendingImg: "https://www.wealthmanagement.com/sites/wealthmanagement.com/files/styles/article_featured_standard/public/fastest-growing-rias-promo.jpg?itok=20oq5xhc",
-		trendingCommunities: [
-			{name: "AntiWork"},
-			{name: "ShitPosting"},
-			{name: "NoStupidQuestions"},
-			{name: "InterestingAsFuck"},
-			{name: "PCMasterRace"},
-		]
+		loading: true,
+		trendingImg: require("@/assets/trending.jpg"),
+		trendingCommunities: []
 	}),
+	computed: {
+		...mapGetters({
+			actor: "user/current"
+		})
+	},
+	created() {
+		this.fetchTrendingCommunities();
+	},
+	methods: {
+		isSubscribed(community) {
+			if(!this.actor) {
+				return false;
+			} else return !!this.actor["my_subscriptions"].includes(community.id);
+		},
+		fetchTrendingCommunities() {
+			this.loading = true;
+			const url = this.$urls.community.trending
+			this.$axios.get(url).then((res) => {
+				this.loading = false;
+				this.trendingCommunities = res
+			});
+		}
+	}
 }
 </script>
 

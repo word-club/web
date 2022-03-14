@@ -240,14 +240,17 @@ export default {
 				password: this.payload.password
 			}).then(() => {
 				if (this.success) {
-					this.openSuccessSnack(`Welcome ${this.getGreetName(this.postInstance.data)}!`)
-					this.$helper.setAccessToken(this.postInstance.token)
-					this.$helper.setCurrentUser(this.postInstance.data)
-					this.$store.dispatch("user/setCurrentUser", this.postInstance.data)
+					this.$helper.setSession({
+						user: this.postInstance.user,
+						token: this.postInstance.token,
+						administration: this.postInstance.administration
+					})
+					this.$store.dispatch("user/setCurrentUser", this.postInstance.user)
+					this.afterAuth()
 					if (this.authMode.next) {
 						this.closeAuthDialog()
-						this.afterAuth()
 						this.$router.push(this.authMode.next)
+						this.openSuccessSnack(`Welcome ${this.getGreetName(this.postInstance.user)}!`)
 					} else {
 						this.closeAuthDialog()
 						this.afterAuth()
