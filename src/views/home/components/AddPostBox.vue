@@ -63,7 +63,7 @@ export default {
 		}),
 		getCommunityId() {
 			if (this.$route.name.includes("Community")) {
-				return this.$route.params.id
+				return this.$route.params.uniqueId
 			} return undefined
 		}
 	},

@@ -8,8 +8,8 @@
 			tile flat
 		>
 			<v-img
-				v-if="community.cover"
-				:src="$link(community.cover.image)"
+				v-if="activeCover"
+				:src="$link(activeCover.image)"
 				:height="coverHeight"
 			/>
 		</v-card>
@@ -30,6 +30,9 @@ export default {
 			if (!this.community?.cover) return 100
 			return 300
 		},
+		activeCover() {
+			return this.community.covers.find(cover => cover.is_active)
+		}
 	}
 }
 </script>

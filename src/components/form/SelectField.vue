@@ -14,7 +14,7 @@
 		:prepend-inner-icon="icon"
 		:error-messages="getErrorMessage"
 		@input="$emit('input', $event)"
-		@change="$emit('input', $event)"
+		@change="$emit('change', $event)"
 	/>
 </template>
 <script>

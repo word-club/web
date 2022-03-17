@@ -18,8 +18,8 @@
 					size="80"
 					:color="(community.avatar) ? 'white' : community.theme.color"
 				>
-					<v-img v-if="community.avatar"
-						:src="$link(community.avatar.image)"
+					<v-img v-if="activeAvatar"
+						:src="$link(activeAvatar.image)"
 					/>
 					<div v-else
 						class="full-width display-1 text-center white--text"
@@ -68,14 +68,14 @@
 					<v-btn
 						v-if="subscription && !subscription.disable_notification"
 						icon :color="community.theme.color"
-						@click="disableNotification(community)"
+						@click="disableNotification(subscription)"
 					>
 						<v-icon>mdi-bell</v-icon>
 					</v-btn>
 					<v-btn
 						v-if="subscription && subscription.disable_notification"
 						icon :color="community.theme.color"
-						@click="enableNotification(community)"
+						@click="enableNotification(subscription)"
 					>
 						<v-icon>mdi-bell-outline</v-icon>
 					</v-btn>
@@ -158,6 +158,9 @@ export default {
 			if (!this.community) return false
 			if (!this.currentUser) return false
 			return this.currentUser["my_subscriptions"].find(s => s.community.id === this.community.id && s.is_approved && !s.is_banned)
+		},
+		activeAvatar() {
+			return this.community.avatars.find(av => av.is_active)
 		}
 	}
 }

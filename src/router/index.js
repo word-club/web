@@ -73,34 +73,9 @@ const routes = [
 		},
 		children: [
 			{
-				path: "mainframe",
-				name: "Community Mainframe",
+				path: "",
+				name: "Register Community",
 				component: () => import("@/views/community/register/Mainframe")
-			},
-			{
-				path: "display",
-				name: "Community Display",
-				component: () => import("@/views/community/register/Display")
-			},
-			{
-				path: "rules",
-				name: "Community Rules",
-				component: () => import("@/views/community/register/Rules")
-			},
-			{
-				path: "hashtags",
-				name: "Community Hashtags",
-				component: () => import("@/views/community/register/Hashtags")
-			},
-			{
-				path: "authorization/:code?",
-				name: "Community Authorization",
-				component: () => import("@/views/community/register/Authorization")
-			},
-			{
-				path: "administration",
-				name: "Community Administration",
-				component: () => import("@/views/community/register/Administration")
 			}
 		]
 	},
@@ -280,6 +255,21 @@ const routes = [
 						name: "Community MOD Settings Contact",
 						path: "contact-wordclub",
 						component: () => import("@/views/community/modCog/ContactWordclub")
+					},
+					{
+						path: "display",
+						name: "Community MOD Settings Display",
+						component: () => import("@/views/community/modCog/Display")
+					},
+					{
+						path: "description",
+						name: "Community MOD Settings Description",
+						component: () => import("@/views/community/modCog/Description")
+					},
+					{
+						path: "authorization/:code?",
+						name: "Community MOD Settings Authorization",
+						component: () => import("@/views/community/register/Authorization")
 					},
 				]
 			},

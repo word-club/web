@@ -25,8 +25,8 @@
 					</tbody>
 				</template>
 			</v-simple-table>
-			<div v-else-if="currentUserIsAdmin" class="py-4 px16">
-				No rules set yet.
+			<div v-else class="py-4">
+				No rules available
 			</div>
 			<v-btn block class="mt-2" v-if="currentUserIsAdmin">Add Rules</v-btn>
 		</v-card-text>

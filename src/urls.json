@@ -48,8 +48,7 @@
 		"addSubMod": "community/%s/sub-mod/",
 		"ruleDetail": "community/rule/%s/",
 		"modDetail": "community/moderator/%s/",
-		"addTheme": "community/%s/theme/",
-		"themeDetail": "community/theme/%s/"
+		"theme": "community/theme/%s/"
 	},
 	"publication": {
 		"list": "wc-publication/",
@@ -118,12 +117,14 @@
 	"avatar": {
 		"community": "community/%s/avatar/",
 		"profile": "profile/%s/avatar/",
-		"detail": "avatar/%s/"
+		"detail": "avatar/%s/",
+		"active": "avatar/%s/active/"
 	},
 	"cover": {
 		"community": "community/%s/cover/",
 		"profile": "profile/%s/cover/",
-		"detail": "cover/%s/"
+		"detail": "cover/%s/",
+		"active": "cover/%s/active/"
 	},
 	"image": {
 		"publication": "publication/%s/image/",

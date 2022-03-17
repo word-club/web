@@ -23,7 +23,7 @@
 			<v-btn rounded
 				block outlined
 				class="primary--text"
-				:to="{name: 'Community Mainframe'}"
+				:to="{name: 'Register Community'}"
 			>
 				Create a Community
 			</v-btn>

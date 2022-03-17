@@ -13,7 +13,7 @@ const RouteMixin = {
 			await this.$router.push({name: "Community Detail Modmail", params: {id: id}})
 		},
 		async toRegisterCommunity() {
-			await this.$router.push({name: "Community Mainframe"})
+			await this.$router.push({name: "Register Community"})
 		},
 		async toRegisterCommunityTheme() {
 			await this.$router.push({name: "Community Display"})

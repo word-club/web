@@ -1,22 +1,22 @@
 <template>
-	<v-dialog :value="radDialog"
-		v-if="radDialog"
+	<v-dialog
+		:value="isReport && mod"
 		max-width="600"
 		persistent
 		transition="dialog-bottom-transition"
 	>
-		<v-card>
+		<v-card v-if="mod && isReport && report && model">
 			<v-card-title class="d-flex justify-space-between align-center">
 				<div>
 					<v-chip class="text-uppercase"
 						:color="chipColor"
 					>
-						{{detail.state}}
+						{{report.status}}
 					</v-chip>
 					<span class="px-3">Community Report</span>
 				</div>
 				<v-btn icon
-					@click="$store.dispatch('reportDialog/clearReport')"
+					@click="$store.dispatch('dialog/clearDialog')"
 				>
 					<v-icon>mdi-close</v-icon>
 				</v-btn>
@@ -31,7 +31,7 @@
 						<v-list-item-content>
 							<v-list-item-title>Reporter</v-list-item-title>
 							<v-list-item-subtitle>
-								{{ detail.created_by.username }}
+								{{ report.created_by.name }}
 							</v-list-item-subtitle>
 						</v-list-item-content>
 					</v-list-item>
@@ -40,25 +40,25 @@
 						<v-list-item-content>
 							<v-list-item-title>Reason to report</v-list-item-title>
 							<v-list-item-subtitle>
-								{{ detail.reason }}
+								{{ report.reason }}
 							</v-list-item-subtitle>
 						</v-list-item-content>
 					</v-list-item>
-					<v-list-item v-if="detail.resolved_by">
+					<v-list-item v-if="report.resolved_by">
 						<v-list-item-icon><v-icon>mdi-account</v-icon></v-list-item-icon>
 						<v-list-item-content>
-							<v-list-item-title>{{detail.state === 'resolved' ? "Resolved" : "Ignored"}} by</v-list-item-title>
+							<v-list-item-title>{{report.state === 'resolved' ? "Resolved" : "Ignored"}} by</v-list-item-title>
 							<v-list-item-subtitle>
-								{{ detail.resolved_by.username }}
+								{{ report.resolved_by.username }}
 							</v-list-item-subtitle>
 						</v-list-item-content>
 					</v-list-item>
-					<v-list-item v-if="detail.resolve_text">
+					<v-list-item v-if="report.resolve_text">
 						<v-list-item-icon><v-icon>mdi-comment</v-icon></v-list-item-icon>
 						<v-list-item-content>
 							<v-list-item-title>Resolve Message</v-list-item-title>
 							<v-list-item-subtitle>
-								{{ detail.resolve_text }}
+								{{ report.resolve_text }}
 							</v-list-item-subtitle>
 						</v-list-item-content>
 					</v-list-item>
@@ -67,7 +67,7 @@
 						<v-list-item-content>
 							<v-list-item-title>Timestamp</v-list-item-title>
 							<v-list-item-subtitle>
-								{{ $moment(detail.timestamp).format("LLLL Z") }}
+								{{ $moment(report.timestamp).format("LLLL Z") }}
 							</v-list-item-subtitle>
 						</v-list-item-content>
 					</v-list-item>
@@ -130,30 +130,31 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			radDialog: "reportDialog/dialog",
-			detail: "reportDialog/object",
-			model: "reportDialog/model"
+			isReport: "dialog/report",
+			report: "dialog/object",
+			model: "dialog/model",
+			mod: "dialog/mod"
 		}),
 		isPendingReport() {
-			return this.detail?.state === "pending"
+			return this.report?.state === "pending"
+		},
+		isIgnoredReport() {
+			return this.report.state === "ignored"
 		},
 		chipColor() {
 			return (this.isPendingReport)
 				? "orange"
-				: (this.detail.state === "ignored")
+				: this.isIgnoredReport
 					? "error"
 					: "primary"
 		}
 	},
 	methods: {
-		clearView() {
-			this.detail = null
-		},
 		resolveReport() {
 			this.openConfirmDialog(
 				"Are you sure you want to resolve this report?",
 				"POST",
-				this.$util.format(this.$urls.community.resolveReport, this.detail.id),
+				this.$util.format(this.$urls.community.resolveReport, this.report.id),
 				["refreshMe", "refreshCommunity"],
 				"Cheers! Report resolved successfully!",
 				"Sorry! Report couldn't be resolved!",
@@ -164,7 +165,7 @@ export default {
 			this.openConfirmDialog(
 				"Are you sure you want to ignore this report?",
 				"POST",
-				this.$util.format(this.$urls.community.resolveReport, this.detail.id),
+				this.$util.format(this.$urls.community.resolveReport, this.report.id),
 				["refreshMe", "refreshCommunity"],
 				"Cheers! Report ignored successfully!",
 				"Sorry! Report couldn't be ignored!",
@@ -175,7 +176,7 @@ export default {
 			this.openConfirmDialog(
 				"Are you sure you want to delete this report?",
 				"DELETE",
-				this.$util.format(this.$urls.community.reportDetail, this.detail.id),
+				this.$util.format(this.$urls.report.detail, this.report.id),
 				["refreshMe", "refreshCommunity"],
 				"Cheers! Report deleted successfully!",
 				"Sorry! Report couldn't be deleted!",

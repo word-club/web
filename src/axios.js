@@ -6,9 +6,9 @@ const BACKEND_HOST = process.env.VUE_APP_BACKEND_HOST
 const AXIOS = {
 	setHeaders: function (headers = {}) {
 		const HEADERS = {
-			...headers,
 			"Content-Type": "application/json",
 			Accept: "application/json",
+			...headers,
 		}
 		if (typeof $helper.getAccessToken() === "string") {
 			HEADERS["Authorization"] = `Token ${$helper.getAccessToken()}`

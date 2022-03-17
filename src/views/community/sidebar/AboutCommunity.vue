@@ -6,7 +6,7 @@
 			<div class="about-community--title">
 				About Community
 			</div>
-			<v-menu bottom nudge-bottom="30">
+			<v-menu bottom nudge-bottom="30" nudge-left="91">
 				<template #activator="{on, attrs}">
 					<v-btn
 						icon small dark
@@ -18,7 +18,7 @@
 				</template>
 				<v-list dense outlined>
 					<v-list-item @click="openReportDialog('community', community)">
-						<v-list-item-icon>
+						<v-list-item-icon class="mx-0 mr-3">
 							<v-icon>mdi-flag</v-icon>
 						</v-list-item-icon>
 						<v-list-item-content>
@@ -27,9 +27,9 @@
 					</v-list-item>
 					<v-list-item
 						v-if="isCommunityManager"
-						@click="$router.push({name: 'Community MOD Settings Reports'})"
+						@click="$router.push({name: 'Community MOD Settings Description'})"
 					>
-						<v-list-item-icon><v-icon>mdi-cog</v-icon></v-list-item-icon>
+						<v-list-item-icon class="ml-0 mr-3"><v-icon>mdi-cog</v-icon></v-list-item-icon>
 						<v-list-item-content>
 							<v-list-item-title>MOD Tools</v-list-item-title>
 						</v-list-item-content>
@@ -39,26 +39,10 @@
 		</v-card-title>
 		<v-card-text class="pa-3">
 			<div class="about-community--quote"
-				v-if="community.description"
+				v-if="community.quote"
 			>
-				{{ community.description }}
+				{{ community.quote }}
 			</div>
-			<text-area
-				v-else
-				v-model="description"
-				name="description"
-				label="Community Quote"
-				icon="mdi-format-quote-close"
-				counter="256"
-			/>
-			<v-btn block
-				dark
-				v-if="description"
-				@click="patchQuote"
-				:color="community.theme.color"
-			>
-				Update
-			</v-btn>
 		</v-card-text>
 		<v-card-text class="d-flex align-center pa-3 weight-500 justify-space-between">
 			<div>
@@ -66,13 +50,13 @@
 					{{ community.subscriptions.length }}
 				</div>
 				<div class="px14">
-					{{ community.theme.subscriber_nickname }}
+					{{ community.theme["subscriber_nickname"] }}
 				</div>
 			</div>
 			<div class="px-1" />
 			<div>
 				<div class="px18">
-					{{ community.subscriptions.filter(item => item.disable_notification === false).length }}
+					{{ notificationEnabledUserCount }}
 				</div>
 				<div class="px14">
 					{{ community.theme.state_after_subscription }}
@@ -85,7 +69,7 @@
 				mdi-routes-clock
 			</v-icon>
 			<div class="px-2 px16 weight-500">
-				Created {{ $moment(community.date_of_registration).fromNow() }}
+				Created {{ parsedCreatedAt }}
 			</div>
 		</v-card-text>
 		<v-card-text class="pa-3">
@@ -106,9 +90,7 @@
 				@click="options = !options"
 			>
 				<template #default>
-					<div class="d-flex align-center justify-space-between px-4"
-						style="width: 100%"
-					>
+					<div class="full-width d-flex align-center justify-space-between px-4">
 						<div>Community options</div>
 						<v-icon>mdi-chevron-down</v-icon>
 					</div>
@@ -142,6 +124,7 @@ export default {
 	name: "AboutCommunity",
 	mixins: [UserRoles, PatchMixin, Snack, ReportDialogMixin],
 	data: () => ({
+		editDescription: false,
 		description: null,
 		options: false,
 		seeTheme: true
@@ -150,10 +133,13 @@ export default {
 		...mapGetters({
 			community: "community/inView",
 			currentUser: "user/current"
-		})
-	},
-	created() {
-		console.log(this.community)
+		}),
+		notificationEnabledUserCount() {
+			return this.community.subscriptions.filter(item => item["disable_notification"] === false).length
+		},
+		parsedCreatedAt() {
+			return this.$moment(this.community["date_of_registration"]).fromNow()
+		}
 	},
 	methods: {
 		patchQuote() {

@@ -5,7 +5,7 @@ module.exports = {
 		MEDIA: "media",
 		POLL: "poll"
 	},
-	colorsForSelect: [
+	COLORS: [
 		{value: "primary", name: "Primary"},
 		{value: "orange", name: "Orange"},
 		{value: "red", name: "Red"},

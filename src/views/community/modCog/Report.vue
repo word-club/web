@@ -9,7 +9,7 @@
 				<v-btn icon small color="orange"
 					@click="viewItem(item)"
 				>
-					<v-icon>
+					<v-icon small>
 						mdi-eye
 					</v-icon>
 				</v-btn>
@@ -86,16 +86,10 @@ export default {
 		},
 		viewItem(item) {
 			this.$store.dispatch("dialog/clearDialog")
-			this.$store.dispatch("dialog/setReportInView", {
+			this.$store.dispatch("dialog/setReportForAdminInView", {
 				model: "community",
 				object: item
 			})
-			if (!item.is_seen) {
-				this.$axios.patch(`/api/report/${item.id}/seen`)
-					.then(() => {
-						item.is_seen = true;
-					})
-			}
 		}
 	}
 }

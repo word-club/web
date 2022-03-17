@@ -32,7 +32,7 @@ const CommunityActions = {
 		},
 		async disableNotification(item) {
 			await this.openConfirmDialog(
-				`Are you sure you want to disable notifications for the community <code>${item.name}</code>?`,
+				`Are you sure you want to disable notifications for the community <code>${this.community.name}</code>?`,
 				"POST",
 				this.$util.format(this.$urls.community.subscription.notifications.disable, item.id),
 				["refreshMe", "refreshCommunity"],
@@ -42,7 +42,7 @@ const CommunityActions = {
 		},
 		async enableNotification(item) {
 			await this.openConfirmDialog(
-				`Are you sure you want to enable notifications for the community <code>${item.name}</code>?`,
+				`Are you sure you want to enable notifications for the community <code>${this.community.name}</code>?`,
 				"DELETE",
 				this.$util.format(this.$urls.community.subscription.notifications.removeDisable, item.subscription.id),
 				["refreshMe", "refreshCommunity"],

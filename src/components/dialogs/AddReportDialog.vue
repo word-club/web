@@ -1,10 +1,10 @@
 <template>
 	<v-dialog
-		:value="dialog"
+		:value="dialog && !mod"
 		persistent
 		max-width="600"
 	>
-		<v-card v-if="report && model">
+		<v-card v-if="!mod && toReport && model">
 			<v-card-title class="d-flex justify-space-between align-center">
 				<div>
 					Report {{model}} <code v-if="objectDisplayName">{{ objectDisplayName }}</code>
@@ -47,10 +47,10 @@ export default {
 			return !this.reportPayload.title || !this.reportPayload.content;
 		},
 		objectDisplayName() {
-			if (this.model === "publication") return this.report.title
-			else if (this.model === "community") return this.report.name
-			else if (this.model === "user") return this.report.username
-			else if (this.model === "comment") return this.report.comment
+			if (this.model === "publication") return this.toReport.title
+			else if (this.model === "community") return this.toReport.name
+			else if (this.model === "user") return this.toReport.username
+			else if (this.model === "comment") return this.toReport.comment
 			else return false
 		}
 	}

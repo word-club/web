@@ -23,8 +23,9 @@ const ReportDialogMixin = {
 			}
 		},
 		...mapGetters({
-			report: "dialog/object",
-			model: "dialog/model"
+			toReport: "dialog/object",
+			model: "dialog/model",
+			mod: "dialog/mod"
 		})
 	},
 	methods: {
@@ -40,7 +41,7 @@ const ReportDialogMixin = {
 		},
 		submitReport() {
 			const model = this.model
-			const obj = this.report
+			const obj = this.toReport
 			const url = `${model}/${obj.id}/report/`
 			this.post(url, {
 				...this.reportPayload

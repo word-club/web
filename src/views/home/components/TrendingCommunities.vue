@@ -33,7 +33,7 @@
 									<v-avatar size="30"
 										:color="item.theme.color"
 									>
-										<v-img v-if="item.avatar" :src="item.avatar"
+										<v-img v-if="item.avatar" :src="$link(item.avatar.image)"
 											class="rounded-full"
 										/>
 										<span v-else class="white--text">{{item.name[0].toUpperCase()}}</span>

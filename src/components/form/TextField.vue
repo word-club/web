@@ -31,7 +31,7 @@ export default {
 		hint: {type: String,default: null},
 		type: {type: String, required: false, default: "text"},
 		errors: {type: Object, required: false, default: () => {}},
-		icon: {type: String, required: true},
+		icon: {type: String, default: ""},
 		counter: {default: false},
 		autocomplete: {type: String, default: "off"},
 		dense: {type: Boolean, default: true},

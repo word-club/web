@@ -29,7 +29,7 @@ export default {
 		id: {type: String, default: null},
 		name: {type: String, required: true},
 		label: {type: String, required: true},
-		counter: {type: [String, Boolean], required: true},
+		counter: {type: [String, Boolean], default: false},
 		errors: {type: Object, required: false, default: () => {}},
 		icon: {type: String, default: "mdi-form-textbox"},
 		color: {type: String, default: "primary"},

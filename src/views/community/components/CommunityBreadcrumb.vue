@@ -1,5 +1,5 @@
 <template>
-	<div class="community-breadcrumb">
+	<div class="community-breadcrumb" v-if="community">
 		<div class="community-breadcrumb--item"
 			@click="$router.push(communityItem.to)"
 		>
@@ -51,10 +51,7 @@ export default {
 				text: this.$route.name.split("Community MOD Settings ")[1],
 			}
 		}
-	},
-	created() {
-	},
-	methods: {}
+	}
 }
 </script>
 

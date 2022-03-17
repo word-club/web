@@ -79,7 +79,7 @@
 				<v-subheader class="text-uppercase">
 					More Stuff
 				</v-subheader>
-				<v-list-item :to="{name: 'Community Mainframe'}"
+				<v-list-item :to="{name: 'Register Community'}"
 					class="create-community"
 				>
 					<v-list-item-icon><v-icon>mdi-account-group-outline</v-icon></v-list-item-icon>

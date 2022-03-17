@@ -3,7 +3,7 @@
 		<v-card color="primary" dark class="mx-2">
 			<v-card-title class="d-flex align-center flex-wrap">
 				<v-icon large dark>mdi-plus</v-icon>
-				<span class="px-2">New community</span>
+				<span class="px-2">Register a new community</span>
 			</v-card-title>
 		</v-card>
 		<div class="px-3">

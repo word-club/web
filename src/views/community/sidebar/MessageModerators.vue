@@ -17,43 +17,27 @@
 			</v-btn>
 		</v-card-text>
 		<v-card-text>
-			<div v-for="(mod, index) in community.admins"
+			<div v-for="(mod, index) in community.moderators"
 				:key="index"
 				class="d-flex weight-500 align-center py-1"
 				:class="`${community.theme.color}--text`"
 			>
 				<div>
-					{{ mod.user.username }}
+					{{ mod.user.name }}
 				</div>
 				<div class="px-1">
 					-
 				</div>
 				<div
+					v-if="community.created_by === mod.user.id"
 					class="white--text rounded px-1"
 					:class="community.theme.color"
 				>
 					President
 				</div>
+				<div v-else-if="mod.role === 'mod'">MOD</div>
+				<div v-else>Sub MOD</div>
 			</div>
-			<div v-for="(mod, index) in community.sub_admins"
-				:key="index"
-				class="d-flex weight-500 align-center py-1"
-				:class="`${community.theme.color}--text`"
-			>
-				<div>
-					{{ mod.user.username }}
-				</div>
-				<div class="px-1">
-					-
-				</div>
-				<div
-					class="white--text rounded px-1"
-					:class="community.theme.color"
-				>
-					Vice President
-				</div>
-			</div>
-
 		</v-card-text>
 	</v-card>
 </template>

@@ -68,6 +68,14 @@ export default {
 		items() {
 			return [
 				{
+					name: "General",
+					icon: "mdi-account-multiple",
+					children: [
+						{title: "Description", to: "Community MOD Settings Description"},
+						{title: "Display", to: "Community MOD Settings Display"},
+					]
+				},
+				{
 					name: "Queues",
 					icon: "mdi-tray-full",
 					children: [
@@ -112,6 +120,13 @@ export default {
 					children: [
 						{title: "Scheduled posts", to: "Community MOD Settings Scheduled Post"},
 						{title: "Event posts", to: "Community MOD Settings Event"},
+					]
+				},
+				{
+					name:"Authorization",
+					icon: "mdi-email-check",
+					children: [
+						{title: "Email", to: "Community MOD Settings Authorization"}
 					]
 				},
 				{

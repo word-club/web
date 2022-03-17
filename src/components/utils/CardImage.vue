@@ -26,7 +26,7 @@
 				<v-img
 					contain
 					height="100%"
-					:src="src"
+					:src="$link(src)"
 				>
 					<v-btn
 						fab dark
@@ -42,7 +42,7 @@
 		<v-img
 			:height="height"
 			:contain="contain"
-			:src="src"
+			:src="$link(src)"
 		/>
 	</v-card>
 </template>
