@@ -30,7 +30,7 @@ const FollowMixin = {
 			}
 		},
 		async unFollow(user) {
-			const follow = this.currentUser.following.find(follow => follow.user === user.id)
+			const follow = this.isFollowing(user)
 			if (!follow) return
 			if (this.currentUser) {
 				const url = this.$util.format(this.$urls.user.unfollow, follow.id)

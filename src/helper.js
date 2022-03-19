@@ -26,7 +26,6 @@ module.exports = {
 	},
 	getAdministrationData() {
 		const session =  localStorage.getItem(WORD_CLUB_SESSION)
-		console.log(session, JSON.parse((session)))
 		if (session) return JSON.parse(session).administration
 		return null
 	},

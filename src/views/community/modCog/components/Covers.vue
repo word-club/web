@@ -90,11 +90,6 @@ export default {
 			return this.community.covers.find(cover => cover.is_active)
 		},
 	},
-	watch: {
-		community(v) {
-			console.log(v)
-		}
-	},
 	methods: {
 		addCover() {
 			const fd = new FormData()
