@@ -2,7 +2,7 @@
 	<v-slide-x-reverse-transition>
 		<v-navigation-drawer
 			v-if="communityModCogRoute"
-			v-model="mainDrawer"
+			v-model="drawer"
 			app clipped
 			color="grey lighten-3"
 			:class="{'home-sidebar': mdAndUp}"

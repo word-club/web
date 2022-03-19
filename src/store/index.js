@@ -18,13 +18,13 @@ export default new Vuex.Store({
 		ruleDialog: false,
 		rule: null,
 		top: {}, sidebar: null,
-		mainDrawer: null,
+		drawer: null,
 		notFound: {dialog: false, status: null},
 
 	},
 	getters: {
 		sidebarState: state => state.sidebar,
-		mainDrawerState: state => state.mainDrawer,
+		drawerState: state => state.drawer,
 		topItems: state => state.top,
 		authMode: state => state.auth,
 		draftState: state => state.draftDialog,
@@ -39,7 +39,7 @@ export default new Vuex.Store({
 		SET_RULE_IN_EDIT: (state, value) => state.rule = value,
 		SET_TOP: (state, value) => state.top = value,
 		SET_SIDEBAR_STATE: (state, value) => state.sidebar = value,
-		SET_DRAWER_STATE: (state, value) => state.mainDrawer = value,
+		SET_DRAWER_STATE: (state, value) => state.drawer = value,
 		SET_NOT_FOUND: (state, value) => state.notFound = value
 	},
 	actions: {
