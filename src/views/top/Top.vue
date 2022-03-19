@@ -55,11 +55,9 @@ export default {
 	methods: {
 		fetchAdministrationDataIfNotPresent() {
 			this.loading = true
-			console.log(this.administrationData)
 			if (!this.administrationData) {
 				this.$axios.get(this.$urls.administration.list)
 					.then(response => {
-						console.log(response)
 						this.$helper.setAdministrationData(response)
 					})
 					.catch(() => {

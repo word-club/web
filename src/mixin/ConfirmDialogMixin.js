@@ -29,7 +29,6 @@ const ConfirmDialogMixin = {
 			await this.$store.dispatch("confirmDialog/close")
 		},
 		proceedConfirmDialog() {
-
 			this.$axios.send(
 				this.dialogMethod,
 				this.dialogUrl,
@@ -45,15 +44,16 @@ const ConfirmDialogMixin = {
 				await this.closeConfirmDialog()
 			})
 				.catch((err) => {
+					console.debug(err)
 					this.confirmResponse = err.response
 					this.confirmSuccess = false
 					this.confirmErrors = err.response?.data
 					this.openSnack(this.dialogFailureMessage)
 				})
 		},
-		async openConfirmDialog(dialogMsg, method, url, events, successMessage, failMessage, payload=null, params=null) {
+		async openConfirmDialog(dialogMsg, method="", url, events, successMessage, failMessage, payload=null, params=null) {
 			await this.$store.dispatch("confirmDialog/setDialogMessage", dialogMsg)
-			await this.$store.dispatch("confirmDialog/setMethod", method)
+			await this.$store.dispatch("confirmDialog/setMethod", method.toUpperCase())
 			await this.$store.dispatch("confirmDialog/setUrl", url)
 			await this.$store.dispatch("confirmDialog/setSuccessEvents", events)
 			await this.$store.dispatch("confirmDialog/setSuccessMessage", successMessage)

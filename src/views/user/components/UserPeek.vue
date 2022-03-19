@@ -76,12 +76,21 @@
 		</v-card-text>
 		<div class="py-2" v-else />
 		<v-card-actions class="px-4 py-0 justify-space-between flex-wrap">
-			<v-btn depressed
-				color="primary" rounded
-				:dark="!followed" :disabled="followed"
-				@click="followUser"
+			<v-btn
+				v-if="isFollowing(user)"
+				depressed dark
+				color="primary lighten-1" rounded
+				@click="unFollow(user)"
 			>
-				{{ (followed) ? 'Following' : 'Follow' }}
+				unfollow
+			</v-btn>
+			<v-btn
+				v-else
+				depressed dark
+				color="primary" rounded
+				@click="followUser(user)"
+			>
+				follow
 			</v-btn>
 			<v-btn depressed
 				color="primary" rounded
@@ -161,11 +170,11 @@ import PostMixin from "@/mixin/PostMixin.js";
 import Snack from "@/mixin/Snack.js";
 import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
 import FetchMixin from "@/mixin/FetchMixin.js";
-import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin.js";
+import FollowMixin from "@/mixin/FollowMixin.js";
 
 export default {
 	name: "UserPeek",
-	mixins: [PostMixin, Snack, RefreshMeMixin, FetchMixin, ConfirmDialogMixin],
+	mixins: [PostMixin, Snack, RefreshMeMixin, FetchMixin, FollowMixin],
 	data: () => ({
 		moreOptions: false
 	}),
@@ -177,35 +186,10 @@ export default {
 			if (!this.user?.profile) return
 			return this.user.profile.popularity +
 				this.user.profile.supports
-		},
-		currentUser() {
-			return this.$helper.getCurrentUser()
-		},
-		followed() {
-			if (this.user && this.currentUser) {
-				return this.user.followers
-					.filter(user => user.id === this.currentUser.id)
-					.length > 0
-			} return false
 		}
 	},
 	methods: {
 		...mapMutations("user", ["SET_TO_VIEW"]),
-		followUser() {
-			if (this.currentUser) {
-				const url = this.$util.format(this.$urls.user.follow, this.user.id)
-				this.openConfirmDialog(
-					`Are you sure you want to follow user <code>${this.user.username}</code>`,
-					"POST",
-					url,
-					["refreshMe", "refresh"],
-					`Follow success. You're now following user ${this.user.username}`,
-					"Follow failed. Something went wrong. Please try again."
-				)
-			} else {
-				this.$store.dispatch("setAuthMode", {state: true, mode: "login"});
-			}
-		}
 	},
 }
 </script>

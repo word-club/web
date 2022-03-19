@@ -24,7 +24,7 @@
 				<v-avatar left color="white">
 					<v-img
 						v-if="data.item.avatar"
-						:src="$link(data.item.avatar.image)"
+						:src="$link(data.item.avatar)"
 					/>
 					<span v-else
 						:class="`${data.item.theme.color}--text`"
@@ -39,7 +39,7 @@
 			<v-list-item-avatar :color="data.item.theme.color">
 				<v-img
 					v-if="data.item.avatar"
-					:src="$link(data.item.avatar.image)"
+					:src="$link(data.item.avatar)"
 				/>
 				<div class="white--text headline text-center full-width" v-else>{{data.item.name[0].toUpperCase()}}</div>
 			</v-list-item-avatar>

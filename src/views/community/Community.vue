@@ -62,6 +62,7 @@ export default {
 	methods: {
 		...mapMutations("community", ["SET_TO_VIEW"]),
 		refreshCommunity() {
+			this.setToView = true
 			this.fetchDetail("community")
 				.then(() => {
 					this.setTabListeners(this.community.theme.color)

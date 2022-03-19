@@ -43,7 +43,7 @@ const CommunitySelect = {
 		},
 		processInitWithCommunity() {
 			const communityToInitWith = this.$route.params.community
-			this.toView = false
+			this.clearToView = false
 			if (communityToInitWith) {
 				this.fetchDetail("community", {pk: communityToInitWith})
 					.then(async () => {

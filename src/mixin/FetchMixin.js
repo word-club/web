@@ -4,10 +4,11 @@ const FetchMixin = {
 		loading: true,
 		fetchErr: null,
 		fetchRes: null,
-		toView: true,
+		setToView: true,
+		clearToView: true,
 	}),
 	beforeRouteLeave(to, from, next){
-		if (this.toView) this.SET_TO_VIEW(null)
+		if (this.clearToView) this.SET_TO_VIEW(null)
 		next()
 	},
 	methods: {
@@ -21,7 +22,7 @@ const FetchMixin = {
 			return this.$axios
 				.get(this.$util.format(url, pk || routeId))
 				.then(res => {
-					if (this.toView) this.SET_TO_VIEW(res)
+					if (this.setToView) this.SET_TO_VIEW(res)
 					this.fetchRes = res
 				})
 				.catch((err) => {

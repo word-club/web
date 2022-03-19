@@ -17,6 +17,7 @@ const PostMixin = {
 					this.formErrors = {}
 				})
 				.catch(err => {
+					console.debug(err)
 					this.success = false
 					this.postInstance = null
 					this.statusCode = err.response.status

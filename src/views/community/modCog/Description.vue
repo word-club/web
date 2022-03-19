@@ -75,7 +75,7 @@ export default {
 	},
 	created() {
 		this.populate()
-		this.toView = false
+		this.clearToView = false
 	},
 	methods: {
 		populate() {

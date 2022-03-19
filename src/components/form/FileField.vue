@@ -3,10 +3,11 @@
 		:value="value" dense
 		outlined small-chips show-size
 		:accept="accept" :label="label.toUpperCase()"
-		clearable color="primary" background-color="white"
+		clearable background-color="white"
 		hide-details="auto" :placeholder="placeholder"
 		prepend-icon="" :prepend-inner-icon="icon"
 		:error-messages="getErrorMessage"
+		:color="color"
 		@change="$emit('input', $event)"
 	/>
 </template>
@@ -22,6 +23,7 @@ export default {
 		label: {required: true, type: String},
 		name: {default: "image", type: String},
 		value: {required: true},
+		color: {required: false, default: "primary"},
 		accept: {default: "image/*", type: String},
 		placeholder: {type: String, default: "Select an image"},
 		errors: {type: Object, default: () => {}}

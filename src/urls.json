@@ -18,6 +18,7 @@
 		"updatePassword": "update-password/",
 		"profileList": "profile/filter/",
 		"follow": "user/%s/follow/",
+		"unfollow": "follower/%s/",
 		"mentionList": "mention-list/"
 	},
 	"hashtag": {
