@@ -7,6 +7,7 @@
 		hide-details="auto" :placeholder="placeholder"
 		prepend-icon="" :prepend-inner-icon="icon"
 		:error-messages="getErrorMessage"
+		:color="color"
 		@change="$emit('input', $event)"
 	/>
 </template>
@@ -22,6 +23,7 @@ export default {
 		label: {required: true, type: String},
 		name: {default: "image", type: String},
 		value: {required: true},
+		color: {required: false, default: "primary"},
 		accept: {default: "image/*", type: String},
 		placeholder: {type: String, default: "Select an image"},
 		errors: {type: Object, default: () => {}}

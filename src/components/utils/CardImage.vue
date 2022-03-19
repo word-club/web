@@ -16,6 +16,9 @@
 			<v-spacer />
 			<slot />
 		</v-card-actions>
+		<v-card-actions class="info rounded flex-wrap align-center">
+			<slot name="info" />
+		</v-card-actions>
 		<v-dialog v-model="fullscreen"
 			fullscreen
 		>
@@ -75,18 +78,35 @@ export default {
 .card-image {
 	position: relative;
 	.actions {
+		transition: opacity ease .3s;
+		opacity: 0;
 		position: absolute;
 		top: 0;
 		width: 100%;
 		background-color: #3377d20a;
 		z-index: 1;
 		height: 45px;
+		.fullscreen-btn {
+			position: absolute;
+			left: 4px;
+			top: 4px;
+			z-index: 1;
+		}
 	}
-	.fullscreen-btn {
+	.info {
+		transition: opacity ease .3s;
+		opacity: 0;
 		position: absolute;
-		left: 4px;
-		top: 4px;
+		bottom: 0;
+		width: 100%;
+		background-color: #3377d20a !important;
 		z-index: 1;
+		border-radius: 0 !important;
+	}
+}
+.card-image:hover {
+	.actions, .info {
+		opacity: 1;
 	}
 }
 </style>

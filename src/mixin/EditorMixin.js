@@ -90,7 +90,7 @@ const EditorMixin = {
 								uploadByUrl(url) {
 									if (!publication) return
 									var formData = new FormData();
-									var uploadUrl = util.format(urls.publication.addImageUrl, publication.id)
+									var uploadUrl = util.format(urls.image.publication, publication.id)
 									formData.append("image_url", url)
 									return $.ajax({
 										url: `${process.env.VUE_APP_BACKEND_HOST}/api/${uploadUrl}`,
@@ -118,7 +118,7 @@ const EditorMixin = {
 								uploadByFile(file){
 									if (!publication) return
 									var formData = new FormData();
-									var uploadUrl = util.format(urls.publication.addImage, publication.id)
+									var uploadUrl = util.format(urls.image.publication, publication.id)
 									formData.append("image", file)
 									return $.ajax({
 										url: `${process.env.VUE_APP_BACKEND_HOST}/api/${uploadUrl}`,
