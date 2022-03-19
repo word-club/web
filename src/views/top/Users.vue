@@ -13,68 +13,73 @@
 					:class="{
 						'border-bottom': topUsers.length !== index +1
 					}"
-					:to="{name: 'User Overview', params: {username: user.username}}"
+					link
 				>
 					<v-list-item-avatar size="40" color="grey lighten-2">
 						<v-img
-							v-if="user.profile.avatar"
-							:src="$link(user.profile.avatar.image)"
+							v-if="user.avatar"
+							:src="$link(user.avatar)"
 						/>
 						<div class="full-width text-center px22 grey--text text--darken-2">
 							{{ user.username[0].toUpperCase() }}
 						</div>
 					</v-list-item-avatar>
-					<v-list-item-content>
-						<v-list-item-title>{{ getName(user) }}</v-list-item-title>
+					<v-list-item-content @click="$router.push({name: 'User Overview', params: {username: user.username}})">
+						<v-list-item-title class="py-1 px16 weight-500">{{ user.name }}</v-list-item-title>
 						<v-list-item-subtitle>
 							<v-chip small color="orange"
 								class="mx-1"
 								outlined
 							>
 								<v-icon left size="20">mdi-arrow-up</v-icon>
-								<b>{{user.profile.popularity}}</b><span class="pl-1">Popularity</span>
+								<b>{{user.popularity}}</b><span class="pl-1">Popularity</span>
 							</v-chip>
 							<v-chip small color="primary"
 								class="mx-1"
 								outlined
 							>
 								<v-icon left size="20">mdi-arrow-up</v-icon>
-								<b>{{user.profile.supports}}</b><span class="pl-1">Supports</span>
+								<b>{{user.supports}}</b><span class="pl-1">Supports</span>
 							</v-chip>
 						</v-list-item-subtitle>
 					</v-list-item-content>
-					<v-list-item-action>
+					<v-list-item-action v-if="isNotMe(user)">
 						<v-btn rounded
-							v-if="currentUser && user.username !== currentUser.username && !user.is_followed"
-							depressed color="primary">Follow</v-btn>
+							v-if="isFollowing(user)"
+							depressed color="primary"
+							@click="unFollow(user)"
+						>
+							unfollow
+						</v-btn>
+						<v-btn rounded
+							v-else
+							depressed color="primary lighten-1"
+							@click="followUser(user)"
+						>
+							follow
+						</v-btn>
 					</v-list-item-action>
 				</v-list-item>
 			</v-list>
 		</v-card-text>
+		<confirm-dialog @refresh="refreshMe()" />
 	</v-card>
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+
+import TopViewMixin from "@/mixin/TopViewMixin.js";
+import FollowMixin from "@/mixin/FollowMixin.js";
+import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
 
 export default {
-	name: "Users",
+	name: "TopUsers",
+	mixins: [TopViewMixin, FollowMixin, RefreshMeMixin],
 	computed: {
-		...mapGetters(["topItems"]),
-		...mapGetters({
-			currentUser: "user/current"
-		}),
 		topUsers() {
 			return this.topItems["users"]
 		}
 	},
-	methods: {
-		getName(user) {
-			if (user.first_name && user.last_name)
-				return `${user.first_name} ${user.last_name}`
-			return user.username
-		}
-	}
 }
 </script>
 
