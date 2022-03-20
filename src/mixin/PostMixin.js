@@ -7,13 +7,13 @@ const PostMixin = {
 		success: false,
 	}),
 	methods: {
-		post(url, payload = null) {
+		post(url, payload = null, params = {}) {
 			this.posting = true
 			return this
-				.$axios.post(url, payload)
+				.$axios.send("POST", url, payload, params)
 				.then(res => {
 					this.success = true
-					this.postInstance = res
+					this.postInstance = res.data
 					this.formErrors = {}
 				})
 				.catch(err => {

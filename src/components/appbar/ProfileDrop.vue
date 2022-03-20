@@ -9,8 +9,8 @@
 				v-on="on"
 				v-ripple
 			>
-				<v-img v-if="currentUser.profile.avatar"
-					:src="$link(currentUser.profile.avatar.image)"
+				<v-img v-if="activeAvatar"
+					:src="activeAvatar"
 				/>
 				<span v-else class="px22 white--text text-uppercase mb-1 profile-avatar__username">{{currentUser.username[0]}}</span>
 			</v-avatar>
@@ -128,7 +128,20 @@ export default {
 	computed: {
 		...mapGetters({
 			currentUser: "user/current"
-		})
+		}),
+		activeAvatar() {
+			if(!this.currentUser && !this.currentUser.profile) return false
+			const avatar = this.currentUser.profile.avatars.find(av => av.is_active)
+			if (avatar) return this.$link(avatar.image)
+			else return false
+		},
+		activeCover() {
+
+			if(!this.currentUser && !this.currentUser.profile) return false
+			const cover =  this.currentUser.profile.covers.find(cv => cv.is_active)
+			if (cover) return this.$link(cover.image)
+			return false
+		}
 	},
 	methods: {
 		logout() {

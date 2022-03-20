@@ -193,30 +193,12 @@
 
 <script>
 import {mapGetters} from "vuex";
-import PatchMixin from "@/mixin/PatchMixin.js";
-import Snack from "@/mixin/Snack.js";
-import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
-import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin.js";
+import GenderUpdate from "@/views/settings/mixins/GenderUpdate.js";
+import AccountUpdate from "@/views/settings/mixins/AccountUpdate.js";
 
 export default {
 	name: "Account",
-	mixins: [ConfirmDialogMixin, PatchMixin, Snack, RefreshMeMixin],
-	data: () => ({
-		countries: [],
-		payload: {
-			country: null
-		},
-		editEmail: false,
-		emailToUpdate: null,
-		gender: {
-			type: null,
-			custom: null,
-		},
-		deactivate: {
-			mode: false,
-			reason: null
-		}
-	}),
+	mixins: [AccountUpdate, GenderUpdate],
 	computed: {
 		...mapGetters({
 			user: "user/current"
@@ -239,66 +221,6 @@ export default {
 					this.countries = res.results
 				})
 		},
-		submitGenderUpdate(choice) {
-			this.gender.type = choice
-			if (!this.gender.type) return
-			if (this.gender.type === "C" && !this.gender.custom) {
-				this.openSnack("Custom type gender must specify a custom value")
-				return
-			}
-			this.patchAccount({
-				gender: {
-					type: this.gender.type,
-					custom: this.gender.custom
-				}
-			})
-		},
-		getGenderString(type) {
-			if (!type) return false
-			const o = this.$constants.GENDER_OPTIONS.find(o => o.value === type)
-			if (o) return o.text
-			return false
-		},
-		addEmail() {
-			this.editEmail = !this.editEmail
-			this.emailToUpdate = null
-		},
-		changeEmail() {
-			this.editEmail = true
-			this.emailToUpdate = this.user.email
-		},
-		patchAccount(payload = {}) {
-			this.patch(this.$urls.user.updateMe, payload).then(() => {
-				if (this.patchSuccess) {
-					this.refreshMe()
-					this.openSuccessSnack("Account information updated successfully.")
-				}
-				else this.openSnack("Something went wrong, please try again.")
-			})
-		},
-		deactivateMyAccountConfirm() {
-			const url = this.$urls.user.deactivateMe
-			this.openConfirmDialog(
-				"Are you sure you want to deactivate your account?",
-				"POST",
-				url,
-				["refresh"],
-				"Account deactivated.",
-				"Sorry, something went wrong.",
-				{deactivation_reason: this.deactivate.reason}
-			)
-		},
-		reActivateMe() {
-			const url = this.$urls.user.activateMe
-			this.openConfirmDialog(
-				"Are you sure you want to activate your account?",
-				"POST",
-				url,
-				["refresh"],
-				"Account activated.",
-				"Sorry, something went wrong."
-			)
-		}
 	}
 }
 </script>

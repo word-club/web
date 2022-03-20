@@ -28,7 +28,7 @@
 					<div v-else class="full-width text-h5 white--text text-uppercase">{{ user.username[0] }}</div>
 				</v-list-item-avatar>
 				<v-list-item-content>
-					<v-list-item-title>{{ user.name ? user.name : user.username }}</v-list-item-title>
+					<v-list-item-title>{{ user.display_name || user.username }}</v-list-item-title>
 					<v-list-item-subtitle>
 						<span>{{user.username}}</span>
 						<span><v-icon>mdi-circle-small</v-icon></span>

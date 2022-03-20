@@ -121,13 +121,13 @@
 	},
 	"avatar": {
 		"community": "community/%s/avatar/",
-		"profile": "profile/%s/avatar/",
+		"profile": "profile/avatar/",
 		"detail": "avatar/%s/",
 		"active": "avatar/%s/active/"
 	},
 	"cover": {
 		"community": "community/%s/cover/",
-		"profile": "profile/%s/cover/",
+		"profile": "profile/cover/",
 		"detail": "cover/%s/",
 		"active": "cover/%s/active/"
 	},
