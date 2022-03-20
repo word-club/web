@@ -23,21 +23,7 @@
 			color="primary"
 			height="150"
 			:img="coverUrl || ''"
-		>
-			<v-card-actions>
-				<v-btn icon dark>
-					<v-icon>mdi-camera-outline</v-icon>
-				</v-btn>
-				<v-spacer />
-				<v-fab-transition>
-					<v-btn
-						v-if="files.length"
-						rounded small color="error--text">
-						Clear Files
-					</v-btn>
-				</v-fab-transition>
-			</v-card-actions>
-		</v-card>
+		/>
 		<v-card-text class="pa-0 d-flex justify-center avatar-line">
 			<v-avatar size="200"
 				:color="(avatarUrl) ? 'white': 'grey'"
@@ -130,8 +116,8 @@
 				>
 					Add cover
 				</v-btn>
-				<v-btn rounded class="ma-1 info--text" small>Edit Profile</v-btn>
-				<v-btn rounded class="ma-1" block>Settings</v-btn>
+				<v-btn rounded class="ma-1 info--text" small :to="{name: 'User Settings Profile'}">Edit Profile</v-btn>
+				<v-btn rounded class="ma-1" block :to="{name: 'User Settings Account'}">Settings</v-btn>
 			</v-card-actions>
 		</v-scale-transition>
 		<v-card-actions class="py-0">

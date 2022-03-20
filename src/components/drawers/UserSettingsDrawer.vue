@@ -35,11 +35,6 @@ export default {
 		userSettingRoute() {
 			return this.$route.matched.some(route => route.meta["user_settings"])
 		}
-	},
-	watch: {
-		drawer(v) {
-			console.log(v)
-		}
 	}
 }
 </script>

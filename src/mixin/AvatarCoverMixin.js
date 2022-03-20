@@ -27,7 +27,6 @@ const AvatarCoverMixin = {
 			if (this.coverMode && this.fileUrls.length) return this.fileUrls[0]
 			else if (this.user && this.user.profile.covers) {
 				const activeCover = this.user.profile.covers.find(cover => cover.is_active)
-				console.log(activeCover)
 				if (activeCover) return this.$link(activeCover.image)
 				else return false
 			}

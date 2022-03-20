@@ -38,16 +38,13 @@ const ConfirmDialogMixin = {
 				this.confirmResponse = res
 				this.confirmSuccess = true
 				this.confirmErrors = {}
-				console.log("-erlejrlerjlerjelkj--")
 				this.openSuccessSnack(this.dialogSuccessMessage)
 				this.dialogSuccessEvents.forEach(e => {
 					this.$emit(e)
 				})
-				console.log("++erlejrlerjlerjelkj")
 			})
 				.catch((err) => {
 					console.debug(err)
-					console.log("erlejrlerjlerjelkj")
 					this.confirmResponse = err.response
 					this.confirmSuccess = false
 					this.confirmErrors = err.response?.data

@@ -184,6 +184,9 @@ export default {
 	},
 	created() {
 		this.populate()
+		this.$store.dispatch("publication/setInView", null)
+		this.$store.dispatch("community/setToView", null)
+		this.$store.dispatch("user/setInView", this.user)
 	},
 	methods: {
 		populate() {

@@ -14,7 +14,7 @@ export default {
 	props: {
 		size: {type: [Number, String], default: 20},
 		color: {type: String, default: "primary"},
-		src: {type: String, default: null},
+		src: {type: [String, Boolean], default: null},
 		text: {type: String, default: ""},
 		spanClass: {type: String, default: ""}
 	}
