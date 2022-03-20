@@ -23,19 +23,19 @@ export default {
 				{
 					icon: "mdi-view-dashboard",
 					title: "Overview",
-					to: {name: "Home", params: {sortBy: undefined}},
+					to: {name: this.$route.name, params: {sortBy: undefined}},
 					exact: true
 				},
 				{
 					icon: "mdi-chart-donut",
 					title: "Fresh",
-					to: {name: "Home", params: {sortBy: "fresh"}},
+					to: {name: this.$route.name, params: {sortBy: "fresh"}},
 					exact: true
 				},
 				{
 					icon: "mdi-finance",
 					title: "Popular",
-					to: {name: "Home", params: {sortBy: "popular"}},
+					to: {name: this.$route.name, params: {sortBy: "popular"}},
 					exact: true
 				},
 				{

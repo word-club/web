@@ -11,7 +11,7 @@
 					:class="{
 						'active-filter': isOnBest
 					}"
-					:to="{name: 'Home', params: {sortBy: bestItem.queryName}}"
+					:to="{name: $route.name, params: {sortBy: bestItem.queryName}}"
 				>
 					<v-icon left>
 						{{ bestItem.icon }}
@@ -27,7 +27,7 @@
 					active-class="active-filter"
 					rounded depressed :color="color"
 					:outlined="$route.params.sortBy !== item.queryName"
-					:to="{name: 'Home', params: {sortBy: item.queryName}}"
+					:to="{name: $route.name, params: {sortBy: item.queryName}}"
 					:class="{
 						'active-filter': $route.params.sortBy === item.queryName
 					}"
@@ -60,7 +60,7 @@
 						:class="{
 							'active-filter-drop': $route.params.sortBy === item.queryName
 						}"
-						:to="{name: 'Home', params: {sortBy: item.queryName}}"
+						:to="{name: $route.name, params: {sortBy: item.queryName}}"
 					>
 						<v-list-item-icon>
 							<v-icon :color="dropColor(item)">
@@ -161,6 +161,7 @@ export default {
 		},
 	},
 	created() {
+		console.log(this.$route.name)
 		this.$store.dispatch("publication/setFilterset", {
 			sort_by: "support",
 			...this.payload

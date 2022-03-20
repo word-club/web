@@ -98,7 +98,7 @@ const routes = [
 		},
 		children: [
 			{
-				path: "publications",
+				path: "publications/:sortBy?",
 				name: "Community Detail",
 				component: () => import("@/views/community/PostsList"),
 				meta: {

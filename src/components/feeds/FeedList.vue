@@ -60,7 +60,8 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			publications: "publication/list"
+			publications: "publication/list",
+			communityInView: "community/inView"
 		}),
 	},
 	created() {
@@ -80,6 +81,9 @@ export default {
 	},
 	methods: {
 		async getPublications({sortString = "best", payload = {}} = {}) {
+			if (this.$route.name === "Community Detail") {
+				payload["community"] = this.communityInView.id
+			}
 			const sortBy = this.$route.params.sortBy
 			if (sortBy) sortString = sortBy
 

@@ -31,7 +31,7 @@
 			v-if="currentUser && smAndUp"
 			icon="mdi-finance"
 			tooltip="Popular"
-			:to="{ name: 'Home', params: {sortBy: 'popular'} }"
+			:to="{ name: $route.name, params: {sortBy: 'popular'} }"
 		/>
 
 		<tooltip-icon-btn
@@ -40,7 +40,7 @@
 			v-if="currentUser  && smAndUp"
 			icon="mdi-chart-gantt"
 			tooltip="Top Discussed"
-			:to="{ name: 'Home', params: {sortBy: 'discussed'} }"
+			:to="{ name: $route.name, params: {sortBy: 'discussed'} }"
 		/>
 		<tooltip-icon-btn
 			id="create-publication"
