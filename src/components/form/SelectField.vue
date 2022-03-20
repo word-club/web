@@ -10,6 +10,7 @@
 		:item-text="itemText"
 		autocomplete="off"
 		hide-details="auto"
+		:return-object="returnObject"
 		:color="color" background-color="white"
 		:prepend-inner-icon="icon"
 		:error-messages="getErrorMessage"
@@ -63,7 +64,8 @@ export default {
 		},
 		itemValue: {type: [String, null], default: null},
 		itemText: {type: [String, null], default: null},
-		color: {type: String, default: "primary"}
+		color: {type: String, default: "primary"},
+		returnObject: {type: Boolean, default: false},
 	},
 	emits: ["input"],
 	data() {

@@ -2,9 +2,9 @@ import {mapMutations} from "vuex";
 
 const MainDrawer = {
 	computed: {
-		mainDrawer: {
+		drawer: {
 			get() {
-				return this.$store.getters.mainDrawerState
+				return this.$store.getters.drawerState
 			},
 			set(v) {
 				this.SET_DRAWER_STATE(v)

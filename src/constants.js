@@ -17,4 +17,11 @@ module.exports = {
 		{value: "deep-purple", name: "Purple"},
 		{value: "amber", name: "Amber"},
 	],
+	GENDER_OPTIONS: [
+		{value: "M", text: "Male"},
+		{value: "F", text: "Female"},
+		{value: "NB", text: "Non-Binary"},
+		{value: "C", text: "I Refer To Myself As..."},
+		{value: "XY", text: "I Prefer Not To Say"},
+	]
 }

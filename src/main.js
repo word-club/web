@@ -38,6 +38,7 @@ Vue.component("HotBar", () => import("@/views/user/components/HotBar"))
 Vue.component("CommentInstance", () => import("@/views/home/components/CommentInstance"))
 Vue.component("PublicationInstance", () => import("@/views/home/components/PublicationInstance"))
 Vue.component("ConfirmDialog", () => import("@/components/ConfirmDialog"))
+Vue.component("WcAvatar", () => import("@/components/WcAvatar"))
 
 router.beforeEach((to, from, next) => {
 	const loginRequired = to.matched.some(route => route.meta["login_required"])

@@ -6,7 +6,7 @@ const ConfirmDialogMixin = {
 	emits: ["refreshMe", "refreshCommunity", "startNew"],
 	data: () => ({
 		confirmSuccess: false,
-		confirmErrors: false,
+		confirmErrors: {},
 		confirmResponse: null,
 	}),
 	computed: {
@@ -37,11 +37,11 @@ const ConfirmDialogMixin = {
 			).then(async (res) => {
 				this.confirmResponse = res
 				this.confirmSuccess = true
+				this.confirmErrors = {}
 				this.openSuccessSnack(this.dialogSuccessMessage)
 				this.dialogSuccessEvents.forEach(e => {
 					this.$emit(e)
 				})
-				await this.closeConfirmDialog()
 			})
 				.catch((err) => {
 					console.debug(err)
@@ -49,6 +49,9 @@ const ConfirmDialogMixin = {
 					this.confirmSuccess = false
 					this.confirmErrors = err.response?.data
 					this.openSnack(this.dialogFailureMessage)
+				})
+				.finally(async () => {
+					await this.closeConfirmDialog()
 				})
 		},
 		async openConfirmDialog(dialogMsg, method="", url, events, successMessage, failMessage, payload=null, params=null) {

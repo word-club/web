@@ -25,7 +25,7 @@
 						</div>
 					</v-list-item-avatar>
 					<v-list-item-content @click="$router.push({name: 'User Overview', params: {username: user.username}})">
-						<v-list-item-title class="py-1 px16 weight-500">{{ user.name }}</v-list-item-title>
+						<v-list-item-title class="py-1 px16 weight-500">{{ user.display_name || user.username }}</v-list-item-title>
 						<v-list-item-subtitle>
 							<v-chip small color="orange"
 								class="mx-1"

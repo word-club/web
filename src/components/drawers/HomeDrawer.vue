@@ -2,7 +2,7 @@
 	<v-slide-x-transition>
 		<v-navigation-drawer
 			v-if="!drawerFreeRoute"
-			v-model="mainDrawer"
+			v-model="drawer"
 			app clipped
 			color="grey lighten-3"
 			class="home-sidebar"

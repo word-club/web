@@ -2,6 +2,7 @@
 	"administration": {
 		"top": "top/",
 		"list": "administration/",
+		"countries": "countries/",
 		"pageView": {
 			"list": "page-view/",
 			"detail": "page-view/"
@@ -9,6 +10,9 @@
 	},
 	"user": {
 		"me": "me/",
+		"updateMe": "me/update/",
+		"deactivateMe": "me/deactivate/",
+		"activateMe": "me/activate/",
 		"detail": "users/%s/",
 		"list": "users/",
 		"retrieve": "user/%s/",
@@ -16,7 +20,7 @@
 		"register": "wc-register/",
 		"logout": "wc-signout/",
 		"updatePassword": "update-password/",
-		"profileList": "profile/filter/",
+		"filter": "profile/filter/",
 		"follow": "user/%s/follow/",
 		"unfollow": "follower/%s/",
 		"mentionList": "mention-list/"
@@ -117,13 +121,13 @@
 	},
 	"avatar": {
 		"community": "community/%s/avatar/",
-		"profile": "profile/%s/avatar/",
+		"profile": "profile/avatar/",
 		"detail": "avatar/%s/",
 		"active": "avatar/%s/active/"
 	},
 	"cover": {
 		"community": "community/%s/cover/",
-		"profile": "profile/%s/cover/",
+		"profile": "profile/cover/",
 		"detail": "cover/%s/",
 		"active": "cover/%s/active/"
 	},

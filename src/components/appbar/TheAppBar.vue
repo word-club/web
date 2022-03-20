@@ -11,9 +11,9 @@
 			<v-btn
 				class="the-app-bar--toggle"
 				icon v-if="$vuetify.breakpoint.smAndDown"
-				@click="toggleDrawer"
+				@click="toggleDrawer()"
 			>
-				<v-icon v-if="$store.getters.mainDrawerState">mdi-menu-close</v-icon>
+				<v-icon v-if="$store.getters.drawerState">mdi-backburger</v-icon>
 				<v-icon v-else>mdi-menu-open</v-icon>
 			</v-btn>
 			<div class="the-app-bar--site-title" @click="toHome()">WordClub</div>
@@ -128,7 +128,7 @@ export default {
 	methods: {
 		...mapMutations(["SET_DRAWER_STATE", "SET_SIDEBAR_STATE"]),
 		toggleDrawer() {
-			this.SET_DRAWER_STATE(!this.$store.getters.mainDrawerState)
+			this.SET_DRAWER_STATE(!this.$store.getters.drawerState)
 		},
 		login() {
 			this.$store.dispatch("setAuthMode", {state: true, mode: "login"});

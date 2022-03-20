@@ -16,6 +16,8 @@ const PatchMixin = {
 					this.patchErrors = {}
 				})
 				.catch(err => {
+					console.debug(err)
+					this.patchSuccess = false
 					this.patchErrors = err.response.data
 				})
 				.finally(() => {

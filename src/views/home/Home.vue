@@ -27,6 +27,11 @@ export default {
 		...mapGetters({
 			currentUser: "user/current"
 		})
+	},
+	created() {
+		this.$store.dispatch("community/setToView", null)
+		this.$store.dispatch("publication/setInView", null)
+		this.$store.dispatch("user/setInView", null)
 	}
 }
 </script>

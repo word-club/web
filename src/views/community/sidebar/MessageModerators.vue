@@ -23,7 +23,7 @@
 				:class="`${community.theme.color}--text`"
 			>
 				<div>
-					{{ mod.user.name }}
+					{{ mod.user.display_name || mod.user.username }}
 				</div>
 				<div class="px-1">
 					-

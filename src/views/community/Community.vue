@@ -57,6 +57,8 @@ export default {
 		}
 	},
 	created() {
+		this.$store.dispatch("user/setInView", null)
+		this.$store.dispatch("publication/setInView", null)
 		this.refreshCommunity()
 	},
 	methods: {

@@ -26,13 +26,18 @@
 			</div>
 			<div class="display-name">
 				<div class="form-header">Display name (optional)</div>
-				<div class="form-description">Set a display name. This does not change your username</div>
+				<div class="form-description">
+					Set an awesome display name for your profile.
+					Generally we display your unique username as your display text.
+					But if you've set a display name, we'll use that instead.
+				</div>
 				<text-field
 					v-model="profile.display_name"
 					icon="mdi-account-box"
 					label="Display name (optional)"
 					counter="30" name="display_name"
 					:errors="patchErrors"
+					@change="patchAccount({profile: {display_name: profile.display_name}})"
 				/>
 			</div>
 			<div class="user-bio">
@@ -42,8 +47,9 @@
 					v-model="profile.bio"
 					icon="mdi-card-text"
 					label="About (optional)"
-					counter="200" name="bio"
+					name="bio"
 					:errors="patchErrors"
+					@change="patchAccount({profile: {bio: profile.bio}})"
 				/>
 			</div>
 			<div class="overline pb-2">
@@ -70,6 +76,9 @@
 						height="200"
 						:img="coverUrl|| ''"
 					>
+						<v-card-text>
+							<v-chip small>Cover Image Preview Pane</v-chip>
+						</v-card-text>
 						<v-card-actions>
 							<v-spacer />
 							<v-btn dark fab large @click="$refs.coverInput.click()"><v-icon>mdi-plus-circle</v-icon></v-btn>
@@ -89,7 +98,11 @@
 							This content is NSFW (may contain nudity, pornography, profanity or inappropriate content for those under 18)
 						</div>
 					</div>
-					<div><v-switch inset v-model="profile.adult_content" color="primary" /></div>
+					<div>
+						<v-switch inset v-model="profile.adult_content" color="primary"
+							@change="patchAccount({profile: {adult_content: profile.adult_content}})"
+						/>
+					</div>
 				</div>
 			</div>
 			<div class="overline pb-2">
@@ -104,7 +117,11 @@
 							Followers will be notified about posts you make to your profile and see them in their home feed.
 						</div>
 					</div>
-					<div><v-switch inset v-model="profile.allow_follow" color="primary" /></div>
+					<div>
+						<v-switch inset v-model="profile.allow_follow" color="primary"
+							@change="patchAccount({profile: {allow_follow: profile.allow_follow}})"
+						/>
+					</div>
 				</div>
 				<div class="d-flex justify-space-between">
 					<div>
@@ -114,7 +131,11 @@
 								href="">/users</a>
 						</div>
 					</div>
-					<div><v-switch inset v-model="profile.content_visibility" color="primary" /></div>
+					<div>
+						<v-switch inset v-model="profile.content_visibility" color="primary"
+							@change="patchAccount({profile: {content_visibility: profile.content_visibility}})"
+						/>
+					</div>
 				</div>
 				<div class="d-flex justify-space-between">
 					<div>
@@ -123,7 +144,11 @@
 							Show which communities I am active in on my profile
 						</div>
 					</div>
-					<div><v-switch inset v-model="profile.communities_visibility" color="primary" /></div>
+					<div>
+						<v-switch inset v-model="profile.communities_visibility" color="primary"
+							@change="patchAccount({profile: {communities_visibility: profile.communities_visibility}})"
+						/>
+					</div>
 				</div>
 			</div>
 		</v-card-text>
@@ -137,10 +162,11 @@
 import {mapGetters} from "vuex";
 import AvatarCoverMixin from "@/mixin/AvatarCoverMixin.js";
 import PatchMixin from "@/mixin/PatchMixin.js";
+import AccountUpdate from "@/views/settings/mixins/AccountUpdate.js";
 
 export default {
 	name: "Profile",
-	mixins: [AvatarCoverMixin, PatchMixin],
+	mixins: [AvatarCoverMixin, PatchMixin, AccountUpdate],
 	data: () => ({
 		profile: {
 			bio: null,
@@ -157,8 +183,23 @@ export default {
 		})
 	},
 	created() {
+		this.populate()
+		this.$store.dispatch("publication/setInView", null)
+		this.$store.dispatch("community/setToView", null)
+		this.$store.dispatch("user/setInView", this.user)
 	},
-	methods: {}
+	methods: {
+		populate() {
+			this.profile = {
+				bio: this.user.profile.bio,
+				display_name: this.user.profile.display_name,
+				allow_follow: this.user.profile.allow_follow,
+				content_visibility: this.user.profile.content_visibility,
+				communities_visibility: this.user.profile.communities_visibility,
+				adult_content: this.user.profile.adult_content
+			}
+		}
+	}
 }
 </script>
 
