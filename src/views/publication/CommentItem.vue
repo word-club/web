@@ -6,14 +6,14 @@
 				<div
 					class="bottom-end-line-outer"
 				/>
-				<v-list-item-avatar
-					size="30" class="comment-avatar"
-					color="grey"
-				>
-					<v-img v-if="comment.created_by.avatar" :src="$link(comment.created_by.avatar)" />
-					<div class="full-width text-center px16 weight-500 white--text">{{
-						comment.created_by.username[0].toUpperCase()
-					}}</div>
+				<v-list-item-avatar>
+					<wc-avatar
+						size="30"
+						color="grey"
+						:src="comment.created_by.avatar"
+						:text="comment.created_by.username"
+						span-class="full-width text-center px16 weight-500 white--text"
+					/>
 				</v-list-item-avatar>
 				<v-list-item-content class="pl-4">
 					<v-list-item-subtitle class="d-flex align-center px14">
@@ -131,14 +131,14 @@
 				<div
 					class="bottom-end-line"
 				/>
-				<v-list-item-avatar size="30"
-					color="grey" class="comment-avatar"
-				>
-					<v-img v-if="comment.created_by.avatar" :src="$link(comment.created_by.avatar)" />
-					<div class="full-width text-center px16 weight-500 white--text">
-						{{ comment.created_by.username[0].toUpperCase() }}
-					</div>
-				</v-list-item-avatar>
+				<wc-avatar
+					size="30"
+					color="grey"
+					class="comment-avatar"
+					:src="comment.created_by.avatar"
+					:text="comment.created_by.username"
+					span-class="full-width text-center px16 weight-500 white--text"
+				/>
 				<v-list-item-content class="pl-3">
 					<v-list-item-subtitle class="d-flex align-center px14">
 						<div>{{ reply.created_by.username }}</div>

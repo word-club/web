@@ -4,9 +4,13 @@
 	>
 		<v-card-text>
 			<v-list-item>
-				<v-list-item-avatar :color="theme.color">
-					<v-img v-if="inProgress.links.image" :src="inProgress.links.image" />
-					<div v-else class="white--text px22 mb-1 full-width text-center">{{inProgress.links.title[0].toUpperCase()}}</div>
+				<v-list-item-avatar>
+					<wc-avatar
+						:color="theme.color"
+						:src="inProgress.links.image"
+						:text="inProgress.links.title"
+						span-class="white--text px22 mb-1 full-width text-center"
+					/>
 				</v-list-item-avatar>
 				<v-list-item-content>
 					<v-list-item-title>

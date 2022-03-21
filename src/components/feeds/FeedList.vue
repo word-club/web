@@ -42,13 +42,14 @@ import {mapGetters} from "vuex";
 import RouteMixin from "@/mixin/RouteMixin.js";
 import PublicationType from "@/mixin/PublicationType.js";
 import FetchPublications from "@/mixin/FetchPublications.js";
+import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
 
 export default {
 	name: "FeedList",
 	components: {
 		PublicationInstance: () => import("@/views/home/components/PublicationInstance")
 	},
-	mixins: [RouteMixin, PublicationType, FetchPublications],
+	mixins: [RouteMixin, PublicationType, FetchPublications, RefreshMeMixin],
 	props: {
 		payload: {
 			required: false,
@@ -90,6 +91,7 @@ export default {
 			sortString = this.$helper.parseSortString(sortString)
 
 			await this.$store.dispatch("publication/setFilterset", sortString)
+			await this.refreshMe()
 			await this.fetchPublications({sort_by: sortString, ...payload})
 		}
 	},

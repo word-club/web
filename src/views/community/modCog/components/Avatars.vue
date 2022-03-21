@@ -92,7 +92,7 @@ export default {
 			return this.community.theme
 		},
 		activeAvatar() {
-			return this.avatars.find(avatar => avatar.is_active)
+			return this.community.avatar
 		},
 	},
 	methods: {

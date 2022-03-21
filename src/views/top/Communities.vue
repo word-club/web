@@ -15,9 +15,14 @@
 					}"
 					link
 				>
-					<v-list-item-avatar size="40" :color="community.theme.color">
-						<v-img v-if="community.avatar" :src="$link(community.avatar)" />
-						<span v-else class="white--text font-weight-500 px22">{{community.name[0].toUpperCase()}}</span>
+					<v-list-item-avatar>
+						<wc-avatar
+							size="40"
+							:color="community.theme.color"
+							:src="community.avatar"
+							:text="community.name"
+							span-class="white--text font-weight-500 px22"
+						/>
 					</v-list-item-avatar>
 					<v-list-item-content @click="$router.push({name: 'Community Detail', params: {id: community.id}})">
 						<v-list-item-title class="py-1 px16 weight-500">{{ community.name }}</v-list-item-title>

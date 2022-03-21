@@ -1,19 +1,18 @@
 <template>
 	<v-menu offset-y>
 		<template #activator="{on, attrs}">
-			<v-avatar
-				:color="(currentUser.profile.avatar) ? '' : 'primary'"
+			<wc-avatar
+				:color="(activeAvatar) ? '' : 'primary'"
 				size="35"
 				v-bind="attrs"
 				class="elevation-4 profile-avatar"
 				v-on="on"
 				v-ripple
-			>
-				<v-img v-if="activeAvatar"
-					:src="activeAvatar"
-				/>
-				<span v-else class="px22 white--text text-uppercase mb-1 profile-avatar__username">{{currentUser.username[0]}}</span>
-			</v-avatar>
+				:icon="null"
+				:src="activeAvatar"
+				:text="currentUser.username"
+				span-class="px22 white--text text-uppercase mb-1 profile-avatar__username"
+			/>
 		</template>
 		<v-list width="220"
 			dense class="profile-drop-list"
@@ -130,17 +129,12 @@ export default {
 			currentUser: "user/current"
 		}),
 		activeAvatar() {
-			if(!this.currentUser && !this.currentUser.profile) return false
-			const avatar = this.currentUser.profile.avatars.find(av => av.is_active)
-			if (avatar) return this.$link(avatar.image)
-			else return false
+			if(!this.currentUser) return false
+			return this.currentUser.avatar
 		},
 		activeCover() {
-
-			if(!this.currentUser && !this.currentUser.profile) return false
-			const cover =  this.currentUser.profile.covers.find(cv => cv.is_active)
-			if (cover) return this.$link(cover.image)
-			return false
+			if(!this.currentUser) return false
+			return this.currentUser.cover
 		}
 	},
 	methods: {

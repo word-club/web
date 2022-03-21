@@ -21,27 +21,22 @@
 				dark :color="data.item.theme.color"
 				@click="data.select"
 			>
-				<v-avatar left color="white">
-					<v-img
-						v-if="data.item.avatar"
-						:src="$link(data.item.avatar)"
-					/>
-					<span v-else
-						:class="`${data.item.theme.color}--text`"
-					>
-						{{ data.item.name[0].toUpperCase() }}
-					</span>
-				</v-avatar>
+				<wc-avatar
+					left color="white"
+					:src="data.item.avatar"
+					:text="data.item.name"
+					:span-class="`${data.item.theme.color}--text`"
+				/>
 				{{ data.item.name }}
 			</v-chip>
 		</template>
 		<template v-slot:item="data">
-			<v-list-item-avatar :color="data.item.theme.color">
-				<v-img
-					v-if="data.item.avatar"
-					:src="$link(data.item.avatar)"
+			<v-list-item-avatar>
+				<wc-avatar :color="data.item.theme.color"
+					:src="data.item.avatar"
+					span-class="white--text headline text-center full-width"
+					:text="data.item.name"
 				/>
-				<div class="white--text headline text-center full-width" v-else>{{data.item.name[0].toUpperCase()}}</div>
 			</v-list-item-avatar>
 			<v-list-item-content>
 				<v-list-item-title v-html="data.item.name" />

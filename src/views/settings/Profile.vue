@@ -60,12 +60,12 @@
 				<div class="form-header">Avatar and banner image</div>
 				<div class="form-description">Images must be .png or .jpg format</div>
 				<div class="actions">
-					<v-avatar size="200"
+					<wc-avatar size="200"
 						:color="avatarUrl ? '' : 'primary'"
-					>
-						<v-img v-if="avatarUrl" :src="avatarUrl" />
-						<div v-else class="full-width text-center display-3">{{user.username[0].toUpperCase()}}</div>
-					</v-avatar>
+						:src="avatarUrl"
+						:text="user.username"
+						span-class="full-width text-center display-3"
+					/>
 					<v-btn fab class="avatar-add" dark color="grey"
 						@click="$refs.avatarInput.click()"
 					>

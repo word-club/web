@@ -25,10 +25,14 @@
 				class="rounded-t-0 d-flex justify-center align-center"
 			>
 				<v-list-item :href="link.link" target="_blank">
-					<v-list-item-avatar size="80" color="white">
-						<div class="full-width text-center px22">
-							{{link.title[0].toUpperCase()}}
-						</div>
+					<v-list-item-avatar
+						size="80" color="white"
+					>
+						<wc-avatar
+							size="80" color="white"
+							:text="link.title"
+							span-class="full-width text-center px22"
+						/>
 					</v-list-item-avatar>
 					<v-list-item-title class="weight-400 px18 text-decoration-underline">{{link.title}}</v-list-item-title>
 					<v-list-item-subtitle v-if="link.description">{{link.description}}</v-list-item-subtitle>

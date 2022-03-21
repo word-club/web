@@ -15,16 +15,13 @@
 			/>
 		</v-card>
 		<v-card-text class="px-3 py-0 d-flex align-center">
-			<v-avatar :color="community.theme.color"
+			<wc-avatar
+				:color="community.theme.color"
 				size="45"
-			>
-				<v-img v-if="community.avatar"
-					:src="$link(community.avatar)"
-				/>
-				<div v-else class="full-width-text-center white--text px22 weight-500">
-					{{community.name[0].toUpperCase()}}
-				</div>
-			</v-avatar>
+				:src="community.cover"
+				:text="community.name"
+				span-class="full-width-text-center white--text px22 weight-500"
+			/>
 			<div>
 				<v-card-title>{{community.name}}</v-card-title>
 				<v-card-subtitle>

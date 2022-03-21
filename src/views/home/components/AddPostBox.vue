@@ -3,17 +3,12 @@
 		class="cursor"
 	>
 		<v-card-actions class="pa-3 flex-wrap align-center">
-			<v-avatar size="38"
+			<wc-avatar size="38"
 				:color="color"
 				class="mr-2"
-			>
-				<v-img v-if="currentUser && currentUser.avatar"
-					:src="currentUser.avatar.image"
-				/>
-				<v-icon v-else dark>
-					mdi-account-circle-outline
-				</v-icon>
-			</v-avatar>
+				:src="activeAvatar"
+				icon="mdi-account-circle-outline"
+			/>
 			<v-responsive class="px-2 py-1"
 				max-width="1200"
 			>
@@ -65,7 +60,11 @@ export default {
 			if (this.$route.name.includes("Community")) {
 				return this.$route.params.uniqueId
 			} return undefined
-		}
+		},
+		activeAvatar() {
+			if(!this.currentUser) return false
+			return this.currentUser.avatar
+		},
 	},
 	methods: {
 		toCreatePost(type=this.$constants.PUBLICATION_TYPE.EDITOR) {

@@ -8,6 +8,7 @@
 				:src="community.avatar.image"
 				size="30" :color="theme.color"
 				:text="community.name"
+				span-class="white--text"
 			/>
 			<span class="px-1">{{ community.name }}</span>
 			<v-spacer />

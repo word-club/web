@@ -9,17 +9,14 @@
 			:img="user.cover ? user.cover : ''"
 		/>
 		<v-card-text class="d-flex justify-center avatar-line">
-			<v-avatar size="200"
+			<wc-avatar
+				size="200"
 				color="grey"
 				class="profile-avatar"
-			>
-				<v-img v-if="user.avatar"
-					:src="user.avatar"
-				/>
-				<div v-else class="full-width text-center white--text display-3">
-					{{user.username[0].toUpperCase()}}
-				</div>
-			</v-avatar>
+				:src="user.avatar"
+				:text="user.username"
+				span-class="full-width text-center white--text display-3"
+			/>
 		</v-card-text>
 		<v-card-title class="d-flex justify-center">
 			<h2>{{ user.username }}</h2>

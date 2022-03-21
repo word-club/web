@@ -30,14 +30,12 @@
 							</td>
 							<td class="px-1">
 								<div class="d-flex align-center py-1">
-									<v-avatar size="30"
+									<wc-avatar size="30"
 										:color="item.theme.color"
-									>
-										<v-img v-if="item.avatar" :src="$link(item.avatar.image)"
-											class="rounded-full"
-										/>
-										<span v-else class="white--text">{{item.name[0].toUpperCase()}}</span>
-									</v-avatar>
+										:src="item.avatar"
+										:text="item.name"
+										span-class="white--text"
+									/>
 									<div class="pl-2">
 										{{ item.name }}
 									</div>

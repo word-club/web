@@ -15,14 +15,14 @@
 					}"
 					link
 				>
-					<v-list-item-avatar size="40" color="grey lighten-2">
-						<v-img
-							v-if="user.avatar"
-							:src="$link(user.avatar)"
+					<v-list-item-avatar>
+						<wc-avatar
+							size="40"
+							color="grey lighten-2"
+							:src="user.avatar"
+							:text="user.username"
+							span-class="full-width text-center px22 grey--text text--darken-2"
 						/>
-						<div class="full-width text-center px22 grey--text text--darken-2">
-							{{ user.username[0].toUpperCase() }}
-						</div>
 					</v-list-item-avatar>
 					<v-list-item-content @click="$router.push({name: 'User Overview', params: {username: user.username}})">
 						<v-list-item-title class="py-1 px16 weight-500">{{ user.display_name || user.username }}</v-list-item-title>

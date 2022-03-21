@@ -18,14 +18,14 @@
 		</template>
 		<v-card>
 			<v-list-item>
-				<v-list-item-avatar
-					:color="user.avatar ? '' : 'primary'" tile
-					class="d-flex justify-center align-center rounded"
-				>
-					<v-img v-if="user.avatar"
-						:src="$link(user.avatar)"
+				<v-list-item-avatar tile class="rounded">
+					<wc-avatar
+						:color="user.avatar ? '' : 'primary'"
+						class="d-flex justify-center align-center rounded"
+						:src="user.avatar"
+						:text="user.username"
+						span-class="full-width text-h5 white--text text-uppercase"
 					/>
-					<div v-else class="full-width text-h5 white--text text-uppercase">{{ user.username[0] }}</div>
 				</v-list-item-avatar>
 				<v-list-item-content>
 					<v-list-item-title>{{ user.display_name || user.username }}</v-list-item-title>

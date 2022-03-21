@@ -13,20 +13,14 @@
 				class="pa-3 pt-0 pb-1 d-flex align-center full-width"
 				v-if="community"
 			>
-				<v-avatar
+				<wc-avatar
 					class="community-avatar"
 					size="80"
-					:color="(community.avatar) ? 'white' : community.theme.color"
-				>
-					<v-img v-if="activeAvatar"
-						:src="$link(activeAvatar.image)"
-					/>
-					<div v-else
-						class="full-width display-1 text-center white--text"
-					>
-						{{community.name[0].toUpperCase()}}
-					</div>
-				</v-avatar>
+					:color="(activeAvatar) ? 'white' : community.theme.color"
+					:src="activeAvatar"
+					:text="community.name"
+					span-class="full-width display-1 text-center white--text"
+				/>
 				<div class="px-2" />
 				<div class="px24">
 					{{ community.name }}
@@ -160,7 +154,7 @@ export default {
 			return this.currentUser["my_subscriptions"].find(s => s.community.id === this.community.id && s.is_approved && !s.is_banned)
 		},
 		activeAvatar() {
-			return this.community.avatars.find(av => av.is_active)
+			return this.community.avatar
 		}
 	}
 }

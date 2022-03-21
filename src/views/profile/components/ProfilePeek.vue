@@ -25,13 +25,13 @@
 			:img="coverUrl || ''"
 		/>
 		<v-card-text class="pa-0 d-flex justify-center avatar-line">
-			<v-avatar size="200"
+			<wc-avatar size="200"
 				:color="(avatarUrl) ? 'white': 'grey'"
 				class="profile-avatar"
-			>
-				<v-img v-if="avatarUrl" :src="avatarUrl" />
-				<div v-else class="full-width text-center display-3 white--text">{{user.username[0].toUpperCase()}}</div>
-			</v-avatar>
+				:src="avatarUrl"
+				:text="user.username"
+				span-class="full-width text-center display-3 white--text"
+			/>
 		</v-card-text>
 		<v-card-title class="d-flex justify-center">
 			<h2>{{ user.username }}</h2>

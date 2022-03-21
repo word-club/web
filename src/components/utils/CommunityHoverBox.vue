@@ -12,18 +12,14 @@
 				v-bind="attrs"
 				v-on="on"
 			>
-				<v-avatar
+				<wc-avatar
 					size="25" tile class="rounded cursor"
 					:color="(community.avatar) ? 'transparent' : community.theme.color"
 					@click="toCommunityDetail(community.unique_id)"
-				>
-					<v-img v-if="community.avatar"
-						:src="$link(community.avatar)"
-					/>
-					<div v-else class="full-width white--text weight-500 px18 text-center">
-						{{community.name[0].toUpperCase()}}
-					</div>
-				</v-avatar>
+					:src="community.avatar"
+					span-class="full-width white--text weight-500 px18 text-center"
+					:text="community.name"
+				/>
 				<div class="px-1" />
 				<div
 					class="px14 weight-600 cursor hover-underline"

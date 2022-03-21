@@ -1,9 +1,10 @@
 <template>
 	<v-avatar
-		:size="size"
-		:color="color"
+		v-bind="$attrs"
+		v-on="$listeners"
 	>
 		<v-img v-if="src" :src="$link(src)" />
+		<v-icon v-else-if="icon" :color="iconColor" :size="iconSize">{{icon}}</v-icon>
 		<span v-else :class="spanClass">{{text[0].toUpperCase()}}</span>
 	</v-avatar>
 </template>
@@ -12,9 +13,10 @@
 export default {
 	name: "WcAvatar",
 	props: {
-		size: {type: [Number, String], default: 20},
-		color: {type: String, default: "primary"},
 		src: {type: [String, Boolean], default: null},
+		icon: {type: String, default: null},
+		iconColor: {type: String, default: null},
+		iconSize: {type: String, default: null},
 		text: {type: String, default: ""},
 		spanClass: {type: String, default: ""}
 	}

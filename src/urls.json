@@ -63,7 +63,8 @@
 		"pin": "publication/%s/pin/",
 		"view": "publication/%s/view/",
 		"filter": "publication/filter/",
-		"getTwitterEmbed": "get-twitter-embed/"
+		"getTwitterEmbed": "get-twitter-embed/",
+		"removeFromRecent": "publication/%s/recent/"
 	},
 	"comment": {
 		"list": "wc-comment/",
