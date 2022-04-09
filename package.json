@@ -42,7 +42,7 @@
     "editorjs-undo": "^0.3.0",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "v-tooltip": "^2.0.3",
     "vue": "^2.6.14",
     "vue-emoji-picker": "^1.0.3",
