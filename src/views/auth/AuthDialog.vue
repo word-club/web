@@ -39,23 +39,11 @@
 							v-if="isSignUpMode"
 						>
 							<text-field
-								id="firstname-field"
-								v-model="payload.first_name"
+								id="displayname-field"
+								v-model="payload.profile.display_name"
 								icon="mdi-form-textbox"
-								name="first_name"
-								label="First Name"
-								:errors="formErrors"
-							/>
-						</div>
-						<div class="py-4"
-							v-if="isSignUpMode"
-						>
-							<text-field
-								id="lastname-field"
-								v-model="payload.last_name"
-								icon="mdi-form-textbox"
-								name="last_name"
-								label="Last Name"
+								name="profile['display_name']"
+								label="Display Name"
 								:errors="formErrors"
 							/>
 						</div>
@@ -192,9 +180,7 @@ export default {
 		payload: {
 			username: null,
 			password: null,
-			first_name: null,
-			last_name: null,
-			profile: {birth_date: null},
+			profile: {display_name: null, birth_date: null},
 			confirm_password: null,
 		},
 		errors: []
@@ -273,8 +259,7 @@ export default {
 			})
 		},
 		signUp() {
-			const required = Object.keys(this.payload)
-			if (this.checkRequired(required)) return
+			if (this.checkRequired(["username", "password", "confirm_password"])) return
 			if (!this.isValidPassword) return
 			this.post(this.$urls.user.register, this.payload).then(() => {
 				if(this.success) {

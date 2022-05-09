@@ -7,7 +7,8 @@ import publication from "@/store/modules/publication"
 import user from "@/store/modules/user"
 import comment from "@/store/modules/comment"
 import confirmDialog from "@/store/modules/confirmDialog"
-import dialog from "@/store/modules/dialog.js"
+import dialog from "@/store/modules/dialog"
+import notification from "@/store/modules/notification"
 
 Vue.use(Vuex)
 
@@ -69,6 +70,6 @@ export default new Vuex.Store({
 		publication,
 		user, comment,
 		confirmDialog,
-		dialog
+		dialog, notification
 	}
 })

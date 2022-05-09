@@ -36,6 +36,9 @@
 </template>
 
 <script>
+import LoginCheck from "@/mixin/LoginCheck.js";
+import SocketMixin from "@/mixin/SocketMixin.js";
+
 export default {
 	name: "App",
 	components: {
@@ -49,22 +52,16 @@ export default {
 		ReportDialog: () => import("@/components/dialogs/AddReportDialog"),
 		ShareDialog: () => import("@/components/dialogs/ShareDialog"),
 	},
-
+	mixins: [LoginCheck, SocketMixin],
 	computed: {
 		appColor() {
 			return this.$route.name === "Submit" ? "grey lighten-2": "grey lighten-4"
 		}
 	},
-	created() {
-		this.checkForLoggedInUser()
-	},
-	methods: {
-		checkForLoggedInUser() {
-			const token = this.$helper.getAccessToken()
-			const currentUser = this.$helper.getCurrentUser()
-			if (token && currentUser) this.$store.dispatch("user/setCurrentUser", currentUser)
-			else this.$store.dispatch("user/setCurrentUser", null)
-		}
+	async created() {
+		await this.checkForLoggedInUser()
+		this.socketLogin()
+		this.joinNotificationChannel()
 	}
 }
 </script>

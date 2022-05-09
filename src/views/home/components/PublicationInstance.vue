@@ -1,7 +1,8 @@
 <template>
 	<v-card class="feed-item" outlined>
-		<item-header :item="publication" />
-		<v-card-title class="py-0 pb-2 px-2 cursor publication-title grey lighten-4"
+		<item-header @refresh="emitInit" :item="publication" />
+		<v-card-title
+			class="publication-title"
 			@click="toPublicationDetail(publication.id)"
 		>
 			<h4>{{ publication.title }}</h4>
@@ -9,7 +10,7 @@
 		<item-images v-if="publication.type === 'media'" :item="publication" />
 		<item-link v-if="publication.type === 'link'" :link="publication.links"/>
 		<item-content v-if="publication.type ==='editor'" :content="editorContent" />
-		<item-actions @init="$emit('init')" :item="publication"/>
+		<item-actions @init="emitInit" :item="publication"/>
 	</v-card>
 </template>
 
@@ -29,6 +30,11 @@ export default {
 		ItemLink: () => import("@/components/feeds/ItemLink"),
 		ItemContent: () => import("@/components/feeds/ItemContent"),
 		ItemActions: () => import("@/components/feeds/ItemActions"),
+	},
+	methods: {
+		emitInit() {
+			this.$emit("init");
+		},
 	}
 }
 </script>
@@ -42,6 +48,8 @@ export default {
 	color: #666666;
 }
 .publication-title {
+	padding: 6px;
+	cursor: pointer;
 	font-size: 22px;
 	letter-spacing: 0;
 	font-weight: 500 !important;

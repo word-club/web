@@ -16,7 +16,7 @@
 				<v-icon v-if="$store.getters.drawerState">mdi-backburger</v-icon>
 				<v-icon v-else>mdi-menu-open</v-icon>
 			</v-btn>
-			<div class="the-app-bar--site-title" @click="toHome()">WordClub</div>
+			<a href="/" class="the-app-bar--site-title">WordClub</a>
 		</div>
 
 		<community-search v-if="smAndUp" />
@@ -63,7 +63,7 @@
 			color="primary"
 			rounded
 			class="mx-1 signup-btn"
-			@click="signUp"
+			@click="signUp()"
 		>
 			Sign Up
 		</v-btn>
@@ -74,7 +74,7 @@
 			dark
 			rounded
 			class="mx-1 login-btn"
-			@click="login"
+			@click="login()"
 		>
 			Login
 		</v-btn>
@@ -97,9 +97,9 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex";
-import RouteMixin from "@/mixin/RouteMixin.js";
-import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
+import {mapGetters, mapMutations} from "vuex"
+import RouteMixin from "@/mixin/RouteMixin.js"
+import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js"
 
 export default {
 	name: "TheAppBar",
@@ -131,13 +131,13 @@ export default {
 			this.SET_DRAWER_STATE(!this.$store.getters.drawerState)
 		},
 		login() {
-			this.$store.dispatch("setAuthMode", {state: true, mode: "login"});
+			this.$store.dispatch("setAuthMode", {state: true, mode: "login"})
 		},
 		signUp() {
-			this.$store.dispatch("setAuthMode", {state: true, mode: "signup"});
+			this.$store.dispatch("setAuthMode", {state: true, mode: "signup"})
 		},
 	},
-};
+}
 </script>
 <style scoped lang="scss">
 .the-app-bar {
@@ -149,10 +149,6 @@ export default {
 		background: linear-gradient(90deg, #3f51b5, #1979c4);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
-		transition: text-shadow ease .3s;
-		&:hover {
-			text-shadow: 1px 1px rgba(78, 78, 78, 0.1);
-		}
 	}
 }
 </style>

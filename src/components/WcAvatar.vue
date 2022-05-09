@@ -5,7 +5,7 @@
 	>
 		<v-img v-if="src" :src="$link(src)" />
 		<v-icon v-else-if="icon" :color="iconColor" :size="iconSize">{{icon}}</v-icon>
-		<span v-else :class="spanClass">{{text[0].toUpperCase()}}</span>
+		<span v-else :class="spanClass" class="cursor">{{text[0].toUpperCase()}}</span>
 	</v-avatar>
 </template>
 

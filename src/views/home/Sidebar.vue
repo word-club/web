@@ -6,7 +6,7 @@
 		<div class="py-2" />
 		<begin-with-word-club />
 		<div class="py-2" />
-		<recently-viewed-posts />
+		<recently-viewed-posts v-if="$helper.isUserLoggedIn()" />
 		<div class="py-2" />
 		<home-footer />
 	</div>

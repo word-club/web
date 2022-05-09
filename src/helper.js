@@ -1,6 +1,19 @@
 const WORD_CLUB_SESSION = "word-club-session"
 
+const IS_INSECURE = process.env.VUE_APP_INSECURE === "true"
+const BACKEND_HOST = process.env.VUE_APP_BACKEND_HOST || "localhost"
+const BACKEND_PORT = process.env.VUE_APP_BACKEND_PORT || "8080"
+
+
 module.exports = {
+	getBackendUrl() {
+		const PROTOCOL = IS_INSECURE ? "http" : "https"
+		return `${PROTOCOL}://${BACKEND_HOST}:${BACKEND_PORT}`
+	},
+	getBackendWebsocketUrl() {
+		const PROTOCOL = IS_INSECURE ? "ws" : "wss"
+		return `${PROTOCOL}://${BACKEND_HOST}:${BACKEND_PORT}/`
+	},
 	clearSession() {
 		localStorage.clear()
 	},

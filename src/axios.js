@@ -1,7 +1,10 @@
 import axios from "axios"
 import $helper from "@/helper.js";
 
-const BACKEND_HOST = process.env.VUE_APP_BACKEND_HOST
+
+
+const BASE_URL = $helper.getBackendUrl()
+
 
 const AXIOS = {
 	setHeaders: function (headers = {}) {
@@ -14,14 +17,14 @@ const AXIOS = {
 			HEADERS["Authorization"] = `Token ${$helper.getAccessToken()}`
 		}
 		return axios.create({
-			baseURL: `${BACKEND_HOST}/api/`,
+			baseURL: `${BASE_URL}/api/`,
 			headers: HEADERS
 		})
 	},
 	send(method, url, data = {}, params = {}) {
 		const opts = {
 			method: method,
-			url: `${BACKEND_HOST}/api/${url}`,
+			url: `${BASE_URL}/api/${url}`,
 		}
 		if (data) opts.data =  data
 		if (params) opts.params = params

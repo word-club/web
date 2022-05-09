@@ -20,7 +20,7 @@ const RouteMixin = {
 		},
 		async toHome() {
 			if (this.$route.name === "Home") return
-			await this.$router.push("/")
+			await this.$router.getRoute("Home")
 		},
 		async toUserOverview(username) {
 			await this.$router.push({name: "User Overview", params: {username: username}})

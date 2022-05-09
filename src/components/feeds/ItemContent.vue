@@ -1,7 +1,7 @@
 <template>
 	<v-card tile flat>
 		<v-card-text v-for="(block, index) in content.blocks"
-			:key="index" class="pa-2"
+			:key="index" class="px-2 py-0"
 		>
 			<template
 				v-if="block.type === 'header'"
@@ -93,7 +93,8 @@ export default {
 		Tweet,
 	},
 	data: () => ({
-		iframes: [],}),
+		iframes: [],
+	}),
 	props: {
 		content: {type:Object, default: () => {}},
 	},

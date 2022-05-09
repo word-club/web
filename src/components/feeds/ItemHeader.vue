@@ -54,7 +54,7 @@
 				</v-list-item>
 				<v-divider v-if="ifActorIsWriter" />
 				<v-list-item v-if="ifActorIsWriter"
-					@click="deletePublication()"
+					@click="deletePublicationTrigger()"
 				>
 					<v-list-item-icon class="mr-2"><v-icon color="red lighten-1">mdi-delete</v-icon></v-list-item-icon>
 					<v-list-item-content><v-list-item-title>Delete Publication</v-list-item-title></v-list-item-content>
@@ -72,16 +72,20 @@
 				</v-list-item>
 			</v-list>
 		</v-menu>
+		<confirm-dialog @refresh="$emit('refresh')" />
 	</v-card-text>
 </template>
 
 <script>
+import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin.js";
+
 export default {
 	name: "ItemHeader",
 	props: {
 		item: {type: Object, default: () => {}},
 		share: {type: Boolean, default: false},
 	},
+	mixins: [ConfirmDialogMixin],
 	components: {
 		UserHoverBox: () => import("@/components/utils/UserHoverBox"),
 		CommunityHoverBox: () => import("@/components/utils/CommunityHoverBox"),
@@ -103,10 +107,16 @@ export default {
 		}
 	},
 	methods: {
-		deletePublication() {
-			//TODO: delete modal
-			const url = this.$util.format(this.$urls.publication.detail, this.item.id)
-			this.$axios.delete(url)
+		async deletePublicationTrigger() {
+			const url = this.$urls.publication.detail
+			const title = `Are you sure you want to delete publication <i>"${this.item.title}"</i> ?`
+			await this.openConfirmDialog(
+				title,
+				"delete",
+				this.$util.format(url, this.item.id),
+				["refresh"],
+				"Publication deleted."
+			)
 		},
 		ignoreAuthor() {
 			//TODO

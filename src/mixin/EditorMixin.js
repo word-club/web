@@ -13,7 +13,7 @@ import ImageTool from "@editorjs/image";
 import util from "util";
 import urls from "@/urls.json";
 import $ from "jquery";
-import {getAccessToken} from "@/helper.js";
+import {getAccessToken, getBackendUrl} from "@/helper.js";
 import Embed from "@editorjs/embed";
 import SocialPost from "editorjs-social-post-plugin";
 
@@ -93,7 +93,7 @@ const EditorMixin = {
 									var uploadUrl = util.format(urls.image.publication, publication.id)
 									formData.append("image_url", url)
 									return $.ajax({
-										url: `${process.env.VUE_APP_BACKEND_HOST}/api/${uploadUrl}`,
+										url: `${getBackendUrl()}/api/${uploadUrl}`,
 										type: "post",
 										headers: {
 											"Authorization": "Token " + getAccessToken()
@@ -121,7 +121,7 @@ const EditorMixin = {
 									var uploadUrl = util.format(urls.image.publication, publication.id)
 									formData.append("image", file)
 									return $.ajax({
-										url: `${process.env.VUE_APP_BACKEND_HOST}/api/${uploadUrl}`,
+										url: `${getBackendUrl()}/api/${uploadUrl}`,
 										type: "post",
 										headers: {
 											"Authorization": "Token " + getAccessToken()

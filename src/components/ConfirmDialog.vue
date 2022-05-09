@@ -10,33 +10,81 @@
 				<v-spacer />
 				<v-btn
 					fab small
-					@click="closeConfirmDialog"
+					@click="closeConfirmDialog()"
 				>
 					<v-icon>mdi-close</v-icon>
 				</v-btn>
 			</v-card-title>
 			<v-card-text>
-				<h3 v-html="dialogMessage"  />
+				<h3 v-html="dialogMessage" />
 			</v-card-text>
 			<v-card-actions>
 				<v-spacer />
 				<v-btn color="error"
-					@click="closeConfirmDialog"
-				>Cancel</v-btn>
+					@click="closeConfirmDialog()"
+				>
+					Cancel
+				</v-btn>
 				<v-btn color="success"
-					@click="proceedConfirmDialog"
-				>Proceed</v-btn>
+					@click="proceedConfirmDialog()"
+				>
+					Proceed
+				</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
 </template>
 
 <script>
-import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin.js";
+import {mapGetters} from "vuex";
+import ConfirmDialogMixin from "@/mixin/ConfirmDialogMixin";
 
 export default {
 	name: "ConfirmDialog",
 	mixins: [ConfirmDialogMixin],
+	computed: {
+		...mapGetters("confirmDialog",
+			[
+				"dialogState",
+				"dialogMessage",
+				"dialogMethod",
+				"dialogUrl",
+				"dialogPayload",
+				"dialogParams",
+				"dialogSuccessEvents",
+				"dialogSuccessMessage",
+				"dialogFailureMessage"
+			]
+		),
+	},
+	methods: {
+		proceedConfirmDialog() {
+			this.$axios.send(
+				this.dialogMethod,
+				this.dialogUrl,
+				this.dialogPayload,
+				this.dialogParams,
+			).then(async (res) => {
+				this.confirmResponse = res
+				this.confirmSuccess = true
+				this.confirmErrors = {}
+				this.openSuccessSnack(this.dialogSuccessMessage)
+				this.dialogSuccessEvents.forEach(e => {
+					this.$emit(e)
+				})
+			})
+				.catch((err) => {
+					console.error(err)
+					this.confirmResponse = err.response
+					this.confirmSuccess = false
+					this.confirmErrors = err.response?.data
+					this.openSnack(this.dialogFailureMessage)
+				})
+				.finally(async () => {
+					await this.closeConfirmDialog()
+				})
+		},
+	}
 }
 </script>
 

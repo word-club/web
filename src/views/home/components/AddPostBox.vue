@@ -1,36 +1,40 @@
 <template>
-	<v-card outlined
-		class="cursor"
-	>
+	<v-card outlined>
 		<v-card-actions class="pa-3 flex-wrap align-center">
 			<wc-avatar size="38"
 				:color="color"
 				class="mr-2"
 				:src="activeAvatar"
 				icon="mdi-account-circle-outline"
+				icon-color="white"
 			/>
 			<v-responsive class="px-2 py-1"
 				max-width="1200"
 			>
-				<v-chip
-					class="full-width rounded"
-					@click="toCreatePost($constants.PUBLICATION_TYPE.EDITOR)"
+				<v-btn
+					class="rounded"
+					block
+					depressed
+					color="grey lighten-3"
+					:to="submitRoute()"
 				>
-					<v-icon size="22" class="">
-						mdi-home
-					</v-icon>
-					<span class="px-2 weight-500 grey--text text--darken-1 px14">
-						New Publication
-					</span>
-				</v-chip>
+					<div class="full-width d-flex align-center">
+						<v-icon size="22" color="grey darken-3">
+							mdi-home
+						</v-icon>
+						<div class="px-2 weight-500 grey--text text--darken-1 px14">
+							New Publication
+						</div>
+					</div>
+				</v-btn>
 			</v-responsive>
 			<v-btn icon v-if="smAndUp"
-				@click="toCreatePost($constants.PUBLICATION_TYPE.MEDIA)"
+				:to="submitRoute($constants.PUBLICATION_TYPE.MEDIA)"
 			>
 				<v-icon>mdi-image-outline</v-icon>
 			</v-btn>
 			<v-btn icon v-if="smAndUp"
-				@click="toCreatePost($constants.PUBLICATION_TYPE.LINK)"
+				:to="submitRoute($constants.PUBLICATION_TYPE.LINK)"
 			>
 				<v-icon>mdi-link-variant</v-icon>
 			</v-btn>
@@ -67,15 +71,15 @@ export default {
 		},
 	},
 	methods: {
-		toCreatePost(type=this.$constants.PUBLICATION_TYPE.EDITOR) {
+		submitRoute(type=this.$constants.PUBLICATION_TYPE.EDITOR) {
 			let params = {
 				type: type
 			}
 			if (this.getCommunityId) params["community"] = this.getCommunityId
-			this.$router.push({
+			return {
 				name: "Submit",
 				params: params
-			})
+			}
 		}
 	}
 }

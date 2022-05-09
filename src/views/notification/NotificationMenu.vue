@@ -3,6 +3,7 @@
 		v-model="notificationDrop"
 		offset-y
 		max-width="350"
+		class="n_menu"
 	>
 		<template #activator="{on, attrs}">
 			<v-badge
@@ -11,7 +12,7 @@
 				class="notification-badge"
 			>
 				<template #badge>
-					<span class="font-weight-bold notification-count">55</span>
+					<span class="font-weight-bold notification-count">{{ unseen }}</span>
 				</template>
 				<v-btn
 					id="notification-bell"
@@ -26,53 +27,57 @@
 				</v-btn>
 			</v-badge>
 		</template>
-		<v-card flat
-			tile
+		<v-card
+			class="n_menu__card"
+			flat tile
 			width="350"
 			max-height="90vh"
 		>
-			<v-card-actions class="align-center justify-space-between py-4 px-3">
-				<div class="px14 weight-500 black--text">
+			<div class="n_menu__wrapper">
+				<div class="n_menu__title">
 					Notifications
 				</div>
-				<div class="d-flex align-center">
-					<div class="px14 weight-500 grey--text">
+				<div class="n_menu__actions">
+					<div class="messages">
 						Messages
 					</div>
-					<div style="width: 2px; height: 20px; background-color: grey"
-						class="mx-2 py-1"
-					/>
+					&nbsp;
+					<div class="divider" />
+					&nbsp;
 					<v-btn icon
 						x-small
-						class="mx-1"
+						class="mark_seen"
 					>
 						<v-icon>mdi-eye-outline</v-icon>
 					</v-btn>
-					<v-btn icon
-						x-small
-						class="mx-1"
+					&nbsp;
+					<v-btn icon x-small
+						class="settings"
 					>
 						<v-icon>mdi-cog-outline</v-icon>
 					</v-btn>
 				</div>
-			</v-card-actions>
-			<v-list color="grey lighten-3"
-				two-line
+			</div>
+			<v-list
+				v-if="notifications.count > 0"
+				color="grey lighten-3"
+				two-line class="n_menu__list"
 			>
-				<v-list-item v-for="n in 10"
+				<v-list-item
+					v-for="n in notifications.results"
 					:key="n"
 				>
 					<v-list-item-avatar size="40"
 						color="grey darken-1"
 					/>
 					<v-list-item-content>
-						<v-list-item-subtitle class="d-flex align-center">
-							<div>TajMahalWonderers</div>
+						<v-list-item-subtitle class="info">
+							<div>{{ n.notification.subject }}</div>
 							<v-icon>mdi-circle-small</v-icon>
-							<div>3 hours ago</div>
+							<div>{{ $moment(n.created_at).fromNow() }}</div>
 						</v-list-item-subtitle>
-						<v-list-item-title>
-							Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.
+						<v-list-item-title class="description">
+							{{n.notification.description}}
 						</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
@@ -82,17 +87,63 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex"
+
 export default {
 	name: "NotificationMenu",
-	props: {},
 	data: () => ({
-		notificationDrop: false
+		notificationDrop: false,
 	}),
-	computed: {},
-	methods: {}
+	computed: {
+		...mapGetters({
+			notifications: "notification/list",
+		}),
+		unseen() {
+			if (!this.notifications) return 0
+			return this.notifications.unseen_count
+		},
+	},
+	created() {
+		console.log(this.notifications)
+	}
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.n_menu {
+	&__wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 6px 8px;
+	}
+	&__title {
+		font-size: 1.1rem;
+		font-weight: 500;
+		color: grey;
+	}
+	&__actions {
+		display: flex;
+		align-items: center;
+		.divider {
+			width: 1px;
+			height: 20px;
+			background-color: grey;
+		}
+		.messages {
+			font-size: .875rem;
+			color: #696868;
+		}
+	}
+	&__list {
+		.info {
+			display: flex;
+			background: transparent!important;
+			align-items: center;
+		}
+		.description {
+			white-space: normal;
+		}
+	}
+}
 </style>

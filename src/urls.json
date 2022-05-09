@@ -1,4 +1,8 @@
 {
+	"websockets": {
+		"login": "ws/login/",
+		"notifications": "ws/notification/"
+	},
 	"administration": {
 		"top": "top/",
 		"list": "administration/",
@@ -152,7 +156,8 @@
 	},
 	"notification": {
 		"list": "notification/",
+		"me": "me/notifications/",
 		"destroy": "notification/%s/",
-		"setAsSeen": "notification/%s/mark-seen"
+		"setAsSeen": "notification/%s/seen/"
 	}
 }

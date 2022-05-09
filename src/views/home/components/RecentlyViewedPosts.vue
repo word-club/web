@@ -4,9 +4,9 @@
 			<v-subheader class="text-uppercase">
 				Recent Posts
 			</v-subheader>
-			<div v-if="Array.isArray(me['recent_publications'])">
+			<div v-if="Array.isArray(recentPublications)">
 				<v-list-item-group
-					v-for="(recent, index) in me['recent_publications']"
+					v-for="(recent, index) in recentPublications"
 					:key="recent.id"
 				>
 					<v-list-item three-line>
@@ -45,14 +45,14 @@ import {mapGetters} from "vuex";
 
 export default {
 	name: "RecentlyViewedPosts",
-	props: {  },
-	data: () => ({
-		list: []
-	}),
 	computed: {
 		...mapGetters({
 			me: "user/current",
-		})
+		}),
+		recentPublications() {
+			if (!this.me) return [];
+			return this.me["recent_publications"]
+		}
 	},
 	methods: {
 		getAvColor(community) {
