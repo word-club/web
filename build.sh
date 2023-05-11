@@ -3,11 +3,8 @@
 DIST_BRANCH="dist"
 BASE_DIR="/home/runner/work/word-club/web"
 
-echo $VUE_APP_BACKEND_URL
-
-
 echo "Building Started...."
-pnpm build
+yarn build
 ls -la
 echo "Building Completed."
 
