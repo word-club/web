@@ -1,9 +1,0 @@
-{
-    "baseUrl": "https://wc.foodswipe.com.np",
-    "screenshotOnRunFailure": false,
-    "video": false,
-    "defaultCommandTimeout": 8000,
-    "env": {
-        "BACKEND_URL": "https://wordclub.foodswipe.com.np"
-    }
-}
