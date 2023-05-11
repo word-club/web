@@ -25,3 +25,7 @@ cypress/screenshots/*
 cypress/reports/*
 cypress/videos/*
 
+# Dist
+dist/
+docs/
+
