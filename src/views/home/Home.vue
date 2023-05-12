@@ -1,9 +1,9 @@
 <template>
-	<v-card class="mx-auto transparent"
+	<v-card class="home-view"
 		max-width="800"
 		flat
 	>
-		<div class="py-4">
+		<div class="pb-4">
 			<add-post-box v-if="currentUser" />
 		</div>
 		<div class="py-4">

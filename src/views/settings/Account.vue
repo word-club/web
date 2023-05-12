@@ -210,10 +210,10 @@ export default {
 	},
 	methods: {
 		populate() {
-			this.payload.country = this.user.profile.country
-			this.emailToUpdate = this.user.email
-			this.gender.type = this.user.gender.type
-			this.gender.custom = this.user.gender.custom
+			this.payload.country = this.user?.profile?.country
+			this.emailToUpdate = this.user?.email
+			this.gender.type = this.user?.gender?.type
+			this.gender.custom = this.user?.gender?.custom
 		},
 		fetchCountries() {
 			this.$axios.get(this.$urls.administration.countries)

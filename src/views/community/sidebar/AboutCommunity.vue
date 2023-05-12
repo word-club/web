@@ -164,6 +164,7 @@ export default {
 	&--title {
 		font-size: 16px;
 		font-weight: 500;
+		padding-inline: .5rem;
 	}
 }
 </style>

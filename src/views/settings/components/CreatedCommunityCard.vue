@@ -5,7 +5,7 @@
 			v-ripple
 		>
 			<wc-avatar
-				:src="community.avatar.image"
+				:src="avatar"
 				size="30" :color="theme.color"
 				:text="community.name"
 				span-class="white--text"
@@ -17,98 +17,14 @@
 		</v-card-title>
 		<v-card-text>
 			<h3 class="pb-1">Statistics</h3>
-			<v-list dense class="statistics-list" rounded>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title>
-							views
-						</v-list-item-title>
-					</v-list-item-content>
-					<v-list-item-action-text>
-						{{community.views}}
-					</v-list-item-action-text>
-				</v-list-item>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title>
-							popularity
-						</v-list-item-title>
-					</v-list-item-content>
-					<v-list-item-action-text>
-						{{community.popularity}}
-					</v-list-item-action-text>
-				</v-list-item>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title>
-							support
-						</v-list-item-title>
-					</v-list-item-content>
-					<v-list-item-action-text>
-						{{community.support}}
-					</v-list-item-action-text>
-				</v-list-item>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title>
-							discussions
-						</v-list-item-title>
-					</v-list-item-content>
-					<v-list-item-action-text>
-						{{community.discussions}}
-					</v-list-item-action-text>
-				</v-list-item>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title>
-							dislikes
-						</v-list-item-title>
-					</v-list-item-content>
-					<v-list-item-action-text>
-						{{community.dislikes}}
-					</v-list-item-action-text>
-				</v-list-item>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title>
-							tags
-						</v-list-item-title>
-					</v-list-item-content>
-					<v-list-item-action-text>
-						{{community.tags.length}}
-					</v-list-item-action-text>
-				</v-list-item>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title>
-							moderators
-						</v-list-item-title>
-					</v-list-item-content>
-					<v-list-item-action-text>
-						{{community.moderators.length}}
-					</v-list-item-action-text>
-				</v-list-item>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title>
-							subscriptions
-						</v-list-item-title>
-					</v-list-item-content>
-					<v-list-item-action-text>
-						{{community.subscriptions.length}}
-					</v-list-item-action-text>
-				</v-list-item>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title>
-							reports
-						</v-list-item-title>
-					</v-list-item-content>
-					<v-list-item-action-text>
-						{{community.reports.length}}
-					</v-list-item-action-text>
-				</v-list-item>
-			</v-list>
+			<div class="statistics-list">
+				<v-card v-for="item in items"
+					:key="item.name" rounded flat
+				>
+					<div class="l-title">{{item.name}}</div>
+					<div class="l-value">{{item.value}}</div>
+				</v-card>
+			</div>
 		</v-card-text>
 	</v-card>
 </template>
@@ -128,6 +44,23 @@ export default {
 	computed: {
 		theme() {
 			return this.community.theme
+		},
+		avatar() {
+			return this.community.avatar ? this.community.avatar.image : null
+		},
+		items() {
+			console.log(this.community)
+			return [
+				{name: "views", value: this.community.views},
+				{name: "popularity", value: this.community.popularity},
+				{name: "supports", value: this.community.supports},
+				{name: "discussions", value: this.community.discussions},
+				{name: "dislikes", value: this.community.dislikes},
+				{name: "tags", value: this.community.tags.length},
+				{name: "moderators", value: this.community.moderators.length},
+				{name: "subscriptions", value: this.community.subscriptions.length},
+				{name: "reports", value: this.community.reports.length},
+			]
 		}
 	}
 }
@@ -135,17 +68,24 @@ export default {
 
 <style scoped lang="scss">
 .statistics-list {
-	.v-list-item {
-		.v-list-item__title {
-			text-transform: capitalize;
-			font-size: 1rem;
-			line-height: 1rem;
-		}
-		.v-list-item__action-text {
-			font-size: 1.1rem;
-			line-height: 1.1rem;
-			font-weight: 600;
-		}
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+
+	> * {
+		flex-basis: 31.6%;
+		padding: 1rem;
+	}
+
+	.l-title {
+		font-size: 1rem;
+		line-height: 1.2rem;
+		text-transform: capitalize;
+	}
+	.l-value {
+		font-size: 1.1rem;
+		line-height: 1.1rem;
+		font-weight: 600;
 	}
 }
 </style>

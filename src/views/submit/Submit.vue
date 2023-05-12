@@ -1,13 +1,12 @@
 <template>
-	<v-card class="mx-auto transparent"
-		max-width="750"
-		flat
+	<v-card
+		max-width="750" flat tile
+		class="mx-auto transparent pa-4"
 	>
-		<v-card-text/>
-		<v-card-title class="px-0 pb-3">
-			<div v-if="editMode">Edit Publication</div>
-			<div v-else-if="draftMode">Edit Draft</div>
-			<div v-else>Create post</div>
+		<v-card-title class="py-6 px-0">
+			<h3 v-if="editMode">Edit Publication</h3>
+			<h3 v-else-if="draftMode">Edit Draft</h3>
+			<h3 v-else>Create a new post</h3>
 			<v-spacer/>
 			<v-btn text rounded
 				v-if="inProgress"
@@ -33,22 +32,14 @@
 		</v-card-title>
 		<v-divider/>
 		<v-row class="ma-0 pa-0">
-			<v-col cols="12"
-				xl="6"
-				lg="6"
-				md="6"
-				sm="12"
-				class="px-0"
-			>
-				<community-select
-					v-model="payload.community"
-					:errors="formErrors"
-					:color="theme.color"
-					:loading="communityLoading"
-					:items="subscribedCommunities"
-					@change="onChangeCommunity"
-				/>
-			</v-col>
+			<community-select
+				v-model="payload.community"
+				:errors="formErrors"
+				:color="theme.color"
+				:loading="communityLoading"
+				:items="subscribedCommunities"
+				@change="onChangeCommunity"
+			/>
 			<v-col cols="12"
 				class="pa-0"
 			>

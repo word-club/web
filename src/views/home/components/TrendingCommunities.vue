@@ -23,7 +23,8 @@
 				<template #default>
 					<tbody>
 						<tr v-for="(item, index) in trendingCommunities"
-							:key="index"
+							:key="index" class="cursor"
+							@click="$router.push({name: 'Community Detail', params: {uniqueId: item.unique_id}})"
 						>
 							<td class="px-1">
 								<div class="pl-2">{{ index + 1 }}</div>

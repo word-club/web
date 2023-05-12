@@ -38,6 +38,11 @@ const CommunitySelect = {
 			this.$axios.get(this.$urls.community.subscription.filter)
 				.then(res => {
 					this.subscribedCommunities = res.results
+				})
+				.catch(err => {
+					console.log(err)
+				})
+				.finally(() => {
 					this.communityLoading = false
 				})
 		},

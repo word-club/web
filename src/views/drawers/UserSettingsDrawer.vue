@@ -1,26 +1,32 @@
 <template>
-	<v-list rounded>
-		<v-list-item v-for="(item, index) in items"
-			:key="index"
-			:to="{name: item.to}"
-			color="primary"
-		>
-			<v-icon>{{ item.icon }}</v-icon>
-			<v-list-item-title class="drawer-item"
-				:class="{
-					'px16': !$vuetify.breakpoint.md,
-					'px14': $vuetify.breakpoint.md,
-				}"
+	<div class="user-settings-drawer">
+		<h2 class="grey--text pl-3 pt-2">
+			<span><v-icon color="grey">mdi-cog</v-icon></span>
+			User Settings
+		</h2>
+		<v-list rounded>
+			<v-list-item v-for="(item, index) in items"
+				:key="index"
+				:to="{name: item.to}"
+				color="primary"
 			>
-				{{ item.title }}
-			</v-list-item-title>
-		</v-list-item>
-	</v-list>
+				<v-icon>{{ item.icon }}</v-icon>
+				<v-list-item-title class="drawer-item"
+					:class="{
+						'px16': !$vuetify.breakpoint.md,
+						'px14': $vuetify.breakpoint.md,
+					}"
+				>
+					{{ item.title }}
+				</v-list-item-title>
+			</v-list-item>
+		</v-list>
+	</div>
 </template>
 
 <script>
 export default {
-	name: "UserCogDrawer",
+	name: "UserSettingsDrawer",
 	computed: {
 		items() {
 			return [
@@ -33,9 +39,6 @@ export default {
 			]
 		}
 	}
+
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>

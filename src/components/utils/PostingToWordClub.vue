@@ -3,7 +3,9 @@
 		<v-card-title class="pa-2 pt-4">
 			<v-avatar size="35"
 				color="grey darken-1"
-			/>
+			>
+				<span class="white--text">P</span>
+			</v-avatar>
 			<span class="pl-3 px16 weight-400 grey--text">Posting to WordClub</span>
 		</v-card-title>
 		<v-divider class="mx-2" />

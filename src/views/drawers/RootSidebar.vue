@@ -1,7 +1,6 @@
 <template>
 	<v-slide-x-reverse-transition>
 		<v-navigation-drawer
-			v-if="withSidebarRoute"
 			v-model="sidebar"
 			app :permanent="!xs"
 			:temporary="xs"
@@ -97,5 +96,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import "src/styles/sidebar";
+@import "../../styles/sidebar";
 </style>

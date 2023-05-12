@@ -29,6 +29,8 @@ export default {
 		ItemLink: () => import("@/components/feeds/ItemLink"),
 		ItemContent: () => import("@/components/feeds/ItemContent"),
 		ItemActions: () => import("@/components/feeds/ItemActions"),
+	}, created() {
+		this.mini = true
 	}
 }
 </script>

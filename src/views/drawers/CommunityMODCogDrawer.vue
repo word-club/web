@@ -1,32 +1,20 @@
 <template>
-	<v-slide-x-reverse-transition>
-		<v-navigation-drawer
-			v-if="communityModCogRoute"
-			v-model="drawer"
-			app clipped
-			color="grey lighten-3"
-			:class="{'home-sidebar': mdAndUp}"
-			:permanent="mdAndUp"
-			:temporary="!mdAndUp"
-			:width="$vuetify.breakpoint.md ? 220 : 240"
-		>
-			<div v-if="!mdAndUp" class="pa-4">
-				<h3>COMMUNITY MOD</h3>
-				<div class="underline" />
-			</div>
-			<v-list
-				v-if="community"
-				rounded dense
+	<div class="c-mod-cog-drawer">
+		<div v-if="!mdAndUp" class="pa-4">
+			<h3>COMMUNITY MOD</h3>
+			<div class="underline" />
+		</div>
+		<v-list rounded dense>
+			<v-list-item-group v-for="(item, index) in items"
+				:key="index"
 			>
-				<v-list-item-group v-for="(item, index) in items"
-					:key="index"
-				>
-					<v-subheader class="text-uppercase">
-						<v-icon>{{ item.icon }}</v-icon>
-						<span class="pl-2 weight-700">
-							{{ item.name }}
-						</span>
-					</v-subheader>
+				<v-subheader class="text-uppercase">
+					<v-icon>{{ item.icon }}</v-icon>
+					<span class="pl-2 weight-700">
+						{{ item.name }}
+					</span>
+				</v-subheader>
+				<template v-if="community && community.theme">
 					<v-list-item
 						:color="community.theme.color"
 						v-for="(item, index) in item.children"
@@ -44,27 +32,23 @@
 							{{ item.title }}
 						</v-list-item-title>
 					</v-list-item>
-				</v-list-item-group>
-			</v-list>
-		</v-navigation-drawer>
-	</v-slide-x-reverse-transition>
+				</template>
+			</v-list-item-group>
+		</v-list>
+	</div>
 </template>
 
 <script>
-import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
-import MainDrawer from "@/mixin/MainDrawer.js";
 import {mapGetters} from "vuex";
+import ScreenSizeMixin from "@/mixin/ScreenSizeMixin.js";
 
 export default {
 	name: "CommunityMODCogDrawer",
-	mixins: [ScreenSizeMixin, MainDrawer],
+	mixins: [ScreenSizeMixin],
 	computed: {
 		...mapGetters({
 			community: "community/inView"
 		}),
-		communityModCogRoute() {
-			return this.$route.matched.some(route => route.meta["community_mod"])
-		},
 		items() {
 			return [
 				{
@@ -169,7 +153,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "src/styles/sidebar";
+@import "../../styles/sidebar";
 .underline {
 	width: 64%;
 	height: 4px;

@@ -1,6 +1,6 @@
 <template>
 	<v-app-bar
-		flat color="white"
+		app flat
 		height="auto"
 		clipped-right
 		clipped-left
@@ -31,7 +31,7 @@
 			v-if="currentUser && smAndUp"
 			icon="mdi-finance"
 			tooltip="Popular"
-			:to="{ name: $route.name, params: {sortBy: 'popular'} }"
+			:to="{ name: 'Home', params: {sortBy: 'popular'} }"
 		/>
 		<tooltip-icon-btn
 			id="top-discussed"
@@ -39,7 +39,7 @@
 			v-if="currentUser  && smAndUp"
 			icon="mdi-chart-gantt"
 			tooltip="Top Discussed"
-			:to="{ name: $route.name, params: {sortBy: 'discussed'} }"
+			:to="{ name: 'Home', params: {sortBy: 'discussed'} }"
 		/>
 		<tooltip-icon-btn
 			id="create-publication"

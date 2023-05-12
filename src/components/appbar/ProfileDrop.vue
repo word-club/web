@@ -53,7 +53,7 @@
 				>
 					<v-list-item-icon><v-icon>mdi-cog-outline</v-icon></v-list-item-icon>
 					<v-list-item-content>
-						<v-list-item-title>User Settings</v-list-item-title>
+						<v-list-item-title>Settings</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
 				<v-list-item to="/notifications"
@@ -90,7 +90,7 @@
 				<v-list-item color="orange"
 					class="to-premium"
 				>
-					<v-list-item-icon><v-icon color="orange">mdi-apple-keyboard-command</v-icon></v-list-item-icon>
+					<v-list-item-icon class="mr-0 pr-0"><v-icon color="orange">mdi-apple-keyboard-command</v-icon></v-list-item-icon>
 					<v-list-item-content>
 						<v-list-item-title class="orange--text">Premium</v-list-item-title>
 					</v-list-item-content>
@@ -151,3 +151,10 @@ export default {
 	}
 }
 </script>
+<style lang="scss">
+.profile-drop-list {
+	.v-list-item__icon {
+		margin-right: 1rem !important;
+	}
+}
+</style>

@@ -7,6 +7,7 @@
 				v-model="updatePayload.welcome_text"
 				name="welcome_text"
 				:errors="patchErrors"
+				counter="64"
 				@change="patchCommunity()"
 			/>
 			<br>
@@ -16,6 +17,7 @@
 				v-model="updatePayload.description"
 				name="description"
 				:errors="patchErrors"
+				counter="512"
 				@change="patchCommunity()"
 			/>
 			<br>
@@ -23,7 +25,7 @@
 				icon=""
 				label="Quote"
 				v-model="updatePayload.quote"
-				name="quote"
+				name="quote" counter="256"
 				:errors="patchErrors"
 				@change="patchCommunity()"
 			/>
@@ -74,17 +76,22 @@ export default {
 		})
 	},
 	created() {
-		this.populate()
 		this.clearToView = false
+	},
+	watch: {
+		community() {
+			// console.log(this.community)
+			this.populate()
+		}
 	},
 	methods: {
 		populate() {
 			this.updatePayload = {
-				welcome_text: this.community.welcome_text,
-				description: this.community.description,
-				quote: this.community.quote,
-				view_globally: this.community.view_globally,
-				contains_adult_content: this.community.contains_adult_content
+				welcome_text: this.community?.welcome_text,
+				description: this.community?.description,
+				quote: this.community?.quote,
+				view_globally: this.community?.view_globally,
+				contains_adult_content: this.community?.contains_adult_content
 			}
 		},
 		patchCommunity() {

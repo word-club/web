@@ -1,4 +1,15 @@
 const RouteMixin = {
+	data: () => ({
+		currentRoute: null,
+		currentRouteParent: null,
+	}),
+	watch: {
+		$route(to) {
+			const currentPath = to.fullPath
+			this.currentRoute = to.matched.find(route => route.regex.test(currentPath))
+			this.currentRouteParent = this.currentRoute ? this.currentRoute.parent : null
+		}
+	},
 	methods: {
 		async toPublicationDetail(id, view) {
 			await this.$router.push({name: "Publication", params: {id: id, view: view}})
@@ -31,33 +42,6 @@ const RouteMixin = {
 		async toUserComments(username) {
 			await this.$router.push({name: "User Comments", params: {username: username}})
 		},
-		async toProfileOverview() {
-			await this.$router.push({name: "Profile Overview"})
-		},
-		async toProfilePosts() {
-			await this.$router.push({name: "Profile Posts"})
-		},
-		async toProfileComments() {
-			await this.$router.push({name: "Profile Comments"})
-		},
-		async toProfileSaved() {
-			await this.$router.push({name: "Profile Saved"})
-		},
-		async toProfileHidden() {
-			await this.$router.push({name: "Profile Hidden"})
-		},
-		async toProfileUpVoted() {
-			await this.$router.push({name: "Profile Upvoted"})
-		},
-		async toProfileDownVoted() {
-			await this.$router.push({name: "Profile Downvoted"})
-		},
-		async toProfileShares() {
-			await this.$router.push({name: "Profile Shares"})
-		},
-		async toCreatePost() {
-			await this.$router.push({ name: "Submit", params: { type: "editor" } })
-		}
 	}
 }
 

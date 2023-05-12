@@ -1,17 +1,11 @@
 <template>
 	<v-app>
-		<div class="sticky">
-			<the-app-bar />
-		</div>
-		<home-drawer />
-		<user-settings-drawer />
-		<community-mod-cog-drawer />
-		<root-sidebar />
+		<the-app-bar />
+		<root-drawer v-if="withDrawer" />
+		<root-sidebar v-if="withSidebar" />
 		<v-main>
-			<v-card
-				v-if="$route.name"
-				flat tile :color="appColor"
-				class="app-card"
+			<div class="main"
+				:style="{paddingTop: mainTopPadding}"
 			>
 				<the-snackbar />
 				<transition name="view">
@@ -20,35 +14,51 @@
 				<scroll-to-top />
 				<report-dialog />
 				<share-dialog />
-			</v-card>
+			</div>
 		</v-main>
 	</v-app>
 </template>
 
 <script>
+import RouteMixin from "@/mixin/RouteMixin";
+
 export default {
 	name: "App",
+	mixins: [RouteMixin],
 	components: {
-		UserSettingsDrawer: () => import("@/components/drawers/UserSettingsDrawer"),
-		CommunityModCogDrawer: () => import("@/components/drawers/CommunityMODCogDrawer"),
-		HomeDrawer: () => import("@/components/drawers/HomeDrawer"),
-		RootSidebar: () => import("@/components/drawers/RootSidebar"),
+		RootDrawer: () => import("@/views/drawers/RootDrawer.vue"),
+		RootSidebar: () => import("@/views/drawers/RootSidebar"),
 		TheAppBar: () => import("@/components/appbar/TheAppBar"),
 		TheSnackbar: () => import("@/components/utils/TheSnackbar"),
 		ScrollToTop: () => import("@/components/utils/ScrollToTop"),
 		ReportDialog: () => import("@/components/dialogs/AddReportDialog"),
 		ShareDialog: () => import("@/components/dialogs/ShareDialog"),
 	},
-
-	computed: {
-		appColor() {
-			return this.$route.name === "Submit" ? "grey lighten-2": "grey lighten-4"
-		}
-	},
 	created() {
+		this.adjustTopPadding()
 		this.checkForLoggedInUser()
+		window.addEventListener("scroll", this.adjustTopPadding)
+	},
+	data: () => ({
+		mainTopPadding: "0",
+	}),
+	computed: {
+		withSidebar() {
+			return !this.currentRouteParent?.meta?.noSidebar
+		},
+		withDrawer() {
+			return !this.currentRouteParent?.meta?.noDrawer
+		},
 	},
 	methods: {
+		adjustTopPadding() {
+			const appBar = document.querySelector(".the-app-bar")
+			if (!appBar?.offsetHeight) {
+				setTimeout(() => this.adjustTopPadding(), 500)
+			} else {
+				this.mainTopPadding = `${appBar.offsetHeight}px`
+			}
+		},
 		checkForLoggedInUser() {
 			const token = this.$helper.getAccessToken()
 			const currentUser = this.$helper.getCurrentUser()

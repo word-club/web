@@ -48,7 +48,7 @@ const EditorMixin = {
 						shortcut: "CMD+SHIFT+H",
 						config: {
 							placeholder: "Enter a header",
-							levels: [1, 2],
+							levels: [2, 3, 4, 5, 6],
 							defaultLevel: 1
 						},
 						tunes: ["alignmentTune"]

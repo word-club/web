@@ -44,7 +44,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "v-tooltip": "^2.0.3",
-    "vue": "^2.6.14",
+    "vue": "^2.6.15",
     "vue-emoji-picker": "^1.0.3",
     "vue-mention": "^1.1.0",
     "vue-router": "^3.5.3",

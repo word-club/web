@@ -13,11 +13,10 @@ const routes = [
 		name: "Home",
 		components: {
 			default: () => import("@/views/home/Home"),
+			drawer: () => import("@/views/drawers/HomeDrawer.vue"),
 			sidebar: () => import("@/views/home/Sidebar")
 		},
-		meta: {
-			sidebar: true
-		}
+		meta: {}
 	},
 	{
 		path: "/top",
@@ -55,7 +54,6 @@ const routes = [
 			sidebar: () => import("@/views/submit/Sidebar")
 		},
 		meta: {
-			drawer_free: true,
 			sidebar: true,
 			login_required: true
 		}
@@ -91,6 +89,161 @@ const routes = [
 		}
 	},
 	{
+		path: "/community/:uniqueId/mod-setting",
+		name: "Community MOD Settings",
+		components: {
+			default: () => import("@/views/community/ModSettings"),
+			drawer: () => import("@/views/drawers/CommunityMODCogDrawer.vue")
+		},
+		meta: {
+			login_required: true,
+			community_mod: true,
+			noSidebar: true
+		},
+		children: [
+			{
+				name: "Community MOD Settings Reports",
+				path: "reports",
+				component: () => import("@/views/community/modCog/Report")
+			},
+			{
+				name: "Community MOD Settings Spam",
+				path: "spam",
+				component: () => import("@/views/community/modCog/Spam")
+			},
+			{
+				name: "Community MOD Settings Edited",
+				path: "edited",
+				component: () => import("@/views/community/modCog/Edited")
+			},
+			{
+				name: "Community MOD Settings Banned",
+				path: "banned",
+				component: () => import("@/views/community/modCog/Banned")
+			},
+			{
+				name: "Community MOD Settings Muted",
+				path: "muted",
+				component: () => import("@/views/community/modCog/Muted")
+			},
+			{
+				name: "Community MOD Settings Approved",
+				path: "approved",
+				component: () => import("@/views/community/modCog/Approved")
+			},
+			{
+				name: "Community MOD Settings Moderators",
+				path: "moderators",
+				component: () => import("@/views/community/modCog/Moderators")
+			},
+			{
+				name: "Community MOD Settings Grant UF",
+				path: "grant-user-flair",
+				component: () => import("@/views/community/modCog/GrantUserFlair")
+			},
+			{
+				name: "Community MOD Settings Emojis",
+				path: "emojis",
+				component: () => import("@/views/community/modCog/Emojis")
+			},
+			{
+				name: "Community MOD Settings User Flair",
+				path: "user-flair",
+				component: () => import("@/views/community/modCog/UserFlair")
+			},
+			{
+				name: "Community MOD Settings Post Flair",
+				path: "post-flair",
+				component: () => import("@/views/community/modCog/PostFlair")
+			},
+			{
+				name: "Community MOD Settings Rules",
+				path: "rules",
+				component: () => import("@/views/community/modCog/Rules")
+			},
+			{
+				name: "Community MOD Settings Removal Reasons",
+				path: "removal-reasons",
+				component: () => import("@/views/community/modCog/RemovalReasons")
+			},
+			{
+				name: "Community MOD Settings Content Control",
+				path: "content-control",
+				component: () => import("@/views/community/modCog/ContentControl")
+			},
+			{
+				name: "Community MOD Settings Automod",
+				path: "automod",
+				component: () => import("@/views/community/modCog/Automod")
+			},
+			{
+				name: "Community MOD Settings Scheduled Post",
+				path: "scheduled-post",
+				component: () => import("@/views/community/modCog/ScheduledPost")
+			},
+			{
+				name: "Community MOD Settings Event",
+				path: "event",
+				component: () => import("@/views/community/modCog/Event")
+			},
+			{
+				name: "Community MOD Settings Email",
+				path: "email",
+				component: () => import("@/views/community/modCog/Email")
+			},
+			{
+				name: "Community MOD Settings Chat",
+				path: "chat",
+				component: () => import("@/views/community/modCog/Chat")
+			},
+			{
+				name: "Community MOD Settings Traffic",
+				path: "traffic-stat",
+				component: () => import("@/views/community/modCog/TrafficStat")
+			},
+			{
+				name: "Community MOD Settings Log",
+				path: "mod-log",
+				component: () => import("@/views/community/modCog/ModLog")
+			},
+			{
+				name: "Community MOD Settings Help Center",
+				path: "mod-help-center",
+				component: () => import("@/views/community/modCog/ModHelpCenter")
+			},
+			{
+				name: "Community MOD Settings Guidelines",
+				path: "mod-guidelines",
+				component: () => import("@/views/community/modCog/ModGuideline")
+			},
+			{
+				name: "Community MOD Settings Support",
+				path: "mod-support",
+				component: () => import("@/views/community/modCog/ModSupport")
+			},
+			{
+				name: "Community MOD Settings Contact",
+				path: "contact-wordclub",
+				component: () => import("@/views/community/modCog/ContactWordclub")
+			},
+			{
+				path: "display",
+				name: "Community MOD Settings Display",
+				component: () => import("@/views/community/modCog/Display")
+			},
+			{
+				path: "description",
+				name: "Community MOD Settings Description",
+				component: () => import("@/views/community/modCog/Description")
+			},
+			{
+				path: "authorization/:code?",
+				name: "Community MOD Settings Authorization",
+				component: () => import("@/views/community/register/Authorization")
+			},
+		]
+	},
+	{
 		path: "/community/:uniqueId",
 		components: {
 			default: () => import("@/views/community/Community"),
@@ -121,158 +274,6 @@ const routes = [
 					sidebar: true
 				},
 			},
-			{
-				path: "mod-setting",
-				name: "Community MOD Settings",
-				component: () => import("@/views/community/ModSettings"),
-				meta: {
-					drawer_free: true,
-					login_required: true,
-					community_mod: true
-				},
-				children: [
-					{
-						name: "Community MOD Settings Reports",
-						path: "reports",
-						component: () => import("@/views/community/modCog/Report")
-					},
-					{
-						name: "Community MOD Settings Spam",
-						path: "spam",
-						component: () => import("@/views/community/modCog/Spam")
-					},
-					{
-						name: "Community MOD Settings Edited",
-						path: "edited",
-						component: () => import("@/views/community/modCog/Edited")
-					},
-					{
-						name: "Community MOD Settings Banned",
-						path: "banned",
-						component: () => import("@/views/community/modCog/Banned")
-					},
-					{
-						name: "Community MOD Settings Muted",
-						path: "muted",
-						component: () => import("@/views/community/modCog/Muted")
-					},
-					{
-						name: "Community MOD Settings Approved",
-						path: "approved",
-						component: () => import("@/views/community/modCog/Approved")
-					},
-					{
-						name: "Community MOD Settings Moderators",
-						path: "moderators",
-						component: () => import("@/views/community/modCog/Moderators")
-					},
-					{
-						name: "Community MOD Settings Grant UF",
-						path: "grant-user-flair",
-						component: () => import("@/views/community/modCog/GrantUserFlair")
-					},
-					{
-						name: "Community MOD Settings Emojis",
-						path: "emojis",
-						component: () => import("@/views/community/modCog/Emojis")
-					},
-					{
-						name: "Community MOD Settings User Flair",
-						path: "user-flair",
-						component: () => import("@/views/community/modCog/UserFlair")
-					},
-					{
-						name: "Community MOD Settings Post Flair",
-						path: "post-flair",
-						component: () => import("@/views/community/modCog/PostFlair")
-					},
-					{
-						name: "Community MOD Settings Rules",
-						path: "rules",
-						component: () => import("@/views/community/modCog/Rules")
-					},
-					{
-						name: "Community MOD Settings Removal Reasons",
-						path: "removal-reasons",
-						component: () => import("@/views/community/modCog/RemovalReasons")
-					},
-					{
-						name: "Community MOD Settings Content Control",
-						path: "content-control",
-						component: () => import("@/views/community/modCog/ContentControl")
-					},
-					{
-						name: "Community MOD Settings Automod",
-						path: "automod",
-						component: () => import("@/views/community/modCog/Automod")
-					},
-					{
-						name: "Community MOD Settings Scheduled Post",
-						path: "scheduled-post",
-						component: () => import("@/views/community/modCog/ScheduledPost")
-					},
-					{
-						name: "Community MOD Settings Event",
-						path: "event",
-						component: () => import("@/views/community/modCog/Event")
-					},
-					{
-						name: "Community MOD Settings Email",
-						path: "email",
-						component: () => import("@/views/community/modCog/Email")
-					},
-					{
-						name: "Community MOD Settings Chat",
-						path: "chat",
-						component: () => import("@/views/community/modCog/Chat")
-					},
-					{
-						name: "Community MOD Settings Traffic",
-						path: "traffic-stat",
-						component: () => import("@/views/community/modCog/TrafficStat")
-					},
-					{
-						name: "Community MOD Settings Log",
-						path: "mod-log",
-						component: () => import("@/views/community/modCog/ModLog")
-					},
-					{
-						name: "Community MOD Settings Help Center",
-						path: "mod-help-center",
-						component: () => import("@/views/community/modCog/ModHelpCenter")
-					},
-					{
-						name: "Community MOD Settings Guidelines",
-						path: "mod-guidelines",
-						component: () => import("@/views/community/modCog/ModGuideline")
-					},
-					{
-						name: "Community MOD Settings Support",
-						path: "mod-support",
-						component: () => import("@/views/community/modCog/ModSupport")
-					},
-					{
-						name: "Community MOD Settings Contact",
-						path: "contact-wordclub",
-						component: () => import("@/views/community/modCog/ContactWordclub")
-					},
-					{
-						path: "display",
-						name: "Community MOD Settings Display",
-						component: () => import("@/views/community/modCog/Display")
-					},
-					{
-						path: "description",
-						name: "Community MOD Settings Description",
-						component: () => import("@/views/community/modCog/Description")
-					},
-					{
-						path: "authorization/:code?",
-						name: "Community MOD Settings Authorization",
-						component: () => import("@/views/community/register/Authorization")
-					},
-				]
-			},
 		],
 	},
 	{
@@ -281,9 +282,7 @@ const routes = [
 			default: () => import("@/views/user/User"),
 			sidebar: () => import("@/views/user/Sidebar")
 		},
-		meta: {
-			sidebar: true
-		},
+		meta: {},
 		children: [
 			{
 				path: "",
@@ -309,7 +308,6 @@ const routes = [
 			sidebar: () => import("@/views/profile/Sidebar")
 		},
 		meta: {
-			sidebar: true,
 			login_required: true
 		},
 		children: [
@@ -362,11 +360,13 @@ const routes = [
 	},
 	{
 		path: "/settings",
-		component: () => import("@/views/settings/Settings"),
 		name: "User Settings",
+		components: {
+			default: () => import("@/views/settings/Settings"),
+			drawer: () => import("@/views/drawers/UserSettingsDrawer.vue"),
+		},
 		meta: {
 			user_settings: true,
-			drawer_free: true,
 			login_required: true
 		},
 		children: [
@@ -407,20 +407,24 @@ const routes = [
 		name: "Notification",
 		component: () => import("@/views/notification/Notification"),
 		meta: {
-			sidebar: true,
 			login_required: true
 		},
 	},
 	{
-		name: "Site Administration",
-		path: "/site-administration",
-		component: () => import("@/views/siteAdmin/SiteAdmin")
+		name: "Administration",
+		path: "/administration",
+		children: [
+			{
+				name: "Site Administration",
+				path: "site",
+				component: () => import("@/views/siteAdmin/SiteAdmin")
+			}
+		]
 	}
 ]
 
 const router = new VueRouter({
-	base: process.env.BASE_URL,
-	routes
+	routes,
 })
 
 export default router

@@ -51,7 +51,7 @@ const DraftMixin = {
 			}
 			return payload
 		},
-		async saveAsDraft(isDraft = true, refreshMe=true) {
+		async saveAsDraft(isDraft = true, refreshMe=true, noSnack=false) {
 			if(!this.checkRequired(["title"])) {
 				const url = this.$util.format(this.$urls.publication.detail, this.inProgress.id)
 				const payload = await this.preparePayload()
@@ -60,13 +60,15 @@ const DraftMixin = {
 				if (!this.patchSuccess) {
 					this.formErrors = {...this.patchErrors}
 				} else {
-					this.openSuccessSnack(`${isDraft ? "Draft" : "Publication"} saved successfully.`)
+					if (!noSnack) {
+						this.openSuccessSnack(`${isDraft ? "Draft" : "Publication"} saved successfully.`)
+					}
 					if (refreshMe) await this.refreshMe()
 				}
 			}
 		},
 		publishPublication() {
-			this.saveAsDraft(this.inProgress.is_published, false)
+			this.saveAsDraft(this.inProgress.is_published, false, true)
 				.then(async () => {
 					const url = this.$util.format(this.$urls.publication.publish, this.inProgress.id)
 					await this.openConfirmDialog(

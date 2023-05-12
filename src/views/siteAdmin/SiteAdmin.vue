@@ -1,9 +1,10 @@
 <template>
 	<div class="site-admin">
-		<div class="site-admin--page-title">
-			<h2>Site Administration</h2>
-		</div>
-		<v-card flat max-width="800">
+		<v-card>
+			<div class="site-admin--page-title">
+				<h2>Site Administration</h2>
+			</div>
+			<v-divider />
 			<v-card-text class="site-admin--tags">
 				<h3>Site Hashtags</h3>
 				<v-progress-linear v-if="fetchingTags" color="primary" height="6" indeterminate/>
@@ -231,8 +232,10 @@ export default {
 <style scoped lang="scss">
 .site-admin {
 	padding: 8px;
+	max-width: 1000px;
+	margin: auto;
 	&--page-title {
-		padding: 0 4px 4px 4px;
+		padding: 1rem;
 	}
 	&--tags {
 		&--available {

@@ -1,5 +1,5 @@
 <template>
-	<div class="px-2">
+	<div class="px-2 pt-2">
 		<profile-peek />
 		<div class="py-2" />
 		<home-small-footer />
