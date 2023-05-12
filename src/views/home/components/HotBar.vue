@@ -161,7 +161,6 @@ export default {
 		},
 	},
 	created() {
-		console.log(this.$route.name)
 		this.$store.dispatch("publication/setFilterset", {
 			sort_by: "support",
 			...this.payload

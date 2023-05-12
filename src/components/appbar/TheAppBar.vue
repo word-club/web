@@ -33,7 +33,6 @@
 			tooltip="Popular"
 			:to="{ name: $route.name, params: {sortBy: 'popular'} }"
 		/>
-
 		<tooltip-icon-btn
 			id="top-discussed"
 			size="40"
@@ -51,11 +50,13 @@
 			:to="{ name: 'Submit' }"
 		/>
 
-		<notification-menu v-if="currentUser  && viewportWidth > 310"/>
+		<template v-if="currentUser">
+			<notification-menu v-if="viewportWidth > 310"/>
 
-		<div class="pl-5" />
+			<div class="pl-5" />
 
-		<profile-drop v-if="currentUser"/>
+			<profile-drop v-if="currentUser"/>
+		</template>
 
 		<v-btn
 			v-if="!currentUser"

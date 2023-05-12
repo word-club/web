@@ -48,7 +48,7 @@ const routes = [
 		]
 	},
 	{
-		path: "/submit/type/:type/edit/:toEdit?/community/:community?",
+		path: "/submit/type/:type?/edit/:toEdit?/community/:community?",
 		name: "Submit",
 		components: {
 			default: () => import("@/views/submit/Submit"),
@@ -62,7 +62,7 @@ const routes = [
 	},
 	{
 		path: "/register-community",
-		name: "Register Community",
+		name: "Register Community Form",
 		components: {
 			default: () => import("@/views/community/RegisterCommunity"),
 			sidebar: () => import("@/views/community/RegisterSidebar")
@@ -420,7 +420,7 @@ const routes = [
 
 const router = new VueRouter({
 	base: process.env.BASE_URL,
-	routes,
+	routes
 })
 
 export default router

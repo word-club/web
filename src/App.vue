@@ -11,18 +11,8 @@
 			<v-card
 				v-if="$route.name"
 				flat tile :color="appColor"
-				class="app-card fill-height"
-				:class="{
-					'app-padding': ! $route.name.includes('Community') &&
-						!$route.name.includes('User') &&
-						!$route.name.includes('Profile') &&
-						!$route.name.includes('Top'),
-					'px-0': $route.name.includes('Community'),
-					'px-0': $route.name.includes('User'),
-					'px-0': $route.name.includes('Profile')
-				}"
+				class="app-card"
 			>
-
 				<the-snackbar />
 				<transition name="view">
 					<router-view />

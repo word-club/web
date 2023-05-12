@@ -7,6 +7,7 @@
 				:color="color"
 				class="mr-2"
 				:src="activeAvatar"
+				iconColor="white"
 				icon="mdi-account-circle-outline"
 			/>
 			<v-responsive class="px-2 py-1"

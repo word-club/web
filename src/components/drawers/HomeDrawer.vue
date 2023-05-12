@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "styles/sidebar";
+@import "src/styles/sidebar";
 .site-title {
 	padding: 10px;
 	background-color: whitesmoke;

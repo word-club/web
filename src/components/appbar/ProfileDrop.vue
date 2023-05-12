@@ -1,18 +1,17 @@
 <template>
 	<v-menu offset-y>
 		<template #activator="{on, attrs}">
-			<wc-avatar
+			<v-avatar
 				:color="(activeAvatar) ? '' : 'primary'"
 				size="35"
 				v-bind="attrs"
 				class="elevation-4 profile-avatar"
 				v-on="on"
 				v-ripple
-				:icon="null"
-				:src="activeAvatar"
-				:text="currentUser.username"
-				span-class="px22 white--text text-uppercase mb-1 profile-avatar__username"
-			/>
+			>
+				<v-img v-if="activeAvatar" :src="activeAvatar" />
+				<span class="white--text" v-else>{{currentUser.username[0].toUpperCase()}}</span>
+			</v-avatar>
 		</template>
 		<v-list width="220"
 			dense class="profile-drop-list"
@@ -21,6 +20,7 @@
 				<v-subheader class="text-uppercase">
 					Online Status
 				</v-subheader>
+				<v-divider />
 				<v-list-item class="online-status">
 					<v-list-item-content>
 						<v-list-item-title>On</v-list-item-title>
@@ -34,6 +34,7 @@
 						/>
 					</v-list-item-action>
 				</v-list-item>
+				<v-divider />
 			</v-list-item-group>
 			<v-list-item-group>
 				<v-subheader class="text-uppercase">

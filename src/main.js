@@ -12,8 +12,6 @@ import {generateFullLink} from "@/utils.js";
 
 Vue.config.productionTip = false
 
-Vue.use(moment)
-
 Vue.prototype.$constants = constants
 Vue.prototype.$axios = AXIOS
 Vue.prototype.$moment = moment

@@ -169,7 +169,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "styles/sidebar";
+@import "src/styles/sidebar";
 .underline {
 	width: 64%;
 	height: 4px;
