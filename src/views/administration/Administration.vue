@@ -8,5 +8,6 @@
 <style>
 .administration-view {
 	margin: 0 auto;
+	padding: 1rem;
 }
 </style>

@@ -427,6 +427,14 @@ const routes = [
 				name: "Site Administration",
 				path: "site",
 				component: () => import("@/views/administration/SiteAdmin")
+			}, {
+				name: "Community Administration",
+				path: "community",
+				component: () => import("@/views/administration/CommunityAdmin")
+			}, {
+				name: "Publication Administration",
+				path: "publication",
+				component: () => import("@/views/administration/PublicationAdmin")
 			}
 		],
 		meta: {
