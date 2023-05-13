@@ -1,6 +1,6 @@
 <template>
 	<v-card flat>
-		<rule-dialog />
+		<rule-dialog @refresh="fetchDetail('community')" />
 		<v-card-actions class="grey lighten-5">
 			<v-spacer />
 			<v-menu offset-y>
@@ -86,14 +86,15 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import UserRoles from "@/mixin/UserRoles.js";
+import FetchMixin from "@/mixin/FetchMixin";
 export default {
 	name: "WikiPage",
 	components: {
 		RuleDialog: () => import("@/views/community/RuleDialog")
 	},
-	mixins: [UserRoles],
+	mixins: [UserRoles, FetchMixin],
 	data: () => ({
 		options: {
 			lineNumbers: false
@@ -105,7 +106,9 @@ export default {
 			currentUser: "user/current"
 		})
 	},
-	methods: {}
+	methods: {
+		...mapMutations("community", ["SET_TO_VIEW"])
+	}
 }
 </script>
 

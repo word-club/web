@@ -2,6 +2,7 @@
 	<div class="site-admin">
 		<v-card>
 			<div class="site-admin--page-title">
+				<v-icon>mdi-sitemap</v-icon>
 				<h2>Site Administration</h2>
 			</div>
 			<v-divider />
@@ -232,10 +233,9 @@ export default {
 <style scoped lang="scss">
 .site-admin {
 	padding: 8px;
-	max-width: 1000px;
-	margin: auto;
 	&--page-title {
 		padding: 1rem;
+		display: flex; gap: 1rem;
 	}
 	&--tags {
 		&--available {

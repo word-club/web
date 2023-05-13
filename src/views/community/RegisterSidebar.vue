@@ -1,5 +1,5 @@
 <template>
-	<div class="px-4">
+	<div class="pa-2">
 		<v-card outlined>
 			<v-card-title>
 				Community Registration
@@ -22,7 +22,7 @@
 				</v-list>
 			</v-card-text>
 		</v-card>
-		<div class="py-2" />
+		<div class="py-1" />
 		<home-small-footer />
 	</div>
 </template>

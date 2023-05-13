@@ -17,17 +17,11 @@ const RouteMixin = {
 		async toCommunityDetail(uniqueId) {
 			await this.$router.push({name: "Community Detail", params: {uniqueId}})
 		},
-		async toCommunityWiki(id) {
-			await this.$router.push({name: "Community Detail Wiki", params: {id: id}})
+		async toCommunityWiki(uniqueId) {
+			await this.$router.push({name: "Community Detail Wiki", params: {uniqueId}})
 		},
-		async toCommunityModmail(id) {
-			await this.$router.push({name: "Community Detail Modmail", params: {id: id}})
-		},
-		async toRegisterCommunity() {
-			await this.$router.push({name: "Register Community"})
-		},
-		async toRegisterCommunityTheme() {
-			await this.$router.push({name: "Community Display"})
+		async toCommunityModmail(uniqueId) {
+			await this.$router.push({name: "Community Detail Modmail", params: {uniqueId}})
 		},
 		async toHome() {
 			if (this.$route.name === "Home") return

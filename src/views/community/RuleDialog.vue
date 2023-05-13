@@ -89,6 +89,7 @@ export default {
 				title: this.rule.title,
 				description: this.rule.description
 			}).then(() => {
+				this.$emit("refresh")
 				if (this.patchSuccess) this.closeDialog()
 				else this.openSnack("Rule update failed. Please try again.")
 			})
@@ -97,6 +98,7 @@ export default {
 			this.saveRule()
 				.then(() => {
 					if (this.success) {
+						this.$emit("refresh")
 						this.closeDialog()
 					} else {
 						this.openSnack("Rule create failed. Please try again.")

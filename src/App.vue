@@ -44,10 +44,16 @@ export default {
 	}),
 	computed: {
 		withSidebar() {
-			return !this.currentRouteParent?.meta?.noSidebar
+			if (this.currentRouteParent) {
+				return !this.currentRouteParent?.meta?.noSidebar
+			}
+			return !this.currentRoute?.meta?.noSidebar
 		},
 		withDrawer() {
-			return !this.currentRouteParent?.meta?.noDrawer
+			if (this.currentRouteParent) {
+				return !this.currentRouteParent?.meta?.noDrawer
+			}
+			return !this.currentRoute?.meta?.noDrawer
 		},
 	},
 	methods: {

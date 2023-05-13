@@ -16,7 +16,7 @@
 			</v-scale-transition>
 		</div>
 		<div class="community-top-button ma-2 mb-0 cursor"
-			@click="toCommunityWiki(community.id)"
+			@click="toCommunityWiki(community.uniqueId)"
 			:class="($route.name==='Community Detail Wiki') ? community.theme.color + '--text': ''"
 		>
 			<div class="px-1">Wiki</div>
@@ -28,7 +28,7 @@
 		</div>
 		<div class="community-top-button ma-2 mb-0 cursor"
 			:class="($route.name==='Community Detail Modmail') ? community.theme.color + '--text': ''"
-			@click="toCommunityModmail(community.id)"
+			@click="toCommunityModmail(community.uniqueId)"
 		>
 			<div class="px-1">Modmail</div>
 			<v-scale-transition>

@@ -1,11 +1,10 @@
 #!/usr/bin/env sh
 
 DIST_BRANCH="dist"
-BASE_DIR="/home/runner/work/word-club/web"
+BASE_DIR="/home/runner/work/word-club"
 
 echo "Building Started...."
 yarn build
-ls -la
 echo "Building Completed."
 
 

@@ -23,11 +23,10 @@ const routes = [
 		name: "Top",
 		components: {
 			default: () => import("@/views/top/Top"),
-			sidebar: () => import("@/views/home/Sidebar")
+			sidebar: () => import("@/views/home/Sidebar"),
+			drawer: () => import("@/views/drawers/HomeDrawer")
 		},
-		meta: {
-			sidebar: true
-		},
+		meta: {},
 		children: [
 			{
 				path: "communities",
@@ -54,7 +53,7 @@ const routes = [
 			sidebar: () => import("@/views/submit/Sidebar")
 		},
 		meta: {
-			sidebar: true,
+			noDrawer: true,
 			login_required: true
 		}
 	},
@@ -66,7 +65,7 @@ const routes = [
 			sidebar: () => import("@/views/community/RegisterSidebar")
 		},
 		meta: {
-			sidebar: true,
+			noDrawer: true,
 			login_required: true
 		},
 		children: [
@@ -305,7 +304,8 @@ const routes = [
 		path: "/profile",
 		components: {
 			default: () => import("@/views/profile/Profile"),
-			sidebar: () => import("@/views/profile/Sidebar")
+			sidebar: () => import("@/views/profile/Sidebar"),
+			drawer: () => import("@/views/drawers/ProfileDrawer")
 		},
 		meta: {
 			login_required: true
@@ -366,7 +366,7 @@ const routes = [
 			drawer: () => import("@/views/drawers/UserSettingsDrawer.vue"),
 		},
 		meta: {
-			user_settings: true,
+			noSidebar: true,
 			login_required: true
 		},
 		children: [
@@ -405,7 +405,12 @@ const routes = [
 	{
 		path: "/notifications",
 		name: "Notification",
-		component: () => import("@/views/notification/Notification"),
+		components: {
+			default: () => import("@/views/notification/Notification"),
+			drawer: () => import("@/views/drawers/HomeDrawer.vue"),
+			sidebar: () => import("@/views/home/Sidebar")
+
+		},
 		meta: {
 			login_required: true
 		},
@@ -413,13 +418,20 @@ const routes = [
 	{
 		name: "Administration",
 		path: "/administration",
+		components: {
+			default: () => import("@/views/administration/Administration"),
+			drawer: () => import("@/views/drawers/AdministrationDrawer"),
+		},
 		children: [
 			{
 				name: "Site Administration",
 				path: "site",
-				component: () => import("@/views/siteAdmin/SiteAdmin")
+				component: () => import("@/views/administration/SiteAdmin")
 			}
-		]
+		],
+		meta: {
+			noSidebar: true
+		}
 	}
 ]
 

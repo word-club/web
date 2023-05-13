@@ -1,9 +1,11 @@
 <template>
 	<div class="user-settings-drawer">
-		<h2 class="grey--text pl-3 pt-2">
-			<span><v-icon color="grey">mdi-cog</v-icon></span>
-			User Settings
-		</h2>
+		<div class="pl-3 pt-2 d-flex align-center">
+			<v-icon color="grey" style="padding-bottom: 1px;">mdi-account-cog</v-icon>
+			<h2 class="grey--text ml-2">
+				User Settings
+			</h2>
+		</div>
 		<v-list rounded>
 			<v-list-item v-for="(item, index) in items"
 				:key="index"

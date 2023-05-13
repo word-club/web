@@ -21,7 +21,7 @@ jobs:
       - uses: mskelton/setup-yarn@v1
         with:
           node-version: 16
-          flags: --immutable-cache --frozen-lockfile
+          flags: --frozen-lockfile
       - name: Publish
         run: |
           cp .env.prod .env
