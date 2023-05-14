@@ -1,28 +1,28 @@
-on:
-#  pull_request:
-#    types:
-#      - closed
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-#    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          all_but_latest: true
-          access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - uses: mskelton/setup-yarn@v1
-        with:
-          node-version: 16
-          flags: --frozen-lockfile
-      - name: Publish
-        run: |
-          cp .env.prod .env
-          bash -x build.sh
+#on:
+##  pull_request:
+##    types:
+##      - closed
+#  push:
+#    branches:
+#      - main
+#
+#jobs:
+#  build:
+##    if: github.event.pull_request.merged == true
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.9.1
+#        with:
+#          all_but_latest: true
+#          access_token: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - uses: mskelton/setup-yarn@v1
+#        with:
+#          node-version: 16
+#          flags: --frozen-lockfile
+#      - name: Publish
+#        run: |
+#          cp .env.prod .env
+#          bash -x build.sh

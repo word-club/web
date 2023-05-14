@@ -79,7 +79,8 @@ const routes = [
 		name: "Publication",
 		components: {
 			default: () => import("@/views/publication/Publication"),
-			sidebar: () => import("@/views/publication/Sidebar")
+			sidebar: () => import("@/views/publication/Sidebar"),
+			drawer: () => import("@/views/drawers/HomeDrawer")
 		},
 		meta: {}
 	},
