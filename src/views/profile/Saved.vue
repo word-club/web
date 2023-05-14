@@ -5,24 +5,26 @@
 				hmm... looks like you haven't saved anything yet
 			</v-card-title>
 		</v-card>
-		<div v-for="item in bookmarks"
-			:key="item.id"
-			class="pb-4"
+		<v-card v-for="item in bookmarks"
+			:key="item.id" flat
 		>
-			<comment-instance v-if="item.publication" :comment="item" />
 			<publication-instance
-				v-else
-				:publication="item"
+				v-if="item.publication"
+				:publication="item.publication"
+				@init="refreshProfile()"
 			/>
-		</div>
+			<comment-instance v-else :comment="item.comment" />
+		</v-card>
 	</div>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
+import ProfileMixin from "@/views/profile/ProfileMixin";
 
 export default {
 	name: "Saved",
+	mixins: [ProfileMixin],
 	computed: {
 		...mapGetters({
 			user: "user/inView"

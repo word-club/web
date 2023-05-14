@@ -6,6 +6,7 @@ const EditorContentMixin =  {
 	},
 	computed: {
 		editorContent() {
+			if (!this.publication) return { blocks: []}
 			try {
 				if (this.mini) {
 					const content = JSON.parse(this.publication.content)

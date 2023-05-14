@@ -9,6 +9,14 @@
 			label="Search" prepend-inner-icon="mdi-magnify"
 			outlined dense color="primary" hide-details
 		/>
+		<template v-if="withCreate">
+			<v-spacer />
+			<v-btn color="primary" fab small
+				@click="$emit('create')"
+			>
+				<v-icon>mdi-plus</v-icon>
+			</v-btn>
+		</template>
 	</v-toolbar>
 </template>
 <script>
@@ -22,7 +30,12 @@ export default {
 		icon: {
 			type: String,
 			default: "mdi-table"
+		},
+		withCreate: {
+			type: Boolean,
+			default: false
 		}
-	}
+	},
+	emits: ["create"]
 }
 </script>

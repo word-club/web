@@ -49,7 +49,6 @@ export default {
 			return this.community.avatar ? this.community.avatar.image : null
 		},
 		items() {
-			console.log(this.community)
 			return [
 				{name: "views", value: this.community.views},
 				{name: "popularity", value: this.community.popularity},

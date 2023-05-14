@@ -18,7 +18,7 @@
 		>
 			<v-list-item-group>
 				<v-subheader class="text-uppercase">
-					Online Status
+					Online Status&nbsp;&nbsp;<b>({{currentUser.username}})</b>
 				</v-subheader>
 				<v-divider />
 				<v-list-item class="online-status">
@@ -28,7 +28,7 @@
 					<v-list-item-action>
 						<v-switch
 							v-model="onlineStatus"
-							color="primary"
+							color="success"
 							inset dense
 							hide-details
 						/>

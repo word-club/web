@@ -114,6 +114,18 @@
 								</v-icon>
 							</v-fab-transition>
 						</div>
+						<div class="py-4"
+							v-if="isSignUpMode"
+						>
+							<select-field :items="$constants.GENDER_OPTIONS" v-model="payload.profile.gender.type"
+								label="Gender" icon="mdi-gender-male-female-variant"
+								item-value="value" item-text="text" name="type" :errors="formErrors"
+							/>
+
+							<text-field v-if="payload.profile.gender.type === 'C'" v-model="payload.profile.gender.custom" class="mt-6"
+								label="My Gender" icon="mdi-gender-transgender" name="custom" :errors="formErrors"
+							/>
+						</div>
 					</div>
 					<v-card-actions class="justify-space-between">
 						<v-btn
@@ -194,7 +206,13 @@ export default {
 			password: null,
 			first_name: null,
 			last_name: null,
-			profile: {birth_date: null},
+			profile: {
+				birth_date: null,
+				gender: {
+					type: null,
+					custom: null
+				},
+			},
 			confirm_password: null,
 		},
 		errors: []

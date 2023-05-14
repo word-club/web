@@ -14,7 +14,7 @@
 			<publication-instance
 				v-if="item.publication"
 				:publication="item.publication"
-				@init="handler"
+				@init="refreshProfile()"
 			/>
 			<comment-instance v-else :comment="item.comment" />
 		</div>
@@ -24,10 +24,11 @@
 <script>
 import FeedMixin from "@/mixin/FeedMixin.js";
 import {mapGetters} from "vuex";
+import ProfileMixin from "@/views/profile/ProfileMixin";
 
 export default {
 	name: "Hidden",
-	mixins: [FeedMixin],
+	mixins: [ProfileMixin],
 	computed: {
 		...mapGetters({
 			user: "user/inView"

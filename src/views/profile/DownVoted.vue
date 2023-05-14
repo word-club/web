@@ -14,6 +14,7 @@
 			<publication-instance
 				v-if="item.publication"
 				:publication="item.publication"
+				@init="refreshProfile()"
 			/>
 			<comment-instance v-else :comment="item.comment" />
 		</div>
@@ -22,9 +23,11 @@
 
 <script>
 import {mapGetters} from "vuex";
+import ProfileMixin from "@/views/profile/ProfileMixin";
 
 export default {
 	name: "DownVoted",
+	mixins: [ProfileMixin],
 	computed: {
 		...mapGetters({
 			user: "user/inView"

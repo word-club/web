@@ -19,11 +19,14 @@
 			</v-card>
 		</div>
 		<v-card
-			flat tile color="primary"
+			flat tile
 			max-width="800" class="mx-auto"
-			:loading="refreshing"
-			style="background-color: transparent!important;"
 		>
+			<v-scale-transition>
+				<v-progress-linear v-if="refreshing" indeterminate
+					color="primary" height="6" class="mt-1 mx-3"
+				/>
+			</v-scale-transition>
 			<v-card-text class="pb-0">
 				<transition name="view">
 					<router-view />
@@ -34,13 +37,11 @@
 </template>
 
 <script>
-import RouteMixin from "@/mixin/RouteMixin.js";
-import {mapGetters} from "vuex";
-import RefreshMeMixin from "@/mixin/RefreshMeMixin.js";
+import ProfileMixin from "@/views/profile/ProfileMixin";
 
 export default {
 	name: "Profile",
-	mixins: [RouteMixin, RefreshMeMixin],
+	mixins: [ProfileMixin],
 	data: () => ({
 		tabs: [
 			"Profile Overview",
@@ -54,15 +55,8 @@ export default {
 			"Profile Downvoted",
 		]
 	}),
-	computed: {
-		...mapGetters({
-			currentUser: "user/current",
-		})
-	},
 	async created() {
-		this.refreshing = true
-		await this.$store.dispatch("user/setInView", this.currentUser)
-		this.refreshing = false
+		await this.refreshProfile()
 	}
 }
 </script>

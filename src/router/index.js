@@ -20,7 +20,6 @@ const routes = [
 	},
 	{
 		path: "/top",
-		name: "Top",
 		components: {
 			default: () => import("@/views/top/Top"),
 			sidebar: () => import("@/views/home/Sidebar"),
@@ -54,19 +53,18 @@ const routes = [
 		},
 		meta: {
 			noDrawer: true,
-			login_required: true
+			loginRequired: true
 		}
 	},
 	{
 		path: "/register-community",
-		name: "Register Community Form",
 		components: {
 			default: () => import("@/views/community/RegisterCommunity"),
 			sidebar: () => import("@/views/community/RegisterSidebar")
 		},
 		meta: {
 			noDrawer: true,
-			login_required: true
+			loginRequired: true
 		},
 		children: [
 			{
@@ -83,9 +81,7 @@ const routes = [
 			default: () => import("@/views/publication/Publication"),
 			sidebar: () => import("@/views/publication/Sidebar")
 		},
-		meta: {
-			sidebar: true
-		}
+		meta: {}
 	},
 	{
 		path: "/community/:uniqueId/mod-setting",
@@ -95,8 +91,7 @@ const routes = [
 			drawer: () => import("@/views/drawers/CommunityMODCogDrawer.vue")
 		},
 		meta: {
-			login_required: true,
-			community_mod: true,
+			loginRequired: true,
 			noSidebar: true
 		},
 		children: [
@@ -253,27 +248,19 @@ const routes = [
 				path: "publications/:sortBy?",
 				name: "Community Detail",
 				component: () => import("@/views/community/PostsList"),
-				meta: {
-					sidebar: true
-				},
 			},
 			{
 				path: "wiki",
 				name: "Community Detail Wiki",
 				component: () => import("@/views/community/WikiPage"),
-				meta: {
-					sidebar: true
-				},
 			},
 			{
 				path: "modmail",
 				name: "Community Detail Modmail",
 				component: () => import("@/views/community/ModMail"),
-				meta: {
-					sidebar: true
-				},
 			},
 		],
+		meta: {}
 	},
 	{
 		path: "/user/:username",
@@ -308,7 +295,7 @@ const routes = [
 			drawer: () => import("@/views/drawers/ProfileDrawer")
 		},
 		meta: {
-			login_required: true
+			loginRequired: true
 		},
 		children: [
 			{
@@ -337,7 +324,7 @@ const routes = [
 				component: () => import("@/views/profile/Saved")
 			},
 			{
-				path: "saved",
+				path: "hidden",
 				name: "Profile Hidden",
 				component: () => import("@/views/profile/Hidden")
 			},
@@ -367,7 +354,7 @@ const routes = [
 		},
 		meta: {
 			noSidebar: true,
-			login_required: true
+			loginRequired: true
 		},
 		children: [
 			{
@@ -412,7 +399,7 @@ const routes = [
 
 		},
 		meta: {
-			login_required: true
+			loginRequired: true
 		},
 	},
 	{
@@ -427,6 +414,14 @@ const routes = [
 				name: "Site Administration",
 				path: "site",
 				component: () => import("@/views/administration/SiteAdmin")
+			},  {
+				name: "User Administration",
+				path: "user",
+				component: () => import("@/views/administration/UserAdmin")
+			}, {
+				name: "Hashtag Administration",
+				path: "hashtag",
+				component: () => import("@/views/administration/HashtagAdmin.vue")
 			}, {
 				name: "Community Administration",
 				path: "community",
@@ -435,10 +430,63 @@ const routes = [
 				name: "Publication Administration",
 				path: "publication",
 				component: () => import("@/views/administration/PublicationAdmin")
-			}
+			}, {
+				name: "Comment Administration",
+				path: "comment",
+				component: () => import("@/views/administration/CommentAdmin")
+			}, {
+				name: "Vote Administration",
+				path: "vote",
+				component: () => import("@/views/administration/VoteAdmin")
+			}, {
+				name: "Bookmark Administration",
+				path: "bookmark",
+				component: () => import("@/views/administration/BookmarkAdmin")
+			}, {
+				name: "Share Administration",
+				path: "share",
+				component: () => import("@/views/administration/ShareAdmin")
+			}, {
+				name: "Hide Administration",
+				path: "hide",
+				component: () => import("@/views/administration/HideAdmin")
+			}, {
+				name: "Block Administration",
+				path: "block",
+				component: () => import("@/views/administration/BlockAdmin")
+			}, {
+				name: "Avatar Administration",
+				path: "avatar",
+				component: () => import("@/views/administration/AvatarAdmin")
+			}, {
+				name: "Cover Administration",
+				path: "cover",
+				component: () => import("@/views/administration/CoverAdmin")
+			}, {
+				name: "Image Administration",
+				path: "image",
+				component: () => import("@/views/administration/ImageAdmin")
+			}, {
+				name: "Link Administration",
+				path: "link",
+				component: () => import("@/views/administration/LinkAdmin")
+			}, {
+				name: "Auth Code Administration",
+				path: "auth-code",
+				component: () => import("@/views/administration/AuthCodeAdmin")
+			}, {
+				name: "Report Administration",
+				path: "report",
+				component: () => import("@/views/administration/ReportAdmin")
+			}, {
+				name: "Ban Administration",
+				path: "ban",
+				component: () => import("@/views/administration/BanAdmin")
+			},
 		],
 		meta: {
-			noSidebar: true
+			noSidebar: true,
+			loginRequired: true,
 		}
 	}
 ]

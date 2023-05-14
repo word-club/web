@@ -47,7 +47,7 @@
 			v-if="currentUser  && smAndUp"
 			icon="mdi-plus"
 			tooltip="Create Publication"
-			:to="{ name: 'Submit' }"
+			:to="{ name: 'Submit', params: {type: 'editor'} }"
 		/>
 
 		<template v-if="currentUser">

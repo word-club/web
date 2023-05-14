@@ -35,11 +35,11 @@ Vue.component("CardImg", () => import("@/components/utils/CardImage"))
 Vue.component("HotBar", () => import("@/views/user/components/HotBar"))
 Vue.component("CommentInstance", () => import("@/views/home/components/CommentInstance"))
 Vue.component("PublicationInstance", () => import("@/views/home/components/PublicationInstance"))
-Vue.component("ConfirmDialog", () => import("@/components/ConfirmDialog"))
-Vue.component("WcAvatar", () => import("@/components/WcAvatar"))
+Vue.component("ConfirmDialog", () => import("@/components/utils/ConfirmDialog.vue"))
+Vue.component("WcAvatar", () => import("@/components/utils/WcAvatar.vue"))
 
 router.beforeEach((to, from, next) => {
-	const loginRequired = to.matched.some(route => route.meta["login_required"])
+	const loginRequired = to.matched.some(route => route.meta["loginRequired"])
 	if (loginRequired && !getAccessToken()) {
 		store.commit("SET_AUTH_MODE", {
 			state: true, mode: "login", next: to.fullPath

@@ -1,5 +1,5 @@
 <template>
-	<div class="publication-admin">
+	<div class="ban-admin">
 		<v-data-table
 			:items="items"
 			:headers="headers"
@@ -7,13 +7,10 @@
 			class="elevation-4"
 		>
 			<template #top>
-				<TableToolbar v-model="search" title="Publication" icon="mdi-post" />
+				<TableToolbar v-model="search" title="Ban" icon="mdi-account-lock" />
 			</template>
-			<template #item.created_at="{ item }">
+			<template #item.banned_at="{ item }">
 				{{ new Date(item.created_at).toLocaleString() }}
-			</template>
-			<template #item.updated_at="{ item }">
-				{{ new Date(item.updated_at).toLocaleString() }}
 			</template>
 			<template #item.actions="{ item }">
 				<v-btn icon small color="error" @click="deleteItem(item)">
@@ -32,14 +29,15 @@ export default {
 	components: {TableToolbar},
 	mixins: [AdminTableMixin],
 	data: () => ({
-		fetchUrl: "/publication-list/",
-		deleteUrl: "/publication/%s/",
+		fetchUrl: "/ban/",
+		deleteUrl: "/ban/%s/",
 		headers: [
 			{ text: "Id", value: "id" },
-			{ text: "Title", value: "title" },
-			{ text: "Created By", value: "created_by.username" },
-			{ text: "Created At", value: "created_at" },
-			{ text: "Updated At", value: "updated_at" },
+			{ text: "Ban Item Id", value: "ban_item_id" },
+			{ text: "Ban Item Model Class", value: "ban_item_id" },
+			{ text: "Ban Item App Label", value: "ban_item_app_label" },
+			{ text: "Banned At", value: "banned_at" },
+			{ text: "Banned By", value: "created_by.username"},
 			{ text: "Actions", value: "actions", sortable: false }
 		]
 	}),

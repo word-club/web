@@ -102,7 +102,10 @@
 						active-class="menu-item-active"
 						:class="{'menu-item-active': ((myBookmark))}"
 					>
-						<v-list-item-icon class="mr-2"><v-icon>mdi-bookmark-outline</v-icon></v-list-item-icon>
+						<v-list-item-icon class="mr-2">
+							<v-icon v-if="myBookmark">mdi-bookmark</v-icon>
+							<v-icon v-else>mdi-bookmark-outline</v-icon>
+						</v-list-item-icon>
 						<v-list-item-content>
 							<v-list-item-title>Bookmark</v-list-item-title>
 						</v-list-item-content>
@@ -113,7 +116,9 @@
 						active-class="menu-item-active"
 						:class="{'menu-item-active': ((myHide))}"
 					>
-						<v-list-item-icon class="mr-2"><v-icon>mdi-eye-off-outline</v-icon></v-list-item-icon>
+						<v-list-item-icon class="mr-2">
+							<v-icon>mdi-eye-off-outline</v-icon>
+						</v-list-item-icon>
 						<v-list-item-content>
 							<v-list-item-title>Hide</v-list-item-title>
 						</v-list-item-content>
