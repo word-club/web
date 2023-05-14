@@ -1,3 +1,5 @@
+.idea/
+.vscode/
 cypress/
 node_modules/
 public/
